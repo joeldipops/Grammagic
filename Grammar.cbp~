@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Grammagic" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Grammagic" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="`sdl-config --cflags`" />
+		</Compiler>
+		<Linker>
+			<Add option="-lSDL2" />
+			<Add option="-lSDL2_ttf" />
+			<Add option="-lSDL2_image" />
+		</Linker>
+		<Unit filename="util/assetCache.cpp" />
+		<Unit filename="util/assetCache.h" />
+		<Unit filename="cb.bmp" />
+		<Unit filename="command.cpp" />
+		<Unit filename="command.h" />
+		<Unit filename="controlViewManager.cpp" />
+		<Unit filename="gameMap.cpp" />
+		<Unit filename="gameMap.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="mapCell.cpp" />
+		<Unit filename="mapCell.h" />
+		<Unit filename="mapFileBlock.h" />
+		<Unit filename="mapObject.cpp" />
+		<Unit filename="mapObject.h" />
+		<Unit filename="mapViewManager.cpp" />
+		<Unit filename="miniMapViewManager.cpp" />
+		<Unit filename="mob.cpp" />
+		<Unit filename="mob.h" />
+		<Unit filename="playStateManager.cpp" />
+		<Unit filename="playStateManager.h" />
+		<Unit filename="res/enemy.png" />
+		<Unit filename="res/font.ttf" />
+		<Unit filename="res/grass.png" />
+		<Unit filename="res/pc.png" />
+		<Unit filename="res/strings.h" />
+		<Unit filename="res/wall.png" />
+		<Unit filename="stateEnums.h" />
+		<Unit filename="statsViewManager.cpp" />
+		<Unit filename="terrain.cpp" />
+		<Unit filename="terrain.h" />
+		<Unit filename="util/utils.h" />
+		<Unit filename="viewManager.cpp" />
+		<Unit filename="viewManager.h" />
+		<Unit filename="viewManagers.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

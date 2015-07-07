@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Grammagic" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Grammagic" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="`sdl-config --cflags`" />
+		</Compiler>
+		<Linker>
+			<Add option="-lSDL2" />
+			<Add option="-lSDL2_ttf" />
+			<Add option="-lSDL2_image" />
+		</Linker>
+		<Unit filename="combat/battleField.cpp" />
+		<Unit filename="combat/battleField.h" />
+		<Unit filename="combat/combatManager.cpp" />
+		<Unit filename="combat/combatManager.h" />
+		<Unit filename="combat/command.cpp" />
+		<Unit filename="combat/command.h" />
+		<Unit filename="combat/modifier.cpp" />
+		<Unit filename="combat/modifier.h" />
+		<Unit filename="combat/noun.cpp" />
+		<Unit filename="combat/noun.h" />
+		<Unit filename="combat/spell.cpp" />
+		<Unit filename="combat/spell.h" />
+		<Unit filename="combat/verb.cpp" />
+		<Unit filename="combat/verb.h" />
+		<Unit filename="combat/word.cpp" />
+		<Unit filename="combat/word.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="mapFileBlock.h" />
+		<Unit filename="mapObject.cpp" />
+		<Unit filename="mapObject.h" />
+		<Unit filename="menuItem.cpp" />
+		<Unit filename="menuItem.h" />
+		<Unit filename="play/battleCommands.h" />
+		<Unit filename="play/controlViewManager.cpp" />
+		<Unit filename="play/enemy.cpp" />
+		<Unit filename="play/enemy.h" />
+		<Unit filename="play/gameMap.cpp" />
+		<Unit filename="play/gameMap.h" />
+		<Unit filename="play/mapCell.cpp" />
+		<Unit filename="play/mapCell.h" />
+		<Unit filename="play/mapViewManager.cpp" />
+		<Unit filename="play/miniMapViewManager.cpp" />
+		<Unit filename="play/mob.cpp" />
+		<Unit filename="play/mob.h" />
+		<Unit filename="play/playStateManager.cpp" />
+		<Unit filename="play/playStateManager.h" />
+		<Unit filename="play/statsViewManager.cpp" />
+		<Unit filename="play/terrain.cpp" />
+		<Unit filename="play/terrain.h" />
+		<Unit filename="play/viewManagers.h" />
+		<Unit filename="res/enemy.png" />
+		<Unit filename="res/font.ttf" />
+		<Unit filename="res/grass.png" />
+		<Unit filename="res/pc.png" />
+		<Unit filename="res/strings.h" />
+		<Unit filename="res/wall.png" />
+		<Unit filename="screenViewContainer.h" />
+		<Unit filename="stateEnums.h" />
+		<Unit filename="stateManager.cpp" />
+		<Unit filename="stateManager.h" />
+		<Unit filename="title/titleStateManager.cpp" />
+		<Unit filename="title/titleStateManager.h" />
+		<Unit filename="title/titleViewManager.cpp" />
+		<Unit filename="title/titleViewManager.h" />
+		<Unit filename="util/assetCache.cpp" />
+		<Unit filename="util/assetCache.h" />
+		<Unit filename="util/utils.h" />
+		<Unit filename="viewManager.cpp" />
+		<Unit filename="viewManager.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

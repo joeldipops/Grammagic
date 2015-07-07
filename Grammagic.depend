@@ -1,0 +1,561 @@
+# depslib dependency file v1.0
+1435469561 source:/home/joel/Projects/Grammagic/command.cpp
+	"command.h"
+
+1435465117 /home/joel/Projects/Grammagic/command.h
+	<string>
+	<vector>
+
+1435471569 source:/home/joel/Projects/Grammagic/gameMap.cpp
+	"gameMap.h"
+	"mapCell.h"
+	<iostream>
+
+1435471592 /home/joel/Projects/Grammagic/gameMap.h
+	"mapCell.h"
+	<vector>
+
+1435471458 /home/joel/Projects/Grammagic/mapCell.h
+	"terrain.h"
+	"mob.h"
+
+1434963886 /home/joel/Projects/Grammagic/terrain.h
+	"util/utils.h"
+	<stdint.h>
+	"mapObject.h"
+
+1435992465 /home/joel/Projects/Grammagic/util/utils.h
+
+1435995633 /home/joel/Projects/Grammagic/mapObject.h
+	<string>
+
+1435455804 /home/joel/Projects/Grammagic/mob.h
+	"util/utils.h"
+	"mapObject.h"
+	"command.h"
+	<string>
+	<vector>
+
+1435471446 source:/home/joel/Projects/Grammagic/mapCell.cpp
+	"mapCell.h"
+
+1435231296 source:/home/joel/Projects/Grammagic/miniMapViewManager.cpp
+	"viewManagers.h"
+
+1435470987 /home/joel/Projects/Grammagic/viewManagers.h
+	"viewManager.h"
+	"gameMap.h"
+	"stateEnums.h"
+	"mob.h"
+
+1435997162 /home/joel/Projects/Grammagic/viewManager.h
+	<SDL2/SDL.h>
+	"util/assetCache.h"
+	<SDL2/SDL_ttf.h>
+	"menuItem.h"
+	<vector>
+
+1435995954 /home/joel/Projects/Grammagic/util/assetCache.h
+	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_image.h>
+	<map>
+	<string>
+
+1387745243 /usr/include/SDL/SDL_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_audio.h"
+	"SDL_cdrom.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_loadso.h"
+	"SDL_mutex.h"
+	"SDL_rwops.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_video.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<iconv.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_config.h
+	"SDL_platform.h"
+	<stdarg.h>
+
+1399696797 /usr/include/SDL/SDL_platform.h
+
+1399696797 /usr/include/SDL/begin_code.h
+
+1399696797 /usr/include/SDL/close_code.h
+
+1399696797 /usr/include/SDL/SDL_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_cdrom.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_cpuinfo.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_active.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_quit.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_active.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keysym.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_keysym.h
+
+1399696797 /usr/include/SDL/SDL_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_video.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1399696797 /usr/include/SDL/SDL_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1399696797 /usr/include/SDL/SDL_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1436182302 /home/joel/Projects/Grammagic/stateEnums.h
+	<SDL2/SDL.h>
+
+1435470044 source:/home/joel/Projects/Grammagic/mob.cpp
+	"mob.h"
+	"battleCommands.h"
+
+1435470075 /home/joel/Projects/Grammagic/battleCommands.h
+	<vector>
+
+1435468942 source:/home/joel/Projects/Grammagic/playStateManager.cpp
+	"playStateManager.h"
+	"terrain.h"
+	"mapCell.h"
+	"gameMap.h"
+	"mapFileBlock.h"
+	<fstream>
+	<iostream>
+	<vector>
+	<SDL_ttf.h>
+	<string>
+	"viewManagers.h"
+
+1435476662 /home/joel/Projects/Grammagic/playStateManager.h
+	<SDL2/SDL.h>
+	"stateEnums.h"
+	<vector>
+	<map>
+	"terrain.h"
+	"mapCell.h"
+	"gameMap.h"
+	"mapFileBlock.h"
+	"util/assetCache.h"
+	"viewManager.h"
+	"viewManagers.h"
+
+1435993792 /home/joel/Projects/Grammagic/mapFileBlock.h
+	"play/mob.h"
+	"play/terrain.h"
+
+1434881852 source:/home/joel/Projects/Grammagic/terrain.cpp
+	"terrain.h"
+	<string>
+	<stdint.h>
+
+1436170929 source:/home/joel/Projects/Grammagic/viewManager.cpp
+	"viewManager.h"
+
+1435477394 source:/home/joel/Projects/Grammagic/controlViewManager.cpp
+	"viewManagers.h"
+	"res/strings.h"
+	"command.h"
+
+1435995538 /home/joel/Projects/Grammagic/res/strings.h
+	<string>
+
+1435997211 source:/home/joel/Projects/Grammagic/mapObject.cpp
+	"mapObject.h"
+
+1435476668 source:/home/joel/Projects/Grammagic/mapViewManager.cpp
+	"viewManagers.h"
+	"util/assetCache.h"
+
+1435477409 source:/home/joel/Projects/Grammagic/statsViewManager.cpp
+	"viewManagers.h"
+	"res/strings.h"
+	<iostream>
+
+1436170922 source:/home/joel/Projects/Grammagic/util/assetCache.cpp
+	"assetCache.h"
+	<iostream>
+
+1390221300 /usr/include/SDL/SDL_image.h
+	"SDL.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1436260865 source:/home/joel/Projects/Grammagic/main.cpp
+	<string>
+	"res/strings.h"
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"util/assetCache.h"
+	"stateEnums.h"
+	"title/titleStateManager.h"
+	"play/playStateManager.h"
+	<stdlib.h>
+	<time.h>
+
+1435481360 source:/home/joel/Projects/Grammagic/play/command.cpp
+	"command.h"
+	"../menuItem.h"
+
+1435753048 /home/joel/Projects/Grammagic/play/command.h
+	<string>
+	<vector>
+	"../menuItem.h"
+	"../combat/spell.h"
+
+1436170150 source:/home/joel/Projects/Grammagic/play/controlViewManager.cpp
+	"viewManagers.h"
+
+1436170069 /home/joel/Projects/Grammagic/play/viewManagers.h
+	"gameMap.h"
+	<SDL2/SDL.h>
+	"../stateEnums.h"
+	"../viewManager.h"
+	"../res/strings.h"
+
+1436265300 /home/joel/Projects/Grammagic/play/gameMap.h
+	"mob.h"
+	"mapCell.h"
+	<vector>
+	"../util/utils.h"
+
+1435995414 /home/joel/Projects/Grammagic/play/mapCell.h
+	"terrain.h"
+	"mob.h"
+
+1435994666 /home/joel/Projects/Grammagic/play/terrain.h
+	"../mapObject.h"
+
+1436171100 /home/joel/Projects/Grammagic/play/mob.h
+	"../mapObject.h"
+	<vector>
+	"../util/utils.h"
+	<string>
+	"../combat/command.h"
+
+1436267171 source:/home/joel/Projects/Grammagic/play/gameMap.cpp
+	"gameMap.h"
+
+1436266651 source:/home/joel/Projects/Grammagic/play/mapCell.cpp
+	"mapCell.h"
+
+1436264340 source:/home/joel/Projects/Grammagic/play/mapViewManager.cpp
+	"viewManagers.h"
+
+1436169502 source:/home/joel/Projects/Grammagic/play/miniMapViewManager.cpp
+	"viewManagers.h"
+
+1436263486 source:/home/joel/Projects/Grammagic/play/mob.cpp
+	"mob.h"
+	"battleCommands.h"
+
+1436168773 /home/joel/Projects/Grammagic/play/battleCommands.h
+	"mob.h"
+	"../combat/battleField.h"
+	"../mapObject.h"
+	"../combat/noun.h"
+	"../combat/verb.h"
+	"../combat/modifier.h"
+
+1436268084 source:/home/joel/Projects/Grammagic/play/playStateManager.cpp
+	"playStateManager.h"
+	"enemy.h"
+	<fstream>
+	"../combat/combatManager.h"
+	<iostream>
+
+1436180817 /home/joel/Projects/Grammagic/play/playStateManager.h
+	<vector>
+	"../stateManager.h"
+	"gameMap.h"
+	"mob.h"
+	<SDL2/SDL.h>
+	"../mapFileBlock.h"
+	"viewManagers.h"
+
+1436170684 source:/home/joel/Projects/Grammagic/play/statsViewManager.cpp
+	"viewManagers.h"
+
+1436170700 source:/home/joel/Projects/Grammagic/play/terrain.cpp
+	"terrain.h"
+
+1435997224 source:/home/joel/Projects/Grammagic/menuItem.cpp
+	"menuItem.h"
+
+1435995642 /home/joel/Projects/Grammagic/menuItem.h
+	<string>
+
+1435483921 source:/home/joel/Projects/Grammagic/intro/introStateManager.cpp
+	"introStateManager.h"
+
+1435483778 /home/joel/Projects/Grammagic/intro/introStateManager.h
+	"../util/assetCache.h"
+	<SDL2/SDL.h>
+	"../stateEnums.h"
+	"introViewManager.h"
+
+1435483864 /home/joel/Projects/Grammagic/intro/introViewManager.h
+	"../viewManager.h"
+	"../util/assetCache.h"
+	<SDL2/SDL.h>
+
+1436170001 /home/joel/Projects/Grammagic/title/titleStateManager.h
+	"../menuItem.h"
+	"../title/titleViewManager.h"
+	"../stateManager.h"
+
+1435995600 /home/joel/Projects/Grammagic/title/titleViewManager.h
+	"../viewManager.h"
+
+1436170852 source:/home/joel/Projects/Grammagic/title/titleStateManager.cpp
+	"titleStateManager.h"
+	"../res/strings.h"
+
+1436170889 source:/home/joel/Projects/Grammagic/title/titleViewManager.cpp
+	"titleStateManager.h"
+
+1435568281 source:/home/joel/Projects/Grammagic/StateManager.cpp
+	"stateManager.h"
+	"stateEnums.h"
+
+1436182774 /home/joel/Projects/Grammagic/stateManager.h
+	"util/assetCache.h"
+	<SDL2/SDL.h>
+	"stateEnums.h"
+
+1436182799 source:/home/joel/Projects/Grammagic/stateManager.cpp
+	"stateManager.h"
+
+1435995828 source:/home/joel/Projects/Grammagic/combat/modifier.cpp
+	"modifier.h"
+	<math.h>
+
+1435995013 /home/joel/Projects/Grammagic/combat/modifier.h
+	"../util/utils.h"
+
+1435995862 source:/home/joel/Projects/Grammagic/combat/word.cpp
+	"word.h"
+
+1435995206 /home/joel/Projects/Grammagic/combat/word.h
+	<string>
+	"modifier.h"
+
+1435995836 source:/home/joel/Projects/Grammagic/combat/noun.cpp
+	"noun.h"
+
+1436168912 /home/joel/Projects/Grammagic/combat/noun.h
+	"word.h"
+	"../mapObject.h"
+	"battleField.h"
+	"modifier.h"
+
+1436172163 source:/home/joel/Projects/Grammagic/combat/spell.cpp
+	"spell.h"
+
+1436052381 /home/joel/Projects/Grammagic/combat/spell.h
+	"word.h"
+	"noun.h"
+	"verb.h"
+	<vector>
+	"battleField.h"
+
+1435995190 /home/joel/Projects/Grammagic/combat/verb.h
+	"../mapObject.h"
+	"modifier.h"
+	"word.h"
+
+1436186786 /home/joel/Projects/Grammagic/combat/battleField.h
+	"../mapObject.h"
+	<vector>
+	<queue>
+	"../stateEnums.h"
+
+1435995853 source:/home/joel/Projects/Grammagic/combat/verb.cpp
+	"verb.h"
+
+1436170957 source:/home/joel/Projects/Grammagic/combat/command.cpp
+	"command.h"
+
+1436169756 /home/joel/Projects/Grammagic/combat/command.h
+	"spell.h"
+	"noun.h"
+	"verb.h"
+	"../menuItem.h"
+
+1436264784 source:/home/joel/Projects/Grammagic/combat/battleField.cpp
+	"battleField.h"
+	"../play/mob.h"
+	"../play/gameMap.h"
+
+1436268029 source:/home/joel/Projects/Grammagic/play/enemy.cpp
+	"enemy.h"
+	<stdlib.h>
+
+1436261103 /home/joel/Projects/Grammagic/play/enemy.h
+	"mob.h"
+	"gameMap.h"
+
+1436186998 source:/home/joel/Projects/Grammagic/combat/combatManager.cpp
+	"combatManager.h"
+	"../stateManager.cpp"
+
+1436183835 /home/joel/Projects/Grammagic/combat/combatManager.h
+	"../stateManager.h"
+	"../play/viewManagers.h"
+	"../play/gameMap.h"
+	"battleField.h"
+	"../screenViewContainer.h"
+	"../play/enemy.h"
+
+1436177983 /home/joel/Projects/Grammagic/screenViewContainer.h
+	"viewManager.h"
+
+1436182799 /home/joel/Projects/Grammagic/stateManager.cpp
+	"stateManager.h"
+
