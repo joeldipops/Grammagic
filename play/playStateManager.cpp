@@ -557,7 +557,7 @@ std::vector<MapFileBlock> PlayStateManager::tempMapFile()
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
-        MapFileBlock::generateTestCell(GrassTerrain),
+        MapFileBlock::generateTestCell(GrassTerrain, MobType::Hostile),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
