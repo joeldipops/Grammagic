@@ -9,6 +9,7 @@ const SDL_Rect CONTROL_VIEW = {0, 0, 1000, 150};
 const SDL_Rect MINIMAP_VIEW = {1000, 0, 200, 150};
 const SDL_Rect STATS_VIEW = {1000, 150, 200, 650};
 const SDL_Rect MAP_VIEW = {0, 150, 1000, 650};
+const int COMBAT_GRACE_PERIOD = 1000;
 
 /**
  * Constructor
@@ -79,11 +80,13 @@ Core::CoreState PlayStateManager::start(void)
         switch(state())
         {
             case Play::PlayState::Victory:
+                state(Play::PlayState::Movement);
             case Play::PlayState::Movement:
                 rerender = processMovementState();
                 continue;
             case Play::PlayState::Combat:
                 state(combatManager.start(_map));
+                _combatGraceTime = SDL_GetTicks() + COMBAT_GRACE_PERIOD;
                 continue;
             case Play::PlayState::GameOver:
             default:
@@ -113,7 +116,6 @@ bool PlayStateManager::processMovementState(void)
     bool hasUpdate = false;
 
     Play::PlayState oldState = state();
-
 
     // Enemies should move around the map.
     int time = SDL_GetTicks();
@@ -157,6 +159,18 @@ bool PlayStateManager::processMovementState(void)
                 }
         }
     }
+
+    // After combat ends, you have a few moments to get away.
+    if (time < _combatGraceTime)
+        return hasUpdate;
+
+    std::vector<Mob*> enemies = _map->mobs();
+    for(int i = 1; i < int(enemies.size()); i++)
+    {
+        if (enemies.at(i)->isSeen(_map->pc()))
+            state(Play::PlayState::Combat);
+    }
+
     return hasUpdate;
 }
 
@@ -183,17 +197,6 @@ bool PlayStateManager::moveMob(Mob* mob, Core::InputPress input)
     }
 
     bool result = _map->moveMob(mob, x, y);
-
-    // Todo - only the PC can move at the moment, but later when enemies move, this code will not be a good thing.
-    std::vector<Mob*> enemies = _map->mobs();
-    for(int i = 1; i < int(enemies.size()); i++)
-    {
-        if (enemies.at(i)->isSeen(mob))
-        {
-            state(Play::PlayState::Combat);
-            return result;
-        }
-    }
 
     return result;
 }

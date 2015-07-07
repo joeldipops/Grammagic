@@ -37,11 +37,12 @@
 
             // Properties
             SDL_Window* _window = NULL;
-            ControlViewManager* _controlView;
-            StatsViewManager* _statsView;
-            ViewManager* _miniMapView;
-            MapViewManager* _mapView;
+            ControlViewManager* _controlView = nullptr;
+            StatsViewManager* _statsView = nullptr;
+            ViewManager* _miniMapView = nullptr;
+            MapViewManager* _mapView = nullptr;
             GameMap* _map = nullptr;
+            int _combatGraceTime = 0;
 
             std::vector<MapFileBlock> tempMapFile();
     };
