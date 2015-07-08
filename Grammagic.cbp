@@ -25,6 +25,8 @@
 			<Add option="-lSDL2_ttf" />
 			<Add option="-lSDL2_image" />
 		</Linker>
+		<Unit filename="combat/adjective.cpp" />
+		<Unit filename="combat/adjective.h" />
 		<Unit filename="combat/battleField.cpp" />
 		<Unit filename="combat/battleField.h" />
 		<Unit filename="combat/combatManager.cpp" />
@@ -35,6 +37,11 @@
 		<Unit filename="combat/modifier.h" />
 		<Unit filename="combat/noun.cpp" />
 		<Unit filename="combat/noun.h" />
+		<Unit filename="combat/nounPhrase.cpp" />
+		<Unit filename="combat/nounPhrase.h" />
+		<Unit filename="combat/nounish.h" />
+		<Unit filename="combat/properNoun.cpp" />
+		<Unit filename="combat/properNoun.h" />
 		<Unit filename="combat/spell.cpp" />
 		<Unit filename="combat/spell.h" />
 		<Unit filename="combat/verb.cpp" />
@@ -47,6 +54,7 @@
 		<Unit filename="mapObject.h" />
 		<Unit filename="menuItem.cpp" />
 		<Unit filename="menuItem.h" />
+		<Unit filename="noun.h" />
 		<Unit filename="play/battleCommands.h" />
 		<Unit filename="play/controlViewManager.cpp" />
 		<Unit filename="play/enemy.cpp" />
