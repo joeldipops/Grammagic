@@ -2,7 +2,7 @@
 #define COMMAND_H_INCLUDED
 
 #include "spell.h"
-#include "noun.h"
+#include "properNoun.h"
 #include "verb.h"
 #include "../menuItem.h"
 class Mob;

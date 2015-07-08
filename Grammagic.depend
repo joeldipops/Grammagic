@@ -391,17 +391,21 @@
 1436169502 source:/home/joel/Projects/Grammagic/play/miniMapViewManager.cpp
 	"viewManagers.h"
 
-1436263486 source:/home/joel/Projects/Grammagic/play/mob.cpp
+1436354496 source:/home/joel/Projects/Grammagic/play/mob.cpp
 	"mob.h"
 	"battleCommands.h"
+	"../combat/nounish.h"
+	"../combat/nounPhrase.h"
 
-1436168773 /home/joel/Projects/Grammagic/play/battleCommands.h
+1436354150 /home/joel/Projects/Grammagic/play/battleCommands.h
 	"mob.h"
 	"../combat/battleField.h"
 	"../mapObject.h"
-	"../combat/noun.h"
+	"../combat/properNoun.h"
 	"../combat/verb.h"
 	"../combat/modifier.h"
+	"../combat/adjective.h"
+	"../combat/noun.h"
 
 1436269999 source:/home/joel/Projects/Grammagic/play/playStateManager.cpp
 	"playStateManager.h"
@@ -479,28 +483,29 @@
 1435995013 /home/joel/Projects/Grammagic/combat/modifier.h
 	"../util/utils.h"
 
-1435995862 source:/home/joel/Projects/Grammagic/combat/word.cpp
+1436351239 source:/home/joel/Projects/Grammagic/combat/word.cpp
 	"word.h"
 
-1435995206 /home/joel/Projects/Grammagic/combat/word.h
+1436351201 /home/joel/Projects/Grammagic/combat/word.h
 	<string>
 	"modifier.h"
 
-1435995836 source:/home/joel/Projects/Grammagic/combat/noun.cpp
+1436352925 source:/home/joel/Projects/Grammagic/combat/noun.cpp
 	"noun.h"
 
-1436168912 /home/joel/Projects/Grammagic/combat/noun.h
+1436352960 /home/joel/Projects/Grammagic/combat/noun.h
+	<vector>
 	"word.h"
+	"modifier.h"
 	"../mapObject.h"
 	"battleField.h"
-	"modifier.h"
 
-1436172163 source:/home/joel/Projects/Grammagic/combat/spell.cpp
+1436352213 source:/home/joel/Projects/Grammagic/combat/spell.cpp
 	"spell.h"
 
-1436052381 /home/joel/Projects/Grammagic/combat/spell.h
+1436354397 /home/joel/Projects/Grammagic/combat/spell.h
 	"word.h"
-	"noun.h"
+	"nounish.h"
 	"verb.h"
 	<vector>
 	"battleField.h"
@@ -522,13 +527,13 @@
 1436170957 source:/home/joel/Projects/Grammagic/combat/command.cpp
 	"command.h"
 
-1436169756 /home/joel/Projects/Grammagic/combat/command.h
+1436353371 /home/joel/Projects/Grammagic/combat/command.h
 	"spell.h"
-	"noun.h"
+	"properNoun.h"
 	"verb.h"
 	"../menuItem.h"
 
-1436264784 source:/home/joel/Projects/Grammagic/combat/battleField.cpp
+1436354535 source:/home/joel/Projects/Grammagic/combat/battleField.cpp
 	"battleField.h"
 	"../play/mob.h"
 	"../play/gameMap.h"
@@ -541,7 +546,7 @@
 	"mob.h"
 	"gameMap.h"
 
-1436186998 source:/home/joel/Projects/Grammagic/combat/combatManager.cpp
+1436349052 source:/home/joel/Projects/Grammagic/combat/combatManager.cpp
 	"combatManager.h"
 	"../stateManager.cpp"
 
@@ -558,4 +563,44 @@
 
 1436182799 /home/joel/Projects/Grammagic/stateManager.cpp
 	"stateManager.h"
+
+1436352213 /home/joel/Projects/Grammagic/combat/nounish.h
+	"word.h"
+	"../mapObject.h"
+	"battleField.h"
+
+1436352213 source:/home/joel/Projects/Grammagic/combat/specificNoun.cpp
+	"specificNoun.h"
+
+1436352213 /home/joel/Projects/Grammagic/combat/specificNoun.h
+	"nounish.h"
+	"../mapObject.h"
+	"battleField.h"
+	"modifier.h"
+
+1436355260 source:/home/joel/Projects/Grammagic/combat/nounPhrase.cpp
+	"nounPhrase.h"
+
+1436355099 /home/joel/Projects/Grammagic/combat/nounPhrase.h
+	"nounish.h"
+	"adjective.h"
+	"noun.h"
+
+1436355332 /home/joel/Projects/Grammagic/combat/adjective.h
+	"word.h"
+	"../mapObject.h"
+	<vector>
+	"battleField.h"
+
+1436353095 source:/home/joel/Projects/Grammagic/combat/adjective.cpp
+	"adjective.h"
+
+1436353404 /home/joel/Projects/Grammagic/combat/properNoun.h
+	"nounish.h"
+	"../mapObject.h"
+	"battleField.h"
+	"modifier.h"
+
+1436353413 source:/home/joel/Projects/Grammagic/combat/properNoun.cpp
+	"properNoun.h"
 

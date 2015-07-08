@@ -56,6 +56,12 @@ Play::PlayState CombatManager::start(GameMap* map_)
         if (field.isDefeat())
             state(Play::PlayState::GameOver);
     }
+
+    for (Mob* mob : field.mobs())
+    {
+        mob->unblock();
+    }
+
     _field = nullptr;
     _map = nullptr;
     return result();

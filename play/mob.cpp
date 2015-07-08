@@ -1,5 +1,7 @@
 #include "mob.h"
 #include "battleCommands.h"
+#include "../combat/nounish.h"
+#include "../combat/nounPhrase.h"
 
 Mob::Mob() {}
 
@@ -18,10 +20,12 @@ Mob::Mob(MobType type)
     if (type == MobType::PC)
     {
         _commands.push_back(Command("Flee", Commands::FLEE));
-        _commands.push_back(Command("self-DMG-weak", Spell(Commands::SELF, Commands::ENEMY_WEAKEST, Commands::WEAKEN)));
-        _commands.push_back(Command("self-DMG-strong", Spell(Commands::SELF, Commands::ENEMY_STRONGEST, Commands::WEAKEN)));
-        _commands.push_back(Command("weak-HEAL-self", Spell(Commands::ENEMY_WEAKEST, Commands::SELF, Commands::HEAL)));
-        _commands.push_back(Command("strong-HEAL-self", Spell(Commands::ENEMY_STRONGEST, Commands::SELF, Commands::HEAL)));
+        Nounish* weakest = new NounPhrase(Commands::ENEMY, Commands::WEAKEST);
+        _commands.push_back(Command("self-DMG-weak", Spell(&Commands::SELF, weakest, Commands::WEAKEN)));
+        Nounish* strongest = new NounPhrase(Commands::ENEMY, Commands::STRONGEST);
+        _commands.push_back(Command("self-DMG-strong", Spell(&Commands::SELF, strongest, Commands::WEAKEN)));
+        _commands.push_back(Command("weak-HEAL-self", Spell(weakest, &Commands::SELF, Commands::HEAL)));
+        _commands.push_back(Command("strong-HEAL-self", Spell(strongest, &Commands::SELF, Commands::HEAL)));
     }
 
     _maxStamina = 100;

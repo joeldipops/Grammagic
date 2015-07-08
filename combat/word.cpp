@@ -14,9 +14,9 @@ const std::string Word::name(void) const
 }
 
 
-const Modifier Word::effect(void) const
+const Modifier* Word::effect(void) const
 {
-    return _effect;
+    return &_effect;
 }
 Modifier Word::effect(Modifier effect_)
 {
@@ -24,9 +24,9 @@ Modifier Word::effect(Modifier effect_)
     return _effect;
 }
 
-const Modifier Word::cost(void) const
+const Modifier* Word::cost(void) const
 {
-    return _cost;
+    return &_cost;
 }
 Modifier Word::cost(Modifier cost_)
 {
@@ -34,9 +34,9 @@ Modifier Word::cost(Modifier cost_)
     return _cost;
 }
 
-const Modifier Word::duration(void) const
+const Modifier* Word::duration(void) const
 {
-    return _duration;
+    return &_duration;
 }
 Modifier Word::duration(Modifier duration_)
 {

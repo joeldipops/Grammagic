@@ -1,17 +1,13 @@
 #include "noun.h"
-Noun::Noun(MapObject* (*target)(Mob*, BattleField*), std::string name, Modifier effect, Modifier cost, Modifier duration)
-    : Word(name, effect, cost, duration)
+
+Noun::Noun(MultiTargeter targeter, std::string n, Modifier e, Modifier c, Modifier d)
+    : Word(n, e, c, d)
 {
-    _target = target;
+    _targeter = targeter;
 }
 
 
-// Will create my own battlefield object.  The map is not sufficient for more than a few targets.
-// This may also return a group of mobs later...
-/**
- * Selects the target from a mob, item or terrain on the battlefield according to the _target function.
- */
-MapObject* Noun::aquireTarget(Mob* caster, BattleField* battleField)
+std::vector<MapObject*> Noun::acquireCandidates(Mob* caster, BattleField* field)
 {
-    return _target(caster, battleField);
+    return _targeter(caster, field);
 }

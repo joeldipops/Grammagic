@@ -95,6 +95,11 @@ std::vector<Mob*> BattleField::hostiles(void)
     return _hostiles;
 }
 
+std::vector<Mob*> BattleField::pcs(void)
+{
+    return _pcs;
+}
+
 std::vector<Mob*> BattleField::mobs(void)
 {
     std::vector<Mob*> result = std::vector<Mob*>();

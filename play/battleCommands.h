@@ -4,9 +4,11 @@
 #include "mob.h"
 #include "../combat/battleField.h"
 #include "../mapObject.h"
-#include "../combat/noun.h"
+#include "../combat/properNoun.h"
 #include "../combat/verb.h"
 #include "../combat/modifier.h"
+#include "../combat/adjective.h"
+#include "../combat/noun.h"
 
 class Commands
 {
@@ -17,57 +19,76 @@ class Commands
             return 0;
         };
 
-        static Noun SELF;
-        static Noun ENEMY_WEAKEST;
+        static ProperNoun SELF;
+        static Noun ENEMY;
         static Verb WEAKEN;
         static Verb HEAL;
-        static Noun ENEMY_STRONGEST;
+        static Adjective STRONGEST;
+        static Adjective WEAKEST;
 
     private:
+        // Specific Nouns
+
         static MapObject* self (Mob* caster, BattleField*)
         {
             return (MapObject*) caster;
         };
 
-        static MapObject* enemyWeakest(Mob* caster, BattleField* battleField)
+        // General Nouns
+
+        static std::vector<MapObject*> enemies(Mob* caster, BattleField* battleField)
+        {
+            std::vector<MapObject*> result;
+            std::vector<Mob*> candidates;
+            if (caster->type() == MobType::PC)
+                candidates = battleField->hostiles();
+            else
+                candidates = battleField->pcs();
+
+            for (Mob* m : candidates)
+            {
+                result.push_back((MapObject*) m);
+            }
+
+            return result;
+        }
+
+
+        // Adjectives
+
+        static MapObject* weakest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
         {
             Mob* result = nullptr;
-            for(int i = 0; i < int(battleField->mobs().size()); i++)
+            for(int i = 0; i < int(candidates.size()); i++)
             {
-                Mob* mob = battleField->mobs().at(i);
-
-                if (mob->type() != MobType::Hostile)
-                    continue;
+                Mob* mob = (Mob*) candidates.at(i);
 
                 if (result == nullptr)
                     result = mob;
                 else if (mob->stamina() < result->stamina())
                     result = mob;
-
             }
 
             return result;
         };
 
-        static MapObject* enemyStrongest(Mob* caster, BattleField* battleField)
+        static MapObject* strongest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
         {
             Mob* result = nullptr;
-            for(int i = 0; i < int(battleField->mobs().size()); i++)
+            for(int i = 0; i < int(candidates.size()); i++)
             {
-                Mob* mob = battleField->mobs().at(i);
-
-                if (mob->type() != MobType::Hostile)
-                    continue;
+                Mob* mob = (Mob*) candidates.at(i);
 
                 if (result == nullptr)
                     result = mob;
                 else if (mob->stamina() > result->stamina())
                     result = mob;
-
             }
 
             return result;
         };
+
+        // Verbs
 
         static void weaken(MapObject* source, MapObject* target, int cost, int effect)
         {
@@ -77,16 +98,18 @@ class Commands
 
         static void strengthen(MapObject* source, MapObject* target, int cost, int effect)
         {
-            source->changeStamina(cost);
+            source->changeStamina(cost*-1);
             target->changeStamina(effect);
         };
 };
 
-Noun Commands::SELF = Noun(self, std::string("SELF"), Modifier(.8), Modifier(1.0), Modifier(1.0));
-Noun Commands::ENEMY_WEAKEST = Noun(enemyWeakest, std::string("ENEMY_WEAKEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
-Noun Commands::ENEMY_STRONGEST = Noun(enemyStrongest, std::string("ENEMY_STRONGEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Noun Commands::ENEMY = Noun(enemies, std::string("ENEMY"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Adjective Commands::WEAKEST = Adjective(weakest, std::string("WEAKEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Adjective Commands::STRONGEST = Adjective(strongest, std::string("WEAKEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+
+ProperNoun Commands::SELF = ProperNoun(self, std::string("SELF"), Modifier(.8), Modifier(1.0), Modifier(1.0));
 Verb Commands::WEAKEN = Verb(weaken, std::string("WEAKEN"), Modifier(50), Modifier(10), Modifier(2000), -2, 1, 0);
-Verb Commands::HEAL = Verb(strengthen, std::string("HEAL"), Modifier(50), Modifier(10, -1.0), Modifier(2000), -1, 1, 0);
+Verb Commands::HEAL = Verb(strengthen, std::string("HEAL"), Modifier(50), Modifier(10, 1.0), Modifier(2000), -1, 1, 0);
 
 #endif
 

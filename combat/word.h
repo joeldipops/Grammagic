@@ -10,9 +10,9 @@ class Word
         Word(){};
         Word(std::string, Modifier, Modifier, Modifier);
         const std::string name(void) const;
-        const Modifier effect(void) const;
-        const Modifier cost(void) const;
-        const Modifier duration(void) const;
+        const virtual Modifier* effect(void) const;
+        const virtual Modifier* cost(void) const;
+        const virtual Modifier* duration(void) const;
 
     protected:
         Modifier effect(Modifier);
