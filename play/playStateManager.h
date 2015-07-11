@@ -8,15 +8,18 @@
 #include <SDL2/SDL.h>
 #include "../mapFileBlock.h"
 #include "viewManagers.h"
-
-    class PlayStateManager : public StateManager<Play::PlayState, Core::CoreState>
+#include "../menuManager.h"
+#include "enemy.h"
+#include <fstream>
+#include "../magic/combatManager.h"
+#include <iostream>
+namespace Play {
+    class PlayStateManager : public StateManager<PlayState, Core::CoreState>
     {
         public:
             PlayStateManager(SDL_Renderer*, AssetCache*);
             ~PlayStateManager(void);
             Core::CoreState start(void);
-            static const int CELL_WIDTH = 50;
-            static const int CELL_HEIGHT = 50;
         private:
             // Set up
             GameMap* loadMap(void);
@@ -46,4 +49,6 @@
 
             std::vector<MapFileBlock> tempMapFile();
     };
+}
+
 #endif

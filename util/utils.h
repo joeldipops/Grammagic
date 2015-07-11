@@ -1,6 +1,9 @@
 #ifndef UTILS_H_INCLUDED
 #define UTILS_H_INCLUDED
 
+#include <vector>
+#include <algorithm>
+
 namespace Util {
     /*
     static void sleep(int milliseconds)
@@ -68,5 +71,13 @@ struct Location
         }
         int X;
         int Y;
+};
+
+template <typename T>
+static std::vector<T*> toPointers(std::vector<T>& source)
+{
+    std::vector<T*> target(source.size());
+    std::transform(source.begin(), source.end(), target.begin(), [](T& t) { return &t; });
+    return target;
 };
 #endif

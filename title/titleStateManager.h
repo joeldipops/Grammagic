@@ -4,6 +4,7 @@
 #include "../menuItem.h"
 #include "../title/titleViewManager.h"
 #include "../stateManager.h"
+#include "../util/utils.h"
 
 class TitleStateManager final : StateManager<Title::TitleState, Core::CoreState>
 {

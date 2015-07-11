@@ -3,7 +3,7 @@
 
 #include "mob.h"
 #include "gameMap.h"
-
+using namespace Magic;
 class Enemy : public Mob
 {
     public:
@@ -11,7 +11,8 @@ class Enemy : public Mob
         bool aiMove(GameMap*);
         void aiAct(BattleField*);
         int movementDelay(void) const;
-        int combatDelay() ;
+        int combatDelay() const;
+        MobType type(void) const;
 
     private:
         int _movementDelay;

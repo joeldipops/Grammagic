@@ -1,8 +1,6 @@
 #include "playStateManager.h"
-#include "enemy.h"
-#include <fstream>
-#include "../combat/combatManager.h"
-#include <iostream>
+
+using namespace Play;
 
 const bool REGEN_MAP = true;
 const SDL_Rect CONTROL_VIEW = {0, 0, 1000, 150};
@@ -35,10 +33,11 @@ PlayStateManager::~PlayStateManager()
  */
 Core::CoreState PlayStateManager::start(void)
 {
-    state(Play::PlayState::Movement);
+    state(PlayState::Movement);
     result(Core::CoreState::Exit);
 
     CombatManager combatManager = CombatManager(renderer(), assets(), ScreenViewContainer{_controlView, _miniMapView, _statsView, _mapView});
+    MenuManager menuManager = MenuManager(renderer(), assets());
 
     // Create a simple 5x5 map for testing.
     if (REGEN_MAP)
@@ -57,7 +56,7 @@ Core::CoreState PlayStateManager::start(void)
     bool rerender = true;
 
     // Enter the main loop.
-    while(state() != Play::PlayState::Exit)
+    while(state() != PlayState::Exit)
     {
         // Free up the CPU to do other shit each iteration.
         //Util::sleep(20);
@@ -67,7 +66,7 @@ Core::CoreState PlayStateManager::start(void)
         if (_map->pc()->stamina() <= 0)
         {
             // _state = GameOver
-            state(Play::PlayState::Exit);
+            state(PlayState::Exit);
             break;
         }
 
@@ -79,24 +78,28 @@ Core::CoreState PlayStateManager::start(void)
 
         switch(state())
         {
-            case Play::PlayState::Victory:
-                state(Play::PlayState::Movement);
-            case Play::PlayState::Movement:
+            case PlayState::Menu:
+                state(menuManager.start(_map->pc()));
+                continue;
+            case PlayState::Victory:
+                state(PlayState::Movement);
+            case PlayState::Movement:
                 rerender = processMovementState();
                 continue;
-            case Play::PlayState::Combat:
+            case PlayState::Combat:
                 state(combatManager.start(_map));
+                // We shouldn't start another battle as soon as one ends.
                 _combatGraceTime = SDL_GetTicks() + COMBAT_GRACE_PERIOD;
                 continue;
-            case Play::PlayState::GameOver:
+            case PlayState::GameOver:
             default:
                 exit(Core::CoreState::Exit);
         }
     }
 
     switch (state()) {
-        case Play::PlayState::GameOver:
-        case Play::PlayState::Exit:
+        case PlayState::GameOver:
+        case PlayState::Exit:
             result(Core::CoreState::Exit); break;
         default:
             result(Core::CoreState::Title); break;
@@ -115,7 +118,7 @@ bool PlayStateManager::processMovementState(void)
     Mob* pc = _map->pc();
     bool hasUpdate = false;
 
-    Play::PlayState oldState = state();
+    PlayState oldState = state();
 
     // Enemies should move around the map.
     int time = SDL_GetTicks();
@@ -156,6 +159,10 @@ bool PlayStateManager::processMovementState(void)
                     case SDLK_d:
                         hasUpdate = moveMob(pc, Core::InputPress::RIGHT);
                         break;
+                    case SDLK_RETURN:
+                        hasUpdate = false;
+                        state(PlayState::Menu);
+                        break;
                 }
         }
     }
@@ -168,7 +175,7 @@ bool PlayStateManager::processMovementState(void)
     for(int i = 1; i < int(enemies.size()); i++)
     {
         if (enemies.at(i)->isSeen(_map->pc()))
-            state(Play::PlayState::Combat);
+            state(PlayState::Combat);
     }
 
     return hasUpdate;
@@ -203,7 +210,7 @@ bool PlayStateManager::moveMob(Mob* mob, Core::InputPress input)
 
 void PlayStateManager::exit(const Core::CoreState nextState)
 {
-    state(Play::PlayState::Exit);
+    state(PlayState::Exit);
     result(nextState);
 }
 

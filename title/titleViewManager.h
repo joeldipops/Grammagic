@@ -8,7 +8,7 @@ class TitleViewManager : public ViewManager
     public:
         TitleViewManager(void);
         TitleViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-        void render(const std::vector<MenuItem>, const int);
+        void render(const std::vector<MenuItem*>, const int);
 };
 
 #endif

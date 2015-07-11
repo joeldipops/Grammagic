@@ -79,7 +79,8 @@ Core::CoreState TitleStateManager::start(void)
 
 void TitleStateManager::render(void)
 {
-    _view.render(_menu, _selectedItemIndex);
+    std::vector<MenuItem*> pointers = toPointers<MenuItem>(_menu);
+    _view.render(pointers, _selectedItemIndex);
     SDL_RenderPresent(renderer());
 }
 

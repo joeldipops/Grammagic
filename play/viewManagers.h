@@ -3,9 +3,11 @@
 
 #include "gameMap.h"
 #include <SDL2/SDL.h>
-#include "../stateEnums.h"
+#include "../globalConstants.h"
 #include "../viewManager.h"
 #include "../res/strings.h"
+#include <algorithm>
+#include "../util/utils.h"
 
 class ControlViewManager : public ViewManager
 {

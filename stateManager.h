@@ -3,7 +3,7 @@
 
 #include "util/assetCache.h"
 #include <SDL2/SDL.h>
-#include "stateEnums.h"
+#include "globalConstants.h"
 
 template<typename State, typename ParentState>
 class StateManager

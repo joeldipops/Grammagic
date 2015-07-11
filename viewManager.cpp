@@ -75,35 +75,37 @@ int ViewManager::menuItemsPerColumn(void) const
  * @param items The list of items on the menu.
  * @param selectedIndex The position in the list of the currently selected item.
  */
-void ViewManager::drawControls(const std::vector<MenuItem>* items, const int selectedIndex, const SDL_Rect* port)
+void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port)
 {
     const int marginTop = 15;
     const int marginLeft = 15;
     const int width = 200;
     const int height = 55;
 
-    SDL_Rect rect = SDL_Rect {marginLeft, marginTop, width, height};
-    SDL_Rect temp;
     SDL_Rect view;
     if (port == nullptr)
         view = viewPort();
     else
         view = *port;
+
+    SDL_Rect rect = SDL_Rect {view.x + marginLeft, view.y + marginTop, width, height};
+    SDL_Rect temp;
+
     int rows = 1;
     int i = 0;
     for(; i < int(items->size()); i++)
     {
         if (i == selectedIndex)
-            drawOptionBox(&rect, items->at(i).name(), 5, &hudColour, &textColour, &textColour);
+            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textColour, &textColour);
         else
-            drawOptionBox(&rect, items->at(i).name(), 5, &hudColour, &borderColour, &borderColour);
+            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &borderColour, &borderColour);
         temp = SDL_Rect {rect.x, rect.y + height + marginTop, width, height};
 
         // Can't fit horizontally, so shift to the right.
-        if (temp.y + temp.h > view.h)
+        if (temp.y + temp.h > view.h + view.y)
         {
             rows++;
-            temp = SDL_Rect {marginLeft + rect.x + rect.w, marginTop, width, height };
+            temp = SDL_Rect {marginLeft + rect.x + rect.w, view.y + marginTop, width, height };
         }
 
         rect = temp;
@@ -241,4 +243,3 @@ void ViewManager::drawBorder(SDL_Rect rect, int width, const SDL_Colour* colour 
 
     SDL_RenderFillRects(_renderer, *rects, 4);
 }
-

@@ -5,8 +5,8 @@
 #include <vector>
 #include "../util/utils.h"
 #include <string>
-#include "../combat/command.h"
-
+#include "../magic/command.h"
+using namespace Magic;
 class Mob : public MapObject
 {
     public:
@@ -14,7 +14,7 @@ class Mob : public MapObject
         Mob(MobType);
         virtual ~Mob();
 
-        MobType type(void) const;
+        virtual MobType type(void) const;
         Location location(int, int);
         Location location(const Location*);
         int x(int);

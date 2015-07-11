@@ -1,7 +1,8 @@
 #include "mob.h"
-#include "battleCommands.h"
-#include "../combat/nounish.h"
-#include "../combat/nounPhrase.h"
+#include "../magic/battleCommands.h"
+#include "../magic/nounish.h"
+#include "../magic/nounPhrase.h"
+using namespace Magic;
 
 Mob::Mob() {}
 

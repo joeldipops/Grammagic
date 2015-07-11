@@ -4,24 +4,24 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "util/assetCache.h"
-#include "stateEnums.h"
+#include "globalConstants.h"
 #include "title/titleStateManager.h"
 #include "play/playStateManager.h"
 
 #include <stdlib.h>
 #include <time.h>
 
+#include "magic/battleCommands.h"
+
 const std::string Strings::Heading = "Grammagic";
 const std::string Strings::Stamina = "Stamina";
 const std::string Strings::Start = "Start";
 const std::string Strings::Quit = "Quit";
 
+using namespace Magic;
+using namespace Play;
     class Grammar
     {
-        static const int WIDTH = 1200;
-        static const int HEIGHT = 800;
-        static const int BITS_PER_PIXEL = 32;
-
         public:
             Grammar()
             {};
@@ -83,6 +83,15 @@ const std::string Strings::Quit = "Quit";
 
 int main ()
 {
+    Commands::allCommands.push_back(&Commands::HEAVIER);
+    Commands::allCommands.push_back(&Commands::LIGHTER);
+    Commands::allCommands.push_back(&Commands::HEAL);
+    Commands::allCommands.push_back(&Commands::WEAKEN);
+    Commands::allCommands.push_back(&Commands::SELF);
+    Commands::allCommands.push_back(&Commands::WEAKEST);
+    Commands::allCommands.push_back(&Commands::ENEMY);
+    Commands::allCommands.push_back(&Commands::STRONGEST);
+
     Grammar program;
     program.start();
 

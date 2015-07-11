@@ -9,7 +9,12 @@ Enemy::Enemy(void) : Mob(MobType::Hostile)
     _movementDelay = 500;
 }
 
-int Enemy::combatDelay()
+MobType Enemy::type(void) const
+{
+    return MobType::Hostile;
+}
+
+int Enemy::combatDelay(void) const
 {
     return _combatDelay;
 }
