@@ -3,6 +3,13 @@
 const SDL_Colour ViewManager::hudColour = { 0x19, 0x19, 0x70, 0xFF };
 const SDL_Colour ViewManager::borderColour = { 0x69, 0x69, 0x69, 0xFF };
 const SDL_Colour ViewManager::textColour = { 0xFF, 0xFF, 0xFF, 0xFF };
+
+const int ViewManager::controlMarginTop = 15;
+const int ViewManager::controlMarginLeft = 15;
+const int ViewManager::controlWidth = 200;
+const int ViewManager::controlHeight = 55;
+const int ViewManager::controlBorderWidth = 5;
+
 const int ViewManager::DEFAULT_BORDER_WIDTH = 7;
 
 /**
@@ -70,25 +77,15 @@ int ViewManager::menuItemsPerColumn(void) const
 }
 
 
-/**
- * Render all the items that a player can pick from the menu.
- * @param items The list of items on the menu.
- * @param selectedIndex The position in the list of the currently selected item.
- */
-void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port)
+void ViewManager::drawHorizontalControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port)
 {
-    const int marginTop = 15;
-    const int marginLeft = 15;
-    const int width = 200;
-    const int height = 55;
-
     SDL_Rect view;
     if (port == nullptr)
         view = viewPort();
     else
         view = *port;
 
-    SDL_Rect rect = SDL_Rect {view.x + marginLeft, view.y + marginTop, width, height};
+    SDL_Rect rect = SDL_Rect {view.x + controlMarginLeft, view.y + controlMarginTop, controlWidth, controlHeight};
     SDL_Rect temp;
 
     int rows = 1;
@@ -99,13 +96,50 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
             drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textColour, &textColour);
         else
             drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &borderColour, &borderColour);
-        temp = SDL_Rect {rect.x, rect.y + height + marginTop, width, height};
+        temp = SDL_Rect {rect.x + controlWidth + controlMarginLeft, rect.y, controlWidth, controlHeight};
 
-        // Can't fit horizontally, so shift to the right.
+        // Can't fit horizontally, so shift below.
+        if (temp.x + temp.w > view.x + view.w)
+        {
+            rows++;
+            temp = SDL_Rect {view.x + controlMarginLeft, controlMarginTop + rect.y + rect.h, controlWidth, controlHeight };
+        }
+
+        rect = temp;
+    }
+}
+
+/**
+ * Render all the items that a player can pick from the menu.
+ * @param items The list of items on the menu.
+ * @param selectedIndex The position in the list of the currently selected item.
+ */
+void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port)
+{
+    SDL_Rect view;
+    if (port == nullptr)
+        view = viewPort();
+    else
+        view = *port;
+
+    SDL_Rect rect = SDL_Rect {view.x + controlMarginLeft, view.y + controlMarginTop, controlWidth, controlHeight};
+    SDL_Rect temp;
+
+    int rows = 1;
+    int i = 0;
+    for(; i < int(items->size()); i++)
+    {
+        if (i == selectedIndex)
+            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textColour, &textColour);
+        else
+            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &borderColour, &borderColour);
+        temp = SDL_Rect {rect.x, rect.y + controlHeight + controlMarginTop, controlWidth, controlHeight};
+
+        // Can't fit vertically, so shift to the right.
         if (temp.y + temp.h > view.h + view.y)
         {
             rows++;
-            temp = SDL_Rect {marginLeft + rect.x + rect.w, view.y + marginTop, width, height };
+            temp = SDL_Rect {controlMarginLeft + rect.x + rect.w, view.y + controlMarginTop, controlWidth, controlHeight };
         }
 
         rect = temp;
@@ -122,8 +156,7 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
  */
 SDL_Texture* ViewManager::formatFontTexture(std::string text, const SDL_Colour* colour)
 {
-    TTF_Font* font = _assets->get("res/font.ttf", 30);
-    return SDL_CreateTextureFromSurface(_renderer, TTF_RenderText_Solid(font, text.c_str(), *colour));
+    return _assets->get("res/font.ttf", text.c_str(), 30, *colour);
 }
 
 

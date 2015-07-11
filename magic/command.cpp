@@ -9,7 +9,14 @@ using namespace Magic;
  */
 int Command::spellCaster(Command* _this, Mob* caster, BattleField* field)
 {
-    return _this->_spell.cast(caster, field);                         sdfsfsfdsf
+    return _this->_spell.cast(caster, field);
+}
+
+const std::vector<Word*> Command::components(void) const
+{
+    if (_hasSpell)
+        return _spell.components();
+    return std::vector<Word*>(0);
 }
 
 
@@ -18,6 +25,7 @@ int Command::spellCaster(Command* _this, Mob* caster, BattleField* field)
  */
 Command::Command(std::string name, Spell spell) : MenuItem(name)
 {
+    _hasSpell = true;
     _spell = spell;
     _effect = spellCaster;
 }

@@ -17,7 +17,7 @@ class Adjective : public Word {
         Adjective(){};
         Adjective(Selecter, std::string, Modifier, Modifier, Modifier);
         MapObject* selectTarget(Mob*, BattleField*, std::vector<MapObject*>);
-        //WordType type(void) const;
+        WordType type(void) const;
 
     private:
         Selecter _selecter;

@@ -27,12 +27,13 @@ class Command : public MenuItem
         Command(std::string, Effect);
         Command(std::string, Spell);
 
-        //std::vector
+        const std::vector<Word*> components(void) const;
         int execute(Mob*, BattleField*);
 
     private:
         Effect _effect;
         Spell _spell;
+        bool _hasSpell = false;
         static int spellCaster(Command* _this, Mob* caster, BattleField*);
 };
 }

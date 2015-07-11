@@ -18,7 +18,7 @@ namespace Magic
             Noun(){};
             Noun(MultiTargeter, std::string, Modifier, Modifier, Modifier);
             std::vector<MapObject*> acquireCandidates(Mob*, BattleField*);
-            //WordType type(void) const;
+            WordType type(void) const;
 
         private:
             MultiTargeter _targeter;

@@ -9,6 +9,8 @@
 #include "adverb.h"
 #include "battleField.h"
 
+#include "../util/utils.h"
+
 class Mob;
 namespace Magic
 {
@@ -16,15 +18,16 @@ namespace Magic
     {
         public:
             Spell(){};
-            Spell(Nounish*, Nounish*, Verb, std::vector<Adverb> = std::vector<Adverb>(0));
+            Spell(Nounish*, Nounish*, Verb, std::vector<Adverb>* = nullptr);
 
             int cast(Mob*, BattleField*);
+            const std::vector<Word*> components(void) const;
 
         private:
             Nounish* _target;
             Nounish* _source;
             Verb _action;
-            std::vector<Word> _adjectives;
+            std::vector<Adverb> _adverbs;
     };
 }
 #endif

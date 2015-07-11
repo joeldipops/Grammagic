@@ -11,11 +11,11 @@ Verb::Verb(Action action_, std::string n, Modifier e, Modifier c, Modifier d, fl
     _isSameMultiplier = isSameMultiplier_;
 }
 
-/*
+
 WordType Verb::type(void) const
 {
-    return WordType::Verb;
-}*/
+    return WordType::AVerb;
+}
 
 float Verb::enemyCostMultiplier(void) const
 {

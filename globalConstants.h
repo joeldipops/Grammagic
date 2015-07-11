@@ -12,17 +12,6 @@ enum MobType
     // Some other NPC
     Hostile
 };
-/*
-namespace Magic
-{
-    enum WordType
-    {
-        Verb,
-        Adjective,
-        Noun,
-        Adverb
-    };
-}*/
 
 namespace Title
 {
@@ -63,6 +52,19 @@ namespace Play
         Exit
     };
 }
+
+namespace Magic
+{
+    enum WordType
+    {
+        AVerb,
+        AnAdjective,
+        ANoun,
+        AnAdverb,
+        ANounPhrase
+    };
+}
+
 
 const int WIDTH = 1200;
 const int HEIGHT = 800;

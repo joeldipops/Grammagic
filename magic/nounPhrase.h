@@ -14,9 +14,8 @@ namespace Magic
 
             // Override base
             MapObject* acquireTarget(Mob*, BattleField*);
-            //const virtual Modifier* effect(void) const;
-            //const virtual Modifier* cost(void) const;
-            //const virtual Modifier* duration(void) const;
+            WordType type(void) const;
+            const std::vector<Word*> components(void) const;
 
         private:
             Noun _targeter;

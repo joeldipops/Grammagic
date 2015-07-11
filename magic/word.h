@@ -16,7 +16,7 @@ namespace Magic
             const virtual Modifier* effect(void) const;
             const virtual Modifier* cost(void) const;
             const virtual Modifier* duration(void) const;
-            //virtual WordType type(void) const = 0;
+            virtual WordType type(void) const = 0;
 
         protected:
             Modifier effect(Modifier);

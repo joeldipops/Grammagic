@@ -7,6 +7,7 @@
 class Rune : public MenuItem
 {
     public:
+        Rune() {};
         Rune(Magic::Word*);
 
     private:

@@ -28,6 +28,8 @@
 		<Unit filename="globalConstants.h" />
 		<Unit filename="magic/adjective.cpp" />
 		<Unit filename="magic/adjective.h" />
+		<Unit filename="magic/adverb.cpp" />
+		<Unit filename="magic/adverb.h" />
 		<Unit filename="magic/battleCommands.cpp" />
 		<Unit filename="magic/battleCommands.h" />
 		<Unit filename="magic/battleField.cpp" />

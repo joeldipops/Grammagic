@@ -17,6 +17,9 @@ namespace Magic
             ProperNoun(){};
             ProperNoun(Targeter, std::string, Modifier, Modifier, Modifier);
 
+            WordType type(void) const;
+            const std::vector<Word*> components(void) const;
+
             MapObject* acquireTarget(Mob*, BattleField*);
         private:
             Targeter _target;

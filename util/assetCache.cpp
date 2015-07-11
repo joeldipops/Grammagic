@@ -45,6 +45,32 @@ SDL_Texture* AssetCache::get(std::string fileName)
 }
 
 /**
+ * Loads a textual component, either creating it new or pulling from the cache.
+ * @param filename The TTF font to generate the texture.
+ * @param text The text that will appear on the texture.
+ * @param the font pixel size to generate at.
+ * @return The text as an SDL_Texture
+ */
+SDL_Texture* AssetCache::get(std::string fileName, std::string text, int fontSize, SDL_Colour colour)
+{
+    TTF_Font* font = get(fileName, fontSize);
+    std::string key = fileName + ":" + text + ":" + std::to_string(fontSize) + std::to_string(colour.r) + std::to_string(colour.g) + std::to_string(colour.b);
+
+    if (_assets.count(key) > 0)
+        return _assets.at(key);
+
+    SDL_Surface* temp = TTF_RenderText_Solid(font, text.c_str(), colour);
+    SDL_Texture* result = SDL_CreateTextureFromSurface(_renderer, temp);
+    SDL_FreeSurface(temp);
+
+    _assets[key] = result;
+    return result;
+
+}
+
+
+
+/**
  * Loads a TTF font type asset either from file or from the cache.
  * @param fileName The name of path of the file on disc.
  * @param fontSize the pixel size of the font.

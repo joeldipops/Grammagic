@@ -7,11 +7,11 @@ Noun::Noun(MultiTargeter targeter, std::string n, Modifier e, Modifier c, Modifi
     _targeter = targeter;
 }
 
-/*
+
 WordType Noun::type(void) const
 {
-    return WordType::Noun;
-}*/
+    return WordType::ANoun;
+}
 
 
 std::vector<MapObject*> Noun::acquireCandidates(Mob* caster, BattleField* field)

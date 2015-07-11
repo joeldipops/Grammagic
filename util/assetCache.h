@@ -15,6 +15,7 @@ class AssetCache
         ~AssetCache(void);
         SDL_Texture* get(std::string);
         TTF_Font* get(std::string, int);
+        SDL_Texture* get(std::string, std::string, int, SDL_Colour);
 
         void discard(std::string);
         void emptyCache(void);

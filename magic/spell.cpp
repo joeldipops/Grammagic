@@ -1,11 +1,34 @@
 #include "spell.h"
 using namespace Magic;
 
-Spell::Spell(Nounish* source, Nounish* target, Verb action, std::vector<Adverb> adverbs)
+Spell::Spell(Nounish* source, Nounish* target, Verb action, std::vector<Adverb>* adverbs)
 {
     _source = source;
     _target = target;
     _action = action;
+    if (adverbs != nullptr)
+        _adverbs = *adverbs;
+    else
+        _adverbs = std::vector<Adverb>();
+}
+
+const std::vector<Word*> Spell::components(void) const
+{
+        std::vector<Word*> result = std::vector<Word*>(0);
+        result.reserve(5 + _adverbs.size());
+        std::vector<Word*> subList = _source->components();
+        result.insert(result.end(), subList.begin(), subList.end());
+
+        for (int i = 0; i < int(_adverbs.size()); i++)
+            result.push_back((Word*) &_adverbs.at(i));
+
+        result.push_back((Word*) &_action);
+
+        subList = _target->components();
+        result.insert(result.end(), subList.begin(), subList.end());
+
+        result.shrink_to_fit();
+        return result;
 }
 
 /**
@@ -37,10 +60,10 @@ int Spell::cast(Mob* caster, BattleField* battleField)
     totalDuration = _target->duration()->multiply(totalDuration);
     totalDuration = _source->duration()->multiply(totalDuration);
 
-    Word word;
-    for (int i = 0; i < int(_adjectives.size()); i++)
+    Adverb word;
+    for (int i = 0; i < int(_adverbs.size()); i++)
     {
-        word = _adjectives.at(i);
+        word = _adverbs.at(i);
 
         totalEffect = word.effect()->modify(totalEffect);
         totalCost = word.cost()->modify(totalCost);

@@ -8,11 +8,11 @@ Adjective::Adjective(Selecter selecter, std::string n, Modifier e, Modifier c, M
     _selecter = selecter;
 }
 
-/*
+
 WordType Adjective::type(void) const
 {
-    return WordType::Adjective;
-}*/
+    return WordType::AnAdjective;
+}
 
 MapObject* Adjective::selectTarget(Mob* caster, BattleField* field, std::vector<MapObject*> candidates)
 {

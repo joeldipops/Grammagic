@@ -4,6 +4,7 @@
 #include "../mapObject.h"
 #include "modifier.h"
 #include "word.h"
+#include "../globalConstants.h"
 
 namespace Magic
 {
@@ -15,7 +16,7 @@ namespace Magic
             Verb(){};
             Verb(Action, std::string, Modifier, Modifier, Modifier, float = 1, float = 1, float = 1);
             Action action(void);
-            //WordType type(void) const;
+            WordType type(void) const;
             float enemyCostMultiplier(void) const;
             float allyEffectMultiplier(void) const;
             float isSameMultiplier(void) const;

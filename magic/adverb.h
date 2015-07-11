@@ -11,7 +11,7 @@ namespace Magic
         public:
             Adverb() {};
             Adverb(std::string, Modifier, Modifier, Modifier);
-            //WordType type(void) const;
+            WordType type(void) const;
     };
 }
 
