@@ -12,6 +12,9 @@ Spell::Spell(Nounish* source, Nounish* target, Verb action, std::vector<Adverb>*
         _adverbs = std::vector<Adverb>();
 }
 
+/**
+ * Gets a list of each word in the spell.
+ */
 const std::vector<Word*> Spell::components(void) const
 {
         std::vector<Word*> result = std::vector<Word*>(0);
@@ -29,6 +32,24 @@ const std::vector<Word*> Spell::components(void) const
 
         result.shrink_to_fit();
         return result;
+}
+
+const Word* Spell::component(int index) const
+{
+    return components().at(index);
+}
+
+/**
+ * Replace one or more of the spell's components words.
+ */
+void Spell::edit(Nounish* source, Nounish* target, Verb* action)
+{
+    if (source != nullptr)
+        _source = source;
+    if (target != nullptr)
+        _target = target;
+    if (action != nullptr)
+        _action = *action;
 }
 
 /**

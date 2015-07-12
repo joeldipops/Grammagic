@@ -24,7 +24,7 @@
 	<stdint.h>
 	"mapObject.h"
 
-1436533175 /home/joel/Projects/Grammagic/util/utils.h
+1436681638 /home/joel/Projects/Grammagic/util/utils.h
 	<vector>
 	<algorithm>
 
@@ -352,7 +352,7 @@
 	"../menuItem.h"
 	"../combat/spell.h"
 
-1436533313 source:/home/joel/Projects/Grammagic/play/controlViewManager.cpp
+1436679814 source:/home/joel/Projects/Grammagic/play/controlViewManager.cpp
 	"viewManagers.h"
 
 1436533272 /home/joel/Projects/Grammagic/play/viewManagers.h
@@ -377,7 +377,7 @@
 1435994666 /home/joel/Projects/Grammagic/play/terrain.h
 	"../mapObject.h"
 
-1436666372 /home/joel/Projects/Grammagic/play/mob.h
+1436681823 /home/joel/Projects/Grammagic/play/mob.h
 	"../mapObject.h"
 	<vector>
 	"../util/utils.h"
@@ -396,11 +396,12 @@
 1436169502 source:/home/joel/Projects/Grammagic/play/miniMapViewManager.cpp
 	"viewManagers.h"
 
-1436523969 source:/home/joel/Projects/Grammagic/play/mob.cpp
+1436686194 source:/home/joel/Projects/Grammagic/play/mob.cpp
 	"mob.h"
 	"../magic/battleCommands.h"
 	"../magic/nounish.h"
 	"../magic/nounPhrase.h"
+	"../util/utils.h"
 
 1436354150 /home/joel/Projects/Grammagic/play/battleCommands.h
 	"mob.h"
@@ -464,7 +465,7 @@
 1436532760 /home/joel/Projects/Grammagic/title/titleViewManager.h
 	"../viewManager.h"
 
-1436532963 source:/home/joel/Projects/Grammagic/title/titleStateManager.cpp
+1436686491 source:/home/joel/Projects/Grammagic/title/titleStateManager.cpp
 	"titleStateManager.h"
 	"../res/strings.h"
 
@@ -617,7 +618,7 @@
 	"verb.h"
 	"../menuItem.h"
 
-1436594594 /home/joel/Projects/Grammagic/magic/spell.h
+1436687242 /home/joel/Projects/Grammagic/magic/spell.h
 	<vector>
 	"word.h"
 	"nounish.h"
@@ -701,7 +702,7 @@
 	"../play/mob.h"
 	"../play/gameMap.h"
 
-1436528426 source:/home/joel/Projects/Grammagic/magic/combatManager.cpp
+1436686466 source:/home/joel/Projects/Grammagic/magic/combatManager.cpp
 	"combatManager.h"
 	"../stateManager.cpp"
 
@@ -721,7 +722,7 @@
 1436589113 source:/home/joel/Projects/Grammagic/magic/properNoun.cpp
 	"properNoun.h"
 
-1436599700 source:/home/joel/Projects/Grammagic/magic/spell.cpp
+1436687604 source:/home/joel/Projects/Grammagic/magic/spell.cpp
 	"spell.h"
 
 1436586430 source:/home/joel/Projects/Grammagic/magic/verb.cpp
@@ -733,28 +734,28 @@
 1436667398 source:/home/joel/Projects/Grammagic/magic/battleCommands.cpp
 	"battleCommands.h"
 
-1436668103 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
+1436687003 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
 	"menuViewManager.h"
 	<iostream>
 	"magic/battleCommands.h"
 
-1436663260 /home/joel/Projects/Grammagic/menuViewManager.h
+1436685205 /home/joel/Projects/Grammagic/menuViewManager.h
 	"util/utils.h"
 	"viewManager.h"
 	"magic/battleCommands.h"
 	"rune.h"
 
-1436667772 /home/joel/Projects/Grammagic/menuManager.h
+1436686571 /home/joel/Projects/Grammagic/menuManager.h
 	"stateManager.h"
 	"play/mob.h"
 	"menuViewManager.h"
 	"globalConstants.h"
 	<SDL2/SDL.h>
 
-1436668218 source:/home/joel/Projects/Grammagic/menuManager.cpp
+1436686911 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
-1436661609 /home/joel/Projects/Grammagic/globalConstants.h
+1436685093 /home/joel/Projects/Grammagic/globalConstants.h
 	<SDL2/SDL.h>
 
 1436594101 /home/joel/Projects/Grammagic/rune.h

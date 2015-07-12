@@ -66,6 +66,7 @@ Core::CoreState TitleStateManager::start(void)
                             rerender = moveCursor(Core::InputPress::RIGHT);
                             break;
                         case SDLK_RETURN:
+                        case SDLK_RIGHTBRACKET:
                             rerender = processCommand();
                             break;
                     }

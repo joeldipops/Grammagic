@@ -21,7 +21,9 @@ namespace Magic
             Spell(Nounish*, Nounish*, Verb, std::vector<Adverb>* = nullptr);
 
             int cast(Mob*, BattleField*);
+            void edit(Nounish* = nullptr, Nounish* = nullptr, Verb* = nullptr);
             const std::vector<Word*> components(void) const;
+            const Word* component(int) const;
 
         private:
             Nounish* _target;

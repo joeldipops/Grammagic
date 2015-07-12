@@ -10,7 +10,7 @@ MenuViewManager::MenuViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
     _runesVp = SDL_Rect {v.x, v.y + _spellsVp.h, WIDTH, v.h - _spellsVp.h};
 }
 
-void MenuViewManager::render(Mob* pc, int spellIndex, int runeIndex)
+void MenuViewManager::render(Mob* pc, int spellIndex, int componentPosition, int runeIndex)
 {
     const int borderWidth = 5;
     const int cursorXOffset = borderWidth + controlMarginLeft;
@@ -27,21 +27,16 @@ void MenuViewManager::render(Mob* pc, int spellIndex, int runeIndex)
     // Render Spells
     SDL_Rect rect = SDL_Rect { marginLeft, 0, WIDTH, controlMarginTop + controlHeight };
 
-    std::vector<Command> spells = std::vector<Command>(0);
-    for(Command c : pc->commands())
+    for (int i = 0; i < int (pc->spells().size()); i++)
     {
-        if (c.components().size() > 0)
-            spells.push_back(c);
-    }
-
-    for (int i = 0; i < int (spells.size()); i++)
-    {
+        int position = -1;
         if (i == spellIndex)
         {
             SDL_Rect cursorRect = SDL_Rect {cursorXOffset, cursorYOffset + rect.y, 30, 30};
             SDL_RenderCopy(renderer(), cursor, 0, &cursorRect);
+            position = componentPosition;
         }
-        Command command = spells.at(i);
+        Command command = pc->spells().at(i);
         std::vector<Word*> words = command.components();
         std::vector<MenuItem*> pointers = std::vector<MenuItem*>(0);
         std::vector<Rune> runes = std::vector<Rune>(0);
@@ -53,21 +48,24 @@ void MenuViewManager::render(Mob* pc, int spellIndex, int runeIndex)
             pointers.push_back((MenuItem*)&runes.at(runes.size()-1));
         }
 
-        drawHorizontalControls(&pointers, -1, &rect);
+        drawHorizontalControls(&pointers, position, &rect);
         rect = SDL_Rect { rect.x, rect.y + rect.h, rect.w, rect.h};
     }
 
-    // Render Runes
-    std::vector<Rune> runes = std::vector<Rune>();
-    for (Word* word : Commands::allCommands)
+    if (runeIndex >= 0)
     {
-        Rune item = Rune(word);
-        runes.push_back(item);
-    }
+        // Render Runes
+        std::vector<Rune> runes = std::vector<Rune>();
+        for (Word* word : Commands::allCommands)
+        {
+            Rune item = Rune(word);
+            runes.push_back(item);
+        }
 
-    std::vector<Rune*> pointers = toPointers(runes);
-    std::vector<MenuItem*> items = std::vector<MenuItem*> {pointers.begin(), pointers.end()};
-    drawControls(&items, runeIndex, &_runesVp);
+        std::vector<Rune*> pointers = toPointers(runes);
+        std::vector<MenuItem*> items = std::vector<MenuItem*> {pointers.begin(), pointers.end()};
+        drawControls(&items, runeIndex, &_runesVp);
+    }
 
     SDL_RenderPresent(renderer());
     return;

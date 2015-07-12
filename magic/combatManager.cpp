@@ -132,7 +132,7 @@ bool CombatManager::processPcTurn(Mob* pc, BattleField* field, std::vector<SDL_E
             case SDLK_d:
                 hasUpdate |= moveCursor(pc, Core::InputPress::RIGHT);
                 break;
-            case SDLK_SPACE:
+            case SDLK_RIGHTBRACKET:
                 hasUpdate |= processCommand(pc, field);
                 break;
             case SDLK_RETURN:
@@ -147,7 +147,7 @@ bool CombatManager::processPcTurn(Mob* pc, BattleField* field, std::vector<SDL_E
 bool CombatManager::processCommand(Mob* mob, BattleField* field)
 {
     // Carry out the command
-    int waitMs = mob->selectedCommand().execute(mob, field);
+    int waitMs = mob->selectedCommand()->execute(mob, field);
 
     // Apply the duration - mob cannot act again until command completes.
     mob->block(SDL_GetTicks() + waitMs);

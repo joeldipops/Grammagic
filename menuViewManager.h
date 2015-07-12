@@ -11,7 +11,7 @@ class MenuViewManager : public ViewManager
     public:
         MenuViewManager(){};
         MenuViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-        void render(Mob* pc, int, int);
+        void render(Mob* pc, int, int, int);
 
     private:
         SDL_Rect _spellsVp;

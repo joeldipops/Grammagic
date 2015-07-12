@@ -2,6 +2,8 @@
 #include "../magic/battleCommands.h"
 #include "../magic/nounish.h"
 #include "../magic/nounPhrase.h"
+#include "../util/utils.h"
+
 using namespace Magic;
 
 Mob::Mob() {}
@@ -17,16 +19,18 @@ Mob::Mob(MobType type)
     else
         isDense(false);
 
-    _commands = std::vector<Command>(0);
+    _spellCommands = std::vector<Command>();
+    _otherCommands = std::vector<Command>();
+
     if (type == MobType::PC)
     {
-        _commands.push_back(Command("Flee", Commands::FLEE));
+        _otherCommands.push_back(Command("Flee", Commands::FLEE));
         Nounish* weakest = new NounPhrase(Commands::ENEMY, Commands::WEAKEST);
-        _commands.push_back(Command("self-DMG-weak", Spell(&Commands::SELF, weakest, Commands::WEAKEN)));
+        _spellCommands.push_back(Command("self-DMG-weak", Spell(&Commands::SELF, weakest, Commands::WEAKEN)));
         Nounish* strongest = new NounPhrase(Commands::ENEMY, Commands::STRONGEST);
-        _commands.push_back(Command("self-DMG-strong", Spell(&Commands::SELF, strongest, Commands::WEAKEN)));
-        _commands.push_back(Command("weak-HEAL-self", Spell(weakest, &Commands::SELF, Commands::HEAL)));
-        _commands.push_back(Command("strong-HEAL-self", Spell(strongest, &Commands::SELF, Commands::HEAL)));
+        _spellCommands.push_back(Command("self-DMG-strong", Spell(&Commands::SELF, strongest, Commands::WEAKEN)));
+        _spellCommands.push_back(Command("weak-HEAL-self", Spell(weakest, &Commands::SELF, Commands::HEAL)));
+        _spellCommands.push_back(Command("strong-HEAL-self", Spell(strongest, &Commands::SELF, Commands::HEAL)));
     }
 
     _maxStamina = 100;
@@ -45,8 +49,6 @@ Mob::Mob(MobType type)
             imageFileName(RESOURCE_LOCATION + "blank.png");
             break;
     }
-
-    _commands.shrink_to_fit();
 }
 
 Mob::~Mob() {}
@@ -220,9 +222,25 @@ int Mob::rangeOfSight(void) const
     return _rangeOfSight;
 }
 
-std::vector<Command> Mob::commands(void) const
+std::vector<Command*> Mob::commands(void) const
 {
-    return _commands;
+    std::vector<Command*> result = std::vector<Command*>();
+
+    for (int i = 0; i < int(_otherCommands.size()); i++)
+    {
+        result.push_back(const_cast<Command*>(&_otherCommands.at(i)));
+    }
+
+    for (int i = 0; i < int(_spellCommands.size()); i++)
+    {
+        result.push_back(const_cast<Command*>(&_spellCommands.at(i)));
+    }
+    return result;
+}
+
+std::vector<Command> Mob::spells(void) const
+{
+    return _spellCommands;
 }
 
 
@@ -230,9 +248,9 @@ std::vector<Command> Mob::commands(void) const
  * Gets the last selected command.
  * @return A command.
  */
-Command Mob::selectedCommand(void) const
+Command* Mob::selectedCommand(void) const
 {
-    return _commands[_selectedCommandIndex];
+    return commands()[_selectedCommandIndex];
 }
 
 /**
@@ -250,7 +268,7 @@ int Mob::selectedCommandIndex(void) const
  */
 int Mob::selectedCommandIndex(int index)
 {
-    if (index < 0 || index >= int(_commands.size()))
+    if (index < 0 || index >= int(commands().size()))
         return -1;
 
     _selectedCommandIndex = index;

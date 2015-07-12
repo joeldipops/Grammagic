@@ -30,9 +30,10 @@ class Mob : public MapObject
 
         int selectedCommandIndex(int);
         int selectedCommandIndex(void) const;
-        Command selectedCommand(void) const;
+        Command* selectedCommand(void) const;
         const std::string portraitFileName(void) const;
-        std::vector<Command> commands(void) const;
+        std::vector<Command*> commands(void) const;
+        std::vector<Command> spells(void) const;
         int unblockTime(void) const;
         bool isBlocked(void) const;
 
@@ -53,6 +54,10 @@ class Mob : public MapObject
         int _unblockTime = 0;
         bool _isBlocked = false;
 
-        std::vector<Command> _commands;
+        std::vector<Command> _spellCommands;
+        std::vector<Command> _otherCommands;
+
+
+        static std::vector<Command*> toPointers(const std::vector<Command>& source);
 };
 #endif

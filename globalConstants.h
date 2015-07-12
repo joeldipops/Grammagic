@@ -56,6 +56,7 @@ namespace Play
     enum MenuState
     {
         SelectSpell,
+        SelectComponent,
         SelectRune,
     };
 }

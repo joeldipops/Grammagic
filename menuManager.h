@@ -20,9 +20,13 @@ namespace Play
             bool moveCursor(Mob* pc, Core::InputPress input);
             bool processRuneCommand(Mob* pc);
             bool processSpellCommand(Mob* pc);
+            bool processComponentCommand(Mob* pc);
+            bool processCommand(Mob* pc);
+            bool processCancel(void);
             MenuViewManager _viewManager;
             int _selectedSpellIndex;
             int _selectedRuneIndex;
+            int _selectedComponentIndex;
     };
 }
 

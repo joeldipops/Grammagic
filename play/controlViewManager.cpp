@@ -11,9 +11,8 @@ void ControlViewManager::render(const Mob* pc, Play::PlayState state)
         case Play::PlayState::Movement:
             writeHeading(); break;
         case Play::PlayState::Combat: {
-            std::vector<Command> commands = pc->commands();
-            std::vector<Command*> pointers = toPointers(commands);
-            std::vector<MenuItem*> menuItems = std::vector<MenuItem*> {pointers.begin(), pointers.end()};
+            std::vector<Command*> commands = pc->commands();
+            std::vector<MenuItem*> menuItems = std::vector<MenuItem*> {commands.begin(), commands.end()};
 
             if (pc->isBlocked())
                 drawControls(&menuItems, -1);
