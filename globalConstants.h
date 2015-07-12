@@ -51,6 +51,13 @@ namespace Play
         GameOver,
         Exit
     };
+
+
+    enum MenuState
+    {
+        SelectSpell,
+        SelectRune,
+    };
 }
 
 namespace Magic

@@ -1,4 +1,10 @@
 #include "stateManager.h"
+
+using namespace Core;
+
+/**
+ * Constructor
+ */
 template <typename S, typename P>
 StateManager<S, P>::StateManager(SDL_Renderer* renderer, AssetCache* assets)
 {
@@ -6,12 +12,14 @@ StateManager<S, P>::StateManager(SDL_Renderer* renderer, AssetCache* assets)
     _assets = assets;
 }
 
+/**
+ * Gets and sets the current internal state.
+ */
 template <typename S, typename P>
 S StateManager<S, P>::state(void) const
 {
     return _state;
 }
-
 template <typename S, typename P>
 S StateManager<S, P>::state(S state_)
 {
@@ -19,12 +27,14 @@ S StateManager<S, P>::state(S state_)
     return _state;
 }
 
+/**
+ * Gets and sets the current parent state
+ */
 template <typename S, typename P>
 P StateManager<S, P>::result(void) const
 {
     return _result;
 }
-
 template <typename S, typename P>
 P StateManager<S, P>::result(P result_)
 {
@@ -32,18 +42,23 @@ P StateManager<S, P>::result(P result_)
     return _result;
 }
 
+/**
+ * Gets the SDL renderer.
+ */
 template <typename S, typename P>
 SDL_Renderer* StateManager<S, P>::renderer(void)
 {
     return _renderer;
 }
 
+/**
+ * Gets the asset cache.
+ */
 template <typename S, typename P>
 AssetCache* StateManager<S, P>::assets(void)
 {
     return _assets;
 }
-
 
 
 /**
@@ -82,3 +97,4 @@ const int StateManager<S, P>::moveCursor(const Core::InputPress input, const int
 
 template class StateManager<Play::PlayState, Core::CoreState>;
 template class StateManager<Title::TitleState, Core::CoreState>;
+template class StateManager<Play::MenuState, Play::PlayState>;

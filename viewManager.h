@@ -26,7 +26,7 @@ class ViewManager
         virtual ~ViewManager(void);
         virtual void render(void);
 
-        int menuItemsPerColumn(void) const;
+        virtual int menuItemsPerColumn(void) const;
 
     protected:
         void fillViewport(const SDL_Colour*);
@@ -40,8 +40,6 @@ class ViewManager
         AssetCache* assets(void);
         TTF_Font* font(void);
         SDL_Texture* formatFontTexture(const std::string, const SDL_Colour*);
-
-
 
     private:
         SDL_Renderer* _renderer;

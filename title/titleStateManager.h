@@ -6,7 +6,7 @@
 #include "../stateManager.h"
 #include "../util/utils.h"
 
-class TitleStateManager final : StateManager<Title::TitleState, Core::CoreState>
+class TitleStateManager final : Core::StateManager<Title::TitleState, Core::CoreState>
 {
     public:
         TitleStateManager(SDL_Renderer*, AssetCache*);

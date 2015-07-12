@@ -20,6 +20,8 @@ const std::string Strings::Quit = "Quit";
 
 using namespace Magic;
 using namespace Play;
+namespace Core
+{
     class Grammar
     {
         public:
@@ -45,28 +47,28 @@ using namespace Play;
                 TitleStateManager title = TitleStateManager(renderer, &assets);
                 PlayStateManager play = PlayStateManager(renderer, &assets);
 
-                Core::CoreState state = Core::CoreState::Title;
-                while(state != Core::CoreState::Exit)
+                CoreState state = CoreState::Title;
+                while(state != CoreState::Exit)
                 {
                     SDL_Event e;
                     while(SDL_PollEvent(&e) != 0)
                     {
                         if (e.type == SDL_QUIT)
                         {
-                            state = Core::CoreState::Exit;
+                            state = CoreState::Exit;
                         }
                     }
                     switch(state)
                     {
-                        case Core::CoreState::Title: {
+                        case CoreState::Title: {
                             state = title.start();
                             break;
                         }
-                        case Core::CoreState::Play: {
+                        case CoreState::Play: {
                             state = play.start();
                             break;
                         }
-                        case Core::CoreState::Exit:
+                        case CoreState::Exit:
                         default:
                             break;
                     }
@@ -80,6 +82,7 @@ using namespace Play;
                 return;
             }
     };
+}
 
 int main ()
 {
@@ -92,7 +95,7 @@ int main ()
     Commands::allCommands.push_back(&Commands::ENEMY);
     Commands::allCommands.push_back(&Commands::STRONGEST);
 
-    Grammar program;
+    Core::Grammar program;
     program.start();
 
     return 0;

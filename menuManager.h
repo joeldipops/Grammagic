@@ -7,20 +7,24 @@
 #include "globalConstants.h"
 #include <SDL2/SDL.h>
 
-class MenuManager : public StateManager<Play::PlayState, Play::PlayState>
+namespace Play
 {
-    public:
-        MenuManager(SDL_Renderer*, AssetCache*);
-        Play::PlayState start(Mob* pc);
-        Play::PlayState start(void);
+    class MenuManager : public Core::StateManager<Play::MenuState, Play::PlayState>
+    {
+        public:
+            MenuManager(SDL_Renderer*, AssetCache*);
+            Play::PlayState start(Mob* pc);
+            Play::PlayState start(void);
 
-    protected:
-        virtual Play::PlayState result(void) const;
-
-    private:
-        bool moveCursor(Mob* mob, Core::InputPress input);
-        MenuViewManager _viewManager;
-
-};
+        private:
+            bool moveCursor(Mob* pc, Core::InputPress input);
+            bool processRuneCommand(Mob* pc);
+            bool processSpellCommand(Mob* pc);
+            MenuViewManager _viewManager;
+            int _selectedSpellIndex;
+            int _selectedRuneIndex;
+    };
+}
 
 #endif
+

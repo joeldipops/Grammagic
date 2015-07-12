@@ -8,7 +8,7 @@ Noun Commands::ENEMY = Noun(enemies, std::string("ENEMY"), Modifier(1.0), Modifi
 
 Adjective Commands::WEAKEST = Adjective(weakest, std::string("WEAKEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 
-Adjective Commands::STRONGEST = Adjective(strongest, std::string("WEAKEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Adjective Commands::STRONGEST = Adjective(strongest, std::string("STRONGEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 
 
 ProperNoun Commands::SELF = ProperNoun(self, std::string("SELF"), Modifier(.8), Modifier(1.0), Modifier(1.0));

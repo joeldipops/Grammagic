@@ -7,38 +7,40 @@
 #include "battleField.h"
 #include "../screenViewContainer.h"
 #include "../play/enemy.h"
-namespace Magic {
-class CombatManager : public StateManager<Play::PlayState, Play::PlayState>
+namespace Magic
 {
-    public:
-        CombatManager(SDL_Renderer*, AssetCache*, ScreenViewContainer);
-        ~CombatManager(void);
+    class CombatManager : public Core::StateManager<Play::PlayState, Play::PlayState>
+    {
+        public:
+            CombatManager(SDL_Renderer*, AssetCache*, ScreenViewContainer);
+            ~CombatManager(void);
 
-        Play::PlayState start(GameMap*);
-        Play::PlayState start(void);
+            Play::PlayState start(GameMap*);
+            Play::PlayState start(void);
 
-    protected:
-        virtual Play::PlayState result(void) const;
-        virtual Play::PlayState state(Play::PlayState);
+        protected:
+            virtual Play::PlayState result(void) const;
+            virtual Play::PlayState state(Play::PlayState);
 
-    private:
+        private:
 
-        bool processCommand(Mob*, BattleField*);
-        bool processPcTurn(Mob*, BattleField*, std::vector<SDL_Event>*);
-        bool processHostileTurn(Enemy*, BattleField*);
-        void render(void);
-        bool moveCursor(Mob* mob, Core::InputPress input);
+            bool processCommand(Mob*, BattleField*);
+            bool processPcTurn(Mob*, BattleField*, std::vector<SDL_Event>*);
+            bool processHostileTurn(Enemy*, BattleField*);
+            void render(void);
+            bool moveCursor(Mob* mob, Core::InputPress input);
 
-        // views
-        ControlViewManager* _controlView;
-        StatsViewManager* _statsView;
-        MapViewManager* _mapView;
-        MiniMapViewManager* _miniMapView;
+            // views
+            ControlViewManager* _controlView;
+            StatsViewManager* _statsView;
+            MapViewManager* _mapView;
+            MiniMapViewManager* _miniMapView;
 
-        BattleField* _field = nullptr;
-        GameMap* _map = nullptr;
-};
+            BattleField* _field = nullptr;
+            GameMap* _map = nullptr;
+    };
 }
+
 #endif
 
 

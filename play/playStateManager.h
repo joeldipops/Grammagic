@@ -13,8 +13,9 @@
 #include <fstream>
 #include "../magic/combatManager.h"
 #include <iostream>
-namespace Play {
-    class PlayStateManager : public StateManager<PlayState, Core::CoreState>
+namespace Play
+{
+    class PlayStateManager : public Core::StateManager<PlayState, Core::CoreState>
     {
         public:
             PlayStateManager(SDL_Renderer*, AssetCache*);
