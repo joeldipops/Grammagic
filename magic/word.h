@@ -12,6 +12,7 @@ namespace Magic
         public:
             Word(){};
             Word(std::string, Modifier, Modifier, Modifier);
+            virtual ~Word();
             const std::string name(void) const;
             const virtual Modifier* effect(void) const;
             const virtual Modifier* cost(void) const;

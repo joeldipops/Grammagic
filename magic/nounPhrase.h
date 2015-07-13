@@ -10,7 +10,7 @@ namespace Magic
     {
         public:
             NounPhrase(){};
-            NounPhrase(Noun, Adjective);
+            NounPhrase(Noun*, Adjective*);
 
             // Override base
             MapObject* acquireTarget(Mob*, BattleField*);
@@ -18,8 +18,8 @@ namespace Magic
             const std::vector<Word*> components(void) const;
 
         private:
-            Noun _targeter;
-            Adjective _specifier;
+            Noun* _targeter;
+            Adjective* _specifier;
     };
 }
 #endif

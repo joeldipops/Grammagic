@@ -396,12 +396,13 @@
 1436169502 source:/home/joel/Projects/Grammagic/play/miniMapViewManager.cpp
 	"viewManagers.h"
 
-1436686194 source:/home/joel/Projects/Grammagic/play/mob.cpp
+1436790171 source:/home/joel/Projects/Grammagic/play/mob.cpp
 	"mob.h"
 	"../magic/battleCommands.h"
 	"../magic/nounish.h"
 	"../magic/nounPhrase.h"
 	"../util/utils.h"
+	<iostream>
 
 1436354150 /home/joel/Projects/Grammagic/play/battleCommands.h
 	"mob.h"
@@ -618,16 +619,17 @@
 	"verb.h"
 	"../menuItem.h"
 
-1436687242 /home/joel/Projects/Grammagic/magic/spell.h
+1436789995 /home/joel/Projects/Grammagic/magic/spell.h
 	<vector>
 	"word.h"
 	"nounish.h"
 	"verb.h"
 	"adverb.h"
+	"nounPhrase.h"
 	"battleField.h"
 	"../util/utils.h"
 
-1436586212 /home/joel/Projects/Grammagic/magic/word.h
+1436789711 /home/joel/Projects/Grammagic/magic/word.h
 	<string>
 	"../globalConstants.h"
 	"modifier.h"
@@ -681,7 +683,7 @@
 	"../mapObject.h"
 	"battleField.h"
 
-1436588908 /home/joel/Projects/Grammagic/magic/nounPhrase.h
+1436788362 /home/joel/Projects/Grammagic/magic/nounPhrase.h
 	"nounish.h"
 	"adjective.h"
 	"noun.h"
@@ -716,19 +718,19 @@
 1436586430 source:/home/joel/Projects/Grammagic/magic/noun.cpp
 	"noun.h"
 
-1436598381 source:/home/joel/Projects/Grammagic/magic/nounPhrase.cpp
+1436788320 source:/home/joel/Projects/Grammagic/magic/nounPhrase.cpp
 	"nounPhrase.h"
 
-1436589113 source:/home/joel/Projects/Grammagic/magic/properNoun.cpp
+1436784734 source:/home/joel/Projects/Grammagic/magic/properNoun.cpp
 	"properNoun.h"
 
-1436687604 source:/home/joel/Projects/Grammagic/magic/spell.cpp
+1436790286 source:/home/joel/Projects/Grammagic/magic/spell.cpp
 	"spell.h"
 
 1436586430 source:/home/joel/Projects/Grammagic/magic/verb.cpp
 	"verb.h"
 
-1436524385 source:/home/joel/Projects/Grammagic/magic/word.cpp
+1436789664 source:/home/joel/Projects/Grammagic/magic/word.cpp
 	"word.h"
 
 1436667398 source:/home/joel/Projects/Grammagic/magic/battleCommands.cpp
@@ -752,7 +754,7 @@
 	"globalConstants.h"
 	<SDL2/SDL.h>
 
-1436686911 source:/home/joel/Projects/Grammagic/menuManager.cpp
+1436689557 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
 1436685093 /home/joel/Projects/Grammagic/globalConstants.h

@@ -10,6 +10,8 @@ Word::Word(std::string name, Modifier effect, Modifier cost, Modifier duration)
     _duration = duration;
 }
 
+Word::~Word(void) {}
+
 const std::string Word::name(void) const
 {
     return _name;

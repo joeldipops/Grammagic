@@ -7,6 +7,7 @@
 #include "nounish.h"
 #include "verb.h"
 #include "adverb.h"
+#include "nounPhrase.h"
 #include "battleField.h"
 
 #include "../util/utils.h"
@@ -18,18 +19,23 @@ namespace Magic
     {
         public:
             Spell(){};
-            Spell(Nounish*, Nounish*, Verb, std::vector<Adverb>* = nullptr);
-
+            Spell(std::vector<Word*>);
+            ~Spell(void);
+            bool edit(std::vector<Word*>);
             int cast(Mob*, BattleField*);
-            void edit(Nounish* = nullptr, Nounish* = nullptr, Verb* = nullptr);
             const std::vector<Word*> components(void) const;
             const Word* component(int) const;
 
         private:
             Nounish* _target;
             Nounish* _source;
-            Verb _action;
-            std::vector<Adverb> _adverbs;
+            Verb* _action;
+            std::vector<Adverb*> _adverbs;
+            bool verify(std::vector<Word*>) const;
+            bool isValid(void) const;
+            //void takeOutBin(void);
+            std::vector<NounPhrase*> _rubbishBin;
+
     };
 }
 #endif

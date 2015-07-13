@@ -4,6 +4,8 @@
 #include "../magic/nounPhrase.h"
 #include "../util/utils.h"
 
+#include <iostream>
+
 using namespace Magic;
 
 Mob::Mob() {}
@@ -25,12 +27,8 @@ Mob::Mob(MobType type)
     if (type == MobType::PC)
     {
         _otherCommands.push_back(Command("Flee", Commands::FLEE));
-        Nounish* weakest = new NounPhrase(Commands::ENEMY, Commands::WEAKEST);
-        _spellCommands.push_back(Command("self-DMG-weak", Spell(&Commands::SELF, weakest, Commands::WEAKEN)));
-        Nounish* strongest = new NounPhrase(Commands::ENEMY, Commands::STRONGEST);
-        _spellCommands.push_back(Command("self-DMG-strong", Spell(&Commands::SELF, strongest, Commands::WEAKEN)));
-        _spellCommands.push_back(Command("weak-HEAL-self", Spell(weakest, &Commands::SELF, Commands::HEAL)));
-        _spellCommands.push_back(Command("strong-HEAL-self", Spell(strongest, &Commands::SELF, Commands::HEAL)));
+        _spellCommands.push_back(Command("self-DMG-weak", Spell(std::vector<Word*> {&Commands::SELF, &Commands::WEAKEN, &Commands::STRONGEST, &Commands::ENEMY})));
+        _spellCommands.push_back(Command("strong-HEAL-self", Spell(std::vector<Word*> { &Commands::STRONGEST, &Commands::ENEMY, &Commands::HEAL, &Commands::SELF})));
     }
 
     _maxStamina = 100;

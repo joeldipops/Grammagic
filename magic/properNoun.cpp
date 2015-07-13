@@ -22,7 +22,7 @@ MapObject* ProperNoun::acquireTarget(Mob* caster, BattleField* battleField)
 
 WordType ProperNoun::type(void) const
 {
-    return WordType::ANoun;
+    return WordType::ANounPhrase;
 }
 
 const std::vector<Word*> ProperNoun::components(void) const
