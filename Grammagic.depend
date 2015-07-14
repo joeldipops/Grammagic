@@ -613,13 +613,13 @@
 1436353413 source:/home/joel/Projects/Grammagic/combat/properNoun.cpp
 	"properNoun.h"
 
-1436871057 /home/joel/Projects/Grammagic/magic/command.h
+1436874964 /home/joel/Projects/Grammagic/magic/command.h
 	"spell.h"
 	"properNoun.h"
 	"verb.h"
 	"../menuItem.h"
 
-1436871012 /home/joel/Projects/Grammagic/magic/spell.h
+1436876135 /home/joel/Projects/Grammagic/magic/spell.h
 	<vector>
 	"word.h"
 	"nounish.h"
@@ -708,7 +708,7 @@
 	"combatManager.h"
 	"../stateManager.cpp"
 
-1436871107 source:/home/joel/Projects/Grammagic/magic/command.cpp
+1436874952 source:/home/joel/Projects/Grammagic/magic/command.cpp
 	"command.h"
 
 1436524357 source:/home/joel/Projects/Grammagic/magic/modifier.cpp
@@ -724,7 +724,7 @@
 1436784734 source:/home/joel/Projects/Grammagic/magic/properNoun.cpp
 	"properNoun.h"
 
-1436869516 source:/home/joel/Projects/Grammagic/magic/spell.cpp
+1436876122 source:/home/joel/Projects/Grammagic/magic/spell.cpp
 	"spell.h"
 
 1436586430 source:/home/joel/Projects/Grammagic/magic/verb.cpp
@@ -736,7 +736,7 @@
 1436667398 source:/home/joel/Projects/Grammagic/magic/battleCommands.cpp
 	"battleCommands.h"
 
-1436871593 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
+1436876020 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
 	"menuViewManager.h"
 	<iostream>
 	"magic/battleCommands.h"
@@ -754,7 +754,7 @@
 	"globalConstants.h"
 	<SDL2/SDL.h>
 
-1436870406 source:/home/joel/Projects/Grammagic/menuManager.cpp
+1436875736 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
 1436685093 /home/joel/Projects/Grammagic/globalConstants.h

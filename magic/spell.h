@@ -18,23 +18,27 @@ namespace Magic
     class Spell
     {
         public:
+            static bool verify(std::vector<Word*>);
+
             Spell(){};
             Spell(std::vector<Word*>);
             ~Spell(void);
             bool edit(std::vector<Word*>);
+            bool resolve(void);
             int cast(Mob*, BattleField*);
             const std::vector<Word*> components(void) const;
             const Word* component(int) const;
-            bool isValid(void) const;
+            Word* component(int, Word*);
+            bool isValid(bool = false) const;
 
         private:
             Nounish* _target;
             Nounish* _source;
             Verb* _action;
             std::vector<Adverb*> _adverbs;
-            bool verify(std::vector<Word*>) const;
             //void takeOutBin(void);
             std::vector<NounPhrase*> _rubbishBin;
+            std::vector<Word*> _components;
 
     };
 }

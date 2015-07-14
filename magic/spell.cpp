@@ -1,125 +1,12 @@
 #include "spell.h"
 using namespace Magic;
 
-Spell::Spell(std::vector<Word*> components)
-{
-
-    _source = nullptr;
-    _target = nullptr;
-    _action = nullptr;
-    _adverbs = std::vector<Adverb*>();
-    if(!edit(components))
-    {
-        _source = nullptr;
-        _target = nullptr;
-        _action = nullptr;
-    }
-}
-
-Spell::~Spell(void)
-{
-}
-
 /**
- * Repopulates the spell from a list of words.
- * @param components The list of words.
- * @return true if the components were valid.
- */
-bool Spell::edit(std::vector<Word*> components)
-{
-    Nounish* target = nullptr;
-    Nounish* source = nullptr;
-    Verb* action = nullptr;
-    std::vector<Adverb*> adverbs = std::vector<Adverb*>(0);
-    std::vector<NounPhrase*> toBin = std::vector<NounPhrase*>(0);
-    for (int i = 0 ; i < int(components.size()); i++)
-    {
-        switch(components.at(i)->type())
-        {
-            // Should never encounter a noun without an adjective.
-            case WordType::ANoun:
-                return false;
-            case WordType::ANounPhrase:
-                // Can't have more than one of each (yet)
-                if (target != nullptr && source != nullptr)
-                    return false;
-                if (source != nullptr)
-                    target = (Nounish*) components.at(i);
-                else
-                    source = (Nounish*) components.at(i);
-                break;
-            case WordType::AnAdjective: {
-                if (target != nullptr && source != nullptr)
-                    return false;
-                // An adjective must be followed by a noun
-                if (components.at(i+1)->type() != WordType::ANoun)
-                    return false;
-                NounPhrase* temp = new NounPhrase((Noun*)components.at(i+1), (Adjective*)components.at(i));
-                //toBin.push_back(temp);
-                if (source != nullptr)
-                    target = temp;
-                else
-                    source = temp;
-                i++;
-                break;
-            }
-            case WordType::AVerb:
-                // Can't have more than one verb (yet)
-                if (action != nullptr)
-                    return false;
-                action = (Verb*) components.at(i);
-                break;
-            case WordType::AnAdverb:
-                adverbs.push_back((Adverb*)components.at(i));
-                break;
-            default:
-                return false;
-        }
-    }
-
-    if(target == nullptr || source == nullptr || action == nullptr)
-        return false;
-
-    //takeOutBin();
-    // keep track of the "new" references so we can clean them up later...
-    //_rubbishBin = toBin;
-    _target = target;
-    _source = source;
-    _action = action;
-    _adverbs.insert(_adverbs.end(), adverbs.begin(), adverbs.end());
-    return true;
-
-}
-
-/**
- * Gets a list of each word in the spell.
- */
-const std::vector<Word*> Spell::components(void) const
-{
-        std::vector<Word*> result = std::vector<Word*>(0);
-        std::vector<Word*> subList = _source->components();
-        result.insert(result.end(), subList.begin(), subList.end());
-
-        for (int i = 0; i < int(_adverbs.size()); i++)
-            result.push_back((Word*) &_adverbs.at(i));
-
-        result.push_back((Word*) _action);
-
-        subList = _target->components();
-        result.insert(result.end(), subList.begin(), subList.end());
-        return result;
-}
-
-const Word* Spell::component(int index) const
-{
-    return components().at(index);
-}
-
-/**
+ * Static function to determine if a list of words can be turned in to a valid spell.
  * @param A candidate list of spell components.
  * @return true if the list contains all the components to make a valid spell.
  */
-bool Spell::verify(std::vector<Word*> components) const
+bool Spell::verify(std::vector<Word*> components)
 {
     bool hasTarget = false;
     bool hasSource = false;
@@ -170,14 +57,148 @@ bool Spell::verify(std::vector<Word*> components) const
 }
 
 
+Spell::Spell(std::vector<Word*> components_)
+{
+
+    _source = nullptr;
+    _target = nullptr;
+    _action = nullptr;
+    _adverbs = std::vector<Adverb*>();
+    if(!edit(components_))
+    {
+        _source = nullptr;
+        _target = nullptr;
+        _action = nullptr;
+        _components = components_;
+    }
+}
+
+Spell::~Spell(void)
+{
+}
+
 /**
+ * Takes the current component list and attempts to turn it in to a spell.
+ * @return true if spell was valid, false otherwise.
+ */
+bool Spell::resolve(void)
+{
+    _target = nullptr;
+    _source = nullptr;
+    _action = nullptr;
+    _adverbs = std::vector<Adverb*>(0);
+    return edit(_components);
+}
+
+/**
+ * Repopulates the spell from a list of words.
+ * @param components The list of words.
+ * @return true if the components were valid.
+ */
+bool Spell::edit(std::vector<Word*> components_)
+{
+    Nounish* target = nullptr;
+    Nounish* source = nullptr;
+    Verb* action = nullptr;
+    std::vector<Adverb*> adverbs = std::vector<Adverb*>(0);
+    std::vector<NounPhrase*> toBin = std::vector<NounPhrase*>(0);
+    for (int i = 0 ; i < int(components_.size()); i++)
+    {
+        switch(components_.at(i)->type())
+        {
+            // Should never encounter a noun without an adjective.
+            case WordType::ANoun:
+                return false;
+            case WordType::ANounPhrase:
+                // Can't have more than one of each (yet)
+                if (target != nullptr && source != nullptr)
+                    return false;
+                if (source != nullptr)
+                    target = (Nounish*) components_.at(i);
+                else
+                    source = (Nounish*) components_.at(i);
+                break;
+            case WordType::AnAdjective: {
+                if (target != nullptr && source != nullptr)
+                    return false;
+                // An adjective must be followed by a noun
+                if (components_.at(i+1)->type() != WordType::ANoun)
+                    return false;
+                NounPhrase* temp = new NounPhrase((Noun*)components_.at(i+1), (Adjective*)components_.at(i));
+                //toBin.push_back(temp);
+                if (source != nullptr)
+                    target = temp;
+                else
+                    source = temp;
+                i++;
+                break;
+            }
+            case WordType::AVerb:
+                // Can't have more than one verb (yet)
+                if (action != nullptr)
+                    return false;
+                action = (Verb*) components_.at(i);
+                break;
+            case WordType::AnAdverb:
+                adverbs.push_back((Adverb*)components_.at(i));
+                break;
+            default:
+                return false;
+        }
+    }
+
+    if(target == nullptr || source == nullptr || action == nullptr)
+        return false;
+
+    //takeOutBin();
+    // keep track of the "new" references so we can clean them up later...
+    //_rubbishBin = toBin;
+    _target = target;
+    _source = source;
+    _action = action;
+    _adverbs.insert(_adverbs.end(), adverbs.begin(), adverbs.end());
+    _components = components_;
+    return true;
+
+}
+
+/**
+ * Gets a list of each word in the spell.
+ */
+const std::vector<Word*> Spell::components(void) const
+{
+    return _components;
+}
+
+const Word* Spell::component(int index) const
+{
+    return components().at(index);
+}
+
+Word* Spell::component(int index, Word* word)
+{
+    _components.at(index) = word;
+    resolve();
+    return _components.at(index);
+}
+
+/**
+ * @param checkUnresolved If true, also check unresolved components.
  * @return True if the spell can be effectively cast.
  */
-bool Spell::isValid(void) const
+bool Spell::isValid(bool checkUnresolved) const
 {
-    return _target != nullptr
-    && _source != nullptr
-    && _action != nullptr;
+    if (_target != nullptr
+        && _source != nullptr
+        && _action != nullptr
+    )
+        return true;
+
+    // If checkComponents flag is provided, check the "Future" of the spell, not just the current state.
+    if (!checkUnresolved)
+        return false;
+
+    return verify(_components);
 }
 
 /**

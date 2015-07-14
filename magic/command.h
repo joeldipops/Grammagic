@@ -31,6 +31,7 @@ class Command : public MenuItem
         int execute(Mob*, BattleField*);
         bool edit(std::vector<Word*> components);
         bool isValid(void) const;
+        Spell* spell(void);
 
     private:
         Effect _effect;

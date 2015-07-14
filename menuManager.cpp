@@ -72,6 +72,13 @@ Play::PlayState MenuManager::start(Mob* pc)
             }
         }
     }
+
+    // Resolve all spells.
+    for (Command* cmd : pc->commands())
+    {
+        cmd->spell()->resolve();
+    }
+
     return result();
 }
 
@@ -174,11 +181,9 @@ bool MenuManager::processSpellCommand(Mob* pc)
 
 bool MenuManager::processRuneCommand(Mob* pc)
 {
-    Command* workingSpell = &pc->spells()->at(_selectedSpellIndex);
-
-    std::vector<Word*> components = workingSpell->components();
-    components.at(_selectedComponentIndex) = Commands::allCommands.at(_selectedRuneIndex);
-    return workingSpell->edit(components);
+    Spell* workingSpell = pc->spells()->at(_selectedSpellIndex).spell();
+    workingSpell->component(_selectedComponentIndex, Commands::allCommands.at(_selectedRuneIndex));
+    return true;
 }
 
 

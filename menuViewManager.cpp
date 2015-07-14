@@ -52,9 +52,8 @@ void MenuViewManager::render(Mob* pc, int spellIndex, int componentPosition, int
 
         drawHorizontalControls(&pointers, position, &rect);
 
-        //SDL_Rect validRect = SDL_Rect {rect.x + rect.w - cursorXOffset, cursorYOffset + rect.y, 30, 30 };
         SDL_Rect validRect = SDL_Rect { rect.w - rect.x, rect.y + cursorYOffset, 30, 30 };
-        if (command.isValid())
+        if (command.spell()->isValid(true))
             SDL_RenderCopy(renderer(), valid, 0, &validRect);
         else
             SDL_RenderCopy(renderer(), invalid, 0, &validRect);

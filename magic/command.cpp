@@ -12,22 +12,6 @@ int Command::spellCaster(Command* _this, Mob* caster, BattleField* field)
     return _this->_spell.cast(caster, field);
 }
 
-const std::vector<Word*> Command::components(void) const
-{
-    if (_hasSpell)
-        return _spell.components();
-    return std::vector<Word*>(0);
-}
-
-bool Command::isValid(void) const
-{
-    if (_hasSpell)
-        return _spell.isValid();
-
-    return true;
-}
-
-
 /**
  * Constructor
  */
@@ -47,6 +31,19 @@ Command::Command(std::string name, Effect effect) : MenuItem(name)
 {
     _effect = effect;
 }
+
+Spell* Command::spell(void)
+{
+    return &_spell;
+}
+
+const std::vector<Word*> Command::components(void) const
+{
+    if (_hasSpell)
+        return _spell.components();
+    return std::vector<Word*>(0);
+}
+
 
 bool Command::edit(std::vector<Word*> components)
 {
