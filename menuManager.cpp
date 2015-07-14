@@ -21,8 +21,10 @@ Play::PlayState MenuManager::start(Mob* pc)
     _selectedRuneIndex = -1;
     while(result() == PlayState::Menu)
     {
-        if (rerender)
+        if (rerender) {
+            pc->spells()->at(0).components();
             _viewManager.render(pc, _selectedSpellIndex, _selectedComponentIndex, _selectedRuneIndex);
+        }
 
         rerender = false;
 
@@ -82,7 +84,7 @@ bool MenuManager::moveCursor(Mob* pc, Core::InputPress input)
     switch(state())
     {
         case MenuState::SelectSpell:
-            itemCount = pc->spells().size();
+            itemCount = pc->spells()->size();
             index = _selectedSpellIndex;
             columnItemCount = 1;
             break;
@@ -93,7 +95,7 @@ bool MenuManager::moveCursor(Mob* pc, Core::InputPress input)
             break;
         case MenuState::SelectComponent:
             index = _selectedComponentIndex;
-            itemCount = pc->spells().at(_selectedSpellIndex).components().size();
+            itemCount = pc->spells()->at(_selectedSpellIndex).components().size();
             columnItemCount = 1;
             break;
         default:
@@ -172,15 +174,11 @@ bool MenuManager::processSpellCommand(Mob* pc)
 
 bool MenuManager::processRuneCommand(Mob* pc)
 {
-    /*
-    Command* workingSpell = &pc->spells().at(_selectedSpellIndex);
+    Command* workingSpell = &pc->spells()->at(_selectedSpellIndex);
 
-    Word* word = workingSpell->components().at(_selectedComponentIndex);
-
-
-
-    */
-    return true;
+    std::vector<Word*> components = workingSpell->components();
+    components.at(_selectedComponentIndex) = Commands::allCommands.at(_selectedRuneIndex);
+    return workingSpell->edit(components);
 }
 
 

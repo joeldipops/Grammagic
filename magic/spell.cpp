@@ -86,7 +86,7 @@ bool Spell::edit(std::vector<Word*> components)
     _target = target;
     _source = source;
     _action = action;
-    _adverbs = adverbs;
+    _adverbs.insert(_adverbs.end(), adverbs.begin(), adverbs.end());
     return true;
 
 }
@@ -97,7 +97,6 @@ bool Spell::edit(std::vector<Word*> components)
 const std::vector<Word*> Spell::components(void) const
 {
         std::vector<Word*> result = std::vector<Word*>(0);
-        result.reserve(5 + _adverbs.size());
         std::vector<Word*> subList = _source->components();
         result.insert(result.end(), subList.begin(), subList.end());
 
@@ -108,8 +107,6 @@ const std::vector<Word*> Spell::components(void) const
 
         subList = _target->components();
         result.insert(result.end(), subList.begin(), subList.end());
-
-        result.shrink_to_fit();
         return result;
 }
 

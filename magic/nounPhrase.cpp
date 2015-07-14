@@ -36,7 +36,7 @@ const std::vector<Word*> NounPhrase::components(void) const
 {
     std::vector<Word*> result  = std::vector<Word*> (0);
     result.reserve(2);
-    result.push_back((Word*) _targeter);
     result.push_back((Word*) _specifier);
+    result.push_back((Word*) _targeter);
     return result;
 }

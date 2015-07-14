@@ -33,7 +33,8 @@ class Mob : public MapObject
         Command* selectedCommand(void) const;
         const std::string portraitFileName(void) const;
         std::vector<Command*> commands(void) const;
-        std::vector<Command> spells(void) const;
+        std::vector<Command>* spells(void);
+        const std::vector<Command>* spells(void) const;
         int unblockTime(void) const;
         bool isBlocked(void) const;
 

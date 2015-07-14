@@ -236,9 +236,14 @@ std::vector<Command*> Mob::commands(void) const
     return result;
 }
 
-std::vector<Command> Mob::spells(void) const
+std::vector<Command>* Mob::spells(void)
 {
-    return _spellCommands;
+    return &_spellCommands;
+}
+
+const std::vector<Command>* Mob::spells(void) const
+{
+    return &_spellCommands;
 }
 
 

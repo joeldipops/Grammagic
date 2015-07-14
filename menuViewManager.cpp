@@ -23,11 +23,13 @@ void MenuViewManager::render(Mob* pc, int spellIndex, int componentPosition, int
     drawBorder(_runesVp, borderWidth, &borderColour, true);
 
     SDL_Texture* cursor = assets()->get("res/cursor.png");
+    SDL_Texture* valid = assets()->get("res/valid.png");
+    SDL_Texture* invalid = assets()->get("res/invalid.png");
 
     // Render Spells
     SDL_Rect rect = SDL_Rect { marginLeft, 0, WIDTH, controlMarginTop + controlHeight };
 
-    for (int i = 0; i < int (pc->spells().size()); i++)
+    for (int i = 0; i < int (pc->spells()->size()); i++)
     {
         int position = -1;
         if (i == spellIndex)
@@ -36,7 +38,7 @@ void MenuViewManager::render(Mob* pc, int spellIndex, int componentPosition, int
             SDL_RenderCopy(renderer(), cursor, 0, &cursorRect);
             position = componentPosition;
         }
-        Command command = pc->spells().at(i);
+        Command command = pc->spells()->at(i);
         std::vector<Word*> words = command.components();
         std::vector<MenuItem*> pointers = std::vector<MenuItem*>(0);
         std::vector<Rune> runes = std::vector<Rune>(0);
@@ -49,6 +51,14 @@ void MenuViewManager::render(Mob* pc, int spellIndex, int componentPosition, int
         }
 
         drawHorizontalControls(&pointers, position, &rect);
+
+        //SDL_Rect validRect = SDL_Rect {rect.x + rect.w - cursorXOffset, cursorYOffset + rect.y, 30, 30 };
+        SDL_Rect validRect = SDL_Rect { rect.w - rect.x, rect.y + cursorYOffset, 30, 30 };
+        if (command.isValid())
+            SDL_RenderCopy(renderer(), valid, 0, &validRect);
+        else
+            SDL_RenderCopy(renderer(), invalid, 0, &validRect);
+
         rect = SDL_Rect { rect.x, rect.y + rect.h, rect.w, rect.h};
     }
 

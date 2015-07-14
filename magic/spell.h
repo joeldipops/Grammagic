@@ -25,6 +25,7 @@ namespace Magic
             int cast(Mob*, BattleField*);
             const std::vector<Word*> components(void) const;
             const Word* component(int) const;
+            bool isValid(void) const;
 
         private:
             Nounish* _target;
@@ -32,7 +33,6 @@ namespace Magic
             Verb* _action;
             std::vector<Adverb*> _adverbs;
             bool verify(std::vector<Word*>) const;
-            bool isValid(void) const;
             //void takeOutBin(void);
             std::vector<NounPhrase*> _rubbishBin;
 

@@ -19,6 +19,14 @@ const std::vector<Word*> Command::components(void) const
     return std::vector<Word*>(0);
 }
 
+bool Command::isValid(void) const
+{
+    if (_hasSpell)
+        return _spell.isValid();
+
+    return true;
+}
+
 
 /**
  * Constructor
@@ -38,6 +46,11 @@ Command::Command(std::string name, Spell spell) : MenuItem(name)
 Command::Command(std::string name, Effect effect) : MenuItem(name)
 {
     _effect = effect;
+}
+
+bool Command::edit(std::vector<Word*> components)
+{
+    return _spell.edit(components);
 }
 
 /**

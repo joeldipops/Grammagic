@@ -29,6 +29,8 @@ class Command : public MenuItem
 
         const std::vector<Word*> components(void) const;
         int execute(Mob*, BattleField*);
+        bool edit(std::vector<Word*> components);
+        bool isValid(void) const;
 
     private:
         Effect _effect;
