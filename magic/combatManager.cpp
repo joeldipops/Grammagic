@@ -52,7 +52,7 @@ Play::PlayState CombatManager::start(GameMap* map_)
         std::vector<Mob*> due = field.getDue();
         for(Mob* combatant : due)
         {
-            if (combatant->type() == MobType::PC)
+            if (combatant->type() == MobType::PlayerCharacter)
                 rerender = processPcTurn(combatant, &field, &events);
             else if (combatant->type() == MobType::Hostile)
                 rerender = processHostileTurn((Enemy*)combatant, &field);

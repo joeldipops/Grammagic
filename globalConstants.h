@@ -8,7 +8,7 @@ enum MobType
     // There is no mob here.
     None,
     // This mob is directly controlled by the player
-    PC,
+    PlayerCharacter,
     // Some other NPC
     Hostile
 };

@@ -10,7 +10,7 @@ MenuViewManager::MenuViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
     _runesVp = SDL_Rect {v.x, v.y + _spellsVp.h, WIDTH, v.h - _spellsVp.h};
 }
 
-void MenuViewManager::render(Mob* pc, int spellIndex, int componentPosition, int runeIndex)
+void MenuViewManager::render(PC* pc, int spellIndex, int componentPosition, int runeIndex)
 {
     const int borderWidth = 5;
     const int cursorXOffset = borderWidth + controlMarginLeft;
@@ -29,7 +29,7 @@ void MenuViewManager::render(Mob* pc, int spellIndex, int componentPosition, int
     // Render Spells
     SDL_Rect rect = SDL_Rect { marginLeft, 0, WIDTH, controlMarginTop + controlHeight };
 
-    for (int i = 0; i < int (pc->spells()->size()); i++)
+    for (int i = 0; i < pc->spellSlots(); i++)
     {
         int position = -1;
         if (i == spellIndex)
@@ -38,25 +38,57 @@ void MenuViewManager::render(Mob* pc, int spellIndex, int componentPosition, int
             SDL_RenderCopy(renderer(), cursor, 0, &cursorRect);
             position = componentPosition;
         }
-        Command command = pc->spells()->at(i);
-        std::vector<Word*> words = command.components();
         std::vector<MenuItem*> pointers = std::vector<MenuItem*>(0);
-        std::vector<Rune> runes = std::vector<Rune>(0);
-        pointers.reserve(words.size());
-        runes.reserve(words.size());
-        for (Word* word : words)
+        pointers.reserve(pc->runeSlots());
+
+        if (i < pc->spells()->size())
         {
-            runes.push_back(Rune(word));
-            pointers.push_back((MenuItem*)&runes.at(runes.size()-1));
+            Command command = pc->spells()->at(i);
+            std::vector<Word*> words = command.components();
+
+            std::vector<Rune> runes = std::vector<Rune>(0);
+            pointers.reserve(words.size());
+            runes.reserve(words.size());
+
+            int deallocIndex = pc->runeSlots();
+
+            int maxSlots = pc->runeSlots() > words.size()
+            ? words.size() + 1
+            : pc->runeSlots();
+
+            for (int j = 0; j < maxSlots; j++)
+            {
+                if (j < words.size())
+                {
+                    runes.push_back(Rune(words.at(j)));
+                    pointers.push_back((MenuItem*)&runes.at(runes.size()-1));
+                }
+                else
+                {
+                    deallocIndex = j;
+                    pointers.push_back(new MenuItem());
+                }
+            }
+
+            SDL_Rect validRect = SDL_Rect { rect.w - rect.x, rect.y + cursorYOffset, 30, 30 };
+            if (command.spell()->isValid(true))
+                SDL_RenderCopy(renderer(), valid, 0, &validRect);
+            else
+                SDL_RenderCopy(renderer(), invalid, 0, &validRect);
+
+            drawHorizontalControls(&pointers, position, &rect);
+
+            for (int j = deallocIndex; j < pointers.size(); j++)
+                delete pointers.at(j);
         }
-
-        drawHorizontalControls(&pointers, position, &rect);
-
-        SDL_Rect validRect = SDL_Rect { rect.w - rect.x, rect.y + cursorYOffset, 30, 30 };
-        if (command.spell()->isValid(true))
-            SDL_RenderCopy(renderer(), valid, 0, &validRect);
         else
-            SDL_RenderCopy(renderer(), invalid, 0, &validRect);
+        {
+            pointers.push_back(new MenuItem());
+            drawHorizontalControls(&pointers, position, &rect);
+
+            for (MenuItem* item : pointers)
+                delete item;
+        }
 
         rect = SDL_Rect { rect.x, rect.y + rect.h, rect.w, rect.h};
     }

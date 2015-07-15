@@ -45,7 +45,7 @@ namespace Magic
             {
                 std::vector<MapObject*> result;
                 std::vector<Mob*> candidates;
-                if (caster->type() == MobType::PC)
+                if (caster->type() == MobType::PlayerCharacter)
                     candidates = battleField->hostiles();
                 else
                     candidates = battleField->pcs();

@@ -6,6 +6,7 @@
 #include "../util/utils.h"
 #include <string>
 #include "../magic/command.h"
+
 using namespace Magic;
 class Mob : public MapObject
 {
@@ -43,22 +44,23 @@ class Mob : public MapObject
         bool tryUnblock(int);
         void unblock(void);
 
+    protected:
+        std::vector<Command> _spellCommands;
+        std::vector<Command> _otherCommands;
+        std::string _portraitFileName;
+
+        static std::vector<Command*> toPointers(const std::vector<Command>& source);
+
     private:
         MobType _type;
         int _x;
         int _y;
         int _stamina;
         int _maxStamina;
-        std::string _portraitFileName;
         int _rangeOfSight;
         int _selectedCommandIndex = 0;
         int _unblockTime = 0;
         bool _isBlocked = false;
 
-        std::vector<Command> _spellCommands;
-        std::vector<Command> _otherCommands;
-
-
-        static std::vector<Command*> toPointers(const std::vector<Command>& source);
 };
 #endif

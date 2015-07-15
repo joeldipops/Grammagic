@@ -32,6 +32,8 @@ bool Spell::verify(std::vector<Word*> components)
                 if (hasTarget && hasSource)
                     return false;
                 // An adjective must be followed by a noun
+                if (components.size() <= i+1)
+                    return false;
                 if (components.at(i+1)->type() != WordType::ANoun)
                     return false;
                 if (hasSource)
@@ -122,6 +124,8 @@ bool Spell::edit(std::vector<Word*> components_)
                 if (target != nullptr && source != nullptr)
                     return false;
                 // An adjective must be followed by a noun
+                if (components_.size() <= i + 1)
+                    return false;
                 if (components_.at(i+1)->type() != WordType::ANoun)
                     return false;
                 NounPhrase* temp = new NounPhrase((Noun*)components_.at(i+1), (Adjective*)components_.at(i));
@@ -177,7 +181,10 @@ const Word* Spell::component(int index) const
 
 Word* Spell::component(int index, Word* word)
 {
-    _components.at(index) = word;
+    if (_components.size() > index)
+        _components.at(index) = word;
+    else
+        _components.push_back(word);
     resolve();
     return _components.at(index);
 }

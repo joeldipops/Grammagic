@@ -11,7 +11,7 @@ MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
     _selectedComponentIndex = -1;
 }
 
-Play::PlayState MenuManager::start(Mob* pc)
+Play::PlayState MenuManager::start(PC* pc)
 {
     bool rerender = true;
     state(MenuState::SelectSpell);
@@ -22,7 +22,6 @@ Play::PlayState MenuManager::start(Mob* pc)
     while(result() == PlayState::Menu)
     {
         if (rerender) {
-            pc->spells()->at(0).components();
             _viewManager.render(pc, _selectedSpellIndex, _selectedComponentIndex, _selectedRuneIndex);
         }
 
@@ -82,7 +81,7 @@ Play::PlayState MenuManager::start(Mob* pc)
     return result();
 }
 
-bool MenuManager::moveCursor(Mob* pc, Core::InputPress input)
+bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
 {
     int result = 0;
     int index = 0;
@@ -91,7 +90,7 @@ bool MenuManager::moveCursor(Mob* pc, Core::InputPress input)
     switch(state())
     {
         case MenuState::SelectSpell:
-            itemCount = pc->spells()->size();
+            itemCount = pc->spellSlots();
             index = _selectedSpellIndex;
             columnItemCount = 1;
             break;
@@ -102,7 +101,7 @@ bool MenuManager::moveCursor(Mob* pc, Core::InputPress input)
             break;
         case MenuState::SelectComponent:
             index = _selectedComponentIndex;
-            itemCount = pc->spells()->at(_selectedSpellIndex).components().size();
+            itemCount = pc->runeSlots();
             columnItemCount = 1;
             break;
         default:
@@ -151,7 +150,7 @@ bool MenuManager::processCancel(void)
     }
 }
 
-bool MenuManager::processCommand(Mob* pc)
+bool MenuManager::processCommand(PC* pc)
 {
     switch(state())
     {
@@ -165,22 +164,25 @@ bool MenuManager::processCommand(Mob* pc)
     return false;
 }
 
-bool MenuManager::processComponentCommand(Mob* pc)
+bool MenuManager::processComponentCommand(PC* pc)
 {
     _selectedRuneIndex = 0;
     state(MenuState::SelectRune);
     return true;
 }
 
-bool MenuManager::processSpellCommand(Mob* pc)
+bool MenuManager::processSpellCommand(PC* pc)
 {
     _selectedComponentIndex = 0;
     state(MenuState::SelectComponent);
     return true;
 }
 
-bool MenuManager::processRuneCommand(Mob* pc)
+bool MenuManager::processRuneCommand(PC* pc)
 {
+    if (pc->spells()->size() <= _selectedSpellIndex)
+        pc->spells()->push_back(Command("abc", Spell(std::vector<Word*>(0))));
+
     Spell* workingSpell = pc->spells()->at(_selectedSpellIndex).spell();
     workingSpell->component(_selectedComponentIndex, Commands::allCommands.at(_selectedRuneIndex));
     return true;

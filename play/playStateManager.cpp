@@ -50,7 +50,7 @@ Core::CoreState PlayStateManager::start(void)
     _map = loadMap();
 
     // No PC, what's the point - Ollies Outie
-    if (_map->mobs().at(0)->type() != MobType::PC)
+    if (_map->mobs().at(0)->type() != MobType::PlayerCharacter)
         return Core::CoreState::Exit;
 
     bool rerender = true;
@@ -79,7 +79,7 @@ Core::CoreState PlayStateManager::start(void)
         switch(state())
         {
             case PlayState::Menu:
-                state(menuManager.start(_map->pc()));
+                state(menuManager.start((PC*)_map->pc()));
                 continue;
             case PlayState::Victory:
                 state(PlayState::Movement);
@@ -239,11 +239,15 @@ GameMap* PlayStateManager::loadMap(void)
             continue;
 
         Mob* mob;
-        if(contents == MobType::Hostile)
-            mob = new Enemy();
-        else
-            mob = new Mob(contents);
-
+        switch(contents)
+        {
+            case MobType::Hostile:
+                mob = new Enemy();break;
+            case MobType::PlayerCharacter:
+                mob = new PC(); break;
+            default:
+                mob = new Mob(contents);
+        }
         gameMap->placeMob(mob, x, y);
     }
     gameMap->mobs().shrink_to_fit();
@@ -343,7 +347,7 @@ std::vector<MapFileBlock> PlayStateManager::tempMapFile()
         MapFileBlock::generateTestCell(WallTerrain),
 
         MapFileBlock::generateTestCell(WallTerrain),
-        MapFileBlock::generateTestCell(GrassTerrain, MobType::PC),
+        MapFileBlock::generateTestCell(GrassTerrain, MobType::PlayerCharacter),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),

@@ -13,6 +13,7 @@
 #include <fstream>
 #include "../magic/combatManager.h"
 #include <iostream>
+#include "pc.h"
 namespace Play
 {
     class PlayStateManager : public Core::StateManager<PlayState, Core::CoreState>

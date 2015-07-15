@@ -13,15 +13,15 @@ namespace Play
     {
         public:
             MenuManager(SDL_Renderer*, AssetCache*);
-            Play::PlayState start(Mob* pc);
+            Play::PlayState start(PC* pc);
             Play::PlayState start(void);
 
         private:
-            bool moveCursor(Mob* pc, Core::InputPress input);
-            bool processRuneCommand(Mob* pc);
-            bool processSpellCommand(Mob* pc);
-            bool processComponentCommand(Mob* pc);
-            bool processCommand(Mob* pc);
+            bool moveCursor(PC* pc, Core::InputPress input);
+            bool processRuneCommand(PC* pc);
+            bool processSpellCommand(PC* pc);
+            bool processComponentCommand(PC* pc);
+            bool processCommand(PC* pc);
             bool processCancel(void);
             MenuViewManager _viewManager;
             int _selectedSpellIndex;

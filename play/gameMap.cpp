@@ -93,7 +93,7 @@ bool GameMap::placeMob(Mob* mob, int x, int y)
     if (cell->contents()->type() != MobType::None)
         return false;
 
-    if (mob->type() == MobType::PC)
+    if (mob->type() == MobType::PlayerCharacter)
     {
         delete _mobs.at(0);
         _mobs.at(0) = mob;
@@ -112,16 +112,16 @@ bool GameMap::placeMob(Mob* mob, int x, int y)
  * @param pc
  * @return
  */
-Mob* GameMap::pc(Mob* pc_)
+PC* GameMap::pc(PC* pc_)
 {
     if (pc_ != nullptr)
         _mobs[0] = pc_;
 
-    return _mobs.at(0);
+    return (PC*) _mobs.at(0);
 }
-const Mob* GameMap::pc(void) const
+const PC* GameMap::pc(void) const
 {
-    return _mobs.at(0);
+    return (PC*) _mobs.at(0);
 }
 
 /**

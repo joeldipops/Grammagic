@@ -5,6 +5,7 @@
 #include "mapCell.h"
 #include <vector>
 #include "../util/utils.h"
+#include "pc.h"
 
 class MapCell;
 
@@ -31,8 +32,8 @@ class GameMap
         std::vector<MapCell>* cells(std::vector<MapCell>* = nullptr);
         std::vector<Mob*> mobs(std::vector<Mob*>);
         std::vector<Mob*> mobs(void) const;
-        Mob* pc(Mob* = nullptr);
-        const Mob* pc(void) const;
+        PC* pc(PC* = nullptr);
+        const PC* pc(void) const;
 
 
     private:

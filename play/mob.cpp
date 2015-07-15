@@ -1,5 +1,4 @@
 #include "mob.h"
-#include "../magic/battleCommands.h"
 #include "../magic/nounish.h"
 #include "../magic/nounPhrase.h"
 #include "../util/utils.h"
@@ -24,23 +23,13 @@ Mob::Mob(MobType type)
     _spellCommands = std::vector<Command>();
     _otherCommands = std::vector<Command>();
 
-    if (type == MobType::PC)
-    {
-        _otherCommands.push_back(Command("Flee", Commands::FLEE));
-        _spellCommands.push_back(Command("self-DMG-weak", Spell(std::vector<Word*> {&Commands::SELF, &Commands::WEAKEN, &Commands::STRONGEST, &Commands::ENEMY})));
-        _spellCommands.push_back(Command("strong-HEAL-self", Spell(std::vector<Word*> { &Commands::STRONGEST, &Commands::ENEMY, &Commands::HEAL, &Commands::SELF})));
-    }
-
     _maxStamina = 100;
     _stamina = 100;
     _rangeOfSight = 1;
     _type = type;
     switch(type)
     {
-        case MobType::PC:
-            imageFileName(RESOURCE_LOCATION + "pc.png");
-            _portraitFileName = RESOURCE_LOCATION + "magician.png";
-            break;
+        case MobType::PlayerCharacter:
         case MobType::Hostile:
             break;
         default:
@@ -49,7 +38,9 @@ Mob::Mob(MobType type)
     }
 }
 
-Mob::~Mob() {}
+Mob::~Mob()
+{
+}
 
 
 /**
