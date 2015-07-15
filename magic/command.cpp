@@ -37,6 +37,9 @@ Spell* Command::spell(void)
     return &_spell;
 }
 
+/**
+ * Returns the rune components of an attached spell, if any.
+ */
 const std::vector<Word*> Command::components(void) const
 {
     if (_hasSpell)
