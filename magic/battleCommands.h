@@ -26,10 +26,13 @@ namespace Magic
             static Noun ENEMY;
             static Verb WEAKEN;
             static Verb HEAL;
-            static Adjective STRONGEST;
-            static Adjective WEAKEST;
+            static Verb HASTEN;
+            static Verb SLOW;
+            static Adjective FRESHEST;
+            static Adjective SICKEST;
             static Adverb LIGHTER;
             static Adverb HEAVIER;
+            static Adverb FASTER;
 
         private:
             // Specific Nouns
@@ -38,6 +41,7 @@ namespace Magic
             {
                 return (MapObject*) caster;
             };
+
 
             // General Nouns
 
@@ -93,18 +97,30 @@ namespace Magic
                 return result;
             };
 
+
             // Verbs
 
-            static void weaken(MapObject* source, MapObject* target, int cost, int effect)
+            static void weaken(MapObject* source, MapObject* target, double cost, double effect)
             {
-                source->changeStamina(cost*-1);
-                target->changeStamina(effect*-1);
+                source->changeStamina(ceil(cost*-1));
+                target->changeStamina(ceil(effect*-1));
+            };
+            static void strengthen(MapObject* source, MapObject* target, double cost, double effect)
+            {
+                source->changeStamina(ceil(cost*-1));
+                target->changeStamina(ceil(effect));
             };
 
-            static void strengthen(MapObject* source, MapObject* target, int cost, int effect)
+            static void hasten(MapObject* source, MapObject* target, double cost, double effect)
             {
-                source->changeStamina(cost*-1);
-                target->changeStamina(effect);
+                source->changeStamina(ceil(cost * -1));
+                target->changeSpeed(1 + (effect / 10));
+            };
+
+            static void slow(MapObject* source, MapObject* target, double cost, double effect)
+            {
+                source->changeStamina(ceil(cost * -1));
+                target->changeSpeed(1 - (effect/ 10));
             };
     };
 }

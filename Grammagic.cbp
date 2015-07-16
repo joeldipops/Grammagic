@@ -75,6 +75,8 @@
 		<Unit filename="play/miniMapViewManager.cpp" />
 		<Unit filename="play/mob.cpp" />
 		<Unit filename="play/mob.h" />
+		<Unit filename="play/pc.cpp" />
+		<Unit filename="play/pc.h" />
 		<Unit filename="play/playStateManager.cpp" />
 		<Unit filename="play/playStateManager.h" />
 		<Unit filename="play/statsViewManager.cpp" />

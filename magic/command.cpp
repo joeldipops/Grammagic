@@ -32,9 +32,26 @@ Command::Command(std::string name, Effect effect) : MenuItem(name)
     _effect = effect;
 }
 
+/**
+ * @return the wrapped spell.
+ */
 Spell* Command::spell(void)
 {
     return &_spell;
+}
+
+/**
+ * Overrides base to return the name of the wrapped spell.
+ */
+std::string Command::name(void) const
+{
+    for(Word* w : components())
+    {
+        if (w->type() == WordType::AVerb)
+            return w->name();
+    }
+
+    return MenuItem::name();
 }
 
 /**

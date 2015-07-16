@@ -2,9 +2,9 @@
 
 PC::PC(void) : Mob(MobType::PlayerCharacter)
 {
-    _otherCommands.push_back(Command("Flee", Commands::FLEE));
+    otherCommands()->push_back(Command("Flee", Commands::FLEE));
     imageFileName(RESOURCE_LOCATION + "pc.png");
-    _portraitFileName = RESOURCE_LOCATION + "magician.png";
+    portraitFileName(RESOURCE_LOCATION + "magician.png");
     _runeSlots = 5;
     _spellSlots = 7;
 }
@@ -15,7 +15,7 @@ PC::PC(void) : Mob(MobType::PlayerCharacter)
  */
 int PC::spellSlots(void) const
 {
-    return _spellSlots > spells()->size()
+    return _spellSlots > int(spells()->size())
     ? spells()->size() + 1
     : _spellSlots;
 }

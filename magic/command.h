@@ -27,6 +27,7 @@ class Command : public MenuItem
         Command(std::string, Effect);
         Command(std::string, Spell);
 
+        std::string name(void) const;
         const std::vector<Word*> components(void) const;
         int execute(Mob*, BattleField*);
         bool edit(std::vector<Word*> components);

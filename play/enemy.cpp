@@ -7,6 +7,7 @@ Enemy::Enemy(void) : Mob(MobType::Hostile)
     _physicalStrength = 10;
     _combatDelay = 2000;
     _movementDelay = 500;
+    //_speed = 1.0;
 }
 
 MobType Enemy::type(void) const
@@ -62,7 +63,7 @@ void Enemy::attack(BattleField* field)
         }
     }
 
-    block(SDL_GetTicks() + _combatDelay);
+    block(SDL_GetTicks() + (_combatDelay / speed()));
 }
 
 int Enemy::movementDelay(void) const

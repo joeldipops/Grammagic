@@ -10,7 +10,9 @@ class MapObject
         bool isDense(void);
         std::string imageFileName(std::string);
         const std::string imageFileName(void) const;
+
         virtual int changeStamina(int) {return 1;};
+        virtual double changeSpeed(double) {return 1;};
 
         static const std::string RESOURCE_LOCATION;
 

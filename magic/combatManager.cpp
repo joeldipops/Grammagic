@@ -64,7 +64,7 @@ Play::PlayState CombatManager::start(GameMap* map_)
 
     for (Mob* mob : field.mobs())
     {
-        mob->unblock();
+        mob->endCombat();
     }
 
     _field = nullptr;

@@ -10,13 +10,13 @@ class Modifier
         Modifier(int, double, bool = false);
         Modifier(int, bool = false);
         Modifier(double, bool = false);
-        int modify(int) const;
-        int add(int) const;
-        int multiply(int) const;
+        double modify(double) const;
+        double add(double) const;
+        double multiply(double) const;
 
     private:
         Nullable<int> _addition;
-        Nullable<float> _multiplier;
+        Nullable<double> _multiplier;
         bool _isOrderReversed;
 
 };

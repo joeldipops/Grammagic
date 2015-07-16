@@ -4,15 +4,15 @@ NounPhrase::NounPhrase(Noun* noun, Adjective* adjective)
     :Nounish(
         "",
         Modifier(
-            noun->effect()->add(0) + adjective->effect()->add(0),
+            int(noun->effect()->add(0) + adjective->effect()->add(0)),
             noun->effect()->multiply(1) * adjective->effect()->multiply(1) * 1.0
         ),
         Modifier(
-            noun->cost()->add(0) + adjective->cost()->add(0),
+            int(noun->cost()->add(0) + adjective->cost()->add(0)),
             noun->cost()->multiply(1) * adjective->cost()->multiply(1) * 1.0
         ),
         Modifier(
-            noun->duration()->add(0) + adjective->duration()->add(0),
+            int(noun->duration()->add(0) + adjective->duration()->add(0)),
             noun->duration()->multiply(1) * adjective->duration()->multiply(1) * 1.0
         )
     )

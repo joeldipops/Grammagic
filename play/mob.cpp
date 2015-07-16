@@ -196,10 +196,21 @@ int Mob::changeStamina(int delta)
     return _stamina;
 }
 
+/**
+ * Gets or sets the path to the image that represents this mob.
+ * @param portraitFileName The file name.
+ * @return The file name.
+ */
 const std::string Mob::portraitFileName(void) const
 {
     return _portraitFileName;
 }
+std::string Mob::portraitFileName(std::string portraitFileName_)
+{
+    _portraitFileName = portraitFileName_;
+    return _portraitFileName;
+}
+
 
 int Mob::rangeOfSight(int range)
 {
@@ -279,7 +290,60 @@ bool Mob::isSeen(const Mob* target)
 {
     return (abs(target->x() - _x) <= _rangeOfSight)
         && (abs(target->y() - _y) <= _rangeOfSight);
+}
 
+std::vector<Command>* Mob::spellCommands()
+{
+    return &_spellCommands;
+}
+
+std::vector<Command>* Mob::otherCommands()
+{
+    return &_otherCommands;
+}
+
+/**
+ * @return The possibly modified speed stat.
+ */
+double Mob::speed(void) const
+{
+    return _defaultSpeed * _speedMultiplier;
+}
+
+/**
+ * Gets or sets the mob's default speed stat, which is a multiplier.
+ * @param defaultSpeed the new speed stat.
+ * @return the current speed stat.
+ */
+double Mob::defaultSpeed(double defaultSpeed_)
+{
+    _defaultSpeed = defaultSpeed_;
+    return _defaultSpeed;
+}
+double Mob::defaultSpeed(void) const
+{
+    return _defaultSpeed;
+}
+
+/**
+ * Temporary modifies the speed stat by a multiplier.
+ * @param multiplier A non-negative double.
+ * @return the modified speed stat.
+ */
+double Mob::changeSpeed(double multiplier)
+{
+    if (multiplier >= 0)
+        _speedMultiplier = multiplier;
+    return speed();
+}
+
+/**
+ * After combat ends, reset any modified stats etc.
+ */
+void Mob::endCombat(void)
+{
+    unblock();
+    _speedMultiplier = 1.0;
 }
 
 

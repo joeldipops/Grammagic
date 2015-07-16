@@ -91,9 +91,12 @@ int main ()
     Commands::allCommands.push_back(&Commands::HEAL);
     Commands::allCommands.push_back(&Commands::WEAKEN);
     Commands::allCommands.push_back(&Commands::SELF);
-    Commands::allCommands.push_back(&Commands::WEAKEST);
+    Commands::allCommands.push_back(&Commands::SICKEST);
     Commands::allCommands.push_back(&Commands::ENEMY);
-    Commands::allCommands.push_back(&Commands::STRONGEST);
+    Commands::allCommands.push_back(&Commands::FRESHEST);
+    Commands::allCommands.push_back(&Commands::SLOW);
+    Commands::allCommands.push_back(&Commands::HASTEN);
+    Commands::allCommands.push_back(&Commands::FASTER);
 
     Core::Grammar program;
     program.start();

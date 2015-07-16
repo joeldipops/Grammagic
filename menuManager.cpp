@@ -180,11 +180,13 @@ bool MenuManager::processSpellCommand(PC* pc)
 
 bool MenuManager::processRuneCommand(PC* pc)
 {
-    if (pc->spells()->size() <= _selectedSpellIndex)
+    if (int(pc->spells()->size()) <= _selectedSpellIndex)
         pc->spells()->push_back(Command("abc", Spell(std::vector<Word*>(0))));
 
     Spell* workingSpell = pc->spells()->at(_selectedSpellIndex).spell();
     workingSpell->component(_selectedComponentIndex, Commands::allCommands.at(_selectedRuneIndex));
+    if (_selectedComponentIndex < pc->runeSlots())
+        _selectedComponentIndex++;
     return true;
 }
 

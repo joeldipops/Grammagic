@@ -25,9 +25,15 @@ class Mob : public MapObject
         bool isSeen(const Mob*);
         int rangeOfSight(int);
         int rangeOfSight(void) const;
+
+        int changeStamina(int);
         int stamina(int);
         const int stamina(void) const;
         const int maxStamina(void) const;
+
+        double changeSpeed(double);
+        double speed(void) const;
+        double defaultSpeed(void) const;
 
         int selectedCommandIndex(int);
         int selectedCommandIndex(void) const;
@@ -39,15 +45,16 @@ class Mob : public MapObject
         int unblockTime(void) const;
         bool isBlocked(void) const;
 
-        int changeStamina(int);
         void block(int);
         bool tryUnblock(int);
         void unblock(void);
+        void endCombat(void);
 
     protected:
-        std::vector<Command> _spellCommands;
-        std::vector<Command> _otherCommands;
-        std::string _portraitFileName;
+        std::string portraitFileName(std::string);
+        std::vector<Command>* spellCommands(void);
+        std::vector<Command>* otherCommands(void);
+        double defaultSpeed(double);
 
         static std::vector<Command*> toPointers(const std::vector<Command>& source);
 
@@ -60,7 +67,14 @@ class Mob : public MapObject
         int _rangeOfSight;
         int _selectedCommandIndex = 0;
         int _unblockTime = 0;
+        std::vector<Command> _spellCommands;
+        std::vector<Command> _otherCommands;
+        std::string _portraitFileName;
+        double _defaultSpeed = 1.0;
+        double _speedMultiplier = 1.0;
         bool _isBlocked = false;
+
+
 
 };
 #endif

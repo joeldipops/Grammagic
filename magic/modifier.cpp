@@ -25,19 +25,19 @@ Modifier::Modifier(int addition, double multiplier, bool isOrderReversed)
     _isOrderReversed = isOrderReversed;
 }
 
-int Modifier::add(int input) const
+double Modifier::add(double input) const
 {
     return  (_addition.isNull()) ? input : input + _addition.get();
 }
 
-int Modifier::multiply(int input) const
+double Modifier::multiply(double input) const
 {
     return (_multiplier.isNull()) ? input : input * _multiplier.get();
 }
 
-int Modifier::modify(int input) const
+double Modifier::modify(double input) const
 {
-    float result = input;
+    double result = input;
     if(_isOrderReversed)
     {
         result = (_addition.isNull()) ? result : result + _addition.get();
@@ -49,5 +49,5 @@ int Modifier::modify(int input) const
         result = (_addition.isNull()) ? result : result + _addition.get();
     }
 
-    return int(ceil(result));
+    return result;
 }

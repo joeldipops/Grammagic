@@ -2,7 +2,7 @@
 
 using namespace Magic;
 
-Verb::Verb(Action action_, std::string n, Modifier e, Modifier c, Modifier d, float enemyCostMultiplier_, float allyEffectMultiplier_, float isSameMultiplier_)
+Verb::Verb(Action action_, std::string n, Modifier e, Modifier c, Modifier d, double enemyCostMultiplier_, double allyEffectMultiplier_, double isSameMultiplier_)
     :Word(n, e, c, d)
 {
     _action = action_;
@@ -17,17 +17,17 @@ WordType Verb::type(void) const
     return WordType::AVerb;
 }
 
-float Verb::enemyCostMultiplier(void) const
+double Verb::enemyCostMultiplier(void) const
 {
     return _enemyCostMultiplier;
 }
 
-float Verb::allyEffectMultiplier(void) const
+double Verb::allyEffectMultiplier(void) const
 {
     return _allyEffectMultiplier;
 }
 
-float Verb::isSameMultiplier(void) const
+double Verb::isSameMultiplier(void) const
 {
     return _isSameMultiplier;
 }

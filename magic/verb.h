@@ -8,24 +8,24 @@
 
 namespace Magic
 {
-    typedef void (*Action) (MapObject*, MapObject*, int, int);
+    typedef void (*Action) (MapObject*, MapObject*, double, double);
 
     class Verb : public Word
     {
         public:
             Verb(){};
-            Verb(Action, std::string, Modifier, Modifier, Modifier, float = 1, float = 1, float = 1);
+            Verb(Action, std::string, Modifier, Modifier, Modifier, double = 1, double = 1, double = 1);
             Action action(void);
             WordType type(void) const;
-            float enemyCostMultiplier(void) const;
-            float allyEffectMultiplier(void) const;
-            float isSameMultiplier(void) const;
+            double enemyCostMultiplier(void) const;
+            double allyEffectMultiplier(void) const;
+            double isSameMultiplier(void) const;
 
         private:
             Action _action;
-            float _enemyCostMultiplier;
-            float _allyEffectMultiplier;
-            float _isSameMultiplier;
+            double _enemyCostMultiplier;
+            double _allyEffectMultiplier;
+            double _isSameMultiplier;
     };
 }
 

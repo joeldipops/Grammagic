@@ -9,7 +9,7 @@ MenuItem::MenuItem(std::string name_)
 /**
  * Gets or sets the display name of this command.
  */
-const std::string MenuItem::name(void) const
+    std::string MenuItem::name(void) const
 {
     return _name;
 }

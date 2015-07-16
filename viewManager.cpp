@@ -145,7 +145,7 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
         rect = temp;
     }
 
-    _menuItemsPerColumn = ceil(i / float(rows));
+    _menuItemsPerColumn = ceil(i / double(rows));
 }
 
 /**

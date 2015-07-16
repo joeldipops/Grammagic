@@ -41,7 +41,7 @@ void MenuViewManager::render(PC* pc, int spellIndex, int componentPosition, int 
         std::vector<MenuItem*> pointers = std::vector<MenuItem*>(0);
         pointers.reserve(pc->runeSlots());
 
-        if (i < pc->spells()->size())
+        if (i < int(pc->spells()->size()))
         {
             Command command = pc->spells()->at(i);
             std::vector<Word*> words = command.components();
@@ -52,13 +52,13 @@ void MenuViewManager::render(PC* pc, int spellIndex, int componentPosition, int 
 
             int deallocIndex = pc->runeSlots();
 
-            int maxSlots = pc->runeSlots() > words.size()
+            int maxSlots = pc->runeSlots() > int(words.size())
             ? words.size() + 1
             : pc->runeSlots();
 
             for (int j = 0; j < maxSlots; j++)
             {
-                if (j < words.size())
+                if (j < int(words.size()))
                 {
                     runes.push_back(Rune(words.at(j)));
                     pointers.push_back((MenuItem*)&runes.at(runes.size()-1));
@@ -78,7 +78,7 @@ void MenuViewManager::render(PC* pc, int spellIndex, int componentPosition, int 
 
             drawHorizontalControls(&pointers, position, &rect);
 
-            for (int j = deallocIndex; j < pointers.size(); j++)
+            for (int j = deallocIndex; j < int(pointers.size()); j++)
                 delete pointers.at(j);
         }
         else
