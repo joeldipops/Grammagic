@@ -9,7 +9,7 @@ MapCell::MapCell(){}
 MapCell::MapCell(TerrainType type)
 {
     _terrain = Terrain(type);
-    _contents = new Mob(MobType::None);
+    _contents = nullptr;//new Mob(MobType::None);
 }
 
 /**

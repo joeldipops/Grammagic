@@ -59,6 +59,20 @@ bool Spell::verify(std::vector<Word*> components)
     return hasTarget && hasSource && hasAction;
 }
 
+/**
+ * Destructor
+ */
+Spell::~Spell(void)
+{
+    for (Word* w : _rubbishBin)
+    {
+        delete w;
+        w = nullptr;
+    }
+
+    _rubbishBin = std::vector<Word*>(0);
+}
+
 
 Spell::Spell(std::vector<Word*> components_)
 {
@@ -76,10 +90,6 @@ Spell::Spell(std::vector<Word*> components_)
     }
 }
 
-Spell::~Spell(void)
-{
-}
-
 /**
  * Takes the current component list and attempts to turn it in to a spell.
  * @return true if spell was valid, false otherwise.
@@ -93,6 +103,11 @@ bool Spell::resolve(void)
     return edit(_components);
 }
 
+void Spell::toBin(Word* word)
+{
+    _rubbishBin.push_back(word);
+}
+
 /**
  * Repopulates the spell from a list of words.
  * @param components The list of words.
@@ -102,9 +117,9 @@ bool Spell::edit(std::vector<Word*> components_)
 {
     Nounish* target = nullptr;
     Nounish* source = nullptr;
+
     Verb* action = nullptr;
     std::vector<Adverb*> adverbs = std::vector<Adverb*>(0);
-    std::vector<NounPhrase*> toBin = std::vector<NounPhrase*>(0);
     for (int i = 0 ; i < int(components_.size()); i++)
     {
         switch(components_.at(i)->type())
@@ -129,8 +144,10 @@ bool Spell::edit(std::vector<Word*> components_)
                     return false;
                 if (components_.at(i+1)->type() != WordType::ANoun)
                     return false;
+
                 NounPhrase* temp = new NounPhrase((Noun*)components_.at(i+1), (Adjective*)components_.at(i));
-                //toBin.push_back(temp);
+                // Keep track of allocated memory.
+                toBin(temp);
                 if (source != nullptr)
                     target = temp;
                 else
@@ -155,11 +172,26 @@ bool Spell::edit(std::vector<Word*> components_)
     if(target == nullptr || source == nullptr || action == nullptr)
         return false;
 
-    //takeOutBin();
-    // keep track of the "new" references so we can clean them up later...
-    //_rubbishBin = toBin;
+    if (_target != nullptr && _target->components().size() > 1)
+        delete _target;
+
+    if (_source != nullptr && _source->components().size() > 1)
+        delete _source;
+
     _target = target;
     _source = source;
+
+    // Clean up any noun-phrases we didn't use.
+    for (Word* w : _rubbishBin)
+        if (w == target || w == source)
+            continue;
+        else
+        {
+            delete w;
+            w = nullptr;
+        }
+    _rubbishBin = std::vector<Word*>();
+
     _action = action;
     _adverbs.insert(_adverbs.end(), adverbs.begin(), adverbs.end());
     _components = components_;
@@ -188,6 +220,16 @@ Word* Spell::component(int index, Word* word)
         _components.push_back(word);
     resolve();
     return _components.at(index);
+}
+
+void Spell::removeComponent(int index)
+{
+    int len = _components.size();
+    if (len <= 0)
+        return;
+    if (index >= len)
+        return;
+    _components.erase(_components.begin() + index);
 }
 
 /**
@@ -220,21 +262,21 @@ int Spell::cast(Mob* caster, BattleField* battleField)
     if (!isValid())
         return -1;
 
-    double totalEffect = _action->effect()->add(0);
+    float totalEffect = _action->effect()->add(0);
     totalEffect = _target->effect()->add(totalEffect);
     totalEffect = _source->effect()->add(totalEffect);
     totalEffect = _action->effect()->multiply(totalEffect);
     totalEffect = _target->effect()->multiply(totalEffect);
     totalEffect = _source->effect()->multiply(totalEffect);
 
-    double totalCost = _action->cost()->add(0);
+    float totalCost = _action->cost()->add(0);
     totalCost = _target->cost()->add(totalCost);
     totalCost = _target->cost()->add(totalCost);
     totalCost = _action->cost()->multiply(totalCost);
     totalCost = _target->cost()->multiply(totalCost);
     totalCost = _source->cost()->multiply(totalCost);
 
-    double totalDuration = _action->duration()->add(0);
+    float totalDuration = _action->duration()->add(0);
     totalDuration = _target->duration()->add(totalDuration);
     totalDuration = _target->duration()->add(totalDuration);
     totalDuration = _action->duration()->multiply(totalDuration);

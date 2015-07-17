@@ -4,7 +4,7 @@
 #include "word.h"
 #include "../mapObject.h"
 #include <vector>
-#include "battleField.h"
+#include "../play/battleField.h"
 
 class Mob;
 

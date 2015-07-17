@@ -1,7 +1,7 @@
 #ifndef BATTLECOMMANDS_H_INCLUDED
 #define BATTLECOMMANDS_H_INCLUDED
 
-#include "battleField.h"
+#include "../play/battleField.h"
 #include "../mapObject.h"
 #include "properNoun.h"
 #include "verb.h"
@@ -33,6 +33,8 @@ namespace Magic
             static Adverb LIGHTER;
             static Adverb HEAVIER;
             static Adverb FASTER;
+            static Adjective FASTEST;
+            static Adjective SLOWEST;
 
         private:
             // Specific Nouns
@@ -65,7 +67,7 @@ namespace Magic
 
             // Adjectives
 
-            static MapObject* weakest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static MapObject* freshest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
                 Mob* result = nullptr;
                 for(int i = 0; i < int(candidates.size()); i++)
@@ -81,7 +83,7 @@ namespace Magic
                 return result;
             };
 
-            static MapObject* strongest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static MapObject* sickest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
                 Mob* result = nullptr;
                 for(int i = 0; i < int(candidates.size()); i++)
@@ -97,30 +99,62 @@ namespace Magic
                 return result;
             };
 
+            static MapObject* fastest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            {
+                Mob* result = nullptr;
+                for(int i = 0; i < int(candidates.size()); i++)
+                {
+                    Mob* mob = (Mob*) candidates.at(i);
+
+                    if (result == nullptr)
+                        result = mob;
+                    else if (mob->defaultSpeed() > result->defaultSpeed())
+                        result = mob;
+                }
+
+                return result;
+            }
+
+            static MapObject* slowest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            {
+                Mob* result = nullptr;
+                for(int i = 0; i < int(candidates.size()); i++)
+                {
+                    Mob* mob = (Mob*) candidates.at(i);
+
+                    if (result == nullptr)
+                        result = mob;
+                    else if (mob->defaultSpeed() < result->defaultSpeed())
+                        result = mob;
+                }
+
+                return result;
+            }
+
 
             // Verbs
 
-            static void weaken(MapObject* source, MapObject* target, double cost, double effect)
+            static void weaken(MapObject* source, MapObject* target, int cost, int effect)
             {
                 source->changeStamina(ceil(cost*-1));
                 target->changeStamina(ceil(effect*-1));
             };
-            static void strengthen(MapObject* source, MapObject* target, double cost, double effect)
+            static void strengthen(MapObject* source, MapObject* target, int cost, int effect)
             {
                 source->changeStamina(ceil(cost*-1));
                 target->changeStamina(ceil(effect));
             };
 
-            static void hasten(MapObject* source, MapObject* target, double cost, double effect)
+            static void hasten(MapObject* source, MapObject* target, int cost, int effect)
             {
-                source->changeStamina(ceil(cost * -1));
-                target->changeSpeed(1 + (effect / 10));
+                source->changeStamina(cost * -1);
+                target->changeSpeed(1 + (float(effect) / 100.0));
             };
 
-            static void slow(MapObject* source, MapObject* target, double cost, double effect)
+            static void slow(MapObject* source, MapObject* target, int cost, int effect)
             {
-                source->changeStamina(ceil(cost * -1));
-                target->changeSpeed(1 - (effect/ 10));
+                source->changeStamina(cost * -1);
+                target->changeSpeed(1 - (float(effect) / 100.0));
             };
     };
 }

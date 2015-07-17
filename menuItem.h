@@ -8,6 +8,8 @@ class MenuItem
     public:
         MenuItem(void);
         MenuItem(std::string name);
+        virtual ~MenuItem(void) {};
+
         virtual std::string name(void) const;
         virtual std::string name(std::string);
         const bool equals(MenuItem) const;

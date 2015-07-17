@@ -11,7 +11,7 @@
 #include "../menuManager.h"
 #include "enemy.h"
 #include <fstream>
-#include "../magic/combatManager.h"
+#include "combatManager.h"
 #include <iostream>
 #include "pc.h"
 namespace Play

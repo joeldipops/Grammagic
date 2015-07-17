@@ -98,3 +98,4 @@ const int StateManager<S, P>::moveCursor(const Core::InputPress input, const int
 template class StateManager<Play::PlayState, Core::CoreState>;
 template class StateManager<Title::TitleState, Core::CoreState>;
 template class StateManager<Play::MenuState, Play::PlayState>;
+template class StateManager<Play::PlayState, Play::PlayState>;

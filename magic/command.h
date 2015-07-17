@@ -26,6 +26,7 @@ class Command : public MenuItem
         Command(void){};
         Command(std::string, Effect);
         Command(std::string, Spell);
+        ~Command(void);
 
         std::string name(void) const;
         const std::vector<Word*> components(void) const;

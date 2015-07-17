@@ -8,7 +8,7 @@
 #include "verb.h"
 #include "adverb.h"
 #include "nounPhrase.h"
-#include "battleField.h"
+#include "../play/battleField.h"
 
 #include "../util/utils.h"
 
@@ -29,6 +29,7 @@ namespace Magic
             const std::vector<Word*> components(void) const;
             const Word* component(int) const;
             Word* component(int, Word*);
+            void removeComponent(int);
             bool isValid(bool = false) const;
 
         private:
@@ -36,8 +37,8 @@ namespace Magic
             Nounish* _source;
             Verb* _action;
             std::vector<Adverb*> _adverbs;
-            //void takeOutBin(void);
-            std::vector<NounPhrase*> _rubbishBin;
+            void toBin(Word*);
+            std::vector<Word*> _rubbishBin;
             std::vector<Word*> _components;
 
     };

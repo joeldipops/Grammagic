@@ -9,6 +9,7 @@ class Rune : public MenuItem
     public:
         Rune() {};
         Rune(Magic::Word*);
+        virtual ~Rune(void);
 
     private:
         Magic::Word* _word;

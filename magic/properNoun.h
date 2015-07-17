@@ -3,7 +3,7 @@
 
 #include "nounish.h"
 #include "../mapObject.h"
-#include "battleField.h"
+#include "../play/battleField.h"
 #include "modifier.h"
 
 class Mob;

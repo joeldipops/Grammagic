@@ -32,9 +32,6 @@
 		<Unit filename="magic/adverb.h" />
 		<Unit filename="magic/battleCommands.cpp" />
 		<Unit filename="magic/battleCommands.h" />
-		<Unit filename="magic/battleField.cpp" />
-		<Unit filename="magic/battleField.h" />
-		<Unit filename="magic/combatManager.cpp" />
 		<Unit filename="magic/combatManager.h" />
 		<Unit filename="magic/command.cpp" />
 		<Unit filename="magic/command.h" />
@@ -64,6 +61,10 @@
 		<Unit filename="menuViewManager.cpp" />
 		<Unit filename="menuViewManager.h" />
 		<Unit filename="noun.h" />
+		<Unit filename="play/battleField.cpp" />
+		<Unit filename="play/battleField.h" />
+		<Unit filename="play/combatManager.cpp" />
+		<Unit filename="play/combatManager.h" />
 		<Unit filename="play/controlViewManager.cpp" />
 		<Unit filename="play/enemy.cpp" />
 		<Unit filename="play/enemy.h" />

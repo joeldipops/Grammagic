@@ -5,7 +5,7 @@
 #include "word.h"
 #include "modifier.h"
 #include "../mapObject.h"
-#include "battleField.h"
+#include "../play/battleField.h"
 
 class Mob;
 namespace Magic

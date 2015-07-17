@@ -7,8 +7,12 @@ std::vector<Word*> Commands::allCommands = std::vector<Word*>();
 Noun Commands::ENEMY = Noun(enemies, std::string("ENEMY"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 
 // The mob with the most or least stamina
-Adjective Commands::FRESHEST = Adjective(weakest, std::string("FRESHEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
-Adjective Commands::SICKEST = Adjective(strongest, std::string("SICKEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Adjective Commands::FRESHEST = Adjective(freshest, std::string("FRESHEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Adjective Commands::SICKEST = Adjective(sickest, std::string("SICKEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+
+// The fastest or slowest mob
+Adjective Commands::FASTEST = Adjective(fastest, std::string("FASTEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Adjective Commands::SLOWEST = Adjective(slowest, std::string("SLOWEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 
 // The caster
 ProperNoun Commands::SELF = ProperNoun(self, std::string("SELF"), Modifier(.8), Modifier(1.0), Modifier(1.0));
@@ -18,8 +22,8 @@ Verb Commands::WEAKEN = Verb(weaken, std::string("WEAKEN"), Modifier(50), Modifi
 Verb Commands::HEAL = Verb(strengthen, std::string("HEAL"), Modifier(50), Modifier(10, 1.0), Modifier(2000), -1, 1, 0);
 
 // Trades health for speed.
-Verb Commands::HASTEN = Verb(hasten, std::string("HASTEN"), Modifier(5), Modifier(10, 1.0), Modifier(3000), -2, 1, 1);
-Verb Commands::SLOW = Verb(slow, std::string("SLOW"), Modifier(5), Modifier(10, 1.0), Modifier(3000), -1, 1, 1);
+Verb Commands::HASTEN = Verb(hasten, std::string("HASTEN"), Modifier(50), Modifier(10, 1.0), Modifier(3000), -2, 1, 1);
+Verb Commands::SLOW = Verb(slow, std::string("SLOW"), Modifier(50), Modifier(10, 1.0), Modifier(3000), -1, 1, 1);
 
 // Takes more to deal more, takes less to deal less
 Adverb Commands::HEAVIER = Adverb(std::string("HEAVIER"), Modifier(1.25), Modifier(1.25), Modifier(1.0));

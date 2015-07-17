@@ -43,18 +43,18 @@ void MenuViewManager::render(PC* pc, int spellIndex, int componentPosition, int 
 
         if (i < int(pc->spells()->size()))
         {
-            Command command = pc->spells()->at(i);
-            std::vector<Word*> words = command.components();
+            Command* command = &pc->spells()->at(i);
+            std::vector<Word*> words = command->components();
 
             std::vector<Rune> runes = std::vector<Rune>(0);
             pointers.reserve(words.size());
             runes.reserve(words.size());
 
-            int deallocIndex = pc->runeSlots();
-
             int maxSlots = pc->runeSlots() > int(words.size())
             ? words.size() + 1
             : pc->runeSlots();
+
+            MenuItem emptySlot = MenuItem();
 
             for (int j = 0; j < maxSlots; j++)
             {
@@ -64,22 +64,16 @@ void MenuViewManager::render(PC* pc, int spellIndex, int componentPosition, int 
                     pointers.push_back((MenuItem*)&runes.at(runes.size()-1));
                 }
                 else
-                {
-                    deallocIndex = j;
-                    pointers.push_back(new MenuItem());
-                }
+                    pointers.push_back(&emptySlot);
             }
 
             SDL_Rect validRect = SDL_Rect { rect.w - rect.x, rect.y + cursorYOffset, 30, 30 };
-            if (command.spell()->isValid(true))
+            if (command->spell()->isValid(true))
                 SDL_RenderCopy(renderer(), valid, 0, &validRect);
             else
                 SDL_RenderCopy(renderer(), invalid, 0, &validRect);
 
             drawHorizontalControls(&pointers, position, &rect);
-
-            for (int j = deallocIndex; j < int(pointers.size()); j++)
-                delete pointers.at(j);
         }
         else
         {
@@ -104,9 +98,13 @@ void MenuViewManager::render(PC* pc, int spellIndex, int componentPosition, int 
         }
 
         std::vector<Rune*> pointers = toPointers(runes);
-        std::vector<MenuItem*> items = std::vector<MenuItem*> {pointers.begin(), pointers.end()};
+        std::vector<MenuItem*> items = std::vector<MenuItem*> (0);
+        MenuItem item = MenuItem("");
+        items.push_back(&item);
+        items.insert(items.end(), pointers.begin(), pointers.end());
         drawControls(&items, runeIndex, &_runesVp);
     }
+
 
     SDL_RenderPresent(renderer());
     return;

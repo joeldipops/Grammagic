@@ -81,6 +81,20 @@ Play::PlayState MenuManager::start(PC* pc)
     return result();
 }
 
+/**
+ * @param pc who has a list of spells.
+ * @return The number of components in the currently selected spell.
+ */
+int MenuManager::selectedSpellLength(PC* pc) const
+{
+    // We have only just started writing this spell.
+    if (pc->spells()->size() <= _selectedSpellIndex)
+        return 0;
+
+    return (int) pc->spells()->at(_selectedSpellIndex).spell()->components().size();
+}
+
+
 bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
 {
     int result = 0;
@@ -90,18 +104,18 @@ bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
     switch(state())
     {
         case MenuState::SelectSpell:
-            itemCount = pc->spellSlots();
+            itemCount = pc->spellSlots() > pc->spells()->size() ? pc->spells()->size() + 1 : pc->spellSlots();
             index = _selectedSpellIndex;
             columnItemCount = 1;
             break;
         case MenuState::SelectRune:
             index = _selectedRuneIndex;
-            itemCount = Commands::allCommands.size();
+            itemCount = Commands::allCommands.size() + 1;
             columnItemCount = _viewManager.menuItemsPerColumn();
             break;
         case MenuState::SelectComponent:
             index = _selectedComponentIndex;
-            itemCount = pc->runeSlots();
+            itemCount = pc->runeSlots() > selectedSpellLength(pc) ? selectedSpellLength(pc) + 1 : pc->runeSlots();
             columnItemCount = 1;
             break;
         default:
@@ -181,11 +195,18 @@ bool MenuManager::processSpellCommand(PC* pc)
 bool MenuManager::processRuneCommand(PC* pc)
 {
     if (int(pc->spells()->size()) <= _selectedSpellIndex)
-        pc->spells()->push_back(Command("abc", Spell(std::vector<Word*>(0))));
+        pc->spells()->push_back(Command("", Spell(std::vector<Word*>(0))));
 
     Spell* workingSpell = pc->spells()->at(_selectedSpellIndex).spell();
-    workingSpell->component(_selectedComponentIndex, Commands::allCommands.at(_selectedRuneIndex));
-    if (_selectedComponentIndex < pc->runeSlots())
+
+    if (_selectedRuneIndex == 0)
+    {
+        workingSpell->removeComponent(_selectedComponentIndex);
+        return true;
+    }
+
+    workingSpell->component(_selectedComponentIndex, Commands::allCommands.at(_selectedRuneIndex - 1));
+    if (_selectedComponentIndex + 1 < pc->runeSlots())
         _selectedComponentIndex++;
     return true;
 }

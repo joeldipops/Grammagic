@@ -275,4 +275,6 @@ void ViewManager::drawBorder(SDL_Rect rect, int width, const SDL_Colour* colour 
     rects[3] = &rightSide;
 
     SDL_RenderFillRects(_renderer, *rects, 4);
+
+    delete[] rects;
 }

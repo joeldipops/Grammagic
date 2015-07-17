@@ -13,7 +13,7 @@ GameMap::GameMap(int width, int height)
     _mobs = std::vector<Mob*>();
     _mobs.reserve(width * height);
     // Reserve the first spot for the PC mob.
-    _mobs.push_back(new Mob(MobType::None));
+    _mobs.push_back(nullptr);
 }
 
 GameMap::~GameMap()
@@ -22,11 +22,6 @@ GameMap::~GameMap()
     {
         delete _mobs.at(i);
     }
-    /*
-    for(int i = 0; i < _cells.size(); i++)
-    {
-        delete _cells.at(i);
-    }*/
 }
 
 /**
@@ -90,7 +85,7 @@ bool GameMap::placeMob(Mob* mob, int x, int y)
         return false;
 
     MapCell* cell = getCell(x, y);
-    if (cell->contents()->type() != MobType::None)
+    if (cell->contents() != nullptr)
         return false;
 
     if (mob->type() == MobType::PlayerCharacter)

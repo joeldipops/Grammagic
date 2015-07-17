@@ -3,7 +3,7 @@
 
 #include "word.h"
 #include "../mapObject.h"
-#include "battleField.h"
+#include "../play/battleField.h"
 
 class Mob;
 

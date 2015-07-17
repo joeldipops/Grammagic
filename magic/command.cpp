@@ -33,6 +33,14 @@ Command::Command(std::string name, Effect effect) : MenuItem(name)
 }
 
 /**
+ * Destructor
+ */
+Command::~Command()
+{
+
+}
+
+/**
  * @return the wrapped spell.
  */
 Spell* Command::spell(void)

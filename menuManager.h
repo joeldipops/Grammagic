@@ -17,6 +17,7 @@ namespace Play
             Play::PlayState start(void);
 
         private:
+            int selectedSpellLength(PC*) const;
             bool moveCursor(PC* pc, Core::InputPress input);
             bool processRuneCommand(PC* pc);
             bool processSpellCommand(PC* pc);

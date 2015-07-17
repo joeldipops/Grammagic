@@ -318,7 +318,7 @@ void PlayStateManager::writeMapFile(const char* fileName, const int width, const
     mapFile.write(dataBytes, fileSize);
     mapFile.close();
 
-    delete dataBytes;
+    delete[] dataBytes;
 }
 
 // Test data.

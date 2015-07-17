@@ -5,3 +5,6 @@ Rune::Rune(Magic::Word* word_)
 {
     _word = word_;
 }
+
+Rune::~Rune(void) {}
+
