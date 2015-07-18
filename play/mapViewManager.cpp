@@ -71,7 +71,8 @@ void MapViewManager::renderHealthBar(const Mob* mob)
         barWidth,
     };
 
-    drawBorder(rect, 1, new SDL_Colour {0x00, 0x00, 0x00, 0xFF}, false);
+    SDL_Colour colour = SDL_Colour {0x00, 0x00, 0x00, 0xFF};
+    drawBorder(rect, 1, &colour , false);
     SDL_SetRenderDrawColor(renderer(), 0x00, 0xFF, 0x00, 0xFF);
     int w = ceil( (double(rect.w) / double(mob->maxStamina())) * mob->stamina() );
 

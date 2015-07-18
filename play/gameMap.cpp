@@ -19,9 +19,8 @@ GameMap::GameMap(int width, int height)
 GameMap::~GameMap()
 {
     for(int i = 0; i < int(_mobs.size()); i++)
-    {
         delete _mobs.at(i);
-    }
+    _mobs = std::vector<Mob*>(0);
 }
 
 /**

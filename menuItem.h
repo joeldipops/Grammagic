@@ -2,6 +2,7 @@
 #define MENUITEM_H_INCLUDED
 
 #include <string>
+#include <SDL2/SDL.h>
 
 class MenuItem
 {
@@ -12,6 +13,7 @@ class MenuItem
 
         virtual std::string name(void) const;
         virtual std::string name(std::string);
+        virtual SDL_Colour colour(void) const;
         const bool equals(MenuItem) const;
     private:
         std::string _name;

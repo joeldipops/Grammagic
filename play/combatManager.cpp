@@ -1,4 +1,5 @@
 #include "combatManager.h"
+#include <iostream>
 
 using namespace Magic;
 
@@ -146,6 +147,7 @@ bool CombatManager::processCommand(Mob* mob, BattleField* field)
 {
     // Carry out the command
     int waitMs = mob->selectedCommand()->execute(mob, field);
+    std::cout<< waitMs << std::endl;
 
     // Apply the duration - mob cannot act again until command completes.
     mob->block(SDL_GetTicks() + waitMs);

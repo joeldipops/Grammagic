@@ -88,7 +88,7 @@ Play::PlayState MenuManager::start(PC* pc)
 int MenuManager::selectedSpellLength(PC* pc) const
 {
     // We have only just started writing this spell.
-    if (pc->spells()->size() <= _selectedSpellIndex)
+    if (int(pc->spells()->size()) <= _selectedSpellIndex)
         return 0;
 
     return (int) pc->spells()->at(_selectedSpellIndex).spell()->components().size();
@@ -104,7 +104,9 @@ bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
     switch(state())
     {
         case MenuState::SelectSpell:
-            itemCount = pc->spellSlots() > pc->spells()->size() ? pc->spells()->size() + 1 : pc->spellSlots();
+            itemCount = pc->spellSlots() > int(pc->spells()->size())
+                ? pc->spells()->size() + 1
+                : pc->spellSlots();
             index = _selectedSpellIndex;
             columnItemCount = 1;
             break;
@@ -115,7 +117,9 @@ bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
             break;
         case MenuState::SelectComponent:
             index = _selectedComponentIndex;
-            itemCount = pc->runeSlots() > selectedSpellLength(pc) ? selectedSpellLength(pc) + 1 : pc->runeSlots();
+            itemCount = pc->runeSlots() > selectedSpellLength(pc)
+                ? selectedSpellLength(pc) + 1
+                : pc->runeSlots();
             columnItemCount = 1;
             break;
         default:

@@ -23,8 +23,15 @@ PlayStateManager::PlayStateManager(SDL_Renderer* r, AssetCache* a) : StateManage
 PlayStateManager::~PlayStateManager()
 {
     delete _controlView;
-    delete _map;
     _controlView = nullptr;
+    delete _map;
+    _map = nullptr;
+    delete _miniMapView;
+    _miniMapView = nullptr;
+    delete _statsView;
+    _statsView = nullptr;
+    delete _mapView;
+    _mapView = nullptr;
 }
 
 /**
@@ -232,7 +239,8 @@ GameMap* PlayStateManager::loadMap(void)
         int x = position % width;
         int y = position / width;
 
-        gameMap->setCell(x, y, new MapCell(TerrainType(mapData[i])));
+        MapCell cell = MapCell(TerrainType(mapData[i]));
+        gameMap->setCell(x, y, &cell);
 
         MobType contents = MobType(mapData[i+1]);
         if (contents == MobType::None)

@@ -129,10 +129,11 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
     int i = 0;
     for(; i < int(items->size()); i++)
     {
+        SDL_Colour textClr = items->at(i)->colour();
         if (i == selectedIndex)
-            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textColour, &textColour);
+            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textClr, &textColour);
         else
-            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &borderColour, &borderColour);
+            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textClr, &borderColour);
         temp = SDL_Rect {rect.x, rect.y + controlHeight + controlMarginTop, controlWidth, controlHeight};
 
         // Can't fit vertically, so shift to the right.
