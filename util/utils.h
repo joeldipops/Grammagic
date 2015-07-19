@@ -3,14 +3,19 @@
 
 #include <vector>
 #include <algorithm>
+#include <chrono>
+#include <thread>
 
-namespace Util {
-    /*
-    static void sleep(int milliseconds)
+namespace Util
+{
+    struct Util
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
-    }*/
-};
+        static void sleep(int milliseconds)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+        };
+    };
+}
 
 // TODO Learn to do operator overloading to make this prettier
 template<typename N>
@@ -68,7 +73,7 @@ struct Location
         {
             X = x;
             Y = y;
-        }
+        };
         int X;
         int Y;
 };

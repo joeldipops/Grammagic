@@ -66,9 +66,9 @@ Core::CoreState PlayStateManager::start(void)
     while(state() != PlayState::Exit)
     {
         // Free up the CPU to do other shit each iteration.
-        //Util::sleep(20);
+        //
         if (!rerender)
-            ;
+            Util::sleep(50);
 
         if (_map->pc()->stamina() <= 0)
         {

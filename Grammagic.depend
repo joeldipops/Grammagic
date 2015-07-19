@@ -24,9 +24,11 @@
 	<stdint.h>
 	"mapObject.h"
 
-1436681638 /home/joel/Projects/Grammagic/util/utils.h
+1437283999 /home/joel/Projects/Grammagic/util/utils.h
 	<vector>
 	<algorithm>
+	<chrono>
+	<thread>
 
 1437046795 /home/joel/Projects/Grammagic/mapObject.h
 	<string>
@@ -50,12 +52,14 @@
 	"stateEnums.h"
 	"mob.h"
 
-1436665197 /home/joel/Projects/Grammagic/viewManager.h
+1437277386 /home/joel/Projects/Grammagic/viewManager.h
 	<SDL2/SDL.h>
 	"util/assetCache.h"
 	<SDL2/SDL_ttf.h>
 	"menuItem.h"
 	<vector>
+	"util/utils.h"
+	<algorithm>
 
 1436596975 /home/joel/Projects/Grammagic/util/assetCache.h
 	<SDL2/SDL.h>
@@ -295,8 +299,9 @@
 	<string>
 	<stdint.h>
 
-1437181148 source:/home/joel/Projects/Grammagic/viewManager.cpp
+1437282742 source:/home/joel/Projects/Grammagic/viewManager.cpp
 	"viewManager.h"
+	<iostream>
 
 1435477394 source:/home/joel/Projects/Grammagic/controlViewManager.cpp
 	"viewManagers.h"
@@ -378,7 +383,7 @@
 1435994666 /home/joel/Projects/Grammagic/play/terrain.h
 	"../mapObject.h"
 
-1437046795 /home/joel/Projects/Grammagic/play/mob.h
+1437280599 /home/joel/Projects/Grammagic/play/mob.h
 	"../mapObject.h"
 	<vector>
 	"../util/utils.h"
@@ -397,7 +402,7 @@
 1436169502 source:/home/joel/Projects/Grammagic/play/miniMapViewManager.cpp
 	"viewManagers.h"
 
-1437048422 source:/home/joel/Projects/Grammagic/play/mob.cpp
+1437281860 source:/home/joel/Projects/Grammagic/play/mob.cpp
 	"mob.h"
 	"../magic/nounish.h"
 	"../magic/nounPhrase.h"
@@ -414,7 +419,7 @@
 	"../combat/adjective.h"
 	"../combat/noun.h"
 
-1437181547 source:/home/joel/Projects/Grammagic/play/playStateManager.cpp
+1437284170 source:/home/joel/Projects/Grammagic/play/playStateManager.cpp
 	"playStateManager.h"
 
 1437124217 /home/joel/Projects/Grammagic/play/playStateManager.h
@@ -432,7 +437,7 @@
 	<iostream>
 	"pc.h"
 
-1436170684 source:/home/joel/Projects/Grammagic/play/statsViewManager.cpp
+1437283207 source:/home/joel/Projects/Grammagic/play/statsViewManager.cpp
 	"viewManagers.h"
 
 1436170700 source:/home/joel/Projects/Grammagic/play/terrain.cpp
@@ -468,11 +473,11 @@
 1436532760 /home/joel/Projects/Grammagic/title/titleViewManager.h
 	"../viewManager.h"
 
-1436686491 source:/home/joel/Projects/Grammagic/title/titleStateManager.cpp
+1437284165 source:/home/joel/Projects/Grammagic/title/titleStateManager.cpp
 	"titleStateManager.h"
 	"../res/strings.h"
 
-1436533215 source:/home/joel/Projects/Grammagic/title/titleViewManager.cpp
+1437275925 source:/home/joel/Projects/Grammagic/title/titleViewManager.cpp
 	"titleStateManager.h"
 
 1435568281 source:/home/joel/Projects/Grammagic/StateManager.cpp
@@ -758,7 +763,7 @@
 	"globalConstants.h"
 	<SDL2/SDL.h>
 
-1437179493 source:/home/joel/Projects/Grammagic/menuManager.cpp
+1437284025 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
 1436953723 /home/joel/Projects/Grammagic/globalConstants.h
@@ -805,7 +810,7 @@
 	"../play/mob.h"
 	"../play/gameMap.h"
 
-1437181794 source:/home/joel/Projects/Grammagic/play/combatManager.cpp
+1437284036 source:/home/joel/Projects/Grammagic/play/combatManager.cpp
 	"combatManager.h"
 	<iostream>
 

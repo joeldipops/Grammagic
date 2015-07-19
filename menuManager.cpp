@@ -23,6 +23,8 @@ Play::PlayState MenuManager::start(PC* pc)
     {
         if (rerender) {
             _viewManager.render(pc, _selectedSpellIndex, _selectedComponentIndex, _selectedRuneIndex);
+        } else {
+            Util::Util::sleep(50);
         }
 
         rerender = false;

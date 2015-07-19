@@ -44,6 +44,7 @@ class Mob : public MapObject
         const std::vector<Command>* spells(void) const;
         int unblockTime(void) const;
         bool isBlocked(void) const;
+        int elapsedWait(void) const;
 
         void block(int);
         bool tryUnblock(int);
@@ -67,6 +68,7 @@ class Mob : public MapObject
         int _rangeOfSight;
         int _selectedCommandIndex = 0;
         int _unblockTime = 0;
+        int _blockedTime = 0;
         std::vector<Command> _spellCommands;
         std::vector<Command> _otherCommands;
         std::string _portraitFileName;

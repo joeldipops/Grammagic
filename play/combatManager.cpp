@@ -32,10 +32,12 @@ Play::PlayState CombatManager::start(GameMap* map_)
 
     while(field.isInCombat())
     {
+        Util::Util::sleep(50);
         _map->buryTheDead();
 
-        if (rerender)
-            render();
+
+        //if (rerender)
+        render();
 
         rerender = false;
 
@@ -147,7 +149,6 @@ bool CombatManager::processCommand(Mob* mob, BattleField* field)
 {
     // Carry out the command
     int waitMs = mob->selectedCommand()->execute(mob, field);
-    std::cout<< waitMs << std::endl;
 
     // Apply the duration - mob cannot act again until command completes.
     mob->block(SDL_GetTicks() + waitMs);

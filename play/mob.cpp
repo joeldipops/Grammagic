@@ -132,8 +132,26 @@ bool Mob::isBlocked(void) const
  */
 void Mob::block(int unblockTime_)
 {
+    _blockedTime = SDL_GetTicks();
     _isBlocked = true;
     _unblockTime = unblockTime_;
+}
+
+/**
+ * @return The percentage of time elapsed until can be unblocked.
+ */
+int Mob::elapsedWait(void) const
+{
+    int ticks = SDL_GetTicks();
+    if (_unblockTime > ticks)
+    {
+        int elapsed = ticks - _blockedTime;
+        int total = _unblockTime - _blockedTime;
+
+        return elapsed / (double)total * 100;
+    }
+
+    return -1;
 }
 
 /**

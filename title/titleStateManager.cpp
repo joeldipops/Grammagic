@@ -35,6 +35,8 @@ Core::CoreState TitleStateManager::start(void)
     {
         if(rerender)
             render();
+        else
+            Util::Util::sleep(50);
 
         oldState = state();
 

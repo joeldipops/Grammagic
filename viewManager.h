@@ -6,6 +6,8 @@
 #include <SDL2/SDL_ttf.h>
 #include "menuItem.h"
 #include <vector>
+#include "util/utils.h"
+#include <algorithm>
 
 class ViewManager
 {
@@ -41,11 +43,13 @@ class ViewManager
         TTF_Font* font(void);
         SDL_Texture* formatFontTexture(const std::string, const SDL_Colour*);
 
+        void drawSector(int cx, int cy, int r, int degStart, int degEnd);
+
     private:
+        void addToQuad(std::vector<std::vector<Location>>&,int, int, int, int);
         SDL_Renderer* _renderer;
         SDL_Rect _viewPort;
         AssetCache* _assets;
         int _menuItemsPerColumn;
-
 };
 #endif

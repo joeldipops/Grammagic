@@ -1,5 +1,6 @@
 #include "viewManager.h"
 
+
 const SDL_Colour ViewManager::hudColour = { 0x19, 0x19, 0x70, 0xFF };
 const SDL_Colour ViewManager::borderColour = { 0x69, 0x69, 0x69, 0xFF };
 const SDL_Colour ViewManager::textColour = { 0xFF, 0xFF, 0xFF, 0xFF };
@@ -278,4 +279,114 @@ void ViewManager::drawBorder(SDL_Rect rect, int width, const SDL_Colour* colour 
     SDL_RenderFillRects(_renderer, *rects, 4);
 
     delete[] rects;
+}
+
+/**
+ * Helper for drawing circles.
+ */
+void ViewManager::addToQuad(std::vector<std::vector<Location>>& quads, int cx, int cy, int x, int y)
+{
+        int q = 0;
+        if (x >= cx && y >= cy)
+            q = 0;
+        else if ( x >= cx && y < cy)
+            q = 1;
+        else if (x < cx && y < cy)
+            q = 2;
+        else
+            q = 3;
+
+        quads.at(q).push_back(Location(x, y));
+};
+            #include <iostream>
+void ViewManager::drawSector(int icx, int icy, int r, int startDegree, int endDegree)
+{
+    double error = (double)-r;
+    double x = (double)r -0.5;
+    double y = (double) 0.5;
+    double cx = (double) icx - 0.5;
+    double cy = (double) icy - 0.5;
+
+    std::vector<std::vector<Location>> quads = std::vector<std::vector<Location>>(4);
+
+    while (x >= y)
+    {
+        addToQuad(quads, cx, cy, cx + x, cy + y);
+        addToQuad(quads, cx, cy, cx + y, cy + x);
+
+        if (x != 0)
+        {
+            addToQuad(quads, cx, cy, cx - x, cy + y);
+            addToQuad(quads, cx, cy, cx + y, cy - x);
+        }
+
+        if (y != 0)
+        {
+            addToQuad(quads, cx, cy, cx + x, cy - y);
+            addToQuad(quads, cx, cy, cx - y, cy + x);
+        }
+
+        if (x != 0 && y != 0)
+        {
+            addToQuad(quads, cx, cy, cx - x, cy - y);
+            addToQuad(quads, cx, cy,  cx - y, cy - x);
+        }
+
+        error += y;
+        ++y;
+        error += y;
+
+        if (error >= 0)
+        {
+            --x;
+            error -= x;
+            error -= x;
+        }
+    }
+
+    std::sort(quads[0].begin(), quads[0].end(), [](Location lhs, Location rhs)->bool
+    {
+        return lhs.X < rhs.X;
+    });
+
+    std::sort(quads[1].begin(), quads[1].end(), [](Location lhs, Location rhs)->bool
+    {
+        return lhs.X > rhs.X;
+    });
+
+    std::sort(quads[2].begin(), quads[2].end(), [](Location lhs, Location rhs)->bool
+    {
+        return lhs.X > rhs.X;
+    });
+
+    std::sort(quads[3].begin(), quads[3].end(), [](Location lhs, Location rhs)->bool
+    {
+        return lhs.X < rhs.X;
+    });
+
+
+    int totalData = quads[0].size() + quads[1].size() + quads[2].size() + quads[3].size();
+
+    int start = totalData * ((startDegree % 360) / 360.0);
+    int finish = totalData * ((endDegree % 360) / 360.0);
+    int quadBoundary = totalData / 4;
+
+    int i = start;
+    while (i != finish)
+    {
+        int quadrant = i / quadBoundary;
+        int j = i % quadBoundary;
+
+        i++;
+
+        if (j == 0 && quadrant != 0)
+            continue;
+
+        Location loc = quads[quadrant][j];
+
+        SDL_RenderDrawLine(_renderer, cx, cy, loc.X, loc.Y);
+
+        if (i >= totalData)
+            i = 0;
+    }
 }
