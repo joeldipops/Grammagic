@@ -7,6 +7,8 @@
 #include "globalConstants.h"
 #include "title/titleStateManager.h"
 #include "play/playStateManager.h"
+#include "play/pc.h"
+#include "persistence/saveLoad.h"
 
 #include <stdlib.h>
 #include <time.h>
@@ -17,9 +19,11 @@ const std::string Strings::Heading = "Grammagic";
 const std::string Strings::Stamina = "Stamina";
 const std::string Strings::Start = "Start";
 const std::string Strings::Quit = "Quit";
+const std::string Strings::Continue = "Continue";
 
 using namespace Magic;
 using namespace Play;
+using namespace Persistence;
 namespace Core
 {
     class Grammar
@@ -46,7 +50,8 @@ namespace Core
 
                 TitleStateManager title = TitleStateManager(renderer, &assets);
                 PlayStateManager play = PlayStateManager(renderer, &assets);
-
+                PC player = PC();
+                SaveLoad io = SaveLoad("file.save");
                 CoreState state = CoreState::Title;
                 while(state != CoreState::Exit)
                 {
@@ -64,8 +69,12 @@ namespace Core
                             state = title.start();
                             break;
                         }
+                        case CoreState::Load: {
+                            io.load(player);
+                        }
                         case CoreState::Play: {
-                            state = play.start();
+                            state = play.start(player);
+                            io.save(player);
                             break;
                         }
                         case CoreState::Exit:
@@ -87,10 +96,10 @@ namespace Core
 int main ()
 {
     Commands::allCommands.push_back(&Commands::HEAL);
-    Commands::allCommands.push_back(&Commands::WEAKEN);
+    Commands::allCommands.push_back(&Commands::HURT);
     Commands::allCommands.push_back(&Commands::HASTEN);
     Commands::allCommands.push_back(&Commands::SLOW);
-    Commands::allCommands.push_back(&Commands::SELF);
+    Commands::allCommands.push_back(&Commands::CASTER);
     Commands::allCommands.push_back(&Commands::ENEMY);
     Commands::allCommands.push_back(&Commands::SICKEST);
     Commands::allCommands.push_back(&Commands::FRESHEST);

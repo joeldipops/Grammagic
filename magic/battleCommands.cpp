@@ -15,10 +15,10 @@ Adjective Commands::FASTEST = Adjective(fastest, std::string("FASTEST"), Modifie
 Adjective Commands::SLOWEST = Adjective(slowest, std::string("SLOWEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 
 // The caster
-ProperNoun Commands::SELF = ProperNoun(self, std::string("SELF"), Modifier(.8), Modifier(1.0), Modifier(1.0));
+ProperNoun Commands::CASTER = ProperNoun(self, std::string("CASTER"), Modifier(.8), Modifier(1.0), Modifier(1.0));
 
 // Transfers health from one to the other.
-Verb Commands::WEAKEN = Verb(weaken, std::string("WEAKEN"), Modifier(50), Modifier(10), Modifier(2000), -2, 1, 0);
+Verb Commands::HURT = Verb(weaken, std::string("HURT"), Modifier(50), Modifier(10), Modifier(2000), -2, 1, 0);
 Verb Commands::HEAL = Verb(strengthen, std::string("HEAL"), Modifier(50), Modifier(10, 1.0), Modifier(2000), -1, 1, 0);
 
 // Trades health for speed.

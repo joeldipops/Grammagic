@@ -2,7 +2,7 @@
 
 using namespace Play;
 
-const bool REGEN_MAP = true;
+const bool REGEN_MAP = false;
 const SDL_Rect CONTROL_VIEW = {0, 0, 1000, 150};
 const SDL_Rect MINIMAP_VIEW = {1000, 0, 200, 150};
 const SDL_Rect STATS_VIEW = {1000, 150, 200, 650};
@@ -22,10 +22,10 @@ PlayStateManager::PlayStateManager(SDL_Renderer* r, AssetCache* a) : StateManage
 
 PlayStateManager::~PlayStateManager()
 {
-    delete _controlView;
-    _controlView = nullptr;
     delete _map;
     _map = nullptr;
+    delete _controlView;
+    _controlView = nullptr;
     delete _miniMapView;
     _miniMapView = nullptr;
     delete _statsView;
@@ -38,7 +38,7 @@ PlayStateManager::~PlayStateManager()
  * Sets up graphics then Starts the main loop for this state.
  * @returns the state the core loop should be in when the PlayState ends.
  */
-Core::CoreState PlayStateManager::start(void)
+Core::CoreState PlayStateManager::start(PC& pc)
 {
     state(PlayState::Movement);
     result(Core::CoreState::Exit);
@@ -60,6 +60,8 @@ Core::CoreState PlayStateManager::start(void)
     if (_map->mobs().at(0)->type() != MobType::PlayerCharacter)
         return Core::CoreState::Exit;
 
+    _map->pc(pc);
+
     bool rerender = true;
 
     // Enter the main loop.
@@ -68,7 +70,7 @@ Core::CoreState PlayStateManager::start(void)
         // Free up the CPU to do other shit each iteration.
         //
         if (!rerender)
-            Util::sleep(50);
+            Util::Util::sleep(50);
 
         if (_map->pc()->stamina() <= 0)
         {
@@ -227,7 +229,7 @@ void PlayStateManager::exit(const Core::CoreState nextState)
  */
 GameMap* PlayStateManager::loadMap(void)
 {
-    std::vector<char> mapData = readFile("map");
+    std::vector<char> mapData = Util::Util::readFile("map");
     int length = mapData.size();
     GameMap* gameMap = new GameMap(mapData[0], mapData[1]);
 
@@ -278,30 +280,7 @@ void PlayStateManager::render()
     SDL_RenderPresent(renderer());
 }
 
-/**
- * Reads a file and returns an array of bytes.
- * @param fileName the file to read.
- * @return The file's contents as an array of bytes.
- */
-std::vector<char> PlayStateManager::readFile(const char* fileName)
-{
-    std::vector<char> result ;
-    std::streampos size;
-    std::ifstream mapFile(fileName, std::ios::in|std::ios::binary|std::ios::ate);
 
-    if (!mapFile.is_open())
-        return std::vector<char>();
-
-    size = mapFile.tellg();
-
-    char* data = new char[size];
-    mapFile.seekg(0, std::ios::beg);
-    mapFile.read(data, size);
-    mapFile.close();
-
-    result.assign(data, data+size);
-    return result;
-}
 
 /**
  *

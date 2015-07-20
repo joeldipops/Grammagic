@@ -36,10 +36,11 @@ Play::PlayState CombatManager::start(GameMap* map_)
         _map->buryTheDead();
 
 
-        //if (rerender)
-        render();
+        if (rerender)
+            render();
 
-        rerender = false;
+        // Always rerender for now, at least until I can get the clocks working prettily
+        rerender = true;
 
 
         std::vector<SDL_Event> events;

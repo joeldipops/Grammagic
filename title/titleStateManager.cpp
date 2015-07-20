@@ -3,6 +3,7 @@
 
 const MenuItem TitleStateManager::START = MenuItem(Strings::Start);
 const MenuItem TitleStateManager::QUIT = MenuItem(Strings::Quit);
+const MenuItem TitleStateManager::CONTINUE = MenuItem(Strings::Continue);
 
 /**
  * Constructor
@@ -10,7 +11,7 @@ const MenuItem TitleStateManager::QUIT = MenuItem(Strings::Quit);
 TitleStateManager::TitleStateManager(SDL_Renderer* r, AssetCache* a) : StateManager(r, a)
 {
     _view = TitleViewManager(renderer(), SDL_Rect {0, 0, 1200, 800}, assets());
-    _menu = std::vector<MenuItem> {START, QUIT};
+    _menu = std::vector<MenuItem> {START, CONTINUE, QUIT};
     state(Title::TitleState::Normal);
 }
 
@@ -102,6 +103,7 @@ bool TitleStateManager::moveCursor(const Core::InputPress input)
 bool TitleStateManager::processCommand(void)
 {
     MenuItem command = _menu.at(_selectedItemIndex);
+
     if (command.equals(START))
     {
         state(Title::TitleState::Exit);
@@ -111,6 +113,11 @@ bool TitleStateManager::processCommand(void)
     {
         state(Title::TitleState::Exit);
         result(Core::CoreState::Exit);
+    }
+    else if (command.equals(CONTINUE))
+    {
+        state(Title::TitleState::Exit);
+        result(Core::CoreState::Load);
     }
     return false;
 }

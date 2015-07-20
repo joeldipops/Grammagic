@@ -18,8 +18,9 @@ GameMap::GameMap(int width, int height)
 
 GameMap::~GameMap()
 {
-    for(int i = 0; i < int(_mobs.size()); i++)
-        delete _mobs.at(i);
+    // One as PC is a special case
+    for(int i = 1; i < int(_mobs.size()); i++)
+        killMob(_mobs.at(i));
     _mobs = std::vector<Mob*>(0);
 }
 
@@ -75,7 +76,7 @@ std::vector<Mob*> GameMap::mobs(void) const
  * @param y
  * @return true if placed successfuly, false otherwise.
  */
-bool GameMap::placeMob(Mob* mob, int x, int y)
+bool GameMap::placeMob(Mob* mob, int x, int y, bool canReplace)
 {
     if (x < 0 || x >= width())
         return false;
@@ -85,7 +86,12 @@ bool GameMap::placeMob(Mob* mob, int x, int y)
 
     MapCell* cell = getCell(x, y);
     if (cell->contents() != nullptr)
-        return false;
+    {
+        if (canReplace)
+            killMob(cell->contents());
+        else
+            return false;
+    }
 
     if (mob->type() == MobType::PlayerCharacter)
     {
@@ -102,18 +108,22 @@ bool GameMap::placeMob(Mob* mob, int x, int y)
 }
 
 /**
- *
+ * Gets the current pc, or places a new PC
  * @param pc
  * @return
  */
-PC* GameMap::pc(PC* pc_)
+PC* GameMap::pc(PC& pc)
 {
-    if (pc_ != nullptr)
-        _mobs[0] = pc_;
+    if (_mobs[0] != nullptr)
+    {
+        Mob* old = _mobs[0];
+        this->placeMob((Mob*)&pc, old->x(), old->y(), true);
+    }
 
+    _mobs[0] = &pc;
     return (PC*) _mobs.at(0);
 }
-const PC* GameMap::pc(void) const
+PC* GameMap::pc(void) const
 {
     return (PC*) _mobs.at(0);
 }
@@ -133,7 +143,7 @@ bool GameMap::moveMob(Mob* mob, Location loc)
  * Remove a mob from the map, and from existence
  * @param Mob the Mob to remove.
  */
-void GameMap::killMob(const Mob* mob)
+void GameMap::killMob(Mob* mob)
 {
     // Remove from the map.
     getCell(mob->x(), mob->y())->empty();
@@ -143,6 +153,7 @@ void GameMap::killMob(const Mob* mob)
         if (mob == _mobs.at(i))
             _mobs.erase(_mobs.begin() + i);
     }
+    delete mob;
 }
 
 /**

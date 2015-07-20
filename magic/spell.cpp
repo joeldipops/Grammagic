@@ -222,6 +222,11 @@ Word* Spell::component(int index, Word* word)
     return _components.at(index);
 }
 
+void Spell::addComponent(Word* word)
+{
+    _components.push_back(word);
+}
+
 void Spell::removeComponent(int index)
 {
     int len = _components.size();

@@ -9,7 +9,6 @@ PC::PC(void) : Mob(MobType::PlayerCharacter)
     _spellSlots = 7;
 }
 
-
 /**
  * Returns the maximum number of spells a pc can keep at one time.
  */

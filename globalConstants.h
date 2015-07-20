@@ -28,6 +28,7 @@ namespace Core
     {
         Title,
         Play,
+        Load,
         Exit
     };
 

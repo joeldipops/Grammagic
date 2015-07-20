@@ -30,6 +30,7 @@ namespace Magic
             const Word* component(int) const;
             Word* component(int, Word*);
             void removeComponent(int);
+            void addComponent(Word*);
             bool isValid(bool = false) const;
 
         private:

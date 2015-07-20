@@ -9,5 +9,6 @@ class Strings {
         static const std::string Stamina;
         static const std::string Start;
         static const std::string Quit;
+        static const std::string Continue;
 };
 #endif

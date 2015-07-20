@@ -22,9 +22,9 @@ namespace Magic
             };
 
             static std::vector<Word*> allCommands;
-            static ProperNoun SELF;
+            static ProperNoun CASTER;
             static Noun ENEMY;
-            static Verb WEAKEN;
+            static Verb HURT;
             static Verb HEAL;
             static Verb HASTEN;
             static Verb SLOW;

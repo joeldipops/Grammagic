@@ -21,7 +21,7 @@ namespace Play
         public:
             PlayStateManager(SDL_Renderer*, AssetCache*);
             ~PlayStateManager(void);
-            Core::CoreState start(void);
+            Core::CoreState start(PC&);
         private:
             // Set up
             GameMap* loadMap(void);

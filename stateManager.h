@@ -12,7 +12,6 @@ namespace Core
     {
         public:
             StateManager(SDL_Renderer* renderer, AssetCache* assets);
-            virtual ParentState start(void) = 0;
 
         protected:
             virtual const int moveCursor(const Core::InputPress, const int, const int, const int);

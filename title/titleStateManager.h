@@ -16,6 +16,7 @@ class TitleStateManager final : Core::StateManager<Title::TitleState, Core::Core
     private:
         static const MenuItem START;
         static const MenuItem QUIT;
+        static const MenuItem CONTINUE;
         std::vector<MenuItem> _menu;
 
         void render(void);
