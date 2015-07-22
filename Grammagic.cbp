@@ -102,6 +102,7 @@
 		<Unit filename="title/titleViewManager.h" />
 		<Unit filename="util/assetCache.cpp" />
 		<Unit filename="util/assetCache.h" />
+		<Unit filename="util/utils.cpp" />
 		<Unit filename="util/utils.h" />
 		<Unit filename="viewManager.cpp" />
 		<Unit filename="viewManager.h" />

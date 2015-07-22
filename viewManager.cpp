@@ -1,13 +1,16 @@
 #include "viewManager.h"
 
+using namespace Util;
 
 const SDL_Colour ViewManager::hudColour = { 0x19, 0x19, 0x70, 0xFF };
 const SDL_Colour ViewManager::borderColour = { 0x69, 0x69, 0x69, 0xFF };
 const SDL_Colour ViewManager::textColour = { 0xFF, 0xFF, 0xFF, 0xFF };
-
+const SDL_Colour ViewManager::invisible = { 0xFF, 0xFF, 0xFF, 0x00 };
 const SDL_Rect ViewManager::_control = SDL_Rect { 15, 15, 200, 55 };
-const int ViewManager::controlBorderWidth = 5;
+const SDL_Rect ViewManager::messageBoxOuter = SDL_Rect { WIDTH / 2 - 150, (HEIGHT / 2) - 200, 300, 150 };
+const SDL_Rect ViewManager::messageBoxInner = SDL_Rect { 25, 10, 200, 75 };;
 
+const int ViewManager::controlBorderWidth = 5;
 const int ViewManager::DEFAULT_BORDER_WIDTH = 7;
 
 /**
@@ -113,11 +116,39 @@ void ViewManager::drawHorizontalControls(
 }
 
 /**
+ * Displays a message box.
+ * @param The message.
+ * @param outer The outer boundary of the box.
+ * @param inner The actual position of the text inside the box, scoped to within the outer box.
+ * @param borderWidth The width of the border on the outer boundary.
+ */
+void ViewManager::drawMessage(const std::string message, const SDL_Rect& outer, const SDL_Rect& inner, int borderWidth)
+{
+    SDL_Rect rect = SDL_Rect { outer.x + inner.x, outer.y + inner.y, inner.w, inner.h };
+
+    drawOptionBox(&rect, message, 0, &hudColour, &textColour, &invisible);
+    drawBorder(outer, borderWidth, &borderColour, true);
+}
+
+void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control)
+{
+    std::vector<const MenuItem*> cItems = std::vector<const MenuItem*>(0);
+    cItems.reserve(items->size());
+    for (unsigned int i = 0; i < items->size(); i++)
+    {
+        const MenuItem* n = items->at(i);
+        cItems.push_back(n);
+    }
+
+    return drawControls(&cItems, selectedIndex, port, control);
+}
+
+/**
  * Render all the items that a player can pick from the menu.
  * @param items The list of items on the menu.
  * @param selectedIndex The position in the list of the currently selected item.
  */
-void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control)
+void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control)
 {
     SDL_Rect view;
     if (port == nullptr)
@@ -217,7 +248,7 @@ void ViewManager::drawBorder(int width, const SDL_Colour* colour = nullptr)
  * @param willFillInwards If true, the border will appear wholly inside the rectangle.
  *                        If false, the border will wrap outside the rectangle.
  */
-void ViewManager::drawBorder(SDL_Rect rect, int width, const SDL_Colour* colour = nullptr, bool willFillInwards = true)
+void ViewManager::drawBorder(const SDL_Rect& rect, int width, const SDL_Colour* colour = nullptr, bool willFillInwards = true)
 {
     if (colour != nullptr)
         SDL_SetRenderDrawColor(_renderer, colour->r, colour->g, colour->b, colour->a);
@@ -289,7 +320,7 @@ void ViewManager::drawBorder(SDL_Rect rect, int width, const SDL_Colour* colour 
 /**
  * Helper for drawing circles.
  */
-void ViewManager::addToQuad(std::vector<std::vector<Location>>& quads, int cx, int cy, int x, int y)
+void ViewManager::addToQuad(std::vector<std::vector<Util::Location>>& quads, int cx, int cy, int x, int y)
 {
         int q = 0;
         if (x >= cx && y >= cy)
@@ -312,7 +343,7 @@ void ViewManager::drawSector(int icx, int icy, int r, int startDegree, int endDe
     double cx = (double) icx - 0.5;
     double cy = (double) icy - 0.5;
 
-    std::vector<std::vector<Location>> quads = std::vector<std::vector<Location>>(4);
+    std::vector<std::vector<Util::Location>> quads = std::vector<std::vector<Location>>(4);
 
     while (x >= y)
     {

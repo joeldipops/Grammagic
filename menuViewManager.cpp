@@ -25,7 +25,7 @@ MenuViewManager::MenuViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
  * @param pc
  * @param runeIndex The rune that the cursor is on.
  */
-void MenuViewManager::renderRunes(const PC* pc, int runeIndex)
+void MenuViewManager::renderRunes(const PC& pc, int runeIndex)
 {
     std::vector<Rune> runes = std::vector<Rune>();
     for (Word* word : Commands::allCommands)
@@ -48,7 +48,7 @@ void MenuViewManager::renderRunes(const PC* pc, int runeIndex)
  * @param spellIndex Index of the spell currently being edited.
  * @param componnentPosition Position of the component that can be changed.
  */
-void MenuViewManager::renderSpells(const PC* pc, int spellIndex, int componentPosition)
+void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPosition)
 {
     SDL_Texture* cursor = assets()->get("res/cursor.png");
     SDL_Texture* valid = assets()->get("res/valid.png");
@@ -56,7 +56,7 @@ void MenuViewManager::renderSpells(const PC* pc, int spellIndex, int componentPo
 
     SDL_Rect rect = SDL_Rect { _spellsVp.x + marginLeft, _spellsVp.y, WIDTH, _control.y + _control.h };
 
-    for (int i = 0; i < pc->spellSlots(); i++)
+    for (int i = 0; i < pc.spellSlots(); i++)
     {
         int position = -1;
         if (i == spellIndex)
@@ -66,20 +66,20 @@ void MenuViewManager::renderSpells(const PC* pc, int spellIndex, int componentPo
             position = componentPosition;
         }
         std::vector<MenuItem*> pointers = std::vector<MenuItem*>(0);
-        pointers.reserve(pc->runeSlots());
+        pointers.reserve(pc.runeSlots());
 
-        if (i < int(pc->spells()->size()))
+        if (i < int(pc.spells()->size()))
         {
-            const Command* command = &pc->spells()->at(i);
+            const Command* command = &pc.spells()->at(i);
             std::vector<Word*> words = command->components();
 
             std::vector<Rune> runes = std::vector<Rune>(0);
             pointers.reserve(words.size());
             runes.reserve(words.size());
 
-            int maxSlots = pc->runeSlots() > int(words.size())
+            int maxSlots = pc.runeSlots() > int(words.size())
             ? words.size() + 1
-            : pc->runeSlots();
+            : pc.runeSlots();
 
             MenuItem emptySlot = MenuItem();
 
@@ -116,7 +116,7 @@ void MenuViewManager::renderSpells(const PC* pc, int spellIndex, int componentPo
 }
 
 
-void MenuViewManager::render(const PC* pc, std::vector<MenuItem>& menu, MainMenuItem menuIndex, int spellIndex, int componentPosition, int runeIndex)
+void MenuViewManager::render(const PC& pc, const MenuViewModel& model, std::string* message)
 {
     ViewManager::render();
     fillViewport(&hudColour);
@@ -124,20 +124,24 @@ void MenuViewManager::render(const PC* pc, std::vector<MenuItem>& menu, MainMenu
     drawBorder(_spellsVp, borderWidth, &borderColour, true);
     drawBorder(_runesVp, borderWidth, &borderColour, true);
 
-    auto pointers = toPointers(menu);
-    drawControls(&pointers, int(menuIndex), &_mainVp, &_menuControl);
+    auto pointers = toPointers(model.MenuItems);
+    drawControls(&pointers, int(model.SelectedMenuItem), &_mainVp, &_menuControl);
 
-    switch(menuIndex)
+    switch(model.SelectedMenuItem)
     {
         case MagicSelected:
-            renderSpells(pc, spellIndex, componentPosition);
-            if (runeIndex >= 0)
-                renderRunes(pc, runeIndex);
+            renderSpells(pc, model.SelectedSpellIndex, model.SelectedComponentIndex);
+            if (model.SelectedRuneIndex >= 0)
+                renderRunes(pc, model.SelectedRuneIndex);
             break;
         case SaveSelected:
-            //drawOptionBox(&_spellsVp, std::string("Save Complete"), 0, &hudColour, &textColour, &borderColour);
         default:
             break;
+    }
+
+    if (message != nullptr)
+    {
+        drawMessage(*message, messageBoxOuter, messageBoxInner, DEFAULT_BORDER_WIDTH);
     }
 
     SDL_RenderPresent(renderer());

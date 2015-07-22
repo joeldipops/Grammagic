@@ -2,23 +2,25 @@
 #define MODIFIER_H_INCLUDED
 
 #include "../util/utils.h"
-namespace Magic {
-class Modifier
+
+using namespace Util;
+namespace Magic
 {
-    public:
-        Modifier();
-        Modifier(int, double, bool = false);
-        Modifier(int, bool = false);
-        Modifier(double, bool = false);
-        double modify(double) const;
-        double add(double) const;
-        double multiply(double) const;
+    class Modifier
+    {
+        public:
+            Modifier();
+            Modifier(int, double, bool = false);
+            Modifier(int, bool = false);
+            Modifier(double, bool = false);
+            double modify(double) const;
+            double add(double) const;
+            double multiply(double) const;
 
-    private:
-        Nullable<int> _addition;
-        Nullable<double> _multiplier;
-        bool _isOrderReversed;
-
-};
+        private:
+            Nullable<int> _addition;
+            Nullable<double> _multiplier;
+            bool _isOrderReversed;
+    };
 }
 #endif

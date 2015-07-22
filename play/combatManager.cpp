@@ -32,7 +32,7 @@ Play::PlayState CombatManager::start(GameMap* map_)
 
     while(field.isInCombat())
     {
-        Util::Util::sleep(50);
+        Util::sleep(50);
         _map->buryTheDead();
 
 

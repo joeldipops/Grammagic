@@ -1,20 +1,25 @@
 #ifndef VIEWMANAGER_H_INCLUDED
 #define VIEWMANAGER_H_INCLUDED
 
-#include <SDL2/SDL.h>
 #include "util/assetCache.h"
-#include <SDL2/SDL_ttf.h>
 #include "menuItem.h"
-#include <vector>
 #include "util/utils.h"
-#include <algorithm>
+#include "globalConstants.h"
 
+#include <algorithm>
+#include <vector>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL.h>
 class ViewManager
 {
     public:
         static const SDL_Colour hudColour;
         static const SDL_Colour borderColour;
         static const SDL_Colour textColour;
+        static const SDL_Colour invisible;
+
+        static const SDL_Rect messageBoxOuter;
+        static const SDL_Rect messageBoxInner;
         static const int DEFAULT_BORDER_WIDTH;
 
         static const SDL_Rect _control;
@@ -30,8 +35,12 @@ class ViewManager
     protected:
         void fillViewport(const SDL_Colour*);
         void drawBorder(const int, const SDL_Colour*);
-        void drawBorder(const SDL_Rect, const int, const SDL_Colour*, const bool);
+        void drawBorder(const SDL_Rect&, const int, const SDL_Colour*, const bool);
         void drawOptionBox(const SDL_Rect*, const std::string, const int, const SDL_Colour*, const SDL_Colour*, const SDL_Colour*);
+        void drawControls(
+            const std::vector<const MenuItem*>*, const int, const SDL_Rect* = nullptr,
+            const SDL_Rect* = nullptr
+        );
         void drawControls(
             const std::vector<MenuItem*>*, const int, const SDL_Rect* = nullptr,
             const SDL_Rect* = nullptr
@@ -47,9 +56,10 @@ class ViewManager
         SDL_Texture* formatFontTexture(const std::string, const SDL_Colour*);
 
         void drawSector(int cx, int cy, int r, int degStart, int degEnd);
+        void drawMessage(const std::string, const SDL_Rect&, const SDL_Rect&, int);
 
     private:
-        void addToQuad(std::vector<std::vector<Location>>&,int, int, int, int);
+        void addToQuad(std::vector<std::vector<Util::Location>>&,int, int, int, int);
         SDL_Renderer* _renderer;
         SDL_Rect _viewPort;
         AssetCache* _assets;

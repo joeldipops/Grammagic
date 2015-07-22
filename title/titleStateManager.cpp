@@ -37,7 +37,7 @@ Core::CoreState TitleStateManager::start(void)
         if(rerender)
             render();
         else
-            Util::Util::sleep(50);
+            Util::sleep(50);
 
         oldState = state();
 
@@ -83,7 +83,7 @@ Core::CoreState TitleStateManager::start(void)
 
 void TitleStateManager::render(void)
 {
-    std::vector<MenuItem*> pointers = toPointers<MenuItem>(_menu);
+    std::vector<MenuItem*> pointers = Util::toPointers<MenuItem>(_menu);
     _view.render(pointers, _selectedItemIndex);
     SDL_RenderPresent(renderer());
 }

@@ -7,6 +7,7 @@
 #include "globalConstants.h"
 #include "persistence/saveLoad.h"
 #include "res/strings.h"
+#include "util/utils.h"
 
 #include <SDL2/SDL.h>
 
@@ -38,6 +39,7 @@ namespace Play
             int _selectedRuneIndex;
             int _selectedComponentIndex;
             std::vector<MenuItem> _menu;
+            std::string _message = "";
     };
 }
 

@@ -53,7 +53,7 @@ void SaveLoad::save(const PC& pc)
         }
     }
 
-    Util::Util::writeFile(_path.c_str(), data);
+    Util::writeFile(_path.c_str(), data);
 }
 
 /**
@@ -62,7 +62,7 @@ void SaveLoad::save(const PC& pc)
  */
 void SaveLoad::load(PC& pc) const
 {
-    std::vector<char> data = Util::Util::readFile(_path.c_str());
+    std::vector<char> data = Util::readFile(_path.c_str());
     std::vector<Spell> spells = std::vector<Spell>();
 
     Spell workingSpell;

@@ -21,6 +21,7 @@ const std::string Strings::Start = "Start";
 const std::string Strings::Quit = "Quit";
 const std::string Strings::Continue = "Continue";
 const std::string Strings::Save = "Save";
+const std::string Strings::SaveComplete = "Save Complete";
 const std::string Strings::Magic = "Magic";
 
 using namespace Magic;

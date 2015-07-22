@@ -18,7 +18,6 @@ namespace Play
             int SelectedSpellIndex;
             int SelectedComponentIndex;
             int SelectedRuneIndex;
-            std::string Message;
     };
 
     class MenuViewManager : public ViewManager
@@ -26,15 +25,15 @@ namespace Play
         public:
             MenuViewManager(){};
             MenuViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-            void render(const PC* pc, std::vector<MenuItem>&, MainMenuItem, int, int, int);
+            void render(const PC&, const MenuViewModel&, std::string* = nullptr);
 
         private:
             SDL_Rect _spellsVp;
             SDL_Rect _runesVp;
             SDL_Rect _mainVp;
 
-            void renderSpells(const PC* pc,int, int);
-            void renderRunes(const PC* pc, int);
+            void renderSpells(const PC&, int, int);
+            void renderRunes(const PC&, int);
 
             static const SDL_Rect _menuControl;
             static const int borderWidth = 5;

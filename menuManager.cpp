@@ -25,10 +25,20 @@ Play::PlayState MenuManager::start(PC* pc)
     _selectedRuneIndex = -1;
     while(result() == PlayState::Menu)
     {
-        if (rerender)
-            _viewManager.render(pc, _menu, MainMenuItem(_selectedMenuIndex), _selectedSpellIndex, _selectedComponentIndex, _selectedRuneIndex);
+        if (rerender) {
+            MenuViewModel vm
+            {
+                _menu, // MenuItems
+                MainMenuItem(_selectedMenuIndex), // SelectedMenuItem
+                _selectedSpellIndex, // SelectedSpellIndex
+                _selectedComponentIndex, // SelectedComponentIndex
+                _selectedRuneIndex, // SelectedRuneIndex
+            };
+            _viewManager.render(*pc, vm, _message.length() > 0 ? &_message : nullptr);
+        }
+
         else
-            Util::Util::sleep(50);
+            Util::sleep(50);
 
         rerender = false;
 
@@ -41,6 +51,7 @@ Play::PlayState MenuManager::start(PC* pc)
                 case SDL_QUIT:
                     return Play::PlayState::Exit;
                 case SDL_KEYDOWN:
+                    _message = "";
                     if (event.key.keysym.sym == SDLK_RETURN)
                     {
                         result(Play::PlayState::Movement);
@@ -214,6 +225,7 @@ bool MenuManager::processMenuCommand(PC* pc)
     {
         Persistence::SaveLoad io = Persistence::SaveLoad(SAVE_FILE);
         io.save(*pc);
+        _message = Strings::SaveComplete;
         return true;
     }
 

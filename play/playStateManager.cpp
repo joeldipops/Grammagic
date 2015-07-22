@@ -70,7 +70,7 @@ Core::CoreState PlayStateManager::start(PC& pc)
         // Free up the CPU to do other shit each iteration.
         //
         if (!rerender)
-            Util::Util::sleep(50);
+            Util::sleep(50);
 
         if (_map->pc()->stamina() <= 0)
         {
@@ -229,7 +229,7 @@ void PlayStateManager::exit(const Core::CoreState nextState)
  */
 GameMap* PlayStateManager::loadMap(void)
 {
-    std::vector<char> mapData = Util::Util::readFile("map");
+    std::vector<char> mapData = Util::readFile("map");
     int length = mapData.size();
     GameMap* gameMap = new GameMap(mapData[0], mapData[1]);
 
