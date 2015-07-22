@@ -54,7 +54,7 @@ void Enemy::aiAct(BattleField* field)
  */
 void Enemy::attack(BattleField* field)
 {
-    for (int i = 0; i < int(field->mobs().size()); i++)
+    for (unsigned int i = 0; i < field->mobs().size(); i++)
     {
         if (!field->areAllied(this, field->mobs().at(i)))
         {

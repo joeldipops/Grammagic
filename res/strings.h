@@ -10,5 +10,7 @@ class Strings {
         static const std::string Start;
         static const std::string Quit;
         static const std::string Continue;
+        static const std::string Save;
+        static const std::string Magic;
 };
 #endif

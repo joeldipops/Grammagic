@@ -244,12 +244,12 @@ std::vector<Command*> Mob::commands(void) const
 {
     std::vector<Command*> result = std::vector<Command*>();
 
-    for (int i = 0; i < int(_otherCommands.size()); i++)
+    for (unsigned int i = 0; i < _otherCommands.size(); i++)
     {
         result.push_back(const_cast<Command*>(&_otherCommands.at(i)));
     }
 
-    for (int i = 0; i < int(_spellCommands.size()); i++)
+    for (unsigned int i = 0; i < _spellCommands.size(); i++)
     {
         result.push_back(const_cast<Command*>(&_spellCommands.at(i)));
     }
@@ -289,9 +289,9 @@ int Mob::selectedCommandIndex(void) const
  * @param index The index of the command.
  * @return The newly set commandIndex, or -1 if operation failed.
  */
-int Mob::selectedCommandIndex(int index)
+int Mob::selectedCommandIndex(unsigned int index)
 {
-    if (index < 0 || index >= int(commands().size()))
+    if (index < 0 || index >= commands().size())
         return -1;
 
     _selectedCommandIndex = index;

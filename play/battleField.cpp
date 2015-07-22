@@ -8,7 +8,7 @@ BattleField::BattleField(GameMap* map_)
 {
     _pcs.push_back(map_->pc());
 
-    for(int i = 1; i < int(map_->mobs().size()); i++)
+    for(unsigned int i = 1; i < map_->mobs().size(); i++)
     {
         if (map_->mobs().at(i)->isSeen(map_->pc()))
             _hostiles.push_back(map_->mobs().at(i));
@@ -58,10 +58,11 @@ std::vector<Mob*> BattleField::getDue(void)
         // Now is the time to clean up dead mobs.
         if (item->stamina() <= 0)
         {
-            for (int i = 0; i < int(_hostiles.size()); i++)
+            unsigned int i;
+            for (i = 0; i < _hostiles.size(); i++)
                 if (item == _hostiles.at(i))
                     _hostiles.erase(_hostiles.begin() + i);
-            for (int i = 0; i < int(_pcs.size()); i++)
+            for (i = 0; i < _pcs.size(); i++)
                 if (item == _pcs.at(i))
                     _pcs.erase(_pcs.begin() + i);
             continue;

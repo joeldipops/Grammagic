@@ -2,6 +2,9 @@
 
 using namespace Play;
 
+const MenuItem MenuManager::MAGIC = MenuItem(Strings::Magic);
+const MenuItem MenuManager::SAVE = MenuItem(Strings::Save);
+
 MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
     : StateManager(r, a)
 {
@@ -9,23 +12,23 @@ MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
     _selectedSpellIndex = -1;
     _selectedRuneIndex = -1;
     _selectedComponentIndex = -1;
+    _menu = std::vector<MenuItem> { MAGIC, SAVE };
 }
 
 Play::PlayState MenuManager::start(PC* pc)
 {
     bool rerender = true;
-    state(MenuState::SelectSpell);
+    state(MenuState::SelectMenu);
     result(PlayState::Menu);
-    _selectedSpellIndex = 0;
+    _selectedSpellIndex = -1;
     _selectedComponentIndex = -1;
     _selectedRuneIndex = -1;
     while(result() == PlayState::Menu)
     {
-        if (rerender) {
-            _viewManager.render(pc, _selectedSpellIndex, _selectedComponentIndex, _selectedRuneIndex);
-        } else {
+        if (rerender)
+            _viewManager.render(pc, _menu, MainMenuItem(_selectedMenuIndex), _selectedSpellIndex, _selectedComponentIndex, _selectedRuneIndex);
+        else
             Util::Util::sleep(50);
-        }
 
         rerender = false;
 
@@ -105,6 +108,11 @@ bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
     int columnItemCount = 0;
     switch(state())
     {
+        case MenuState::SelectMenu:
+            itemCount = _menu.size();
+            index = _selectedMenuIndex;
+            columnItemCount = 100;
+            break;
         case MenuState::SelectSpell:
             itemCount = pc->spellSlots() > int(pc->spells()->size())
                 ? pc->spells()->size() + 1
@@ -134,6 +142,9 @@ bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
     {
         switch(state())
         {
+            case MenuState::SelectMenu:
+                _selectedMenuIndex = result;
+                return true;
             case MenuState::SelectSpell:
                 _selectedSpellIndex = result;
                 return true;
@@ -163,6 +174,10 @@ bool MenuManager::processCancel(void)
             state(MenuState::SelectSpell);
             return true;
         case MenuState::SelectSpell:
+            _selectedSpellIndex = -1;
+            state(MenuState::SelectMenu);
+            return true;
+        case MenuState::SelectMenu:
             result(PlayState::Movement);
             return true;
         default:
@@ -174,6 +189,8 @@ bool MenuManager::processCommand(PC* pc)
 {
     switch(state())
     {
+        case MenuState::SelectMenu:
+            return processMenuCommand(pc);
         case MenuState::SelectSpell:
             return processSpellCommand(pc);
         case MenuState::SelectRune:
@@ -181,6 +198,25 @@ bool MenuManager::processCommand(PC* pc)
         case MenuState::SelectComponent:
             return processComponentCommand(pc);
     }
+    return false;
+}
+
+bool MenuManager::processMenuCommand(PC* pc)
+{
+    MenuItem item = _menu.at(_selectedMenuIndex);
+    if (item.equals(MAGIC))
+    {
+        _selectedSpellIndex = 0;
+        state(MenuState::SelectSpell);
+        return true;
+    }
+    else if (item.equals(SAVE))
+    {
+        Persistence::SaveLoad io = Persistence::SaveLoad(SAVE_FILE);
+        io.save(*pc);
+        return true;
+    }
+
     return false;
 }
 

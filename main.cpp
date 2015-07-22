@@ -20,10 +20,13 @@ const std::string Strings::Stamina = "Stamina";
 const std::string Strings::Start = "Start";
 const std::string Strings::Quit = "Quit";
 const std::string Strings::Continue = "Continue";
+const std::string Strings::Save = "Save";
+const std::string Strings::Magic = "Magic";
 
 using namespace Magic;
 using namespace Play;
 using namespace Persistence;
+
 namespace Core
 {
     class Grammar
@@ -40,6 +43,7 @@ namespace Core
                 // Initialise randomness.
                 srand(time(0));
 
+                // Initialise SDL
                 SDL_Init(SDL_INIT_EVERYTHING);
                 int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG|IMG_INIT_TIF;
                 IMG_Init(imgFlags);
@@ -48,10 +52,12 @@ namespace Core
                 SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
                 AssetCache assets = AssetCache(renderer);
 
+                // Initialise State Managers.
                 TitleStateManager title = TitleStateManager(renderer, &assets);
                 PlayStateManager play = PlayStateManager(renderer, &assets);
+
                 PC player = PC();
-                SaveLoad io = SaveLoad("file.save");
+                SaveLoad io = SaveLoad(SAVE_FILE);
                 CoreState state = CoreState::Title;
                 while(state != CoreState::Exit)
                 {
@@ -69,12 +75,10 @@ namespace Core
                             state = title.start();
                             break;
                         }
-                        case CoreState::Load: {
-                            io.load(player);
-                        }
+                        case CoreState::Load:
+                            io.load(player); // fall through
                         case CoreState::Play: {
                             state = play.start(player);
-                            io.save(player);
                             break;
                         }
                         case CoreState::Exit:

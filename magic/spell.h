@@ -27,10 +27,10 @@ namespace Magic
             bool resolve(void);
             int cast(Mob*, BattleField*);
             const std::vector<Word*> components(void) const;
-            const Word* component(int) const;
-            Word* component(int, Word*);
+            const Word* component(unsigned int) const;
+            Word* component(unsigned int, Word*);
             void removeComponent(int);
-            void addComponent(Word*);
+            void addComponent(Word*, bool = false);
             bool isValid(bool = false) const;
 
         private:

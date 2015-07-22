@@ -2,6 +2,7 @@
 #define STATE_H_INCLUDED
 
 #include <SDL2/SDL.h>
+#include <string>
 
 enum MobType
 {
@@ -56,9 +57,17 @@ namespace Play
 
     enum MenuState
     {
+        SelectMenu,
         SelectSpell,
         SelectComponent,
         SelectRune,
+    };
+
+    enum MainMenuItem
+    {
+        MagicSelected,
+        SaveSelected,
+        SaveComplete,
     };
 }
 
@@ -78,6 +87,7 @@ namespace Magic
 const int WIDTH = 1200;
 const int HEIGHT = 800;
 const int BITS_PER_PIXEL = 32;
+const std::string SAVE_FILE = "grammagic.save";
 
 
 #endif

@@ -46,7 +46,7 @@ void MapViewManager::renderTerrain(const GameMap* gameMap)
 void MapViewManager::renderMobs(const GameMap* gameMap)
 {
     const std::vector<Mob*> mobs = gameMap->mobs();
-    for (int i = 0; i < int(mobs.size()); i++)
+    for (unsigned int i = 0; i < mobs.size(); i++)
     {
         SDL_Rect rect = {
             mobs.at(i)->x() * CELL_WIDTH + (CELL_WIDTH / 4),

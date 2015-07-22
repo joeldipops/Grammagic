@@ -13,7 +13,7 @@ bool Spell::verify(std::vector<Word*> components)
     bool hasSource = false;
     bool hasAction = false;
 
-    for (int i = 0 ; i < int(components.size()); i++)
+    for (unsigned int i = 0; i < components.size(); i++)
     {
         switch(components.at(i)->type())
         {
@@ -33,7 +33,7 @@ bool Spell::verify(std::vector<Word*> components)
                 if (hasTarget && hasSource)
                     return false;
                 // An adjective must be followed by a noun
-                if (int(components.size()) <= i+1)
+                if (components.size() <= i+1)
                     return false;
                 if (components.at(i+1)->type() != WordType::ANoun)
                     return false;
@@ -120,7 +120,7 @@ bool Spell::edit(std::vector<Word*> components_)
 
     Verb* action = nullptr;
     std::vector<Adverb*> adverbs = std::vector<Adverb*>(0);
-    for (int i = 0 ; i < int(components_.size()); i++)
+    for (unsigned int i = 0; i < components_.size(); i++)
     {
         switch(components_.at(i)->type())
         {
@@ -140,7 +140,7 @@ bool Spell::edit(std::vector<Word*> components_)
                 if (target != nullptr && source != nullptr)
                     return false;
                 // An adjective must be followed by a noun
-                if (int(components_.size()) <= i + 1)
+                if (components_.size() <= i + 1)
                     return false;
                 if (components_.at(i+1)->type() != WordType::ANoun)
                     return false;
@@ -207,14 +207,14 @@ const std::vector<Word*> Spell::components(void) const
     return _components;
 }
 
-const Word* Spell::component(int index) const
+const Word* Spell::component(unsigned int index) const
 {
     return components().at(index);
 }
 
-Word* Spell::component(int index, Word* word)
+Word* Spell::component(unsigned int index, Word* word)
 {
-    if (int(_components.size()) > index)
+    if (_components.size() > index)
         _components.at(index) = word;
     else
         _components.push_back(word);
@@ -222,9 +222,11 @@ Word* Spell::component(int index, Word* word)
     return _components.at(index);
 }
 
-void Spell::addComponent(Word* word)
+void Spell::addComponent(Word* word, bool doResolve)
 {
     _components.push_back(word);
+    if (doResolve)
+        resolve();
 }
 
 void Spell::removeComponent(int index)
@@ -289,7 +291,7 @@ int Spell::cast(Mob* caster, BattleField* battleField)
     totalDuration = _source->duration()->multiply(totalDuration);
 
     Adverb* word;
-    for (int i = 0; i < int(_adverbs.size()); i++)
+    for (unsigned int i = 0; i < _adverbs.size(); i++)
     {
         word = _adverbs.at(i);
 

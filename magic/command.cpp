@@ -47,6 +47,10 @@ Spell* Command::spell(void)
 {
     return &_spell;
 }
+const Spell* Command::spell(void) const
+{
+    return &_spell;
+}
 
 /**
  * Overrides base to return the name of the wrapped spell.

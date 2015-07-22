@@ -34,6 +34,7 @@ class Command : public MenuItem
         bool edit(std::vector<Word*> components);
         bool isValid(void) const;
         Spell* spell(void);
+        const Spell* spell(void) const;
 
     private:
         Effect _effect;

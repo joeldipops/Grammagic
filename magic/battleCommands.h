@@ -70,7 +70,7 @@ namespace Magic
             static MapObject* freshest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
                 Mob* result = nullptr;
-                for(int i = 0; i < int(candidates.size()); i++)
+                for(unsigned int i = 0; i < candidates.size(); i++)
                 {
                     Mob* mob = (Mob*) candidates.at(i);
 
@@ -86,7 +86,7 @@ namespace Magic
             static MapObject* sickest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
                 Mob* result = nullptr;
-                for(int i = 0; i < int(candidates.size()); i++)
+                for(unsigned int i = 0; i < candidates.size(); i++)
                 {
                     Mob* mob = (Mob*) candidates.at(i);
 
@@ -102,7 +102,7 @@ namespace Magic
             static MapObject* fastest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
                 Mob* result = nullptr;
-                for(int i = 0; i < int(candidates.size()); i++)
+                for(unsigned int i = 0; i < candidates.size(); i++)
                 {
                     Mob* mob = (Mob*) candidates.at(i);
 
@@ -118,7 +118,7 @@ namespace Magic
             static MapObject* slowest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
                 Mob* result = nullptr;
-                for(int i = 0; i < int(candidates.size()); i++)
+                for(unsigned int i = 0; i < candidates.size(); i++)
                 {
                     Mob* mob = (Mob*) candidates.at(i);
 

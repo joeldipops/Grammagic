@@ -35,7 +35,7 @@ class Mob : public MapObject
         double speed(void) const;
         double defaultSpeed(void) const;
 
-        int selectedCommandIndex(int);
+        int selectedCommandIndex(unsigned int);
         int selectedCommandIndex(void) const;
         Command* selectedCommand(void) const;
         const std::string portraitFileName(void) const;

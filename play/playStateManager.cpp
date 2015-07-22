@@ -181,7 +181,7 @@ bool PlayStateManager::processMovementState(void)
         return hasUpdate;
 
     std::vector<Mob*> enemies = _map->mobs();
-    for(int i = 1; i < int(enemies.size()); i++)
+    for(unsigned int i = 1; i < enemies.size(); i++)
     {
         if (enemies.at(i)->isSeen(_map->pc()))
             state(PlayState::Combat);

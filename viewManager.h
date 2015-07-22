@@ -17,10 +17,7 @@ class ViewManager
         static const SDL_Colour textColour;
         static const int DEFAULT_BORDER_WIDTH;
 
-        static const int controlMarginTop;
-        static const int controlMarginLeft;
-        static const int controlWidth;
-        static const int controlHeight;
+        static const SDL_Rect _control;
         static const int controlBorderWidth;
 
         ViewManager(void) {};
@@ -35,8 +32,14 @@ class ViewManager
         void drawBorder(const int, const SDL_Colour*);
         void drawBorder(const SDL_Rect, const int, const SDL_Colour*, const bool);
         void drawOptionBox(const SDL_Rect*, const std::string, const int, const SDL_Colour*, const SDL_Colour*, const SDL_Colour*);
-        void drawControls(const std::vector<MenuItem*>*, const int, const SDL_Rect* = nullptr);
-        void drawHorizontalControls(const std::vector<MenuItem*>*, const int, const SDL_Rect* = nullptr);
+        void drawControls(
+            const std::vector<MenuItem*>*, const int, const SDL_Rect* = nullptr,
+            const SDL_Rect* = nullptr
+        );
+        void drawHorizontalControls(
+            const std::vector<MenuItem*>*, const int, const SDL_Rect* = nullptr,
+            const SDL_Rect* = nullptr
+        );
         SDL_Renderer* renderer(void);
         SDL_Rect viewPort(void);
         AssetCache* assets(void);

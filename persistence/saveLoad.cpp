@@ -16,7 +16,7 @@ void SaveLoad::save(const PC& pc)
     data.push_back(pc.x());
     data.push_back(pc.y());
 
-    for (int i = 0; i < pc.spells()->size(); i++)
+    for (unsigned int i = 0; i < pc.spells()->size(); i++)
     {
         data.push_back(SavedObjectCode::NewSpell);
 
@@ -46,6 +46,8 @@ void SaveLoad::save(const PC& pc)
                 data.push_back(SavedObjectCode::SlowRune);
             else if (word == &Commands::SLOWEST)
                 data.push_back(SavedObjectCode::SlowestRune);
+            else if (word == &Commands::ENEMY)
+                data.push_back(SavedObjectCode::EnemyRune);
             else
                 throw;
         }
@@ -65,13 +67,16 @@ void SaveLoad::load(PC& pc) const
 
     Spell workingSpell;
     bool spellInProgress = false;
-    for (int i = 0; i < int(data.size()); i++)
+    for (unsigned int i = 0; i < data.size(); i++)
     {
         switch(SavedObjectCode(data.at(i)))
         {
             case SavedObjectCode::PCPosition:
                 if (spellInProgress)
+                {
+                    workingSpell.resolve();
                     spells.push_back(workingSpell);
+                }
 
                 spellInProgress = false;
                 pc.x(int(data.at(i+1)));
@@ -80,7 +85,10 @@ void SaveLoad::load(PC& pc) const
                 break;
             case SavedObjectCode::NewSpell:
                 if (spellInProgress)
+                {
+                    workingSpell.resolve();
                     spells.push_back(workingSpell);
+                }
 
                 spellInProgress = true;
                 workingSpell = Spell();
@@ -151,18 +159,11 @@ void SaveLoad::load(PC& pc) const
     }
 
     if (spellInProgress)
+    {
+        workingSpell.resolve();
         spells.push_back(workingSpell);
+    }
 
     for (Spell s : spells)
         pc.spells()->push_back(Command("", s));
-
-    /*
-
-    pc.spells()->push_back(Command("", Spell(std::vector<Word*> {
-        &Commands::CASTER, &Commands::HURT, &Commands::SICKEST, &Commands::ENEMY}
-    )));
-    pc.spells()->push_back(Command("", Spell(std::vector<Word*> {
-        &Commands::FRESHEST, &Commands::ENEMY, &Commands::HEAL, &Commands::CASTER}
-    )));
-    */
 }

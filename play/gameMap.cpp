@@ -19,7 +19,7 @@ GameMap::GameMap(int width, int height)
 GameMap::~GameMap()
 {
     // One as PC is a special case
-    for(int i = 1; i < int(_mobs.size()); i++)
+    for(unsigned int i = 1; i < _mobs.size(); i++)
         killMob(_mobs.at(i));
     _mobs = std::vector<Mob*>(0);
 }
@@ -148,7 +148,7 @@ void GameMap::killMob(Mob* mob)
     // Remove from the map.
     getCell(mob->x(), mob->y())->empty();
 
-    for (int i = 0; i < int(_mobs.size()); i++)
+    for (unsigned int i = 0; i < _mobs.size(); i++)
     {
         if (mob == _mobs.at(i))
             _mobs.erase(_mobs.begin() + i);
@@ -162,7 +162,7 @@ void GameMap::killMob(Mob* mob)
 void GameMap::buryTheDead()
 {
     Mob* mob;
-    for(int i = 0; i < int(_mobs.size()); i++)
+    for(unsigned int i = 0; i < _mobs.size(); i++)
     {
         mob = _mobs.at(i);
         if (mob->stamina() <= 0)

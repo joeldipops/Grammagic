@@ -5,10 +5,7 @@ const SDL_Colour ViewManager::hudColour = { 0x19, 0x19, 0x70, 0xFF };
 const SDL_Colour ViewManager::borderColour = { 0x69, 0x69, 0x69, 0xFF };
 const SDL_Colour ViewManager::textColour = { 0xFF, 0xFF, 0xFF, 0xFF };
 
-const int ViewManager::controlMarginTop = 15;
-const int ViewManager::controlMarginLeft = 15;
-const int ViewManager::controlWidth = 200;
-const int ViewManager::controlHeight = 55;
+const SDL_Rect ViewManager::_control = SDL_Rect { 15, 15, 200, 55 };
 const int ViewManager::controlBorderWidth = 5;
 
 const int ViewManager::DEFAULT_BORDER_WIDTH = 7;
@@ -78,7 +75,9 @@ int ViewManager::menuItemsPerColumn(void) const
 }
 
 
-void ViewManager::drawHorizontalControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port)
+void ViewManager::drawHorizontalControls(
+    const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control
+)
 {
     SDL_Rect view;
     if (port == nullptr)
@@ -86,7 +85,10 @@ void ViewManager::drawHorizontalControls(const std::vector<MenuItem*>* items, co
     else
         view = *port;
 
-    SDL_Rect rect = SDL_Rect {view.x + controlMarginLeft, view.y + controlMarginTop, controlWidth, controlHeight};
+    if (control == nullptr)
+        control = &_control;
+
+    SDL_Rect rect = SDL_Rect {view.x + control->x, view.y + control->y, control->w, control->h};
     SDL_Rect temp;
 
     int rows = 1;
@@ -97,13 +99,13 @@ void ViewManager::drawHorizontalControls(const std::vector<MenuItem*>* items, co
             drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textColour, &textColour);
         else
             drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &borderColour, &borderColour);
-        temp = SDL_Rect {rect.x + controlWidth + controlMarginLeft, rect.y, controlWidth, controlHeight};
+        temp = SDL_Rect {rect.x + control->w + control->x, rect.y, control->w, control->h};
 
         // Can't fit horizontally, so shift below.
         if (temp.x + temp.w > view.x + view.w)
         {
             rows++;
-            temp = SDL_Rect {view.x + controlMarginLeft, controlMarginTop + rect.y + rect.h, controlWidth, controlHeight };
+            temp = SDL_Rect {view.x + control->x, control->y+ rect.y + rect.h, control->w, control->h };
         }
 
         rect = temp;
@@ -115,7 +117,7 @@ void ViewManager::drawHorizontalControls(const std::vector<MenuItem*>* items, co
  * @param items The list of items on the menu.
  * @param selectedIndex The position in the list of the currently selected item.
  */
-void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port)
+void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control)
 {
     SDL_Rect view;
     if (port == nullptr)
@@ -123,7 +125,10 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
     else
         view = *port;
 
-    SDL_Rect rect = SDL_Rect {view.x + controlMarginLeft, view.y + controlMarginTop, controlWidth, controlHeight};
+    if (control == nullptr)
+        control = &_control;
+
+    SDL_Rect rect = SDL_Rect {view.x + control->x, view.y + control->y, control->w, control->h};
     SDL_Rect temp;
 
     int rows = 1;
@@ -135,13 +140,13 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
             drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textClr, &textColour);
         else
             drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textClr, &borderColour);
-        temp = SDL_Rect {rect.x, rect.y + controlHeight + controlMarginTop, controlWidth, controlHeight};
+        temp = SDL_Rect {rect.x, rect.y + control->h + control->y, control->w, control->h};
 
         // Can't fit vertically, so shift to the right.
         if (temp.y + temp.h > view.h + view.y)
         {
             rows++;
-            temp = SDL_Rect {controlMarginLeft + rect.x + rect.w, view.y + controlMarginTop, controlWidth, controlHeight };
+            temp = SDL_Rect { control->x + rect.x + rect.w, view.y + control->y, control->w, control->h };
         }
 
         rect = temp;
@@ -298,7 +303,7 @@ void ViewManager::addToQuad(std::vector<std::vector<Location>>& quads, int cx, i
 
         quads.at(q).push_back(Location(x, y));
 };
-            #include <iostream>
+
 void ViewManager::drawSector(int icx, int icy, int r, int startDegree, int endDegree)
 {
     double error = (double)-r;
@@ -380,6 +385,9 @@ void ViewManager::drawSector(int icx, int icy, int r, int startDegree, int endDe
         i++;
 
         if (j == 0 && quadrant != 0)
+            continue;
+
+        if (j >= int(quads[quadrant].size()))
             continue;
 
         Location loc = quads[quadrant][j];
