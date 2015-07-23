@@ -38,6 +38,9 @@ Mob::Mob(MobType type)
     }
 }
 
+/**
+ * Destructor
+ */
 Mob::~Mob()
 {
 }
@@ -65,7 +68,7 @@ Location Mob::location(int x, int y)
 }
 
 /**
- *
+ * Gets or sets the X/Y coordinates of the mob.
  * @param loc
  * @return
  */
@@ -310,20 +313,85 @@ bool Mob::isSeen(const Mob* target)
         && (abs(target->y() - _y) <= _rangeOfSight);
 }
 
+/**
+ * @return The list of commands that can be cast as spells.
+ */
 std::vector<Command>* Mob::spellCommands()
 {
     return &_spellCommands;
 }
 
+/**
+ * @return The list of commands that are not spells.
+ */
 std::vector<Command>* Mob::otherCommands()
 {
     return &_otherCommands;
 }
 
 /**
+ * The modified defence stat.
+ */
+float Mob::defence(void) const
+{
+    return _defaultDefence * _defenceMultiplier;
+}
+
+/**
+ * Gets or sets the mob's default resistance stat, which is a multiplier.
+ */
+float Mob::defaultDefence(void) const
+{
+    return _defaultDefence;
+}
+float Mob::defaultDefence(float defaultDefence_)
+{
+    _defaultDefence = defaultDefence_;
+    return _defaultDefence;
+}
+
+/**
+ * Multiplier that increases or reduces physical damage.
+ */
+float Mob::changeDefence(float multiplier)
+{
+    if (multiplier >= 0)
+        _defenceMultiplier = multiplier;
+    return defence();
+}
+
+/**
+ * The modified resistance stat.
+ */
+float Mob::resistance(void) const
+{
+    return _defaultResistance * _resistanceMultiplier;
+}
+
+/**
+ * Gets or sets the mob's default resistance stat, which is a multiplier.
+ */
+float Mob::defaultResistance(void) const
+{
+    return _defaultResistance;
+}
+float Mob::defaultResistance(float defaultResistance_)
+{
+    _defaultResistance = defaultResistance_;
+    return _defaultResistance;
+}
+
+float Mob::changeResistance(float multiplier)
+{
+    if (multiplier >= 0)
+        _resistanceMultiplier = multiplier;
+    return resistance();
+}
+
+/**
  * @return The possibly modified speed stat.
  */
-double Mob::speed(void) const
+float Mob::speed(void) const
 {
     return _defaultSpeed * _speedMultiplier;
 }
@@ -333,12 +401,12 @@ double Mob::speed(void) const
  * @param defaultSpeed the new speed stat.
  * @return the current speed stat.
  */
-double Mob::defaultSpeed(double defaultSpeed_)
+float Mob::defaultSpeed(float defaultSpeed_)
 {
     _defaultSpeed = defaultSpeed_;
     return _defaultSpeed;
 }
-double Mob::defaultSpeed(void) const
+float Mob::defaultSpeed(void) const
 {
     return _defaultSpeed;
 }
@@ -348,7 +416,7 @@ double Mob::defaultSpeed(void) const
  * @param multiplier A non-negative double.
  * @return the modified speed stat.
  */
-double Mob::changeSpeed(double multiplier)
+float Mob::changeSpeed(float multiplier)
 {
     if (multiplier >= 0)
         _speedMultiplier = multiplier;
@@ -362,6 +430,7 @@ void Mob::endCombat(void)
 {
     unblock();
     _speedMultiplier = 1.0;
+    _resistanceMultiplier = 1.0;
 }
 
 

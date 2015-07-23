@@ -14,15 +14,31 @@ Adjective Commands::SICKEST = Adjective(sickest, std::string("SICKEST"), Modifie
 Adjective Commands::FASTEST = Adjective(fastest, std::string("FASTEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 Adjective Commands::SLOWEST = Adjective(slowest, std::string("SLOWEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 
+// The mob with the most or least magical resistance
+Adjective Commands::WARDED = Adjective(warded, std::string("WARDED"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Adjective Commands::EXPOSED = Adjective(exposed, std::string("EXPOSED"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+
+// The mob with the most or least physical defence
+Adjective Commands::GUARDED = Adjective(guarded, std::string("GUARDED"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Adjective Commands::VULNERABLE = Adjective(vulnerable, std::string("VULNERABLE"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+
 // The caster
 ProperNoun Commands::CASTER = ProperNoun(self, std::string("CASTER"), Modifier(.8), Modifier(1.0), Modifier(1.0));
 
+// Buff an ally's defence or reduce an enemy's
+Verb Commands::DEFEND = Verb(defend, std::string("DEFEND"), Modifier(50), Modifier(10), Modifier(2000), -1, 1, 0, true);
+Verb Commands::ENDANGER = Verb(endanger, std::string("ENDANGER"), Modifier(50), Modifier(10, 1.0), Modifier(2000), -1, 1, 0);
+
+// Buff an ally's magical resistance or reduce an enemy's
+Verb Commands::WARD = Verb(ward, std::string("WARD"), Modifier(50), Modifier(10), Modifier(2000), -1, 1, 0, true);
+Verb Commands::EXPOSE = Verb(expose, std::string("EXPOSE"), Modifier(50), Modifier(10, 1.0), Modifier(2000), -1, 1, 0);
+
 // Transfers health from one to the other.
 Verb Commands::HURT = Verb(weaken, std::string("HURT"), Modifier(50), Modifier(10), Modifier(2000), -2, 1, 0);
-Verb Commands::HEAL = Verb(strengthen, std::string("HEAL"), Modifier(50), Modifier(10, 1.0), Modifier(2000), -1, 1, 0);
+Verb Commands::HEAL = Verb(strengthen, std::string("HEAL"), Modifier(50), Modifier(10, 1.0), Modifier(2000), -1, 1, 0, true);
 
 // Trades health for speed.
-Verb Commands::HASTEN = Verb(hasten, std::string("HASTEN"), Modifier(50), Modifier(10, 1.0), Modifier(3000), -2, 1, 1);
+Verb Commands::HASTEN = Verb(hasten, std::string("HASTEN"), Modifier(50), Modifier(10, 1.0), Modifier(3000), -2, 1, 1, true);
 Verb Commands::SLOW = Verb(slow, std::string("SLOW"), Modifier(50), Modifier(10, 1.0), Modifier(3000), -1, 1, 1);
 
 // Takes more to deal more, takes less to deal less

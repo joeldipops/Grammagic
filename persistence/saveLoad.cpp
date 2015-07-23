@@ -48,6 +48,23 @@ void SaveLoad::save(const PC& pc)
                 data.push_back(SavedObjectCode::SlowestRune);
             else if (word == &Commands::ENEMY)
                 data.push_back(SavedObjectCode::EnemyRune);
+
+            else if (word == &Commands::DEFEND)
+                data.push_back(SavedObjectCode::DefendRune);
+            else if (word == &Commands::GUARDED)
+                data.push_back(SavedObjectCode::GuardedRune);
+            else if (word == &Commands::WARD)
+                data.push_back(SavedObjectCode::WardedRune);
+            else if (word == &Commands::WARDED)
+                data.push_back(SavedObjectCode::WardedRune);
+            else if (word == &Commands::ENDANGER)
+                data.push_back(SavedObjectCode::EndangerRune);
+            else if (word == &Commands::VULNERABLE)
+                data.push_back(SavedObjectCode::VulnerableRune);
+            else if (word == &Commands::EXPOSED)
+                data.push_back(SavedObjectCode::ExposedRune);
+            else if (word == &Commands::EXPOSE)
+                data.push_back(SavedObjectCode::ExposeRune);
             else
                 throw;
         }
@@ -152,6 +169,46 @@ void SaveLoad::load(PC& pc) const
                 if (!spellInProgress)
                     throw;
                 workingSpell.addComponent(&Commands::HASTEN);
+                break;
+            case SavedObjectCode::DefendRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::DEFEND);
+                break;
+            case SavedObjectCode::WardRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::WARD);
+                break;
+            case SavedObjectCode::ExposeRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::EXPOSED);
+                break;
+            case SavedObjectCode::EndangerRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::ENDANGER);
+                break;
+            case SavedObjectCode::GuardedRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::GUARDED);
+                break;
+            case SavedObjectCode::VulnerableRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::VULNERABLE);
+                break;
+            case SavedObjectCode::WardedRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::WARDED);
+                break;
+            case SavedObjectCode::ExposedRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::EXPOSED);
                 break;
             default: throw;
         }

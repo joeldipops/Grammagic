@@ -22,7 +22,16 @@ namespace Persistence
         SickestRune,
         FastestRune,
         SlowestRune,
-        FasterRune
+        FasterRune,
+
+        GuardedRune,
+        ExposeRune,
+        DefendRune,
+        WardRune,
+        WardedRune,
+        VulnerableRune,
+        ExposedRune,
+        EndangerRune,
     };
 
     class SaveLoad

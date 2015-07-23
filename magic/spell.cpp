@@ -317,6 +317,10 @@ int Spell::cast(Mob* caster, BattleField* battleField)
     if (battleField->areAllied((MapObject*)caster, target))
         totalEffect *= _action->allyEffectMultiplier();
 
+    // Apply magical resistance.
+    if (!_action->isBoon())
+        totalEffect *= target->resistance();
+
     _action->action()(source, target, totalCost, totalEffect);
 
     return ceil(totalDuration / caster->speed());

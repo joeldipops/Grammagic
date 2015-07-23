@@ -58,7 +58,9 @@ void Enemy::attack(BattleField* field)
     {
         if (!field->areAllied(this, field->mobs().at(i)))
         {
-            field->mobs().at(i)->changeStamina(-1 * _physicalStrength);
+            Mob* target = field->mobs().at(i);
+
+            target->changeStamina(-1 * _physicalStrength * target->defence());
             break;
         }
     }

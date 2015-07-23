@@ -114,6 +114,15 @@ int main ()
     Commands::allCommands.push_back(&Commands::LIGHTER);
     Commands::allCommands.push_back(&Commands::FASTER);
 
+    Commands::allCommands.push_back(&Commands::WARD);
+    Commands::allCommands.push_back(&Commands::DEFEND);
+    Commands::allCommands.push_back(&Commands::EXPOSE);
+    Commands::allCommands.push_back(&Commands::ENDANGER);
+    Commands::allCommands.push_back(&Commands::GUARDED);
+    Commands::allCommands.push_back(&Commands::VULNERABLE);
+    Commands::allCommands.push_back(&Commands::EXPOSED);
+    Commands::allCommands.push_back(&Commands::WARDED);
+
     Core::Grammar program;
     program.start();
 

@@ -22,7 +22,10 @@ class Mob : public MapObject
         int x(void) const;
         int y(int);
         int y(void) const ;
+
         bool isSeen(const Mob*);
+
+        // Stats
         int rangeOfSight(int);
         int rangeOfSight(void) const;
 
@@ -31,9 +34,17 @@ class Mob : public MapObject
         const int stamina(void) const;
         const int maxStamina(void) const;
 
-        double changeSpeed(double);
-        double speed(void) const;
-        double defaultSpeed(void) const;
+        float changeSpeed(float);
+        float speed(void) const;
+        float defaultSpeed(void) const;
+
+        float changeResistance(float);
+        float resistance(void) const;
+        float defaultResistance(void) const;
+
+        float changeDefence(float);
+        float defence(void) const;
+        float defaultDefence(void) const;
 
         int selectedCommandIndex(unsigned int);
         int selectedCommandIndex(void) const;
@@ -55,7 +66,10 @@ class Mob : public MapObject
         std::string portraitFileName(std::string);
         std::vector<Command>* spellCommands(void);
         std::vector<Command>* otherCommands(void);
-        double defaultSpeed(double);
+
+        float defaultSpeed(float);
+        float defaultResistance(float);
+        float defaultDefence(float);
 
         static std::vector<Command*> toPointers(const std::vector<Command>& source);
 
@@ -67,16 +81,24 @@ class Mob : public MapObject
         int _maxStamina;
         int _rangeOfSight;
         int _selectedCommandIndex = 0;
+
         int _unblockTime = 0;
         int _blockedTime = 0;
+        bool _isBlocked = false;
+
         std::vector<Command> _spellCommands;
         std::vector<Command> _otherCommands;
         std::string _portraitFileName;
-        double _defaultSpeed = 1.0;
-        double _speedMultiplier = 1.0;
-        bool _isBlocked = false;
 
+        // Base stats.
+        float _defaultSpeed = 1.0;
+        float _defaultResistance = 1.0;
+        float _defaultDefence = 1.0;
 
+        // Tempoprary stats.
+        float _speedMultiplier = 1.0;
+        float _resistanceMultiplier = 1.0;
+        float _defenceMultiplier = 1.0;
 
 };
 #endif

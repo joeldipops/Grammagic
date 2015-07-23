@@ -2,7 +2,6 @@
 #define MAPOBJECT_H_INCLUDED
 
 #include <string>
-
 class MapObject
 {
     public:
@@ -12,7 +11,11 @@ class MapObject
         const std::string imageFileName(void) const;
 
         virtual int changeStamina(int) {return 1;};
-        virtual double changeSpeed(double) {return 1;};
+        virtual float changeSpeed(float) {return 1;};
+        virtual float changeDefence(float) { return 1;};
+        virtual float changeResistance(float) { return 1;};
+
+        virtual float resistance(void) {return 1; };
 
         static const std::string RESOURCE_LOCATION;
 

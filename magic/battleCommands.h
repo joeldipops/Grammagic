@@ -28,6 +28,14 @@ namespace Magic
             static Verb HEAL;
             static Verb HASTEN;
             static Verb SLOW;
+            static Verb DEFEND; // Defence
+            static Verb ENDANGER;
+            static Verb WARD; // Resistance
+            static Verb EXPOSE;
+            static Adjective GUARDED;
+            static Adjective VULNERABLE;
+            static Adjective WARDED;
+            static Adjective EXPOSED;
             static Adjective FRESHEST;
             static Adjective SICKEST;
             static Adverb LIGHTER;
@@ -66,6 +74,70 @@ namespace Magic
 
 
             // Adjectives
+            static MapObject* exposed(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            {
+                Mob* result = nullptr;
+                for(unsigned int i = 0; i < candidates.size(); i++)
+                {
+                    Mob* mob = (Mob*) candidates.at(i);
+
+                    if (result == nullptr)
+                        result = mob;
+                    else if (mob->resistance() < result->resistance())
+                        result = mob;
+                }
+
+                return result;
+            };
+
+            static MapObject* warded(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            {
+                Mob* result = nullptr;
+                for(unsigned int i = 0; i < candidates.size(); i++)
+                {
+                    Mob* mob = (Mob*) candidates.at(i);
+
+                    if (result == nullptr)
+                        result = mob;
+                    else if (mob->resistance() > result->resistance())
+                        result = mob;
+                }
+
+                return result;
+            };
+
+            static MapObject* vulnerable(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            {
+                Mob* result = nullptr;
+                for(unsigned int i = 0; i < candidates.size(); i++)
+                {
+                    Mob* mob = (Mob*) candidates.at(i);
+
+                    if (result == nullptr)
+                        result = mob;
+                    else if (mob->defence() < result->defence())
+                        result = mob;
+                }
+
+                return result;
+            };
+
+            static MapObject* guarded(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            {
+                Mob* result = nullptr;
+                for(unsigned int i = 0; i < candidates.size(); i++)
+                {
+                    Mob* mob = (Mob*) candidates.at(i);
+
+                    if (result == nullptr)
+                        result = mob;
+                    else if (mob->defence() > result->defence())
+                        result = mob;
+                }
+
+                return result;
+            };
+
 
             static MapObject* freshest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
@@ -108,7 +180,7 @@ namespace Magic
 
                     if (result == nullptr)
                         result = mob;
-                    else if (mob->defaultSpeed() > result->defaultSpeed())
+                    else if (mob->speed() > result->speed())
                         result = mob;
                 }
 
@@ -124,7 +196,7 @@ namespace Magic
 
                     if (result == nullptr)
                         result = mob;
-                    else if (mob->defaultSpeed() < result->defaultSpeed())
+                    else if (mob->speed() < result->speed())
                         result = mob;
                 }
 
@@ -134,11 +206,36 @@ namespace Magic
 
             // Verbs
 
+            static void defend(MapObject* source, MapObject* target, int cost, int effect)
+            {
+                source->changeStamina(cost * -1);
+                target->changeDefence(1 + (float(effect) / 100.0));
+            };
+
+            static void endanger(MapObject* source, MapObject* target, int cost, int effect)
+            {
+                source->changeStamina(cost * -1);
+                target->changeDefence(1 - (float(effect) / 100.0));
+            };
+
+            static void ward(MapObject* source, MapObject* target, int cost, int effect)
+            {
+                source->changeStamina(cost * -1);
+                target->changeResistance(1 + (float(effect) / 100.0));
+            };
+
+            static void expose(MapObject* source, MapObject* target, int cost, int effect)
+            {
+                source->changeStamina(cost * -1);
+                target->changeResistance(1 - (float(effect) / 100.0));
+            };
+
             static void weaken(MapObject* source, MapObject* target, int cost, int effect)
             {
                 source->changeStamina(ceil(cost*-1));
                 target->changeStamina(ceil(effect*-1));
             };
+
             static void strengthen(MapObject* source, MapObject* target, int cost, int effect)
             {
                 source->changeStamina(ceil(cost*-1));
