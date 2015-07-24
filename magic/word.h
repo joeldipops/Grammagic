@@ -14,6 +14,7 @@ namespace Magic
             Word(std::string, Modifier, Modifier, Modifier);
             virtual ~Word();
             const std::string name(void) const;
+            virtual bool isDummy(void) const;
             const virtual Modifier* effect(void) const;
             const virtual Modifier* cost(void) const;
             const virtual Modifier* duration(void) const;

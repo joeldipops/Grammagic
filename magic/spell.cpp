@@ -2,6 +2,9 @@
 #include "../play/mob.h"
 using namespace Magic;
 
+DummyAdjective Spell::_dummy = DummyAdjective(Spell::_randomObj, "", Modifier(0, 1.0), Modifier(0, 1.0), Modifier(0, 1.0));
+
+
 /**
  * Static function to determine if a list of words can be turned in to a valid spell.
  * @param A candidate list of spell components.
@@ -17,9 +20,7 @@ bool Spell::verify(std::vector<Word*> components)
     {
         switch(components.at(i)->type())
         {
-            // Should never encounter a noun without an adjective.
             case WordType::ANoun:
-                return false;
             case WordType::ANounPhrase:
                 // Can't have more than one of each (yet)
                 if (hasTarget && hasSource)
@@ -124,9 +125,20 @@ bool Spell::edit(std::vector<Word*> components_)
     {
         switch(components_.at(i)->type())
         {
-            // Should never encounter a noun without an adjective.
-            case WordType::ANoun:
-                return false;
+            // If we encounter a noun without an adjective, use the dummy adjective.
+            case WordType::ANoun: {
+                if (source != nullptr && target != nullptr)
+                    return false;
+
+                NounPhrase* temp = new NounPhrase((Noun*)components_.at(i), &_dummy);
+                // Keep track of allocated memory.
+                toBin(temp);
+                if (source != nullptr)
+                    target = temp;
+                else
+                    source = temp;
+                break;
+            }
             case WordType::ANounPhrase:
                 // Can't have more than one of each (yet)
                 if (target != nullptr && source != nullptr)

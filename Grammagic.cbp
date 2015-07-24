@@ -45,6 +45,8 @@
 		<Unit filename="magic/properNoun.h" />
 		<Unit filename="magic/spell.cpp" />
 		<Unit filename="magic/spell.h" />
+		<Unit filename="magic/targetAll.cpp" />
+		<Unit filename="magic/targetAll.h" />
 		<Unit filename="magic/verb.cpp" />
 		<Unit filename="magic/verb.h" />
 		<Unit filename="magic/word.cpp" />

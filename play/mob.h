@@ -31,8 +31,8 @@ class Mob : public MapObject
 
         int changeStamina(int);
         int stamina(int);
-        const int stamina(void) const;
-        const int maxStamina(void) const;
+        int stamina(void) const;
+        int maxStamina(void) const;
 
         float changeSpeed(float);
         float speed(void) const;

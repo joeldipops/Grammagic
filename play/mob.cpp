@@ -186,19 +186,17 @@ void Mob::unblock(void)
     _unblockTime = 0;
 }
 
-
-
 int Mob::stamina(int stamina_)
 {
     _stamina = stamina_;
     return stamina();
 }
-const int Mob::stamina(void) const
+int Mob::stamina(void) const
 {
     return _stamina;
 }
 
-const int Mob::maxStamina(void) const
+int Mob::maxStamina(void) const
 {
     return _maxStamina;
 }

@@ -7,21 +7,26 @@
 #include "../play/battleField.h"
 
 class Mob;
+namespace Magic
+{
+    typedef MapObject* (*Selecter) (Mob*, BattleField*, std::vector<MapObject*>);
 
-namespace Magic {
-typedef MapObject* (*Selecter) (Mob*, BattleField*, std::vector<MapObject*>);
+    class Adjective : public Word {
+        public:
+            Adjective(){};
+            Adjective(Selecter, std::string, Modifier, Modifier, Modifier);
+            MapObject* selectTarget(Mob*, BattleField*, std::vector<MapObject*>);
+            WordType type(void) const;
 
+        private:
+            Selecter _selecter;
+    };
 
-class Adjective : public Word {
-    public:
-        Adjective(){};
-        Adjective(Selecter, std::string, Modifier, Modifier, Modifier);
-        MapObject* selectTarget(Mob*, BattleField*, std::vector<MapObject*>);
-        WordType type(void) const;
-
-    private:
-        Selecter _selecter;
-};
+    class DummyAdjective : public Adjective {
+        public:
+            DummyAdjective(Selecter, std::string, Modifier, Modifier, Modifier);
+            bool isDummy(void) const;
+    };
 }
 
 #endif

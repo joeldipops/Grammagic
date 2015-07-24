@@ -42,6 +42,13 @@ namespace Magic
             std::vector<Word*> _rubbishBin;
             std::vector<Word*> _components;
 
+            static DummyAdjective _dummy;
+            static MapObject* _randomObj (Mob* caster, BattleField* field, std::vector<MapObject*> candidates)
+            {
+                int index  = rand() % candidates.size();
+                return candidates.at(index);
+            }
+
     };
 }
 #endif

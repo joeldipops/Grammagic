@@ -17,6 +17,11 @@ const std::string Word::name(void) const
     return _name;
 }
 
+bool Word::isDummy(void) const
+{
+    return false;
+}
+
 
 const Modifier* Word::effect(void) const
 {

@@ -37,6 +37,7 @@ bool Enemy::aiMove(GameMap* map_)
         xR ? x() + 1 : x() - 1,
         yR ? y() + 1 : y() - 1
     );
+    return false;
 }
 
 /**

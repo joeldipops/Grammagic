@@ -123,6 +123,8 @@ int main ()
     Commands::allCommands.push_back(&Commands::EXPOSED);
     Commands::allCommands.push_back(&Commands::WARDED);
 
+    Commands::allCommands.push_back(&Commands::ALL);
+
     Core::Grammar program;
     program.start();
 

@@ -31,7 +31,7 @@
 	<thread>
 	<fstream>
 
-1437651504 /home/joel/Projects/Grammagic/mapObject.h
+1437734775 /home/joel/Projects/Grammagic/mapObject.h
 	<string>
 
 1435455804 /home/joel/Projects/Grammagic/mob.h
@@ -334,7 +334,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1437652332 source:/home/joel/Projects/Grammagic/main.cpp
+1437733817 source:/home/joel/Projects/Grammagic/main.cpp
 	<string>
 	"res/strings.h"
 	<SDL2/SDL.h>
@@ -386,7 +386,7 @@
 1435994666 /home/joel/Projects/Grammagic/play/terrain.h
 	"../mapObject.h"
 
-1437649136 /home/joel/Projects/Grammagic/play/mob.h
+1437732009 /home/joel/Projects/Grammagic/play/mob.h
 	"../mapObject.h"
 	<vector>
 	"../util/utils.h"
@@ -405,7 +405,7 @@
 1436169502 source:/home/joel/Projects/Grammagic/play/miniMapViewManager.cpp
 	"viewManagers.h"
 
-1437649951 source:/home/joel/Projects/Grammagic/play/mob.cpp
+1437733671 source:/home/joel/Projects/Grammagic/play/mob.cpp
 	"mob.h"
 	"../magic/nounish.h"
 	"../magic/nounPhrase.h"
@@ -557,7 +557,7 @@
 	"../play/mob.h"
 	"../play/gameMap.h"
 
-1437650053 source:/home/joel/Projects/Grammagic/play/enemy.cpp
+1437735103 source:/home/joel/Projects/Grammagic/play/enemy.cpp
 	"enemy.h"
 	<stdlib.h>
 
@@ -629,7 +629,7 @@
 	"verb.h"
 	"../menuItem.h"
 
-1437552914 /home/joel/Projects/Grammagic/magic/spell.h
+1437726915 /home/joel/Projects/Grammagic/magic/spell.h
 	<vector>
 	"word.h"
 	"nounish.h"
@@ -639,7 +639,7 @@
 	"../play/battleField.h"
 	"../util/utils.h"
 
-1437647321 /home/joel/Projects/Grammagic/magic/word.h
+1437726975 /home/joel/Projects/Grammagic/magic/word.h
 	<string>
 	"../globalConstants.h"
 	"modifier.h"
@@ -670,7 +670,7 @@
 	"../play/battleField.h"
 	"modifier.h"
 
-1437651861 /home/joel/Projects/Grammagic/magic/battleCommands.h
+1437733626 /home/joel/Projects/Grammagic/magic/battleCommands.h
 	"../play/battleField.h"
 	"../mapObject.h"
 	"properNoun.h"
@@ -679,8 +679,9 @@
 	"adjective.h"
 	"noun.h"
 	"../play/mob.h"
+	"targetAll.h"
 
-1437124166 /home/joel/Projects/Grammagic/magic/adjective.h
+1437727296 /home/joel/Projects/Grammagic/magic/adjective.h
 	"word.h"
 	"../mapObject.h"
 	<vector>
@@ -706,7 +707,7 @@
 	"../screenViewContainer.h"
 	"../play/enemy.h"
 
-1436586367 source:/home/joel/Projects/Grammagic/magic/adjective.cpp
+1437727311 source:/home/joel/Projects/Grammagic/magic/adjective.cpp
 	"adjective.h"
 
 1436524740 source:/home/joel/Projects/Grammagic/magic/battleField.cpp
@@ -728,23 +729,23 @@
 1436586430 source:/home/joel/Projects/Grammagic/magic/noun.cpp
 	"noun.h"
 
-1437046879 source:/home/joel/Projects/Grammagic/magic/nounPhrase.cpp
+1437727435 source:/home/joel/Projects/Grammagic/magic/nounPhrase.cpp
 	"nounPhrase.h"
 
 1436784734 source:/home/joel/Projects/Grammagic/magic/properNoun.cpp
 	"properNoun.h"
 
-1437649350 source:/home/joel/Projects/Grammagic/magic/spell.cpp
+1437726994 source:/home/joel/Projects/Grammagic/magic/spell.cpp
 	"spell.h"
 	"../play/mob.h"
 
 1437649498 source:/home/joel/Projects/Grammagic/magic/verb.cpp
 	"verb.h"
 
-1436789664 source:/home/joel/Projects/Grammagic/magic/word.cpp
+1437727084 source:/home/joel/Projects/Grammagic/magic/word.cpp
 	"word.h"
 
-1437652215 source:/home/joel/Projects/Grammagic/magic/battleCommands.cpp
+1437728105 source:/home/joel/Projects/Grammagic/magic/battleCommands.cpp
 	"battleCommands.h"
 
 1437564727 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
@@ -798,7 +799,7 @@
 1437388968 source:/home/joel/Projects/Grammagic/play/pc.cpp
 	"pc.h"
 
-1436528618 /home/joel/Projects/Grammagic/play/battleField.h
+1437734620 /home/joel/Projects/Grammagic/play/battleField.h
 	"../mapObject.h"
 	<vector>
 	<queue>
@@ -812,7 +813,7 @@
 	"../screenViewContainer.h"
 	"../play/enemy.h"
 
-1437473186 source:/home/joel/Projects/Grammagic/play/battleField.cpp
+1437734670 source:/home/joel/Projects/Grammagic/play/battleField.cpp
 	"battleField.h"
 	"../play/mob.h"
 	"../play/gameMap.h"
@@ -828,10 +829,10 @@
 	"play/pc.h"
 	<string>
 
-1437653033 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
+1437733872 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
 	"saveLoad.h"
 
-1437652698 /home/joel/Projects/Grammagic/persistence/saveLoad.h
+1437733837 /home/joel/Projects/Grammagic/persistence/saveLoad.h
 	"../play/pc.h"
 	<string>
 
@@ -839,4 +840,12 @@
 
 1437561165 source:/home/joel/Projects/Grammagic/util/utils.cpp
 	"utils.h"
+
+1437733395 /home/joel/Projects/Grammagic/magic/targetAll.h
+	"../mapObject.h"
+	<vector>
+	<algorithm>
+
+1437734903 source:/home/joel/Projects/Grammagic/magic/targetAll.cpp
+	"targetAll.h"
 

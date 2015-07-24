@@ -12,6 +12,7 @@ namespace Magic {
 class BattleField {
     public:
         BattleField(GameMap*);
+        ~BattleField();
         BattleField(void){};
         std::vector<Mob*> mobs(void);
         std::vector<Mob*> pcs(void);
@@ -24,8 +25,11 @@ class BattleField {
         bool isVictory(void) const;
         bool isDefeat(void) const;
 
+        void toBin(MapObject*);
+
     private:
         bool _isInCombat;
+        std::vector<MapObject*> _rubbishBin;
         std::vector<Mob*> _pcs;
         std::vector<Mob*> _hostiles;
 };

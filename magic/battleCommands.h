@@ -9,6 +9,7 @@
 #include "adjective.h"
 #include "noun.h"
 #include "../play/mob.h"
+#include "targetAll.h"
 
 namespace Magic
 {
@@ -43,6 +44,7 @@ namespace Magic
             static Adverb FASTER;
             static Adjective FASTEST;
             static Adjective SLOWEST;
+            static Adjective ALL;
 
         private:
             // Specific Nouns
@@ -74,12 +76,19 @@ namespace Magic
 
 
             // Adjectives
+            static MapObject* all(Mob* caster, BattleField* field, std::vector<MapObject*> candidates)
+            {
+                TargetAll* result = new TargetAll(candidates);
+                field->toBin(result);
+                return result;
+            }
+
             static MapObject* exposed(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
-                Mob* result = nullptr;
+                MapObject* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    Mob* mob = (Mob*) candidates.at(i);
+                    MapObject* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -92,10 +101,10 @@ namespace Magic
 
             static MapObject* warded(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
-                Mob* result = nullptr;
+                MapObject* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    Mob* mob = (Mob*) candidates.at(i);
+                    MapObject* mob = (MapObject*) candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -108,10 +117,10 @@ namespace Magic
 
             static MapObject* vulnerable(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
-                Mob* result = nullptr;
+                MapObject* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    Mob* mob = (Mob*) candidates.at(i);
+                    MapObject* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -124,10 +133,10 @@ namespace Magic
 
             static MapObject* guarded(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
-                Mob* result = nullptr;
+                MapObject* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    Mob* mob = (Mob*) candidates.at(i);
+                    MapObject* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -141,10 +150,10 @@ namespace Magic
 
             static MapObject* freshest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
-                Mob* result = nullptr;
+                MapObject* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    Mob* mob = (Mob*) candidates.at(i);
+                    MapObject* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -157,10 +166,10 @@ namespace Magic
 
             static MapObject* sickest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
-                Mob* result = nullptr;
+                MapObject* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    Mob* mob = (Mob*) candidates.at(i);
+                    MapObject* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -173,10 +182,10 @@ namespace Magic
 
             static MapObject* fastest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
-                Mob* result = nullptr;
+                MapObject* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    Mob* mob = (Mob*) candidates.at(i);
+                    MapObject* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -185,14 +194,14 @@ namespace Magic
                 }
 
                 return result;
-            }
+            };
 
             static MapObject* slowest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
-                Mob* result = nullptr;
+                MapObject* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    Mob* mob = (Mob*) candidates.at(i);
+                    MapObject* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -201,7 +210,7 @@ namespace Magic
                 }
 
                 return result;
-            }
+            };
 
 
             // Verbs

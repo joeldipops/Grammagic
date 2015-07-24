@@ -22,6 +22,9 @@ Adjective Commands::EXPOSED = Adjective(exposed, std::string("EXPOSED"), Modifie
 Adjective Commands::GUARDED = Adjective(guarded, std::string("GUARDED"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 Adjective Commands::VULNERABLE = Adjective(vulnerable, std::string("VULNERABLE"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 
+// Equally distribute effect over all candidates
+Adjective Commands::ALL = Adjective(all, std::string("ALL"), Modifier(1.1), Modifier(1.2), Modifier(1.05));
+
 // The caster
 ProperNoun Commands::CASTER = ProperNoun(self, std::string("CASTER"), Modifier(.8), Modifier(1.0), Modifier(1.0));
 
@@ -47,5 +50,3 @@ Adverb Commands::LIGHTER = Adverb(std::string("LIGHTER"), Modifier(.75), Modifie
 
 // Halves the duration, at a greater cost and some loss of effectiveness
 Adverb Commands::FASTER = Adverb(std::string("FASTER"), Modifier(0.9), Modifier(1.5), Modifier(0.5));
-
-

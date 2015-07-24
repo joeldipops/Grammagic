@@ -13,6 +13,20 @@ BattleField::BattleField(GameMap* map_)
         if (map_->mobs().at(i)->isSeen(map_->pc()))
             _hostiles.push_back(map_->mobs().at(i));
     }
+
+    std::vector<void*> _rubbishBin = std::vector<void*>(0);
+}
+
+/**
+ * Garbage collects any memory that was allocated during combat.
+ */
+BattleField::~BattleField(void)
+{
+    for(MapObject* item : _rubbishBin)
+    {
+        delete item;
+    }
+    _rubbishBin = std::vector<MapObject*>(0);
 }
 
 /**
@@ -77,9 +91,15 @@ std::vector<Mob*> BattleField::getDue(void)
 
 bool BattleField::areAllied(const MapObject* one, const MapObject* other) const
 {
-    Mob* mOne = (Mob*) one;
-    Mob* mOther = (Mob*) other;
-    return mOne->type() == mOther->type();
+    int found = 0;
+    for(MapObject* mob : _hostiles)
+    {
+        if (mob == one)
+            found++;
+        if (mob == other)
+            found++;
+    }
+    return found % 2 == 0;
 }
 
 bool BattleField::isInCombat(bool isInCombat_)
@@ -110,3 +130,10 @@ std::vector<Mob*> BattleField::mobs(void)
     return result;
 }
 
+/**
+ * Keep track of an obj that was allocated during combat.
+ */
+void BattleField::toBin(MapObject* rubbish)
+{
+    _rubbishBin.push_back(rubbish);
+}

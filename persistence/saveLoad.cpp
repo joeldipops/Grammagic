@@ -65,6 +65,8 @@ void SaveLoad::save(const PC& pc)
                 data.push_back(SavedObjectCode::ExposedRune);
             else if (word == &Commands::EXPOSE)
                 data.push_back(SavedObjectCode::ExposeRune);
+            else if (word == &Commands::ALL)
+                data.push_back(SavedObjectCode::AllRune);
             else
                 throw;
         }
@@ -124,6 +126,11 @@ void SaveLoad::load(PC& pc) const
                 if (!spellInProgress)
                     throw;
                 workingSpell.addComponent(&Commands::FASTEST);
+                break;
+            case SavedObjectCode::FasterRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::FASTER);
                 break;
             case SavedObjectCode::FreshestRune:
                 if (!spellInProgress)
@@ -209,6 +216,11 @@ void SaveLoad::load(PC& pc) const
                 if (!spellInProgress)
                     throw;
                 workingSpell.addComponent(&Commands::EXPOSED);
+                break;
+            case SavedObjectCode::AllRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::ALL);
                 break;
             default: throw;
         }
