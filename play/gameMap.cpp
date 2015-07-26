@@ -10,18 +10,18 @@ GameMap::GameMap(int width, int height)
     _width = width;
     _height = height;
     _cells = std::vector<MapCell>(width * height);
-    _mobs = std::vector<Mob*>();
-    _mobs.reserve(width * height);
+    _contents = std::vector<MapObject*>();
+    _contents.reserve(width * height);
     // Reserve the first spot for the PC mob.
-    _mobs.push_back(nullptr);
+    _contents.push_back(nullptr);
 }
 
 GameMap::~GameMap()
 {
     // One as PC is a special case
-    for(unsigned int i = 1; i < _mobs.size(); i++)
-        killMob(_mobs.at(i));
-    _mobs = std::vector<Mob*>(0);
+    for(unsigned int i = 1; i < _contents.size(); i++)
+        kill(_contents.at(i));
+    _contents = std::vector<MapObject*>(0);
 }
 
 /**
@@ -59,14 +59,14 @@ std::vector<MapCell>* GameMap::cells(std::vector<MapCell>* cells)
  * @param mobs
  * @return
  */
-std::vector<Mob*> GameMap::mobs(std::vector<Mob*> mobs_)
+std::vector<MapObject*> GameMap::contents(std::vector<MapObject*> contents_)
 {
-    _mobs = mobs_;
-    return _mobs;
+    _contents = contents_;
+    return _contents;
 }
-std::vector<Mob*> GameMap::mobs(void) const
+std::vector<MapObject*> GameMap::contents(void) const
 {
-    return _mobs;
+    return _contents;
 }
 
 /**
@@ -76,7 +76,7 @@ std::vector<Mob*> GameMap::mobs(void) const
  * @param y
  * @return true if placed successfuly, false otherwise.
  */
-bool GameMap::placeMob(Mob* mob, int x, int y, bool canReplace)
+bool GameMap::place(MapObject* mob, int x, int y, bool canReplace)
 {
     if (x < 0 || x >= width())
         return false;
@@ -88,18 +88,18 @@ bool GameMap::placeMob(Mob* mob, int x, int y, bool canReplace)
     if (cell->contents() != nullptr)
     {
         if (canReplace)
-            killMob(cell->contents());
+            kill(cell->contents());
         else
             return false;
     }
 
-    if (mob->type() == MobType::PlayerCharacter)
+    if (mob->isMob() && ((Mob*)mob)->type() == MobType::PlayerCharacter)
     {
-        delete _mobs.at(0);
-        _mobs.at(0) = mob;
+        delete _contents.at(0);
+        _contents.at(0) = mob;
     }
     else
-        _mobs.push_back(mob);
+        _contents.push_back(mob);
 
     mob->location(x, y);
     mob = cell->contents(mob);
@@ -114,18 +114,19 @@ bool GameMap::placeMob(Mob* mob, int x, int y, bool canReplace)
  */
 PC* GameMap::pc(PC& pc)
 {
-    if (_mobs[0] != nullptr)
+    if (_contents[0] != nullptr)
     {
-        Mob* old = _mobs[0];
-        this->placeMob((Mob*)&pc, old->x(), old->y(), true);
+        MapObject* old = _contents[0];
+        this->place((MapObject*)&pc, old->x(), old->y(), true);
     }
 
-    _mobs[0] = &pc;
-    return (PC*) _mobs.at(0);
+    _contents[0] = &pc;
+    return (PC*) _contents.at(0);
 }
+
 PC* GameMap::pc(void) const
 {
-    return (PC*) _mobs.at(0);
+    return (PC*) _contents.at(0);
 }
 
 /**
@@ -134,7 +135,7 @@ PC* GameMap::pc(void) const
  * @param loc The location to move to.
  * @return true if move was successful, false otherwise
  */
-bool GameMap::moveMob(Mob* mob, Location loc)
+bool GameMap::moveMob(MapObject* mob, Location loc)
 {
     return moveMob(mob, loc.X, loc.Y);
 }
@@ -143,15 +144,15 @@ bool GameMap::moveMob(Mob* mob, Location loc)
  * Remove a mob from the map, and from existence
  * @param Mob the Mob to remove.
  */
-void GameMap::killMob(Mob* mob)
+void GameMap::kill(MapObject* mob)
 {
     // Remove from the map.
     getCell(mob->x(), mob->y())->empty();
 
-    for (unsigned int i = 0; i < _mobs.size(); i++)
+    for (unsigned int i = 0; i < _contents.size(); i++)
     {
-        if (mob == _mobs.at(i))
-            _mobs.erase(_mobs.begin() + i);
+        if (mob == _contents.at(i))
+            _contents.erase(_contents.begin() + i);
     }
     delete mob;
 }
@@ -161,16 +162,19 @@ void GameMap::killMob(Mob* mob)
  */
 void GameMap::buryTheDead()
 {
-    Mob* mob;
-    for(unsigned int i = 0; i < _mobs.size(); i++)
+    MapObject* m;
+    for(unsigned int i = 0; i < _contents.size(); i++)
     {
-        mob = _mobs.at(i);
+        m = _contents.at(i);
+        if (!m->isMob())
+            continue;
+        Mob* mob = (Mob*) m;
         if (mob->stamina() <= 0)
         {
             // Remove from the map.
             getCell(mob->x(), mob->y())->empty();
             // Remove from existence
-            _mobs.erase(_mobs.begin() + i);
+            _contents.erase(_contents.begin() + i);
             i--;
         }
     }
@@ -209,7 +213,7 @@ void GameMap::setCell(int x, int y, MapCell* value)
  * @param y
  * @return true if move was successful, false otherwise
  */
-bool GameMap::moveMob(Mob* mob, int x, int y)
+bool GameMap::moveMob(MapObject* mob, int x, int y)
 {
     if (x < 0 || x >= width())
         return false;

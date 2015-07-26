@@ -33,7 +33,7 @@ const Terrain* MapCell::terrain(void) const
  * @param mob The mob that's placed on this cell.
  * @param The mob on this cell after the update.
  */
-Mob* MapCell::contents(Mob* contents_)
+MapObject* MapCell::contents(MapObject* contents_)
 {
     if (contents_ != nullptr)
         _contents = contents_;

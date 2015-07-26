@@ -20,6 +20,7 @@ class Mob : public MapObject, public Combatable
 
 
         bool isSeen(const MapObject&);
+        bool isMob(void) const { return true; };
 
         // Stats
         int rangeOfSight(int);

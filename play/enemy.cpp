@@ -55,11 +55,11 @@ void Enemy::aiAct(BattleField* field)
  */
 void Enemy::attack(BattleField* field)
 {
-    for (unsigned int i = 0; i < field->mobs().size(); i++)
+    for (unsigned int i = 0; i < field->combatants().size(); i++)
     {
-        if (!field->areAllied(this, field->mobs().at(i)))
+        if (!field->areAllied(this, field->combatants().at(i)))
         {
-            Mob* target = field->mobs().at(i);
+            Combatable* target = field->combatants().at(i);
 
             target->changeStamina(-1 * _physicalStrength * target->defence());
             break;

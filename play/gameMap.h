@@ -16,13 +16,13 @@ class GameMap
         GameMap(int, int);
         ~GameMap();
 
-        void killMob(Mob*);
+        void kill(MapObject*);
         void buryTheDead();
 
-        bool placeMob(Mob*, int, int, bool = false);
+        bool place(MapObject*, int, int, bool = false);
 
-        bool moveMob(Mob*, Location);
-        bool moveMob(Mob*, int, int);
+        bool moveMob(MapObject*, Location);
+        bool moveMob(MapObject*, int, int);
         MapCell* getCell(int x, int y);
         const MapCell* getCell(int x, int y) const;
         void setCell(int x, int y, MapCell*);
@@ -30,14 +30,14 @@ class GameMap
         int width(void) const;
         int height(void) const;
         std::vector<MapCell>* cells(std::vector<MapCell>* = nullptr);
-        std::vector<Mob*> mobs(std::vector<Mob*>);
-        std::vector<Mob*> mobs(void) const;
+        std::vector<MapObject*> contents(std::vector<MapObject*>);
+        std::vector<MapObject*> contents(void) const;
         PC* pc(PC&);
         PC* pc(void) const;
 
 
     private:
-        std::vector<Mob*> _mobs;
+        std::vector<MapObject*> _contents;
         std::vector<MapCell> _cells;
         int _width;
         int _height;

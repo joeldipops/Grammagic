@@ -248,6 +248,8 @@ int Mob::selectedCommandIndex(unsigned int index)
  */
 bool Mob::isSeen(const MapObject& target)
 {
+    if (&target == this)
+        return false;
     return (abs(target.x() - x()) <= _rangeOfSight)
         && (abs(target.y() - y()) <= _rangeOfSight);
 }

@@ -185,7 +185,7 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const 
             SDL_RenderCopy(_renderer, arrowLeft, NULL, &arrowRect);
             rect.x += arrowOffset;
         }
-        else if (items->size() > visiblePerPage)
+        if (int(items->size()) > visiblePerPage)
         {
             SDL_Texture* arrowRight = _assets->get("res/arrow-right.png");
             SDL_Rect arrowRect = SDL_Rect { view.x + view.w - borderWidth - 2 - 15, view.y + (view.h / 2), 15, 15 };
@@ -204,7 +204,7 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const 
 
     SDL_Rect temp;
 
-    int limit = (i + visiblePerPage) >= items->size()
+    int limit = (i + visiblePerPage) >= int(items->size())
     ? items->size()
     : i + visiblePerPage;
 

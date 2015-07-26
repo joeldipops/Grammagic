@@ -22,6 +22,7 @@ class MapObject
         int x(void) const;
         int y(int);
         int y(void) const;
+        virtual bool isMob(void) const { return false; };
 
 
         static const std::string RESOURCE_LOCATION;

@@ -64,7 +64,7 @@ Play::PlayState CombatManager::start(GameMap* map_)
             state(Play::PlayState::GameOver);
     }
 
-    for (Mob* mob : field.mobs())
+    for (Combatable* mob : field.combatants())
     {
         mob->endCombat();
     }
@@ -80,7 +80,7 @@ void CombatManager::render(void)
     SDL_RenderClear(renderer());
 
     Play::PlayState state = Play::PlayState::Combat;
-    _mapView->render(_map, state);
+    _mapView->render(*_map, state);
     _controlView->render(_map->pc(), state);
     _statsView->render(_map, state);
     _miniMapView->render();

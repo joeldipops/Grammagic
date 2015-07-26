@@ -92,6 +92,15 @@ namespace Util
         return result;
     };
 
+    template <typename I, typename O>
+    std::vector<O> castVector(std::vector<I>& source)
+    {
+        std::vector<O> result(source.size());
+        std::transform(source.begin(), source.end(), result.begin(), [](I i) { return (O) i; });
+
+        return result;
+    }
+
     void sleep(int milliseconds);
 
     bool writeFile(const char* fileName, const std::vector<char>& data);

@@ -57,7 +57,7 @@ Core::CoreState PlayStateManager::start(PC& pc)
     _map = loadMap();
 
     // No PC, what's the point - Ollies Outie
-    if (_map->mobs().at(0)->type() != MobType::PlayerCharacter)
+    if (_map->contents().at(0) == nullptr)
         return Core::CoreState::Exit;
 
     _map->pc(pc);
@@ -124,8 +124,12 @@ bool PlayStateManager::processMovementState(void)
 
     // Enemies should move around the map.
     int time = SDL_GetTicks();
-    for(Mob* mob : _map->mobs())
+    for(MapObject* m : _map->contents())
     {
+        if (!m->isMob())
+            continue;
+        Mob* mob = (Mob*) m;
+
         if (mob->type() != MobType::Hostile)
             continue;
         if (!mob->tryUnblock(time) && mob->isBlocked())
@@ -173,10 +177,14 @@ bool PlayStateManager::processMovementState(void)
     if (time < _combatGraceTime)
         return hasUpdate;
 
-    std::vector<Mob*> enemies = _map->mobs();
-    for(unsigned int i = 1; i < enemies.size(); i++)
+    for(MapObject* m : _map->contents())
     {
-        if (enemies.at(i)->isSeen(*_map->pc()))
+        if (!m->isMob())
+            continue;
+
+        Mob* enemy = (Mob*) m;
+
+        if (enemy->isSeen(*_map->pc()))
             state(PlayState::Combat);
     }
 
@@ -251,9 +259,9 @@ GameMap* PlayStateManager::loadMap(void)
             default:
                 mob = new Mob(contents);
         }
-        gameMap->placeMob(mob, x, y);
+        gameMap->place(mob, x, y);
     }
-    gameMap->mobs().shrink_to_fit();
+    gameMap->contents().shrink_to_fit();
     return gameMap;
 }
 
@@ -265,7 +273,7 @@ void PlayStateManager::render()
     SDL_SetRenderDrawColor(renderer(), 0x00, 0x00, 0x00, 0xFF);
     SDL_RenderClear(renderer());
 
-    _mapView->render(_map, state());
+    _mapView->render(*_map, state());
     _controlView->render(_map->pc(), state());
     _statsView->render(_map, state());
     _miniMapView->render();

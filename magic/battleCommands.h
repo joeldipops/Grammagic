@@ -10,6 +10,7 @@
 #include "noun.h"
 #include "../play/mob.h"
 #include "targetAll.h"
+#include "../util/utils.h"
 
 namespace Magic
 {
@@ -65,14 +66,15 @@ namespace Magic
             {
                 std::vector<Combatable*> result;
                 std::vector<Mob*> candidates;
+
                 if (caster->type() == MobType::PlayerCharacter)
-                    candidates = battleField->hostiles();
+                    candidates =  battleField->hostiles();
                 else
                     candidates = battleField->pcs();
 
                 for (Mob* m : candidates)
                 {
-                    result.push_back((Combatable*) m);
+                    result.push_back(m);
                 }
 
                 return result;

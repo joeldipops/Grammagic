@@ -8,10 +8,14 @@ BattleField::BattleField(GameMap* map_)
 {
     _pcs.push_back(map_->pc());
 
-    for(unsigned int i = 1; i < map_->mobs().size(); i++)
+    for(unsigned int i = 1; i < map_->contents().size(); i++)
     {
-        if (map_->mobs().at(i)->isSeen(*map_->pc()))
-            _hostiles.push_back(map_->mobs().at(i));
+        if (!map_->contents().at(i)->isMob())
+            continue;
+        Mob* m = (Mob*) map_->contents().at(i);
+
+        if (m->isSeen(*map_->pc()))
+            _hostiles.push_back(m);
     }
 
     std::vector<void*> _rubbishBin = std::vector<void*>(0);
@@ -34,7 +38,7 @@ BattleField::~BattleField(void)
  */
 bool BattleField::isVictory(void) const
 {
-    for (Mob* m : _hostiles)
+    for (Combatable* m : _hostiles)
     {
         if (m->stamina() > 0)
             return false;
@@ -48,7 +52,7 @@ bool BattleField::isVictory(void) const
  */
 bool BattleField::isDefeat(void) const
 {
-    for (Mob* m : _pcs)
+    for (Combatable* m : _pcs)
     {
         if (m->stamina() > 0)
             return false;
@@ -67,8 +71,9 @@ std::vector<Mob*> BattleField::getDue(void)
         return result;
 
     int time = SDL_GetTicks();
-    for (Mob* item : mobs())
+    for (Combatable* c : combatants())
     {
+        Mob* item = (Mob*) c;
         // Now is the time to clean up dead mobs.
         if (item->stamina() <= 0)
         {
@@ -122,11 +127,18 @@ std::vector<Mob*> BattleField::pcs(void)
     return _pcs;
 }
 
-std::vector<Mob*> BattleField::mobs(void)
+std::vector<Combatable*> BattleField::combatants(void)
 {
-    std::vector<Mob*> result = std::vector<Mob*>();
-    result.insert(result.end(), _hostiles.begin(), _hostiles.end());
-    result.insert(result.end(), _pcs.begin(), _pcs.end());
+    std::vector<Combatable*> result = std::vector<Combatable*>();
+
+    for (Mob* m : _hostiles)
+    {
+        result.push_back(m);
+    }
+    for (Mob* m : _pcs)
+    {
+        result.push_back(m);
+    }
     return result;
 }
 

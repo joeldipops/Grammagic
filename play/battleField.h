@@ -15,7 +15,7 @@ class BattleField {
         BattleField(GameMap*);
         ~BattleField();
         BattleField(void){};
-        std::vector<Mob*> mobs(void);
+        std::vector<Combatable*> combatants(void);
         std::vector<Mob*> pcs(void);
         std::vector<Mob*> hostiles(void);
         std::vector<Mob*> getDue(void);

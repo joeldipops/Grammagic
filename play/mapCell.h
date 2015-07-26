@@ -11,12 +11,12 @@ class MapCell
         MapCell(TerrainType);
         Terrain* terrain(Terrain* = nullptr);
         const Terrain* terrain(void) const;
-        Mob* contents(Mob* = nullptr);
+        MapObject* contents(MapObject* = nullptr);
         void empty(void);
 
     private:
         Terrain _terrain;
-        Mob* _contents;
+        MapObject* _contents;
 };
 
 #endif
