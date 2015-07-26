@@ -20,7 +20,7 @@ void Util::sleep(int milliseconds)
 bool Util::writeFile(const char* fileName, const std::vector<char>& data)
 {
     std::ofstream file(fileName, std::ofstream::binary);
-    file.write(&data[0], int(data.size()));
+    file.write(data.data(), int(data.size()));
     file.close();
 
     return true;

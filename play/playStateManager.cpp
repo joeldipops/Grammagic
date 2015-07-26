@@ -2,7 +2,7 @@
 
 using namespace Play;
 
-const bool REGEN_MAP = false;
+const bool REGEN_MAP = true;
 const SDL_Rect CONTROL_VIEW = {0, 0, 1000, 150};
 const SDL_Rect MINIMAP_VIEW = {1000, 0, 200, 150};
 const SDL_Rect STATS_VIEW = {1000, 150, 200, 650};
@@ -38,7 +38,7 @@ PlayStateManager::~PlayStateManager()
  * Sets up graphics then Starts the main loop for this state.
  * @returns the state the core loop should be in when the PlayState ends.
  */
-Core::CoreState PlayStateManager::start(PC& pc)
+Core::CoreState PlayStateManager::start(Party& party)
 {
     state(PlayState::Movement);
     result(Core::CoreState::Exit);
@@ -60,7 +60,7 @@ Core::CoreState PlayStateManager::start(PC& pc)
     if (_map->contents().at(0) == nullptr)
         return Core::CoreState::Exit;
 
-    _map->pc(pc);
+    _map->party(party);
 
     bool rerender = true;
 
@@ -72,7 +72,7 @@ Core::CoreState PlayStateManager::start(PC& pc)
         if (!rerender)
             Util::sleep(50);
 
-        if (_map->pc()->stamina() <= 0)
+        if(_map->party()->isDefeated())
         {
             // _state = GameOver
             state(PlayState::Exit);
@@ -88,7 +88,7 @@ Core::CoreState PlayStateManager::start(PC& pc)
         switch(state())
         {
             case PlayState::Menu:
-                state(menuManager.start((PC*)_map->pc()));
+                state(menuManager.start(party));
                 continue;
             case PlayState::Victory:
                 state(PlayState::Movement);
@@ -117,7 +117,7 @@ Core::CoreState PlayStateManager::start(PC& pc)
 bool PlayStateManager::processMovementState(void)
 {
     SDL_Event event;
-    Mob* pc = _map->pc();
+    MapObject* pc = _map->party();
     bool hasUpdate = false;
 
     PlayState oldState = state();
@@ -184,7 +184,7 @@ bool PlayStateManager::processMovementState(void)
 
         Mob* enemy = (Mob*) m;
 
-        if (enemy->isSeen(*_map->pc()))
+        if (enemy->isSeen(*_map->party()))
             state(PlayState::Combat);
     }
 
@@ -197,7 +197,7 @@ bool PlayStateManager::processMovementState(void)
  * @param input The direction that was input.
  * @return true if move succeeded.
  */
-bool PlayStateManager::moveMob(Mob* mob, Core::InputPress input)
+bool PlayStateManager::moveMob(MapObject* mob, Core::InputPress input)
 {
     int x = mob->x();
     int y = mob->y();
@@ -249,13 +249,16 @@ GameMap* PlayStateManager::loadMap(void)
         if (contents == MobType::None)
             continue;
 
-        Mob* mob;
+        MapObject* mob;
         switch(contents)
         {
             case MobType::Hostile:
                 mob = new Enemy();break;
-            case MobType::PlayerCharacter:
-                mob = new PC(); break;
+            case MobType::PartyOfMobs:
+            case MobType::PlayerCharacter: {
+                mob = new Party(std::vector<PC*> {new PC()});
+                break;
+            }
             default:
                 mob = new Mob(contents);
         }
@@ -274,7 +277,7 @@ void PlayStateManager::render()
     SDL_RenderClear(renderer());
 
     _mapView->render(*_map, state());
-    _controlView->render(_map->pc(), state());
+    _controlView->render(_map->party()->leader(), state());
     _statsView->render(_map, state());
     _miniMapView->render();
 
@@ -292,15 +295,13 @@ void PlayStateManager::writeMapFile(const char* fileName, const int width, const
     std::vector<char> dataBytes = std::vector<char>(0);
     dataBytes.reserve(fileSize);
 
-    dataBytes[0] = width;
-    dataBytes[1] = height;
-    int position = 2;
+    dataBytes.push_back(width);
+    dataBytes.push_back(height);
 
     for (auto const &cell : *data)
     {
-        dataBytes[position] = char(cell.terrainType);
-        dataBytes[position+1] = char(cell.mobType);
-        position += MapFileBlock::BYTES_PER_CELL;
+        dataBytes.push_back(char(cell.terrainType));
+        dataBytes.push_back(char(cell.mobType));
     }
 
     Util::writeFile(fileName, dataBytes);
@@ -332,7 +333,7 @@ std::vector<MapFileBlock> PlayStateManager::tempMapFile()
         MapFileBlock::generateTestCell(WallTerrain),
 
         MapFileBlock::generateTestCell(WallTerrain),
-        MapFileBlock::generateTestCell(GrassTerrain, MobType::PlayerCharacter),
+        MapFileBlock::generateTestCell(GrassTerrain, MobType::PartyOfMobs),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),

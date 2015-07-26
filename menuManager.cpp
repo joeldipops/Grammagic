@@ -15,7 +15,7 @@ MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
     _menu = std::vector<MenuItem> { MAGIC, SAVE };
 }
 
-Play::PlayState MenuManager::start(PC* pc)
+Play::PlayState MenuManager::start(Party& party)
 {
     bool rerender = true;
     state(MenuState::SelectMenu);
@@ -34,7 +34,7 @@ Play::PlayState MenuManager::start(PC* pc)
                 _selectedComponentIndex, // SelectedComponentIndex
                 _selectedRuneIndex, // SelectedRuneIndex
             };
-            _viewManager.render(*pc, vm, _message.length() > 0 ? &_message : nullptr);
+            _viewManager.render(party, vm, _message.length() > 0 ? &_message : nullptr);
         }
 
         else
@@ -61,22 +61,22 @@ Play::PlayState MenuManager::start(PC* pc)
                     switch(event.key.keysym.sym)
                     {
                         case SDLK_w:
-                            rerender |= moveCursor(pc, Core::InputPress::UP);
+                            rerender |= moveCursor(party, Core::InputPress::UP);
                             break;
                         case SDLK_a:
-                            rerender |= moveCursor(pc, Core::InputPress::LEFT);
+                            rerender |= moveCursor(party, Core::InputPress::LEFT);
                             break;
                         case SDLK_s:
-                            rerender |= moveCursor(pc, Core::InputPress::DOWN);
+                            rerender |= moveCursor(party, Core::InputPress::DOWN);
                             break;
                         case SDLK_d:
-                            rerender |= moveCursor(pc, Core::InputPress::RIGHT);
+                            rerender |= moveCursor(party, Core::InputPress::RIGHT);
                             break;
                         case SDLK_LEFTBRACKET:
                             rerender |= processCancel();
                             break;
                         case SDLK_RIGHTBRACKET:
-                            rerender |= processCommand(pc);
+                            rerender |= processCommand(party);
                             break;
                     }
 
@@ -89,7 +89,7 @@ Play::PlayState MenuManager::start(PC* pc)
     }
 
     // Resolve all spells.
-    for (Command* cmd : pc->commands())
+    for (Command* cmd : party.leader()->commands())
     {
         cmd->spell()->resolve();
     }
@@ -111,7 +111,7 @@ int MenuManager::selectedSpellLength(PC* pc) const
 }
 
 
-bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
+bool MenuManager::moveCursor(Party& party, Core::InputPress input)
 {
     int result = 0;
     int index = 0;
@@ -125,9 +125,9 @@ bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
             columnItemCount = 100;
             break;
         case MenuState::SelectSpell:
-            itemCount = pc->spellSlots() > int(pc->spells()->size())
-                ? pc->spells()->size() + 1
-                : pc->spellSlots();
+            itemCount = party.leader()->spellSlots() > int(party.leader()->spells()->size())
+                ? party.leader()->spells()->size() + 1
+                : party.leader()->spellSlots();
             index = _selectedSpellIndex;
             columnItemCount = 1;
             break;
@@ -138,9 +138,9 @@ bool MenuManager::moveCursor(PC* pc, Core::InputPress input)
             break;
         case MenuState::SelectComponent:
             index = _selectedComponentIndex;
-            itemCount = pc->runeSlots() > selectedSpellLength(pc)
-                ? selectedSpellLength(pc) + 1
-                : pc->runeSlots();
+            itemCount = party.leader()->runeSlots() > selectedSpellLength(party.leader())
+                ? selectedSpellLength(party.leader()) + 1
+                : party.leader()->runeSlots();
             columnItemCount = 1;
             break;
         default:
@@ -196,23 +196,23 @@ bool MenuManager::processCancel(void)
     }
 }
 
-bool MenuManager::processCommand(PC* pc)
+bool MenuManager::processCommand(Party& party)
 {
     switch(state())
     {
         case MenuState::SelectMenu:
-            return processMenuCommand(pc);
+            return processMenuCommand(party);
         case MenuState::SelectSpell:
-            return processSpellCommand(pc);
+            return processSpellCommand(party.leader());
         case MenuState::SelectRune:
-            return processRuneCommand(pc);
+            return processRuneCommand(party.leader());
         case MenuState::SelectComponent:
-            return processComponentCommand(pc);
+            return processComponentCommand(party.leader());
     }
     return false;
 }
 
-bool MenuManager::processMenuCommand(PC* pc)
+bool MenuManager::processMenuCommand(const Party& party)
 {
     MenuItem item = _menu.at(_selectedMenuIndex);
     if (item.equals(MAGIC))
@@ -224,7 +224,7 @@ bool MenuManager::processMenuCommand(PC* pc)
     else if (item.equals(SAVE))
     {
         Persistence::SaveLoad io = Persistence::SaveLoad(SAVE_FILE);
-        io.save(*pc);
+        io.save(party);
         _message = Strings::SaveComplete;
         return true;
     }

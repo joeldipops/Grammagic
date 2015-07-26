@@ -7,6 +7,7 @@
 #include "../play/battleField.h"
 
 class Mob;
+using namespace Play;
 namespace Magic
 {
     typedef Combatable* (*Selecter) (Mob*, BattleField*, std::vector<Combatable*>);

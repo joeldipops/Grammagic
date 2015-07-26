@@ -60,6 +60,8 @@ void MapViewManager::renderContents(const GameMap& gameMap)
         if (contents.at(i)->isMob())
             renderHealthBar(*(Mob*)contents.at(i));
     }
+
+    renderHealthBar(*(Mob*)gameMap.party()->leader());
 }
 
 void MapViewManager::renderHealthBar(const Mob& mob)

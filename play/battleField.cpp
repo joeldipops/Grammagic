@@ -1,12 +1,13 @@
 #include "battleField.h"
-#include "../play/mob.h"
+#include "mob.h"
 #include "../play/gameMap.h"
-
-using namespace Magic;
 
 BattleField::BattleField(GameMap* map_)
 {
-    _pcs.push_back(map_->pc());
+    for (Mob* c : map_->party()->members())
+    {
+        _pcs.push_back(c);
+    }
 
     for(unsigned int i = 1; i < map_->contents().size(); i++)
     {
@@ -14,8 +15,17 @@ BattleField::BattleField(GameMap* map_)
             continue;
         Mob* m = (Mob*) map_->contents().at(i);
 
-        if (m->isSeen(*map_->pc()))
-            _hostiles.push_back(m);
+        std::vector<PC*> members = map_->party()->members();
+
+        // If a mob can see any party member, that mob should be in the combat.
+        for (PC* pc : members)
+        {
+            if (m->isSeen(*pc))
+            {
+                _hostiles.push_back(m);
+                break;
+            }
+        }
     }
 
     std::vector<void*> _rubbishBin = std::vector<void*>(0);

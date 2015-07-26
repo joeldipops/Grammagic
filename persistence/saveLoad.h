@@ -2,6 +2,7 @@
 #define SAVELOAD_H_INCLUDED
 
 #include "../play/pc.h"
+#include "../play/party.h"
 #include <string>
 
 namespace Persistence
@@ -35,15 +36,17 @@ namespace Persistence
         ImpairRune,
         EnhanceRune,
         StrongestRune,
-        WeakestRune
+        WeakestRune,
+        NewMember,
     };
 
     class SaveLoad
     {
         public:
             SaveLoad(std::string);
-            void save(const PC& pc);
-            void load(PC& pc) const;
+            void save(const Party& party);
+            std::vector<char> getSpellBytes(const PC& pc) const;
+            void load(Party& party) const;
 
         private:
             std::string _path;

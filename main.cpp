@@ -55,9 +55,9 @@ namespace Core
 
                 // Initialise State Managers.
                 TitleStateManager title = TitleStateManager(renderer, &assets);
-                PlayStateManager play = PlayStateManager(renderer, &assets);
+                PlayStateManager play(renderer, &assets);
 
-                PC player = PC();
+                Party player = Party();
                 SaveLoad io = SaveLoad(SAVE_FILE);
                 CoreState state = CoreState::Title;
                 while(state != CoreState::Exit)

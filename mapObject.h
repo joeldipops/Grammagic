@@ -18,11 +18,12 @@ class MapObject
 
         Location location(int, int);
         Location location(const Location*);
-        int x(int);
-        int x(void) const;
-        int y(int);
-        int y(void) const;
+        virtual int x(int);
+        virtual int x(void) const;
+        virtual int y(int);
+        virtual int y(void) const;
         virtual bool isMob(void) const { return false; };
+        virtual bool isPlayerParty(void) const {return false;};
 
 
         static const std::string RESOURCE_LOCATION;

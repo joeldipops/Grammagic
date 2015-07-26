@@ -25,11 +25,11 @@ const std::string MapObject::imageFileName(void) const
  * @param y
  * @return
  */
-Location MapObject::location(int x, int y)
+Location MapObject::location(int x_, int y_)
 {
-    _x = x;
-    _y = y;
-    return Location(&x, &y);
+    x(x_);
+    y(y_);
+    return Location(x_, y_);
 }
 
 /**
@@ -41,8 +41,8 @@ Location MapObject::location(const Location* loc)
 {
     if (loc != nullptr)
     {
-        _x = loc->X;
-        _y = loc->Y;
+        x(loc->X);
+        y(loc->Y);
     }
     return Location(&_x, &_y);
 }

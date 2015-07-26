@@ -4,19 +4,22 @@
 #include "terrain.h"
 #include "mob.h"
 
-class MapCell
+namespace Play
 {
-    public:
-        MapCell();
-        MapCell(TerrainType);
-        Terrain* terrain(Terrain* = nullptr);
-        const Terrain* terrain(void) const;
-        MapObject* contents(MapObject* = nullptr);
-        void empty(void);
+    class MapCell
+    {
+        public:
+            MapCell();
+            MapCell(TerrainType);
+            Terrain* terrain(Terrain* = nullptr);
+            const Terrain* terrain(void) const;
+            MapObject* contents(MapObject* = nullptr);
+            void empty(void);
 
-    private:
-        Terrain _terrain;
-        MapObject* _contents;
-};
+        private:
+            Terrain _terrain;
+            MapObject* _contents;
+    };
+}
 
 #endif

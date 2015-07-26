@@ -11,7 +11,9 @@ enum MobType
     // This mob is directly controlled by the player
     PlayerCharacter,
     // Some other NPC
-    Hostile
+    Hostile,
+
+    PartyOfMobs
 };
 
 namespace Title

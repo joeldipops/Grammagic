@@ -8,6 +8,7 @@
 #include "../play/battleField.h"
 
 class Mob;
+using namespace Play;
 namespace Magic
 {
     typedef std::vector<Combatable*> (*MultiTargeter) (Mob*, BattleField*);

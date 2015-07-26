@@ -12,7 +12,7 @@ void StatsViewManager::render(const GameMap* gameMap, const Play::PlayState stat
     fillViewport(&hudColour);
     drawBorder(DEFAULT_BORDER_WIDTH, &borderColour);
 
-    const Mob* pc = gameMap->pc();
+    const Mob* pc = gameMap->party()->leader();
     SDL_Rect rect;
 
     for(const auto r : _regions)

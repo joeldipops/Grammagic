@@ -68,6 +68,7 @@
 		<Unit filename="play/battleField.h" />
 		<Unit filename="play/combatManager.cpp" />
 		<Unit filename="play/combatManager.h" />
+		<Unit filename="play/combatable.h" />
 		<Unit filename="play/controlViewManager.cpp" />
 		<Unit filename="play/enemy.cpp" />
 		<Unit filename="play/enemy.h" />
@@ -79,6 +80,8 @@
 		<Unit filename="play/miniMapViewManager.cpp" />
 		<Unit filename="play/mob.cpp" />
 		<Unit filename="play/mob.h" />
+		<Unit filename="play/party.cpp" />
+		<Unit filename="play/party.h" />
 		<Unit filename="play/pc.cpp" />
 		<Unit filename="play/pc.h" />
 		<Unit filename="play/playStateManager.cpp" />

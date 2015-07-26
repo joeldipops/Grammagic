@@ -7,6 +7,7 @@
 #include "rune.h"
 #include "play/pc.h"
 #include "globalConstants.h"
+#include "play/party.h"
 
 namespace Play
 {
@@ -25,7 +26,7 @@ namespace Play
         public:
             MenuViewManager(){};
             MenuViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-            void render(const PC&, const MenuViewModel&, std::string* = nullptr);
+            void render(const Party&, const MenuViewModel&, std::string* = nullptr);
 
         private:
             SDL_Rect _spellsVp;

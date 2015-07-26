@@ -17,7 +17,7 @@ namespace Play
     {
         public:
             MenuManager(SDL_Renderer*, AssetCache*);
-            Play::PlayState start(PC* pc);
+            Play::PlayState start(Party& party);
             Play::PlayState start(void);
 
         private:
@@ -25,12 +25,12 @@ namespace Play
             static const MenuItem SAVE;
 
             int selectedSpellLength(PC*) const;
-            bool moveCursor(PC* pc, Core::InputPress input);
-            bool processMenuCommand(PC* pc);
+            bool moveCursor(Party& party, Core::InputPress input);
+            bool processMenuCommand(const Party& party);
             bool processRuneCommand(PC* pc);
             bool processSpellCommand(PC* pc);
             bool processComponentCommand(PC* pc);
-            bool processCommand(PC* pc);
+            bool processCommand(Party& party);
             bool processCancel(void);
 
             MenuViewManager _viewManager;

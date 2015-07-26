@@ -42,7 +42,6 @@ Play::PlayState CombatManager::start(GameMap* map_)
         // Always rerender for now, at least until I can get the clocks working prettily
         rerender = true;
 
-
         std::vector<SDL_Event> events;
         while(SDL_PollEvent(&event))
         {
@@ -81,7 +80,7 @@ void CombatManager::render(void)
 
     Play::PlayState state = Play::PlayState::Combat;
     _mapView->render(*_map, state);
-    _controlView->render(_map->pc(), state);
+    _controlView->render(_map->party()->leader(), state);
     _statsView->render(_map, state);
     _miniMapView->render();
 

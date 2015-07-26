@@ -1,5 +1,7 @@
 #include "gameMap.h"
 
+using namespace Play;
+
 /**
  * Contructs a rectangular map with the given dimensions.
  * @param width
@@ -93,7 +95,7 @@ bool GameMap::place(MapObject* mob, int x, int y, bool canReplace)
             return false;
     }
 
-    if (mob->isMob() && ((Mob*)mob)->type() == MobType::PlayerCharacter)
+    if (mob->isPlayerParty())
     {
         delete _contents.at(0);
         _contents.at(0) = mob;
@@ -107,26 +109,28 @@ bool GameMap::place(MapObject* mob, int x, int y, bool canReplace)
     return true;
 }
 
+
 /**
  * Gets the current pc, or places a new PC
  * @param pc
  * @return
  */
-PC* GameMap::pc(PC& pc)
+Party* GameMap::party(Party& party_)
 {
     if (_contents[0] != nullptr)
     {
         MapObject* old = _contents[0];
-        this->place((MapObject*)&pc, old->x(), old->y(), true);
+        this->place((MapObject*)&party_, old->x(), old->y(), true);
     }
 
-    _contents[0] = &pc;
-    return (PC*) _contents.at(0);
+    _contents[0] = &party_;
+    return (Party*) _contents.at(0);
+
 }
 
-PC* GameMap::pc(void) const
+Party* GameMap::party(void) const
 {
-    return (PC*) _contents.at(0);
+    return (Party*) _contents.at(0);
 }
 
 /**

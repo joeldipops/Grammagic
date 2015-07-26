@@ -116,7 +116,7 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
 }
 
 
-void MenuViewManager::render(const PC& pc, const MenuViewModel& model, std::string* message)
+void MenuViewManager::render(const Party& party, const MenuViewModel& model, std::string* message)
 {
     ViewManager::render();
     fillViewport(&hudColour);
@@ -130,9 +130,9 @@ void MenuViewManager::render(const PC& pc, const MenuViewModel& model, std::stri
     switch(model.SelectedMenuItem)
     {
         case MagicSelected:
-            renderSpells(pc, model.SelectedSpellIndex, model.SelectedComponentIndex);
+            renderSpells(*party.leader(), model.SelectedSpellIndex, model.SelectedComponentIndex);
             if (model.SelectedRuneIndex >= 0)
-                renderRunes(pc, model.SelectedRuneIndex);
+                renderRunes(*party.leader(), model.SelectedRuneIndex);
             break;
         case SaveSelected:
         default:

@@ -6,9 +6,11 @@
 #include "verb.h"
 #include "../menuItem.h"
 class Mob;
+namespace Play { class BattleField; }
 
-namespace Magic {
-class BattleField;
+namespace Magic
+{
+
 class Command;
 
 /**

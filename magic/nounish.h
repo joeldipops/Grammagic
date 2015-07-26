@@ -6,7 +6,7 @@
 #include "../play/battleField.h"
 
 class Mob;
-
+using namespace Play;
 namespace Magic
 {
     // Abstract class

@@ -1,19 +1,22 @@
 #ifndef PLAYSTATEMANAGER_H_INCLUDED
 #define PLAYSTATEMANAGER_H_INCLUDED
 
+#include <iostream>
+#include <fstream>
 #include <vector>
+#include <SDL2/SDL.h>
+
 #include "../stateManager.h"
 #include "gameMap.h"
 #include "mob.h"
-#include <SDL2/SDL.h>
 #include "../mapFileBlock.h"
 #include "viewManagers.h"
 #include "../menuManager.h"
 #include "enemy.h"
-#include <fstream>
 #include "combatManager.h"
-#include <iostream>
 #include "pc.h"
+#include "party.h"
+
 namespace Play
 {
     class PlayStateManager : public Core::StateManager<PlayState, Core::CoreState>
@@ -21,7 +24,7 @@ namespace Play
         public:
             PlayStateManager(SDL_Renderer*, AssetCache*);
             ~PlayStateManager(void);
-            Core::CoreState start(PC&);
+            Core::CoreState start(Party&);
         private:
             // Set up
             GameMap* loadMap(void);
@@ -35,7 +38,7 @@ namespace Play
 
             // Main Loop
             bool processMovementState(void);
-            bool moveMob(Mob*, Core::InputPress);
+            bool moveMob(MapObject*, Core::InputPress);
 
             // other
             void exit(const Core::CoreState = Core::CoreState::Exit);

@@ -12,6 +12,7 @@
 #include "targetAll.h"
 #include "../util/utils.h"
 
+using namespace Play;
 namespace Magic
 {
     class Commands

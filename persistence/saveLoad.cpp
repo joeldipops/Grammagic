@@ -7,97 +7,109 @@ SaveLoad::SaveLoad(std::string path_)
     _path = path_;
 }
 
-void SaveLoad::save(const PC& pc)
+void SaveLoad::save(const Party& party)
 {
     std::vector<char> data = std::vector<char>();
 
-    // Start with the PC location.
+   // Start with the PC location.
     data.push_back(SavedObjectCode::PCPosition);
-    data.push_back(pc.x());
-    data.push_back(pc.y());
+    data.push_back(party.x());
+    data.push_back(party.y());
+    for (PC* pc : party.members())
+    {
+        data.push_back(SavedObjectCode::NewMember);
+        std::vector<char> spells = getSpellBytes(*pc);
+        data.insert(data.end(), spells.begin(), spells.end());
+    }
 
+    Util::writeFile(_path.c_str(), data);
+}
+
+std::vector<char> SaveLoad::getSpellBytes(const PC& pc) const
+{
+    std::vector<char> result = std::vector<char>();
     for (unsigned int i = 0; i < pc.spells()->size(); i++)
     {
-        data.push_back(SavedObjectCode::NewSpell);
+        result.push_back(SavedObjectCode::NewSpell);
 
         for (Word* word : pc.spells()->at(i).components())
         {
             if (word == &Commands::FASTER)
-                data.push_back(SavedObjectCode::FasterRune);
+                result.push_back(SavedObjectCode::FasterRune);
             else if (word == &Commands::FASTEST)
-                data.push_back(SavedObjectCode::FastestRune);
+                result.push_back(SavedObjectCode::FastestRune);
             else if (word == &Commands::CASTER)
-                data.push_back(SavedObjectCode::CasterRune);
+                result.push_back(SavedObjectCode::CasterRune);
             else if (word == &Commands::FRESHEST)
-                data.push_back(SavedObjectCode::FreshestRune);
+                result.push_back(SavedObjectCode::FreshestRune);
             else if (word == &Commands::HASTEN)
-                data.push_back(SavedObjectCode::HastenRune);
+                result.push_back(SavedObjectCode::HastenRune);
             else if (word == &Commands::HEAL)
-                data.push_back(SavedObjectCode::HealRune);
+                result.push_back(SavedObjectCode::HealRune);
             else if (word == &Commands::HEAVIER)
-                data.push_back(SavedObjectCode::HeavierRune);
+                result.push_back(SavedObjectCode::HeavierRune);
             else if (word == &Commands::HURT)
-                data.push_back(SavedObjectCode::HurtRune);
+                result.push_back(SavedObjectCode::HurtRune);
             else if (word == &Commands::LIGHTER)
-                data.push_back(SavedObjectCode::LighterRune);
+                result.push_back(SavedObjectCode::LighterRune);
             else if (word == &Commands::SICKEST)
-                data.push_back(SavedObjectCode::SickestRune);
+                result.push_back(SavedObjectCode::SickestRune);
             else if (word == &Commands::SLOW)
-                data.push_back(SavedObjectCode::SlowRune);
+                result.push_back(SavedObjectCode::SlowRune);
             else if (word == &Commands::SLOWEST)
-                data.push_back(SavedObjectCode::SlowestRune);
+                result.push_back(SavedObjectCode::SlowestRune);
             else if (word == &Commands::ENEMY)
-                data.push_back(SavedObjectCode::EnemyRune);
-
+                result.push_back(SavedObjectCode::EnemyRune);
             else if (word == &Commands::DEFEND)
-                data.push_back(SavedObjectCode::DefendRune);
+                result.push_back(SavedObjectCode::DefendRune);
             else if (word == &Commands::GUARDED)
-                data.push_back(SavedObjectCode::GuardedRune);
+                result.push_back(SavedObjectCode::GuardedRune);
             else if (word == &Commands::WARD)
-                data.push_back(SavedObjectCode::WardedRune);
+                result.push_back(SavedObjectCode::WardedRune);
             else if (word == &Commands::WARDED)
-                data.push_back(SavedObjectCode::WardedRune);
+                result.push_back(SavedObjectCode::WardedRune);
             else if (word == &Commands::ENDANGER)
-                data.push_back(SavedObjectCode::EndangerRune);
+                result.push_back(SavedObjectCode::EndangerRune);
             else if (word == &Commands::VULNERABLE)
-                data.push_back(SavedObjectCode::VulnerableRune);
+                result.push_back(SavedObjectCode::VulnerableRune);
             else if (word == &Commands::EXPOSED)
-                data.push_back(SavedObjectCode::ExposedRune);
+                result.push_back(SavedObjectCode::ExposedRune);
             else if (word == &Commands::EXPOSE)
-                data.push_back(SavedObjectCode::ExposeRune);
+                result.push_back(SavedObjectCode::ExposeRune);
             else if (word == &Commands::ALL)
-                data.push_back(SavedObjectCode::AllRune);
+                result.push_back(SavedObjectCode::AllRune);
             else if (word == &Commands::ENHANCE)
-                data.push_back(SavedObjectCode::EnhanceRune);
+                result.push_back(SavedObjectCode::EnhanceRune);
             else if (word == &Commands::IMPAIR)
-                data.push_back(SavedObjectCode::ImpairRune);
+                result.push_back(SavedObjectCode::ImpairRune);
             else if (word == &Commands::STRONGEST)
-                data.push_back(SavedObjectCode::StrongestRune);
+                result.push_back(SavedObjectCode::StrongestRune);
             else if (word == &Commands::WEAKEST)
-                data.push_back(SavedObjectCode::WeakestRune);
+                result.push_back(SavedObjectCode::WeakestRune);
             else
                 throw;
         }
     }
-
-    Util::writeFile(_path.c_str(), data);
+    return result;
 }
 
 /**
  * Loads information about a pc from a save file.
  * @param pc The character that will have properties assigned from the save file.
  */
-void SaveLoad::load(PC& pc) const
+void SaveLoad::load(Party& party) const
 {
     std::vector<char> data = Util::readFile(_path.c_str());
     std::vector<Spell> spells = std::vector<Spell>();
 
     Spell workingSpell;
+    PC* pc;
     bool spellInProgress = false;
     for (unsigned int i = 0; i < data.size(); i++)
     {
         switch(SavedObjectCode(data.at(i)))
         {
+
             case SavedObjectCode::PCPosition:
                 if (spellInProgress)
                 {
@@ -106,9 +118,24 @@ void SaveLoad::load(PC& pc) const
                 }
 
                 spellInProgress = false;
-                pc.x(int(data.at(i+1)));
-                pc.y(int(data.at(i+2)));
+                party.x(int(data.at(i+1)));
+                party.y(int(data.at(i+2)));
                 i+= 2;
+                break;
+            case SavedObjectCode::NewMember:
+                if (spellInProgress)
+                {
+                    workingSpell.resolve();
+                    spells.push_back(workingSpell);
+
+                    for (Spell s : spells)
+                        pc->spells()->push_back(Command("", s));
+                }
+                spellInProgress = false;
+                if (pc == nullptr)
+                    pc = party.addLeader();
+                else
+                    pc = party.addMember();
                 break;
             case SavedObjectCode::NewSpell:
                 if (spellInProgress)
@@ -255,7 +282,8 @@ void SaveLoad::load(PC& pc) const
         }
 
     }
-
+    if (pc == nullptr)
+        throw;
     if (spellInProgress)
     {
         workingSpell.resolve();
@@ -263,5 +291,5 @@ void SaveLoad::load(PC& pc) const
     }
 
     for (Spell s : spells)
-        pc.spells()->push_back(Command("", s));
+        pc->spells()->push_back(Command("", s));
 }
