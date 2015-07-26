@@ -130,8 +130,14 @@ void ViewManager::drawMessage(const std::string message, const SDL_Rect& outer, 
     drawBorder(outer, borderWidth, &borderColour, true);
 }
 
-void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control)
+/**
+ * Render all the items that a player can pick from the menu.
+ * @param items The list of items on the menu.
+ * @param selectedIndex The position in the list of the currently selected item.
+ */
+void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control, bool allowSpilling)
 {
+    // Cast MenuItems to const before calling.
     std::vector<const MenuItem*> cItems = std::vector<const MenuItem*>(0);
     cItems.reserve(items->size());
     for (unsigned int i = 0; i < items->size(); i++)
@@ -140,7 +146,7 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
         cItems.push_back(n);
     }
 
-    return drawControls(&cItems, selectedIndex, port, control);
+    return drawControls(&cItems, selectedIndex, port, control, allowSpilling);
 }
 
 /**
@@ -148,8 +154,10 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
  * @param items The list of items on the menu.
  * @param selectedIndex The position in the list of the currently selected item.
  */
-void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control)
+void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control, bool allowSpilling)
 {
+    const int arrowOffset = 15;
+    const int borderWidth = 5;
     SDL_Rect view;
     if (port == nullptr)
         view = viewPort();
@@ -160,30 +168,64 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const 
         control = &_control;
 
     SDL_Rect rect = SDL_Rect {view.x + control->x, view.y + control->y, control->w, control->h};
+
+    int i = 0;
+    unsigned int visiblePerPage = 0;
+    if (allowSpilling)
+    {
+        // find number of buttons that can be shown
+        visiblePerPage = ((view.w - arrowOffset)/ (control->w + control->x)) * (view.h / (control->h + control->y));
+        if (visiblePerPage <= 0)
+            return;
+
+        if (selectedIndex >= visiblePerPage)
+        {
+            SDL_Texture* arrowLeft = _assets->get("res/arrow-left.png");
+            SDL_Rect arrowRect = SDL_Rect { view.x + borderWidth + 2, view.y + (view.h / 2), 15, 15 };
+            SDL_RenderCopy(_renderer, arrowLeft, NULL, &arrowRect);
+            rect.x += arrowOffset;
+        }
+        else if (items->size() > visiblePerPage)
+        {
+            SDL_Texture* arrowRight = _assets->get("res/arrow-right.png");
+            SDL_Rect arrowRect = SDL_Rect { view.x + view.w - borderWidth - 2 - 15, view.y + (view.h / 2), 15, 15 };
+            SDL_RenderCopy(_renderer, arrowRight, NULL, &arrowRect);
+        }
+    }
+    else
+    {
+        visiblePerPage = ((view.w)/ (control->w + control->x)) * (view.h / (control->h + control->y));
+    }
+
+    i = (selectedIndex / visiblePerPage) * visiblePerPage;
+
     SDL_Rect temp;
 
-    int rows = 1;
-    int i = 0;
-    for(; i < int(items->size()); i++)
+    int limit = (i + visiblePerPage) >= items->size()
+    ? items->size()
+    : i + visiblePerPage;
+
+    for(; i < limit; i++)
     {
         SDL_Colour textClr = items->at(i)->colour();
         if (i == selectedIndex)
-            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textClr, &textColour);
+            drawOptionBox(&rect, items->at(i)->name(), borderWidth, &hudColour, &textClr, &textColour);
         else
-            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textClr, &borderColour);
+            drawOptionBox(&rect, items->at(i)->name(), borderWidth, &hudColour, &textClr, &borderColour);
         temp = SDL_Rect {rect.x, rect.y + control->h + control->y, control->w, control->h};
 
         // Can't fit vertically, so shift to the right.
         if (temp.y + temp.h > view.h + view.y)
         {
-            rows++;
+            if (!allowSpilling)
+                break;
             temp = SDL_Rect { control->x + rect.x + rect.w, view.y + control->y, control->w, control->h };
         }
 
         rect = temp;
     }
 
-    _menuItemsPerColumn = ceil(i / double(rows));
+    _menuItemsPerColumn = view.h / (control->h + control->y);
 }
 
 /**

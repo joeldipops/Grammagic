@@ -386,6 +386,35 @@ float Mob::changeResistance(float multiplier)
     return resistance();
 }
 
+
+/**
+ * The modified skill stat.
+ */
+float Mob::skill(void) const
+{
+    return _defaultSkill * _skillMultiplier;
+}
+
+/**
+ * Gets or sets the mob's default resistance stat, which is a multiplier.
+ */
+float Mob::defaultSkill(void) const
+{
+    return _defaultSkill;
+}
+float Mob::defaultSkill(float defaultSkill_)
+{
+    _defaultSkill = defaultSkill_;
+    return _defaultSkill;
+}
+
+float Mob::changeSkill(float multiplier)
+{
+    if (multiplier >= 0)
+        _skillMultiplier = multiplier;
+    return skill();
+}
+
 /**
  * @return The possibly modified speed stat.
  */

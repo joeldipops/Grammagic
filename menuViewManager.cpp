@@ -4,7 +4,7 @@
 
 using namespace Play;
 
-const SDL_Rect MenuViewManager::_menuControl = SDL_Rect { 9, 9, 175, 50 };
+const SDL_Rect MenuViewManager::_menuControl = SDL_Rect { 6, 6, 175, 50 };
 const int MenuViewManager::cursorXOffset = borderWidth + _menuControl.x;
 const int MenuViewManager::cursorYOffset = borderWidth + _menuControl.y;
 
@@ -17,7 +17,7 @@ MenuViewManager::MenuViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
 {
     _mainVp = SDL_Rect {v.x, v.y, 190, HEIGHT };
     _spellsVp = SDL_Rect {v.x + _mainVp.w, v.y, WIDTH - _mainVp.w, 550};
-    _runesVp = SDL_Rect {_spellsVp.x, v.y + _spellsVp.h, _spellsVp.w, v.h - _spellsVp.h};
+    _runesVp = SDL_Rect {_spellsVp.x, v.y + _spellsVp.h, _spellsVp.w, v.h - _spellsVp.h };
 }
 
 /**
@@ -125,7 +125,7 @@ void MenuViewManager::render(const PC& pc, const MenuViewModel& model, std::stri
     drawBorder(_runesVp, borderWidth, &borderColour, true);
 
     auto pointers = toPointers(model.MenuItems);
-    drawControls(&pointers, int(model.SelectedMenuItem), &_mainVp, &_menuControl);
+    drawControls(&pointers, int(model.SelectedMenuItem), &_mainVp, &_menuControl, false);
 
     switch(model.SelectedMenuItem)
     {

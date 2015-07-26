@@ -100,30 +100,38 @@ namespace Core
 
 int main ()
 {
-    Commands::allCommands.push_back(&Commands::HEAL);
-    Commands::allCommands.push_back(&Commands::HURT);
-    Commands::allCommands.push_back(&Commands::HASTEN);
-    Commands::allCommands.push_back(&Commands::SLOW);
+    Commands::allCommands.push_back(&Commands::ALL);
     Commands::allCommands.push_back(&Commands::CASTER);
     Commands::allCommands.push_back(&Commands::ENEMY);
-    Commands::allCommands.push_back(&Commands::SICKEST);
+
+    Commands::allCommands.push_back(&Commands::HEAL);
+    Commands::allCommands.push_back(&Commands::HURT);
     Commands::allCommands.push_back(&Commands::FRESHEST);
+    Commands::allCommands.push_back(&Commands::SICKEST);
+
+    Commands::allCommands.push_back(&Commands::HASTEN);
+    Commands::allCommands.push_back(&Commands::SLOW);
     Commands::allCommands.push_back(&Commands::FASTEST);
     Commands::allCommands.push_back(&Commands::SLOWEST);
-    Commands::allCommands.push_back(&Commands::HEAVIER);
-    Commands::allCommands.push_back(&Commands::LIGHTER);
-    Commands::allCommands.push_back(&Commands::FASTER);
 
     Commands::allCommands.push_back(&Commands::WARD);
-    Commands::allCommands.push_back(&Commands::DEFEND);
     Commands::allCommands.push_back(&Commands::EXPOSE);
+    Commands::allCommands.push_back(&Commands::WARDED);
+    Commands::allCommands.push_back(&Commands::EXPOSED);
+
+    Commands::allCommands.push_back(&Commands::DEFEND);
     Commands::allCommands.push_back(&Commands::ENDANGER);
     Commands::allCommands.push_back(&Commands::GUARDED);
     Commands::allCommands.push_back(&Commands::VULNERABLE);
-    Commands::allCommands.push_back(&Commands::EXPOSED);
-    Commands::allCommands.push_back(&Commands::WARDED);
 
-    Commands::allCommands.push_back(&Commands::ALL);
+    Commands::allCommands.push_back(&Commands::ENHANCE);
+    Commands::allCommands.push_back(&Commands::IMPAIR);
+    Commands::allCommands.push_back(&Commands::STRONGEST);
+    Commands::allCommands.push_back(&Commands::WEAKEST);
+
+    Commands::allCommands.push_back(&Commands::HEAVIER);
+    Commands::allCommands.push_back(&Commands::LIGHTER);
+    Commands::allCommands.push_back(&Commands::FASTER);
 
     Core::Grammar program;
     program.start();

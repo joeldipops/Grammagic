@@ -288,6 +288,10 @@ int Spell::cast(Mob* caster, BattleField* battleField)
     totalEffect = _target->effect()->multiply(totalEffect);
     totalEffect = _source->effect()->multiply(totalEffect);
 
+    // Apply caster power
+    totalEffect *= caster->skill();
+
+
     float totalCost = _action->cost()->add(0);
     totalCost = _target->cost()->add(totalCost);
     totalCost = _target->cost()->add(totalCost);

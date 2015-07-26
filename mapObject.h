@@ -11,6 +11,7 @@ class MapObject
         std::string imageFileName(std::string);
         const std::string imageFileName(void) const;
 
+        virtual float changeSkill(float) { return 1; };
         virtual int changeStamina(int) {return 1;};
         virtual float changeSpeed(float) {return 1;};
         virtual float changeDefence(float) { return 1;};
@@ -19,6 +20,7 @@ class MapObject
         virtual float speed(void) const { return 1; };
         virtual float resistance(void) const {return 1; };
         virtual float defence(void) const { return 1; };
+        virtual float skill(void) const { return 1;};
 
         static const std::string RESOURCE_LOCATION;
 

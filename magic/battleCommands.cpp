@@ -22,6 +22,10 @@ Adjective Commands::EXPOSED = Adjective(exposed, std::string("EXPOSED"), Modifie
 Adjective Commands::GUARDED = Adjective(guarded, std::string("GUARDED"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 Adjective Commands::VULNERABLE = Adjective(vulnerable, std::string("VULNERABLE"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 
+// The mob with the most or least magical skill
+Adjective Commands::STRONGEST = Adjective(strongest, std::string("STRONGEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+Adjective Commands::WEAKEST = Adjective(weakest, std::string("WEAKEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+
 // Equally distribute effect over all candidates
 Adjective Commands::ALL = Adjective(all, std::string("ALL"), Modifier(1.1), Modifier(1.2), Modifier(1.05));
 
@@ -35,6 +39,10 @@ Verb Commands::ENDANGER = Verb(endanger, std::string("ENDANGER"), Modifier(50), 
 // Buff an ally's magical resistance or reduce an enemy's
 Verb Commands::WARD = Verb(ward, std::string("WARD"), Modifier(50), Modifier(10), Modifier(2000), -1, 1, 0, true);
 Verb Commands::EXPOSE = Verb(expose, std::string("EXPOSE"), Modifier(50), Modifier(10, 1.0), Modifier(2000), -1, 1, 0);
+
+// Buff an ally's magical skill or reduce an enemy's
+Verb Commands::ENHANCE= Verb(enhance, std::string("ENHANCE"), Modifier(50), Modifier(10), Modifier(2000), -1, 1, 0, true);
+Verb Commands::IMPAIR = Verb(impair, std::string("IMPAIR"), Modifier(50), Modifier(10, 1.0), Modifier(2000), -1, 1, 0);
 
 // Transfers health from one to the other.
 Verb Commands::HURT = Verb(weaken, std::string("HURT"), Modifier(50), Modifier(10), Modifier(2000), -2, 1, 0);

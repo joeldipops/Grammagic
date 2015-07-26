@@ -46,6 +46,10 @@ class Mob : public MapObject
         float defence(void) const;
         float defaultDefence(void) const;
 
+        float changeSkill(float);
+        float skill(void) const;
+        float defaultSkill(void) const;
+
         int selectedCommandIndex(unsigned int);
         int selectedCommandIndex(void) const;
         Command* selectedCommand(void) const;
@@ -70,6 +74,7 @@ class Mob : public MapObject
         float defaultSpeed(float);
         float defaultResistance(float);
         float defaultDefence(float);
+        float defaultSkill(float);
 
         static std::vector<Command*> toPointers(const std::vector<Command>& source);
 
@@ -94,11 +99,12 @@ class Mob : public MapObject
         float _defaultSpeed = 1.0;
         float _defaultResistance = 1.0;
         float _defaultDefence = 1.0;
+        float _defaultSkill = 1.0;
 
         // Tempoprary stats.
         float _speedMultiplier = 1.0;
         float _resistanceMultiplier = 1.0;
         float _defenceMultiplier = 1.0;
-
+        float _skillMultiplier = 1.0;
 };
 #endif

@@ -39,11 +39,11 @@ class ViewManager
         void drawOptionBox(const SDL_Rect*, const std::string, const int, const SDL_Colour*, const SDL_Colour*, const SDL_Colour*);
         void drawControls(
             const std::vector<const MenuItem*>*, const int, const SDL_Rect* = nullptr,
-            const SDL_Rect* = nullptr
+            const SDL_Rect* = nullptr, bool = true
         );
         void drawControls(
             const std::vector<MenuItem*>*, const int, const SDL_Rect* = nullptr,
-            const SDL_Rect* = nullptr
+            const SDL_Rect* = nullptr, bool = true
         );
         void drawHorizontalControls(
             const std::vector<MenuItem*>*, const int, const SDL_Rect* = nullptr,

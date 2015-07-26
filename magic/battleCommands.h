@@ -33,12 +33,16 @@ namespace Magic
             static Verb ENDANGER;
             static Verb WARD; // Resistance
             static Verb EXPOSE;
+            static Verb ENHANCE; // Magic Skill
+            static Verb IMPAIR;
             static Adjective GUARDED;
             static Adjective VULNERABLE;
             static Adjective WARDED;
             static Adjective EXPOSED;
             static Adjective FRESHEST;
             static Adjective SICKEST;
+            static Adjective STRONGEST; // Magic Skill
+            static Adjective WEAKEST;
             static Adverb LIGHTER;
             static Adverb HEAVIER;
             static Adverb FASTER;
@@ -180,6 +184,40 @@ namespace Magic
                 return result;
             };
 
+
+            static MapObject* strongest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            {
+                MapObject* result = nullptr;
+                for(unsigned int i = 0; i < candidates.size(); i++)
+                {
+                    MapObject* mob = candidates.at(i);
+
+                    if (result == nullptr)
+                        result = mob;
+                    else if (mob->skill() < result->skill())
+                        result = mob;
+                }
+
+                return result;
+            };
+
+            static MapObject* weakest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            {
+                MapObject* result = nullptr;
+                for(unsigned int i = 0; i < candidates.size(); i++)
+                {
+                    MapObject* mob = candidates.at(i);
+
+                    if (result == nullptr)
+                        result = mob;
+                    else if (mob->skill() > result->skill())
+                        result = mob;
+                }
+
+                return result;
+            };
+
+
             static MapObject* fastest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
             {
                 MapObject* result = nullptr;
@@ -261,6 +299,18 @@ namespace Magic
             {
                 source->changeStamina(cost * -1);
                 target->changeSpeed(1 - (float(effect) / 100.0));
+            };
+
+            static void enhance(MapObject* source, MapObject* target, int cost, int effect)
+            {
+                source->changeStamina(cost * -1);
+                target->changeSkill(1  + (float(effect) / 100.0));
+            };
+
+            static void impair(MapObject* source, MapObject* target, int cost, int effect)
+            {
+                source->changeStamina(cost * -1);
+                target->changeSkill(1 - (float(effect) / 100.0));
             };
     };
 }
