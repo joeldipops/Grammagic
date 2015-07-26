@@ -6,9 +6,10 @@
 #include "../util/utils.h"
 #include <string>
 #include "../magic/command.h"
+#include "combatable.h"
 
 using namespace Magic;
-class Mob : public MapObject
+class Mob : public MapObject, public Combatable
 {
     public:
         Mob();
@@ -16,14 +17,9 @@ class Mob : public MapObject
         virtual ~Mob();
 
         virtual MobType type(void) const;
-        Location location(int, int);
-        Location location(const Location*);
-        int x(int);
-        int x(void) const;
-        int y(int);
-        int y(void) const ;
 
-        bool isSeen(const Mob*);
+
+        bool isSeen(const MapObject&);
 
         // Stats
         int rangeOfSight(int);
@@ -80,8 +76,7 @@ class Mob : public MapObject
 
     private:
         MobType _type;
-        int _x;
-        int _y;
+
         int _stamina;
         int _maxStamina;
         int _rangeOfSight;

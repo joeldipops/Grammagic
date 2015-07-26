@@ -1,7 +1,12 @@
 #ifndef MAPOBJECT_H_INCLUDED
 #define MAPOBJECT_H_INCLUDED
 
+#include "util/utils.h"
+
 #include <string>
+
+using namespace Util;
+
 class MapObject
 {
     public:
@@ -11,16 +16,13 @@ class MapObject
         std::string imageFileName(std::string);
         const std::string imageFileName(void) const;
 
-        virtual float changeSkill(float) { return 1; };
-        virtual int changeStamina(int) {return 1;};
-        virtual float changeSpeed(float) {return 1;};
-        virtual float changeDefence(float) { return 1;};
-        virtual float changeResistance(float) { return 1;};
-        virtual int stamina(void) const { return 1; };
-        virtual float speed(void) const { return 1; };
-        virtual float resistance(void) const {return 1; };
-        virtual float defence(void) const { return 1; };
-        virtual float skill(void) const { return 1;};
+        Location location(int, int);
+        Location location(const Location*);
+        int x(int);
+        int x(void) const;
+        int y(int);
+        int y(void) const;
+
 
         static const std::string RESOURCE_LOCATION;
 
@@ -29,7 +31,8 @@ class MapObject
     private:
         bool _isDense;
         std::string _imageFileName;
-
+        int _x;
+        int _y;
 };
 
 #endif

@@ -101,17 +101,10 @@ Core::CoreState PlayStateManager::start(PC& pc)
                 _combatGraceTime = SDL_GetTicks() + COMBAT_GRACE_PERIOD;
                 continue;
             case PlayState::GameOver:
+                exit(Core::CoreState::Title);
             default:
                 exit(Core::CoreState::Exit);
         }
-    }
-
-    switch (state()) {
-        case PlayState::GameOver:
-        case PlayState::Exit:
-            result(Core::CoreState::Exit); break;
-        default:
-            result(Core::CoreState::Title); break;
     }
 
     return result();
@@ -183,7 +176,7 @@ bool PlayStateManager::processMovementState(void)
     std::vector<Mob*> enemies = _map->mobs();
     for(unsigned int i = 1; i < enemies.size(); i++)
     {
-        if (enemies.at(i)->isSeen(_map->pc()))
+        if (enemies.at(i)->isSeen(*_map->pc()))
             state(PlayState::Combat);
     }
 
@@ -288,7 +281,8 @@ void PlayStateManager::render()
 void PlayStateManager::writeMapFile(const char* fileName, const int width, const int height, const std::vector<MapFileBlock>* data)
 {
     int fileSize =  (data->size() * MapFileBlock::BYTES_PER_CELL)+2;
-    char* dataBytes = new char[fileSize];
+    std::vector<char> dataBytes = std::vector<char>(0);
+    dataBytes.reserve(fileSize);
 
     dataBytes[0] = width;
     dataBytes[1] = height;
@@ -301,11 +295,7 @@ void PlayStateManager::writeMapFile(const char* fileName, const int width, const
         position += MapFileBlock::BYTES_PER_CELL;
     }
 
-    std::ofstream mapFile(fileName, std::ofstream::binary);
-    mapFile.write(dataBytes, fileSize);
-    mapFile.close();
-
-    delete[] dataBytes;
+    Util::writeFile(fileName, dataBytes);
 }
 
 // Test data.

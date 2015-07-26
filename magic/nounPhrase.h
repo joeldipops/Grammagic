@@ -13,7 +13,7 @@ namespace Magic
             NounPhrase(Noun*, Adjective*);
 
             // Override base
-            MapObject* acquireTarget(Mob*, BattleField*);
+            Combatable* acquireTarget(Mob*, BattleField*);
             WordType type(void) const;
             const std::vector<Word*> components(void) const;
 

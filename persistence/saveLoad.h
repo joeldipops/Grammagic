@@ -31,7 +31,11 @@ namespace Persistence
         VulnerableRune,
         ExposedRune,
         EndangerRune,
-        AllRune
+        AllRune,
+        ImpairRune,
+        EnhanceRune,
+        StrongestRune,
+        WeakestRune
     };
 
     class SaveLoad

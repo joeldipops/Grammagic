@@ -170,7 +170,7 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const 
     SDL_Rect rect = SDL_Rect {view.x + control->x, view.y + control->y, control->w, control->h};
 
     int i = 0;
-    unsigned int visiblePerPage = 0;
+    int visiblePerPage = 0;
     if (allowSpilling)
     {
         // find number of buttons that can be shown
@@ -197,7 +197,10 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const 
         visiblePerPage = ((view.w)/ (control->w + control->x)) * (view.h / (control->h + control->y));
     }
 
-    i = (selectedIndex / visiblePerPage) * visiblePerPage;
+    if (selectedIndex >= 0)
+        i = (selectedIndex / visiblePerPage) * visiblePerPage;
+    else
+        i = 0;
 
     SDL_Rect temp;
 

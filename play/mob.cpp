@@ -55,65 +55,6 @@ MobType Mob::type(void) const
 }
 
 /**
- * Gets or sets the X/Y coordinates of the mob.
- * @param x
- * @param y
- * @return
- */
-Location Mob::location(int x, int y)
-{
-    _x = x;
-    _y = y;
-    return Location(&x, &y);
-}
-
-/**
- * Gets or sets the X/Y coordinates of the mob.
- * @param loc
- * @return
- */
-Location Mob::location(const Location* loc)
-{
-    if (loc != nullptr)
-    {
-        _x = loc->X;
-        _y = loc->Y;
-    }
-    return Location(&_x, &_y);
-}
-
-
-/**
- * Gets or sets the Mob's X position.
- * @param x The horizontal co-ordinate of the map
- * @return
- */
-int Mob::x(void) const
-{
-    return _x;
-}
-int Mob::x(int x_)
-{
-    _x = x_;
-    return x();
-}
-
-/**
- * Gets or sets the Mob's Y position.
- * @param y The vertical co-ordinate on the map
- * @return
- */
-int Mob::y(void) const
-{
-    return _y;
-}
-int Mob::y(int y_)
-{
-    _y = y_;
-    return y();
-}
-
-/**
  * Gets the time, in milliseconds, at which a mob can perform commands again.
  */
 int Mob::unblockTime(void) const
@@ -305,10 +246,10 @@ int Mob::selectedCommandIndex(unsigned int index)
  * @param target The mob that may or may not be visible.
  * @return True if the given mob can be seen by this Mob, false otherwise.
  */
-bool Mob::isSeen(const Mob* target)
+bool Mob::isSeen(const MapObject& target)
 {
-    return (abs(target->x() - _x) <= _rangeOfSight)
-        && (abs(target->y() - _y) <= _rangeOfSight);
+    return (abs(target.x() - x()) <= _rangeOfSight)
+        && (abs(target.y() - y()) <= _rangeOfSight);
 }
 
 /**
@@ -458,6 +399,8 @@ void Mob::endCombat(void)
     unblock();
     _speedMultiplier = 1.0;
     _resistanceMultiplier = 1.0;
+    _defenceMultiplier = 1.0;
+    _skillMultiplier = 1.0;
 }
 
 

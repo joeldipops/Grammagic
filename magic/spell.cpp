@@ -316,8 +316,8 @@ int Spell::cast(Mob* caster, BattleField* battleField)
         totalDuration = word->duration()->modify(totalDuration);
     }
 
-    MapObject* target = _target->acquireTarget(caster, battleField);
-    MapObject* source = _source->acquireTarget(caster, battleField);
+    Combatable* target = _target->acquireTarget(caster, battleField);
+    Combatable* source = _source->acquireTarget(caster, battleField);
 
     // Prevent actions such as free healing where cost is 10 and effect is 30 = +20 health.
     if (target == source)
@@ -327,10 +327,10 @@ int Spell::cast(Mob* caster, BattleField* battleField)
     }
 
     // Ensure there is a penalty for using enemy sources rather than allied ones.
-    if (!battleField->areAllied((MapObject*)caster, source))
+    if (!battleField->areAllied((Combatable*)caster, source))
         totalCost *= _action->enemyCostMultiplier();
 
-    if (battleField->areAllied((MapObject*)caster, target))
+    if (battleField->areAllied((Combatable*)caster, target))
         totalEffect *= _action->allyEffectMultiplier();
 
     // Apply magical resistance.

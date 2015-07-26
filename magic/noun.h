@@ -10,14 +10,14 @@
 class Mob;
 namespace Magic
 {
-    typedef std::vector<MapObject*> (*MultiTargeter) (Mob*, BattleField*);
+    typedef std::vector<Combatable*> (*MultiTargeter) (Mob*, BattleField*);
 
     class Noun : public Word
     {
         public:
             Noun(){};
             Noun(MultiTargeter, std::string, Modifier, Modifier, Modifier);
-            std::vector<MapObject*> acquireCandidates(Mob*, BattleField*);
+            std::vector<Combatable*> acquireCandidates(Mob*, BattleField*);
             WordType type(void) const;
 
         private:

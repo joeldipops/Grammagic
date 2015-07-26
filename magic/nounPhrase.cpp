@@ -21,9 +21,9 @@ NounPhrase::NounPhrase(Noun* noun, Adjective* adjective)
     _specifier = adjective;
 }
 
-MapObject* NounPhrase::acquireTarget(Mob* caster, BattleField* field)
+Combatable* NounPhrase::acquireTarget(Mob* caster, BattleField* field)
 {
-    std::vector<MapObject*> candidates = _targeter->acquireCandidates(caster, field);
+    std::vector<Combatable*> candidates = _targeter->acquireCandidates(caster, field);
     return _specifier->selectTarget(caster, field, candidates);
 }
 

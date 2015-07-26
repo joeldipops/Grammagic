@@ -9,7 +9,7 @@
 class Mob;
 namespace Magic
 {
-    typedef MapObject* (*Targeter)(Mob*, BattleField*);
+    typedef Combatable* (*Targeter)(Mob*, BattleField*);
 
     class ProperNoun : public Nounish
     {
@@ -20,7 +20,7 @@ namespace Magic
             WordType type(void) const;
             const std::vector<Word*> components(void) const;
 
-            MapObject* acquireTarget(Mob*, BattleField*);
+            Combatable* acquireTarget(Mob*, BattleField*);
         private:
             Targeter _target;
 

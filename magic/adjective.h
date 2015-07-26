@@ -9,13 +9,13 @@
 class Mob;
 namespace Magic
 {
-    typedef MapObject* (*Selecter) (Mob*, BattleField*, std::vector<MapObject*>);
+    typedef Combatable* (*Selecter) (Mob*, BattleField*, std::vector<Combatable*>);
 
     class Adjective : public Word {
         public:
             Adjective(){};
             Adjective(Selecter, std::string, Modifier, Modifier, Modifier);
-            MapObject* selectTarget(Mob*, BattleField*, std::vector<MapObject*>);
+            Combatable* selectTarget(Mob*, BattleField*, std::vector<Combatable*>);
             WordType type(void) const;
 
         private:

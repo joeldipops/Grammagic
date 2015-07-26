@@ -15,7 +15,7 @@ ProperNoun::ProperNoun(Targeter target, std::string name, Modifier effect, Modif
  * @param battlefield Controls general aspects of the current battle and holds references to all combatants.
  * @return an object to be involved in the spell.
  */
-MapObject* ProperNoun::acquireTarget(Mob* caster, BattleField* battleField)
+Combatable* ProperNoun::acquireTarget(Mob* caster, BattleField* battleField)
 {
     return _target(caster, battleField);
 }

@@ -67,6 +67,14 @@ void SaveLoad::save(const PC& pc)
                 data.push_back(SavedObjectCode::ExposeRune);
             else if (word == &Commands::ALL)
                 data.push_back(SavedObjectCode::AllRune);
+            else if (word == &Commands::ENHANCE)
+                data.push_back(SavedObjectCode::EnhanceRune);
+            else if (word == &Commands::IMPAIR)
+                data.push_back(SavedObjectCode::ImpairRune);
+            else if (word == &Commands::STRONGEST)
+                data.push_back(SavedObjectCode::StrongestRune);
+            else if (word == &Commands::WEAKEST)
+                data.push_back(SavedObjectCode::WeakestRune);
             else
                 throw;
         }
@@ -221,6 +229,27 @@ void SaveLoad::load(PC& pc) const
                 if (!spellInProgress)
                     throw;
                 workingSpell.addComponent(&Commands::ALL);
+                break;
+
+            case SavedObjectCode::EnhanceRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::ENHANCE);
+                break;
+            case SavedObjectCode::ImpairRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::IMPAIR);
+                break;
+            case SavedObjectCode::StrongestRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::STRONGEST);
+                break;
+            case SavedObjectCode::WeakestRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::WEAKEST);
                 break;
             default: throw;
         }

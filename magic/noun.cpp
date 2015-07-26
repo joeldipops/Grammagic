@@ -14,7 +14,7 @@ WordType Noun::type(void) const
 }
 
 
-std::vector<MapObject*> Noun::acquireCandidates(Mob* caster, BattleField* field)
+std::vector<Combatable*> Noun::acquireCandidates(Mob* caster, BattleField* field)
 {
     return _targeter(caster, field);
 }

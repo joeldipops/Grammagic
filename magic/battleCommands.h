@@ -53,17 +53,17 @@ namespace Magic
         private:
             // Specific Nouns
 
-            static MapObject* self (Mob* caster, BattleField*)
+            static Combatable* self (Mob* caster, BattleField*)
             {
-                return (MapObject*) caster;
+                return (Combatable*) caster;
             };
 
 
             // General Nouns
 
-            static std::vector<MapObject*> enemies(Mob* caster, BattleField* battleField)
+            static std::vector<Combatable*> enemies(Mob* caster, BattleField* battleField)
             {
-                std::vector<MapObject*> result;
+                std::vector<Combatable*> result;
                 std::vector<Mob*> candidates;
                 if (caster->type() == MobType::PlayerCharacter)
                     candidates = battleField->hostiles();
@@ -72,7 +72,7 @@ namespace Magic
 
                 for (Mob* m : candidates)
                 {
-                    result.push_back((MapObject*) m);
+                    result.push_back((Combatable*) m);
                 }
 
                 return result;
@@ -80,19 +80,19 @@ namespace Magic
 
 
             // Adjectives
-            static MapObject* all(Mob* caster, BattleField* field, std::vector<MapObject*> candidates)
+            static Combatable* all(Mob* caster, BattleField* field, std::vector<Combatable*> candidates)
             {
                 TargetAll* result = new TargetAll(candidates);
                 field->toBin(result);
                 return result;
             }
 
-            static MapObject* exposed(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* exposed(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = candidates.at(i);
+                    Combatable* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -103,12 +103,12 @@ namespace Magic
                 return result;
             };
 
-            static MapObject* warded(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* warded(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = (MapObject*) candidates.at(i);
+                    Combatable* mob = (Combatable*) candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -119,12 +119,12 @@ namespace Magic
                 return result;
             };
 
-            static MapObject* vulnerable(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* vulnerable(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = candidates.at(i);
+                    Combatable* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -135,12 +135,12 @@ namespace Magic
                 return result;
             };
 
-            static MapObject* guarded(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* guarded(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = candidates.at(i);
+                    Combatable* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -152,12 +152,12 @@ namespace Magic
             };
 
 
-            static MapObject* freshest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* freshest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = candidates.at(i);
+                    Combatable* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -168,12 +168,12 @@ namespace Magic
                 return result;
             };
 
-            static MapObject* sickest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* sickest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = candidates.at(i);
+                    Combatable* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -185,12 +185,12 @@ namespace Magic
             };
 
 
-            static MapObject* strongest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* strongest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = candidates.at(i);
+                    Combatable* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -201,12 +201,12 @@ namespace Magic
                 return result;
             };
 
-            static MapObject* weakest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* weakest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = candidates.at(i);
+                    Combatable* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -218,12 +218,12 @@ namespace Magic
             };
 
 
-            static MapObject* fastest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* fastest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = candidates.at(i);
+                    Combatable* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -234,12 +234,12 @@ namespace Magic
                 return result;
             };
 
-            static MapObject* slowest(Mob* caster, BattleField* battleField, std::vector<MapObject*> candidates)
+            static Combatable* slowest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
             {
-                MapObject* result = nullptr;
+                Combatable* result = nullptr;
                 for(unsigned int i = 0; i < candidates.size(); i++)
                 {
-                    MapObject* mob = candidates.at(i);
+                    Combatable* mob = candidates.at(i);
 
                     if (result == nullptr)
                         result = mob;
@@ -253,61 +253,61 @@ namespace Magic
 
             // Verbs
 
-            static void defend(MapObject* source, MapObject* target, int cost, int effect)
+            static void defend(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(cost * -1);
                 target->changeDefence(1 + (float(effect) / 100.0));
             };
 
-            static void endanger(MapObject* source, MapObject* target, int cost, int effect)
+            static void endanger(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(cost * -1);
                 target->changeDefence(1 - (float(effect) / 100.0));
             };
 
-            static void ward(MapObject* source, MapObject* target, int cost, int effect)
+            static void ward(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(cost * -1);
                 target->changeResistance(1 + (float(effect) / 100.0));
             };
 
-            static void expose(MapObject* source, MapObject* target, int cost, int effect)
+            static void expose(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(cost * -1);
                 target->changeResistance(1 - (float(effect) / 100.0));
             };
 
-            static void weaken(MapObject* source, MapObject* target, int cost, int effect)
+            static void weaken(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(ceil(cost*-1));
                 target->changeStamina(ceil(effect*-1));
             };
 
-            static void strengthen(MapObject* source, MapObject* target, int cost, int effect)
+            static void strengthen(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(ceil(cost*-1));
                 target->changeStamina(ceil(effect));
             };
 
-            static void hasten(MapObject* source, MapObject* target, int cost, int effect)
+            static void hasten(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(cost * -1);
                 target->changeSpeed(1 + (float(effect) / 100.0));
             };
 
-            static void slow(MapObject* source, MapObject* target, int cost, int effect)
+            static void slow(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(cost * -1);
                 target->changeSpeed(1 - (float(effect) / 100.0));
             };
 
-            static void enhance(MapObject* source, MapObject* target, int cost, int effect)
+            static void enhance(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(cost * -1);
                 target->changeSkill(1  + (float(effect) / 100.0));
             };
 
-            static void impair(MapObject* source, MapObject* target, int cost, int effect)
+            static void impair(Combatable* source, Combatable* target, int cost, int effect)
             {
                 source->changeStamina(cost * -1);
                 target->changeSkill(1 - (float(effect) / 100.0));

@@ -1,14 +1,15 @@
 #ifndef VERB_H_INCLUDED
 #define VERB_H_INCLUDED
 
-#include "../mapObject.h"
+#include "../play/combatable.h"
+
 #include "modifier.h"
 #include "word.h"
 #include "../globalConstants.h"
 
 namespace Magic
 {
-    typedef void (*Action) (MapObject*, MapObject*, int, int);
+    typedef void (*Action) (Combatable*, Combatable*, int, int);
 
     class Verb : public Word
     {
