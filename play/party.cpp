@@ -6,9 +6,10 @@ Party::Party(void)
     :MapObject()
 {
     _members = std::vector<PC*>(0);
-    addLeader();
     imageFileName(RESOURCE_LOCATION + "pc.png");
     isDense(true);
+    x(0);
+    y(0);
 }
 
 Party::Party(std::vector<PC*> members_)
@@ -50,13 +51,17 @@ PC* Party::addLeader(void)
     }
     else
         _members.push_back(pc);
+
+    pc->location(x(), y());
     return pc;
 }
 
 
-
 PC* Party::addMember(void)
 {
+    if (_members.size() <= 0)
+        return addLeader();
+
     PC* pc = new PC();
     _members.push_back(pc);
     return pc;
@@ -79,12 +84,14 @@ bool Party::isDefeated(void) const
 
 int Party::x(int x_)
 {
-    leader()->x(x_);
+    if (_members.size() > 0)
+        leader()->x(x_);
     return MapObject::x(x_);
 }
 
 int Party::y(int y_)
 {
-    leader()->y(y_);
+    if (_members.size() > 0)
+        leader()->y(y_);
     return MapObject::y(y_);
 }

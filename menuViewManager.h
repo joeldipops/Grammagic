@@ -16,6 +16,8 @@ namespace Play
         public:
             std::vector<MenuItem> MenuItems;
             MainMenuItem SelectedMenuItem;
+            MenuState state;
+            int SelectedPCIndex;
             int SelectedSpellIndex;
             int SelectedComponentIndex;
             int SelectedRuneIndex;
@@ -32,9 +34,11 @@ namespace Play
             SDL_Rect _spellsVp;
             SDL_Rect _runesVp;
             SDL_Rect _mainVp;
+            SDL_Rect _partyVp;
 
             void renderSpells(const PC&, int, int);
             void renderRunes(const PC&, int);
+            void renderPCs(const Party&, int);
 
             static const SDL_Rect _menuControl;
             static const int borderWidth = 5;

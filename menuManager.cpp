@@ -4,6 +4,7 @@ using namespace Play;
 
 const MenuItem MenuManager::MAGIC = MenuItem(Strings::Magic);
 const MenuItem MenuManager::SAVE = MenuItem(Strings::Save);
+const MenuItem MenuManager::PARTY = MenuItem(Strings::Party);
 
 MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
     : StateManager(r, a)
@@ -12,24 +13,31 @@ MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
     _selectedSpellIndex = -1;
     _selectedRuneIndex = -1;
     _selectedComponentIndex = -1;
-    _menu = std::vector<MenuItem> { MAGIC, SAVE };
+    _selectedMemberIndex = -1;
+    _menu = std::vector<MenuItem> { MAGIC, SAVE, PARTY };
 }
 
 Play::PlayState MenuManager::start(Party& party)
 {
     bool rerender = true;
+    _selectedMenuIndex = 0;
     state(MenuState::SelectMenu);
     result(PlayState::Menu);
+
     _selectedSpellIndex = -1;
     _selectedComponentIndex = -1;
     _selectedRuneIndex = -1;
+    _selectedMemberIndex = -1;
     while(result() == PlayState::Menu)
     {
-        if (rerender) {
+        if (rerender)
+        {
             MenuViewModel vm
             {
                 _menu, // MenuItems
                 MainMenuItem(_selectedMenuIndex), // SelectedMenuItem
+                state(),
+                _selectedMemberIndex,
                 _selectedSpellIndex, // SelectedSpellIndex
                 _selectedComponentIndex, // SelectedComponentIndex
                 _selectedRuneIndex, // SelectedRuneIndex
@@ -115,14 +123,20 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
 {
     int result = 0;
     int index = 0;
-    int itemCount = 0;
+    unsigned int itemCount = 0;
     int columnItemCount = 0;
     switch(state())
     {
         case MenuState::SelectMenu:
             itemCount = _menu.size();
             index = _selectedMenuIndex;
-            columnItemCount = 100;
+            columnItemCount = itemCount;
+            break;
+        case MenuState::SelectMember:
+        case MenuState::ReorderMember:
+            itemCount = party.members().size();
+            columnItemCount = itemCount;
+            index = _selectedMemberIndex;
             break;
         case MenuState::SelectSpell:
             itemCount = party.leader()->spellSlots() > int(party.leader()->spells()->size())
@@ -165,6 +179,9 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
             case MenuState::SelectComponent:
                 _selectedComponentIndex = result;
                 return true;
+            case MenuState::SelectMember:
+                _selectedMemberIndex = result;
+                return true;
             default: return false;
         }
     }
@@ -186,6 +203,10 @@ bool MenuManager::processCancel(void)
             return true;
         case MenuState::SelectSpell:
             _selectedSpellIndex = -1;
+            state(MenuState::SelectMember);
+            return true;
+        case MenuState::SelectMember:
+            _selectedMemberIndex = -1;
             state(MenuState::SelectMenu);
             return true;
         case MenuState::SelectMenu:
@@ -203,11 +224,15 @@ bool MenuManager::processCommand(Party& party)
         case MenuState::SelectMenu:
             return processMenuCommand(party);
         case MenuState::SelectSpell:
-            return processSpellCommand(party.leader());
+            return processSpellCommand();
         case MenuState::SelectRune:
-            return processRuneCommand(party.leader());
+            return processRuneCommand(party);
         case MenuState::SelectComponent:
-            return processComponentCommand(party.leader());
+            return processComponentCommand();
+        case MenuState::SelectMember:
+            return processMemberCommand();
+        case MenuState::ReorderMember:
+            return false;
     }
     return false;
 }
@@ -217,8 +242,8 @@ bool MenuManager::processMenuCommand(const Party& party)
     MenuItem item = _menu.at(_selectedMenuIndex);
     if (item.equals(MAGIC))
     {
-        _selectedSpellIndex = 0;
-        state(MenuState::SelectSpell);
+        _selectedMemberIndex = 0;
+        state(MenuState::SelectMember);
         return true;
     }
     else if (item.equals(SAVE))
@@ -228,26 +253,38 @@ bool MenuManager::processMenuCommand(const Party& party)
         _message = Strings::SaveComplete;
         return true;
     }
+    else if (item.equals(PARTY))
+    {
+        //state(MenuState::SelectPc);
+    }
 
     return false;
 }
 
-bool MenuManager::processComponentCommand(PC* pc)
+bool MenuManager::processMemberCommand(void)
+{
+    _selectedSpellIndex = 0;
+    state(MenuState::SelectSpell);
+    return true;
+}
+
+bool MenuManager::processComponentCommand(void)
 {
     _selectedRuneIndex = 0;
     state(MenuState::SelectRune);
     return true;
 }
 
-bool MenuManager::processSpellCommand(PC* pc)
+bool MenuManager::processSpellCommand(void)
 {
     _selectedComponentIndex = 0;
     state(MenuState::SelectComponent);
     return true;
 }
 
-bool MenuManager::processRuneCommand(PC* pc)
+bool MenuManager::processRuneCommand(const Party& party)
 {
+    PC* pc = party.members().at(_selectedMemberIndex);
     if (int(pc->spells()->size()) <= _selectedSpellIndex)
         pc->spells()->push_back(Command("", Spell(std::vector<Word*>(0))));
 

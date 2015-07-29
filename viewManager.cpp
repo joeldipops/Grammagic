@@ -242,6 +242,15 @@ SDL_Texture* ViewManager::formatFontTexture(std::string text, const SDL_Colour* 
     return _assets->get("res/font.ttf", text.c_str(), 30, *colour);
 }
 
+/**
+ * Expresses a float with no more than two decimal places as an integer < 100
+ */
+std::string ViewManager::displayMultiplier(float value) const
+{
+    int result = int((value - 1) * 100);
+    return std::to_string(result);
+}
+
 
 /**
  * Render a box with a border and text in the middle.
@@ -380,6 +389,9 @@ void ViewManager::addToQuad(std::vector<std::vector<Util::Location>>& quads, int
         quads.at(q).push_back(Location(x, y));
 };
 
+/**
+ * Draw a sector of a circle.
+ */
 void ViewManager::drawSector(int icx, int icy, int r, int startDegree, int endDegree)
 {
     double error = (double)-r;

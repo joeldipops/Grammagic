@@ -9,8 +9,9 @@ namespace Persistence
 {
     enum SavedObjectCode
     {
-        NewSpell,
-        PCPosition,
+        NewSpell = 'A',
+        PCPosition = 'B',
+        NewMember = 'C',
         HealRune,
         EnemyRune,
         CasterRune,
@@ -37,7 +38,6 @@ namespace Persistence
         EnhanceRune,
         StrongestRune,
         WeakestRune,
-        NewMember,
     };
 
     class SaveLoad

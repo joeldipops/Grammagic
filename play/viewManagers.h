@@ -44,9 +44,7 @@ class StatsViewManager : public ViewManager
 {
     public:
         StatsViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-        void render(const GameMap*, const Play::PlayState);
-    private:
-        std::vector<SDL_Rect> _regions;
+        void render(const GameMap&, const Play::PlayState);
 };
 
 #endif

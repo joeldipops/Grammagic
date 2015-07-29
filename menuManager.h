@@ -23,18 +23,21 @@ namespace Play
         private:
             static const MenuItem MAGIC;
             static const MenuItem SAVE;
+            static const MenuItem PARTY;
 
             int selectedSpellLength(PC*) const;
             bool moveCursor(Party& party, Core::InputPress input);
             bool processMenuCommand(const Party& party);
-            bool processRuneCommand(PC* pc);
-            bool processSpellCommand(PC* pc);
-            bool processComponentCommand(PC* pc);
+            bool processMemberCommand(void);
+            bool processRuneCommand(const Party& party);
+            bool processSpellCommand(void);
+            bool processComponentCommand(void);
             bool processCommand(Party& party);
             bool processCancel(void);
 
             MenuViewManager _viewManager;
             int _selectedMenuIndex;
+            int _selectedMemberIndex;
             int _selectedSpellIndex;
             int _selectedRuneIndex;
             int _selectedComponentIndex;

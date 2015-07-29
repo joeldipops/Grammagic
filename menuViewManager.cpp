@@ -15,9 +15,10 @@ const int MenuViewManager::cursorYOffset = borderWidth + _menuControl.y;
 MenuViewManager::MenuViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
     : ViewManager(r, v, a)
 {
-    _mainVp = SDL_Rect {v.x, v.y, 190, HEIGHT };
-    _spellsVp = SDL_Rect {v.x + _mainVp.w, v.y, WIDTH - _mainVp.w, 550};
+    _mainVp = SDL_Rect {v.x, v.y, 190, v.h };
+    _spellsVp = SDL_Rect {v.x + _mainVp.w, v.y, v.w - _mainVp.w, 550};
     _runesVp = SDL_Rect {_spellsVp.x, v.y + _spellsVp.h, _spellsVp.w, v.h - _spellsVp.h };
+    _partyVp = SDL_Rect { v.x + _mainVp.w, v.y, v.w - _mainVp.w, v.h };
 }
 
 /**
@@ -115,14 +116,92 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
     }
 }
 
+void MenuViewManager::renderPCs(const Party& party, int memberIndex)
+{
+    SDL_Rect rect{ _partyVp.x + cursorXOffset, _partyVp.y, _partyVp.w - cursorXOffset, 150 };
+    for (unsigned int i = 0; i < party.members().size(); i++)
+    {
+        PC* pc = party.members().at(i);
+        const int TEXT_WIDTH = 22;
+        const int TEXT_HEIGHT = 19;
+        const int LABEL_GAP = 60;
+        const int MARGIN_Y = 20;
+
+        const SDL_Colour* colour;
+        if (memberIndex == int(i))
+            colour = &textColour;
+        else
+            colour = &borderColour;
+
+        // Draw name;
+        std::string name = pc->name();
+        SDL_Rect nameRect {rect.x + 2, rect.y + 3, TEXT_WIDTH * int(name.length()), TEXT_HEIGHT };
+        SDL_Texture* textTure = formatFontTexture(name, colour);
+        SDL_RenderCopy(renderer(), textTure, NULL, &nameRect);
+
+        // Draw Portrait
+        SDL_Rect portRect { rect.x, nameRect.y + nameRect.h, 100,100 };
+        SDL_RenderCopy(renderer(), assets()->get(pc->portraitFileName()), NULL, &portRect);
+
+        // Draw class name
+        std::string className = pc->className();
+        SDL_Rect classRect { rect.x + 2, portRect.y + portRect.h, TEXT_WIDTH * int(className.length()), TEXT_HEIGHT};
+        textTure = formatFontTexture(className, colour);
+        SDL_RenderCopy(renderer(), textTure, NULL, &classRect);
+
+        // Draw stamina.
+        std::string label = "Stamina";
+        SDL_Rect stmLabelRect { rect.x + classRect.w, rect.y + 3, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
+
+        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &stmLabelRect);
+
+        // Draw skill.
+        label = "Skill";
+        std::string value = displayMultiplier(pc->defaultSkill());
+        SDL_Rect sklLabelRect { stmLabelRect.x, stmLabelRect.y + stmLabelRect.h + MARGIN_Y, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
+        SDL_Rect sklValueRect { sklLabelRect.x + sklLabelRect.w + LABEL_GAP, stmLabelRect.y + stmLabelRect.h + MARGIN_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &sklLabelRect);
+        SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &sklValueRect);
+
+        // Draw resistance
+        label = "Resist";
+        value = displayMultiplier(pc->defaultResistance());
+        SDL_Rect resLabelRect { sklLabelRect.x, sklLabelRect.y + sklLabelRect.h + MARGIN_Y, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
+        SDL_Rect resValueRect { sklValueRect.x, sklValueRect.y + sklValueRect.h + MARGIN_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &resLabelRect);
+        SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &resValueRect);
+
+        // Draw Speed
+        label = "Speed";
+        value = displayMultiplier(pc->defaultSpeed());
+        SDL_Rect spdLabelRect { sklValueRect.x + sklValueRect.w + 2 * LABEL_GAP, sklValueRect.y, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
+        SDL_Rect spdValueRect { spdLabelRect.x + spdLabelRect.w + LABEL_GAP, sklValueRect.y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &spdLabelRect);
+        SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &spdValueRect);
+
+        // Draw Defense
+        label = "Defense";
+        value = displayMultiplier(pc->defaultDefence());
+        SDL_Rect defLabelRect { spdLabelRect.x, spdLabelRect.y + spdLabelRect.h + MARGIN_Y, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
+        SDL_Rect defValueRect { spdValueRect.x, spdValueRect.y + spdValueRect.h + MARGIN_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &defLabelRect);
+        SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &defValueRect);
+
+        value = std::to_string(pc->stamina());
+        SDL_Rect stmValueRect { sklValueRect.x, stmLabelRect.y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &stmValueRect);
+
+        drawBorder(rect, 3, colour, false);
+        rect = SDL_Rect { rect.x, rect.y + rect.h, rect.w, rect.h };
+    }
+}
+
 
 void MenuViewManager::render(const Party& party, const MenuViewModel& model, std::string* message)
 {
     ViewManager::render();
     fillViewport(&hudColour);
     drawBorder(borderWidth, &borderColour);
-    drawBorder(_spellsVp, borderWidth, &borderColour, true);
-    drawBorder(_runesVp, borderWidth, &borderColour, true);
 
     auto pointers = toPointers(model.MenuItems);
     drawControls(&pointers, int(model.SelectedMenuItem), &_mainVp, &_menuControl, false);
@@ -130,13 +209,25 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, std
     switch(model.SelectedMenuItem)
     {
         case MagicSelected:
-            renderSpells(*party.leader(), model.SelectedSpellIndex, model.SelectedComponentIndex);
-            if (model.SelectedRuneIndex >= 0)
-                renderRunes(*party.leader(), model.SelectedRuneIndex);
+            switch (model.state)
+            {
+                case MenuState::SelectMenu:
+                case MenuState::SelectMember:
+                    renderPCs(party, model.SelectedPCIndex);
+                    break;
+                default:
+                {
+                    drawBorder(_spellsVp, borderWidth, &borderColour, true);
+                    drawBorder(_runesVp, borderWidth, &borderColour, true);
+                    renderSpells(*party.members().at(model.SelectedPCIndex), model.SelectedSpellIndex, model.SelectedComponentIndex);
+                    if (model.SelectedRuneIndex >= 0)
+                        renderRunes(*party.members().at(model.SelectedPCIndex), model.SelectedRuneIndex);
+                }
+            }
             break;
         case SaveSelected:
         default:
-            break;
+             break;
     }
 
     if (message != nullptr)

@@ -54,7 +54,7 @@
 	"stateEnums.h"
 	"mob.h"
 
-1437871227 /home/joel/Projects/Grammagic/viewManager.h
+1438080975 /home/joel/Projects/Grammagic/viewManager.h
 	"util/assetCache.h"
 	"menuItem.h"
 	"util/utils.h"
@@ -302,7 +302,7 @@
 	<string>
 	<stdint.h>
 
-1437894928 source:/home/joel/Projects/Grammagic/viewManager.cpp
+1438081303 source:/home/joel/Projects/Grammagic/viewManager.cpp
 	"viewManager.h"
 
 1435477394 source:/home/joel/Projects/Grammagic/controlViewManager.cpp
@@ -310,7 +310,7 @@
 	"res/strings.h"
 	"command.h"
 
-1437564894 /home/joel/Projects/Grammagic/res/strings.h
+1437990375 /home/joel/Projects/Grammagic/res/strings.h
 	<string>
 
 1437913815 source:/home/joel/Projects/Grammagic/mapObject.cpp
@@ -335,7 +335,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1437904647 source:/home/joel/Projects/Grammagic/main.cpp
+1438171563 source:/home/joel/Projects/Grammagic/main.cpp
 	<string>
 	"res/strings.h"
 	<SDL2/SDL.h>
@@ -364,7 +364,7 @@
 1436679814 source:/home/joel/Projects/Grammagic/play/controlViewManager.cpp
 	"viewManagers.h"
 
-1437893932 /home/joel/Projects/Grammagic/play/viewManagers.h
+1437989221 /home/joel/Projects/Grammagic/play/viewManagers.h
 	"gameMap.h"
 	<SDL2/SDL.h>
 	"../globalConstants.h"
@@ -425,10 +425,10 @@
 	"../combat/adjective.h"
 	"../combat/noun.h"
 
-1437906518 source:/home/joel/Projects/Grammagic/play/playStateManager.cpp
+1437989398 source:/home/joel/Projects/Grammagic/play/playStateManager.cpp
 	"playStateManager.h"
 
-1437904510 /home/joel/Projects/Grammagic/play/playStateManager.h
+1437989386 /home/joel/Projects/Grammagic/play/playStateManager.h
 	<iostream>
 	<fstream>
 	<vector>
@@ -444,7 +444,7 @@
 	"pc.h"
 	"party.h"
 
-1437904576 source:/home/joel/Projects/Grammagic/play/statsViewManager.cpp
+1437989746 source:/home/joel/Projects/Grammagic/play/statsViewManager.cpp
 	"viewManagers.h"
 
 1436170700 source:/home/joel/Projects/Grammagic/play/terrain.cpp
@@ -753,11 +753,11 @@
 1437879067 source:/home/joel/Projects/Grammagic/magic/battleCommands.cpp
 	"battleCommands.h"
 
-1437904055 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
+1438171939 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
 	"menuViewManager.h"
 	<iostream>
 
-1437904026 /home/joel/Projects/Grammagic/menuViewManager.h
+1438168085 /home/joel/Projects/Grammagic/menuViewManager.h
 	"util/utils.h"
 	"viewManager.h"
 	"magic/battleCommands.h"
@@ -766,7 +766,7 @@
 	"globalConstants.h"
 	"play/party.h"
 
-1437903907 /home/joel/Projects/Grammagic/menuManager.h
+1438165178 /home/joel/Projects/Grammagic/menuManager.h
 	"stateManager.h"
 	"play/mob.h"
 	"menuViewManager.h"
@@ -776,10 +776,10 @@
 	"util/utils.h"
 	<SDL2/SDL.h>
 
-1437903941 source:/home/joel/Projects/Grammagic/menuManager.cpp
+1438168617 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
-1437902169 /home/joel/Projects/Grammagic/globalConstants.h
+1438163236 /home/joel/Projects/Grammagic/globalConstants.h
 	<SDL2/SDL.h>
 	<string>
 
@@ -798,11 +798,11 @@
 1436586373 source:/home/joel/Projects/Grammagic/magic/adverb.cpp
 	"adverb.h"
 
-1437389069 /home/joel/Projects/Grammagic/play/pc.h
+1438076752 /home/joel/Projects/Grammagic/play/pc.h
 	"mob.h"
 	"../magic/battleCommands.h"
 
-1437885719 source:/home/joel/Projects/Grammagic/play/pc.cpp
+1438076776 source:/home/joel/Projects/Grammagic/play/pc.cpp
 	"pc.h"
 
 1437914753 /home/joel/Projects/Grammagic/play/battleField.h
@@ -825,7 +825,7 @@
 	"mob.h"
 	"../play/gameMap.h"
 
-1437914279 source:/home/joel/Projects/Grammagic/play/combatManager.cpp
+1437989317 source:/home/joel/Projects/Grammagic/play/combatManager.cpp
 	"combatManager.h"
 	<iostream>
 
@@ -836,10 +836,10 @@
 	"play/pc.h"
 	<string>
 
-1437912135 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
+1438170370 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
 	"saveLoad.h"
 
-1437904088 /home/joel/Projects/Grammagic/persistence/saveLoad.h
+1438169609 /home/joel/Projects/Grammagic/persistence/saveLoad.h
 	"../play/pc.h"
 	"../play/party.h"
 	<string>
@@ -858,7 +858,7 @@
 1437886885 source:/home/joel/Projects/Grammagic/magic/targetAll.cpp
 	"targetAll.h"
 
-1437914215 source:/home/joel/Projects/Grammagic/play/party.cpp
+1438171825 source:/home/joel/Projects/Grammagic/play/party.cpp
 	"party.h"
 
 1437914183 /home/joel/Projects/Grammagic/play/party.h

@@ -278,7 +278,7 @@ void PlayStateManager::render()
 
     _mapView->render(*_map, state());
     _controlView->render(_map->party()->leader(), state());
-    _statsView->render(_map, state());
+    _statsView->render(*_map, state());
     _miniMapView->render();
 
     SDL_RenderPresent(renderer());

@@ -54,6 +54,7 @@ class ViewManager
         AssetCache* assets(void);
         TTF_Font* font(void);
         SDL_Texture* formatFontTexture(const std::string, const SDL_Colour*);
+        std::string displayMultiplier(float) const;
 
         void drawSector(int cx, int cy, int r, int degStart, int degEnd);
         void drawMessage(const std::string, const SDL_Rect&, const SDL_Rect&, int);

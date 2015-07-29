@@ -65,7 +65,7 @@ std::vector<char> SaveLoad::getSpellBytes(const PC& pc) const
             else if (word == &Commands::GUARDED)
                 result.push_back(SavedObjectCode::GuardedRune);
             else if (word == &Commands::WARD)
-                result.push_back(SavedObjectCode::WardedRune);
+                result.push_back(SavedObjectCode::WardRune);
             else if (word == &Commands::WARDED)
                 result.push_back(SavedObjectCode::WardedRune);
             else if (word == &Commands::ENDANGER)
@@ -130,6 +130,7 @@ void SaveLoad::load(Party& party) const
 
                     for (Spell s : spells)
                         pc->spells()->push_back(Command("", s));
+                    spells = std::vector<Spell>();
                 }
                 spellInProgress = false;
                 if (pc == nullptr)

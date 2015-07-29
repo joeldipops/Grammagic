@@ -60,6 +60,8 @@ namespace Play
     enum MenuState
     {
         SelectMenu,
+        SelectMember,
+        ReorderMember,
         SelectSpell,
         SelectComponent,
         SelectRune,
@@ -70,6 +72,7 @@ namespace Play
         MagicSelected,
         SaveSelected,
         SaveComplete,
+        PartySelected
     };
 }
 

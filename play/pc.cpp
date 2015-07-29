@@ -7,6 +7,8 @@ PC::PC(void) : Mob(MobType::PlayerCharacter)
     portraitFileName(RESOURCE_LOCATION + "magician.png");
     _runeSlots = 5;
     _spellSlots = 7;
+    _name = "Name";
+    _jobClass = JobClass();
 }
 
 /**
@@ -25,4 +27,17 @@ int PC::spellSlots(void) const
 int PC::runeSlots(void) const
 {
     return _runeSlots;
+}
+
+/**
+ * The character's name.
+ */
+std::string PC::name(void) const
+{
+    return _name;
+}
+
+std::string PC::className(void) const
+{
+    return _jobClass.name();
 }

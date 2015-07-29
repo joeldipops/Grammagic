@@ -23,6 +23,7 @@ const std::string Strings::Continue = "Continue";
 const std::string Strings::Save = "Save";
 const std::string Strings::SaveComplete = "Save Complete";
 const std::string Strings::Magic = "Magic";
+const std::string Strings::Party = "Party";
 
 using namespace Magic;
 using namespace Play;
@@ -57,11 +58,11 @@ namespace Core
                 TitleStateManager title = TitleStateManager(renderer, &assets);
                 PlayStateManager play(renderer, &assets);
 
-                Party player = Party();
                 SaveLoad io = SaveLoad(SAVE_FILE);
                 CoreState state = CoreState::Title;
                 while(state != CoreState::Exit)
                 {
+                    Party player = Party();
                     SDL_Event e;
                     while(SDL_PollEvent(&e) != 0)
                     {
@@ -76,9 +77,15 @@ namespace Core
                             state = title.start();
                             break;
                         }
-                        case CoreState::Load:
-                            io.load(player); // fall through
+                        case CoreState::Load: {
+                            io.load(player);
+                            state = play.start(player);
+                            break;
+                        }
                         case CoreState::Play: {
+                            player.addMember();
+                            player.addMember();
+                            player.addMember();
                             state = play.start(player);
                             break;
                         }
