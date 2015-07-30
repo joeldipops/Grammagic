@@ -2,6 +2,9 @@
 
 using namespace Play;
 
+/**
+ * Constructor
+ */
 Party::Party(void)
     :MapObject()
 {
@@ -12,12 +15,18 @@ Party::Party(void)
     y(0);
 }
 
+/**
+ * Constructor takes list of members.
+ */
 Party::Party(std::vector<PC*> members_)
     :MapObject()
 {
     _members = members_;
 }
 
+/**
+ * Destructor
+ */
 Party::~Party(void)
 {
     for(unsigned int i = 0; i < _members.size(); i++)
@@ -67,11 +76,28 @@ PC* Party::addMember(void)
     return pc;
 }
 
+/**
+ * Finds the position of a specific pc in the party.
+ * pc The pc to look for.
+ */
+ int Party::getIndexOf(const Mob* pc) const
+{
+    for(unsigned int i = 0; i < _members.size(); i++)
+    {
+        if (pc == _members.at(i))
+            return i;
+    }
+    return -1;
+}
+
 bool Party::isPlayerParty(void) const
 {
     return true;
 }
 
+/**
+ * Party is defeated if all members are out of stamina.
+ */
 bool Party::isDefeated(void) const
 {
     for(PC* pc : _members)

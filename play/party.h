@@ -16,6 +16,8 @@ namespace Play
             const std::vector<PC*> members(void) const;
             PC* addMember(void);
             PC* addLeader(void);
+
+            int getIndexOf(const Mob*) const;
             bool isDefeated(void) const;
             bool isPlayerParty(void) const;
             int x(int);

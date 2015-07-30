@@ -14,8 +14,8 @@ class ViewManager
 {
     public:
         static const SDL_Colour hudColour;
-        static const SDL_Colour borderColour;
         static const SDL_Colour textColour;
+        static const SDL_Colour selectedColour;
         static const SDL_Colour invisible;
 
         static const SDL_Rect messageBoxOuter;

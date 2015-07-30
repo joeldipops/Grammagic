@@ -6,7 +6,7 @@ void MiniMapViewManager::render(void)
 {
     ViewManager::render();
     fillViewport(&hudColour);
-    drawBorder(DEFAULT_BORDER_WIDTH, &borderColour);
+    drawBorder(DEFAULT_BORDER_WIDTH, &textColour);
 }
 
 

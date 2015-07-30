@@ -4,21 +4,21 @@
 
 BattleField::BattleField(GameMap* map_)
 {
+    // All party members will be in the combat.
     for (Mob* c : map_->party()->members())
     {
         _pcs.push_back(c);
     }
 
+    // Along with any enemies that can see any member of the party.
     for(unsigned int i = 1; i < map_->contents().size(); i++)
     {
         if (!map_->contents().at(i)->isMob())
             continue;
         Mob* m = (Mob*) map_->contents().at(i);
 
-        std::vector<PC*> members = map_->party()->members();
-
         // If a mob can see any party member, that mob should be in the combat.
-        for (PC* pc : members)
+        for (const PC* pc : map_->party()->members())
         {
             if (m->isSeen(*pc))
             {

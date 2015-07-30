@@ -44,7 +44,7 @@ class StatsViewManager : public ViewManager
 {
     public:
         StatsViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-        void render(const GameMap&, const Play::PlayState);
+        void render(const GameMap&, const Play::PlayState, int = -1);
 };
 
 #endif

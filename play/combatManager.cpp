@@ -54,7 +54,15 @@ Play::PlayState CombatManager::start(GameMap* map_)
         for(Mob* combatant : due)
         {
             if (combatant->type() == MobType::PlayerCharacter)
-                rerender = processPcTurn(combatant, &field, &events);
+            {
+                int index = map_->party()->getIndexOf(combatant);
+                if (index < 0)
+                    continue;
+                if (_selectedMemberIndex < 0)
+                    _selectedMemberIndex = index;
+                if (_selectedMemberIndex == index)
+                    rerender = processPcTurn(combatant, &field, &events);
+            }
             else if (combatant->type() == MobType::Hostile)
                 rerender = processHostileTurn((Enemy*)combatant, &field);
         }
@@ -80,8 +88,11 @@ void CombatManager::render(void)
 
     Play::PlayState state = Play::PlayState::Combat;
     _mapView->render(*_map, state);
-    _controlView->render(_map->party()->leader(), state);
-    _statsView->render(*_map, state);
+    if (_selectedMemberIndex >= 0)
+        _controlView->render(_map->party()->members().at(_selectedMemberIndex), state);
+    else
+        _controlView->render(nullptr, PlayState::Combat);
+    _statsView->render(*_map, state, _selectedMemberIndex);
     _miniMapView->render();
 
     SDL_RenderPresent(renderer());
@@ -107,6 +118,7 @@ bool CombatManager::processHostileTurn(Enemy* mob, BattleField* field)
 
 bool CombatManager::processPcTurn(Mob* pc, BattleField* field, std::vector<SDL_Event>* events)
 {
+
     bool hasUpdate;
 
     // If there
@@ -135,6 +147,7 @@ bool CombatManager::processPcTurn(Mob* pc, BattleField* field, std::vector<SDL_E
                 break;
             case SDLK_RIGHTBRACKET:
                 hasUpdate |= processCommand(pc, field);
+                _selectedMemberIndex = -1;
                 break;
             case SDLK_RETURN:
                 // Pause

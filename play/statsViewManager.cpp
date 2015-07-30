@@ -3,17 +3,23 @@
 StatsViewManager::StatsViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) : ViewManager(r, v, a)
 {}
 
-void StatsViewManager::render(const GameMap& gameMap, const Play::PlayState state)
+void StatsViewManager::render(const GameMap& gameMap, const Play::PlayState state, int selectedMemberIndex)
 {
     ViewManager::render();
     fillViewport(&hudColour);
-    drawBorder(DEFAULT_BORDER_WIDTH, &borderColour);
+    drawBorder(DEFAULT_BORDER_WIDTH, &textColour);
 
     SDL_Rect rect;
     SDL_Rect port = SDL_Rect {1, 1, (viewPort().w / 2) - 5, 80};
 
-    for(const PC* pc : gameMap.party()->members())
+    for(unsigned int i = 0; i < gameMap.party()->members().size(); i++)
     {
+        const PC* pc = gameMap.party()->members().at(i);
+        const SDL_Colour* colour = state == PlayState::Combat && selectedMemberIndex != int(i)
+            ? &textColour
+            : &selectedColour
+            ;
+
         // Render the character potrait
         SDL_RenderCopy(renderer(), assets()->get(pc->portraitFileName()), NULL, &port);
         int radius = port.h / 2;
@@ -30,9 +36,9 @@ void StatsViewManager::render(const GameMap& gameMap, const Play::PlayState stat
         std::string label = Strings::Stamina;
         std::string stamina = std::to_string(pc->stamina());
         rect = SDL_Rect{DEFAULT_BORDER_WIDTH + 2, port.h + port.y, viewPort().w - 75, 20};
-        SDL_RenderCopy(renderer(), formatFontTexture(label, &textColour), NULL, &rect);
+        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &rect);
         rect = SDL_Rect{rect.x + rect.w + 15, rect.y, 40, rect.h};
-        SDL_RenderCopy(renderer(), formatFontTexture(stamina, &textColour), NULL, &rect);
+        SDL_RenderCopy(renderer(), formatFontTexture(stamina, colour), NULL, &rect);
 
         port = SDL_Rect { port.x, rect.y + rect.h, port.w, port.h };
     }

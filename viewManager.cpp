@@ -3,8 +3,8 @@
 using namespace Util;
 
 const SDL_Colour ViewManager::hudColour = { 0x19, 0x19, 0x70, 0xFF };
-const SDL_Colour ViewManager::borderColour = { 0x69, 0x69, 0x69, 0xFF };
-const SDL_Colour ViewManager::textColour = { 0xFF, 0xFF, 0xFF, 0xFF };
+const SDL_Colour ViewManager::textColour = { 0x69, 0x69, 0x69, 0xFF };
+const SDL_Colour ViewManager::selectedColour = { 0xFF, 0xFF, 0xFF, 0xFF };
 const SDL_Colour ViewManager::invisible = { 0xFF, 0xFF, 0xFF, 0x00 };
 const SDL_Rect ViewManager::_control = SDL_Rect { 15, 15, 200, 55 };
 const SDL_Rect ViewManager::messageBoxOuter = SDL_Rect { WIDTH / 2 - 150, (HEIGHT / 2) - 200, 300, 150 };
@@ -99,9 +99,9 @@ void ViewManager::drawHorizontalControls(
     for(; i < int(items->size()); i++)
     {
         if (i == selectedIndex)
-            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textColour, &textColour);
+            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &selectedColour, &selectedColour);
         else
-            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &borderColour, &borderColour);
+            drawOptionBox(&rect, items->at(i)->name(), 5, &hudColour, &textColour, &textColour);
         temp = SDL_Rect {rect.x + control->w + control->x, rect.y, control->w, control->h};
 
         // Can't fit horizontally, so shift below.
@@ -126,8 +126,8 @@ void ViewManager::drawMessage(const std::string message, const SDL_Rect& outer, 
 {
     SDL_Rect rect = SDL_Rect { outer.x + inner.x, outer.y + inner.y, inner.w, inner.h };
 
-    drawOptionBox(&rect, message, 0, &hudColour, &textColour, &invisible);
-    drawBorder(outer, borderWidth, &borderColour, true);
+    drawOptionBox(&rect, message, 0, &hudColour, &selectedColour, &invisible);
+    drawBorder(outer, borderWidth, &textColour, true);
 }
 
 /**
@@ -212,9 +212,9 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const 
     {
         SDL_Colour textClr = items->at(i)->colour();
         if (i == selectedIndex)
-            drawOptionBox(&rect, items->at(i)->name(), borderWidth, &hudColour, &textClr, &textColour);
+            drawOptionBox(&rect, items->at(i)->name(), borderWidth, &hudColour, &textClr, &selectedColour);
         else
-            drawOptionBox(&rect, items->at(i)->name(), borderWidth, &hudColour, &textClr, &borderColour);
+            drawOptionBox(&rect, items->at(i)->name(), borderWidth, &hudColour, &textClr, &textColour);
         temp = SDL_Rect {rect.x, rect.y + control->h + control->y, control->w, control->h};
 
         // Can't fit vertically, so shift to the right.
@@ -255,7 +255,7 @@ std::string ViewManager::displayMultiplier(float value) const
 /**
  * Render a box with a border and text in the middle.
  */
-void ViewManager::drawOptionBox(const SDL_Rect* rect, const std::string text, int borderWidth, const SDL_Colour* bgColour, const SDL_Colour* fgColour, const SDL_Colour* borderColour)
+void ViewManager::drawOptionBox(const SDL_Rect* rect, const std::string text, int borderWidth, const SDL_Colour* bgColour, const SDL_Colour* fgColour, const SDL_Colour* textColour)
 {
     // Background
     SDL_SetRenderDrawColor(_renderer, bgColour->r, bgColour->g, bgColour->b, bgColour->a);
@@ -268,7 +268,7 @@ void ViewManager::drawOptionBox(const SDL_Rect* rect, const std::string text, in
     SDL_RenderCopy(_renderer, texTure, NULL, &textArea);
 
     // Border
-    drawBorder(*rect, borderWidth, borderColour, true);
+    drawBorder(*rect, borderWidth, textColour, true);
 }
 
 /**

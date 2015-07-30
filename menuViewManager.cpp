@@ -129,9 +129,9 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex)
 
         const SDL_Colour* colour;
         if (memberIndex == int(i))
-            colour = &textColour;
+            colour = &selectedColour;
         else
-            colour = &borderColour;
+            colour = &textColour;
 
         // Draw name;
         std::string name = pc->name();
@@ -201,7 +201,7 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, std
 {
     ViewManager::render();
     fillViewport(&hudColour);
-    drawBorder(borderWidth, &borderColour);
+    drawBorder(borderWidth, &textColour);
 
     auto pointers = toPointers(model.MenuItems);
     drawControls(&pointers, int(model.SelectedMenuItem), &_mainVp, &_menuControl, false);
@@ -217,8 +217,8 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, std
                     break;
                 default:
                 {
-                    drawBorder(_spellsVp, borderWidth, &borderColour, true);
-                    drawBorder(_runesVp, borderWidth, &borderColour, true);
+                    drawBorder(_spellsVp, borderWidth, &textColour, true);
+                    drawBorder(_runesVp, borderWidth, &textColour, true);
                     renderSpells(*party.members().at(model.SelectedPCIndex), model.SelectedSpellIndex, model.SelectedComponentIndex);
                     if (model.SelectedRuneIndex >= 0)
                         renderRunes(*party.members().at(model.SelectedPCIndex), model.SelectedRuneIndex);

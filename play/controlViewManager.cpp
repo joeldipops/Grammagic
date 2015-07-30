@@ -11,6 +11,8 @@ void ControlViewManager::render(const Mob* pc, Play::PlayState state)
         case Play::PlayState::Movement:
             writeHeading(); break;
         case Play::PlayState::Combat: {
+            if (pc == nullptr)
+                break;
             std::vector<Command*> commands = pc->commands();
             std::vector<MenuItem*> menuItems = std::vector<MenuItem*> {commands.begin(), commands.end()};
 
@@ -24,12 +26,12 @@ void ControlViewManager::render(const Mob* pc, Play::PlayState state)
 
     }
 
-    drawBorder(DEFAULT_BORDER_WIDTH, &borderColour);
+    drawBorder(DEFAULT_BORDER_WIDTH, &textColour);
 }
 
 void ControlViewManager::writeHeading(void)
 {
-    SDL_Texture* texture = formatFontTexture(Strings::Heading, &textColour);
+    SDL_Texture* texture = formatFontTexture(Strings::Heading, &selectedColour);
     SDL_Rect textArea = SDL_Rect { viewPort().x + 20, viewPort().y + 5, viewPort().w - 40, viewPort().h - 10 };
     SDL_RenderCopy(renderer(), texture, NULL, &textArea);
 }

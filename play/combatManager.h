@@ -39,6 +39,7 @@ namespace Magic
 
             BattleField* _field = nullptr;
             GameMap* _map = nullptr;
+            int _selectedMemberIndex = -1;
     };
 }
 
