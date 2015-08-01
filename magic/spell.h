@@ -9,7 +9,6 @@
 #include "adverb.h"
 #include "nounPhrase.h"
 #include "../play/battleField.h"
-
 #include "../util/utils.h"
 
 class Mob;

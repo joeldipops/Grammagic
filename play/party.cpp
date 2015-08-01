@@ -9,6 +9,7 @@ Party::Party(void)
     :MapObject()
 {
     _members = std::vector<PC*>(0);
+    _bench = std::vector<PC*>(0);
     imageFileName(RESOURCE_LOCATION + "pc.png");
     isDense(true);
     x(0);
@@ -42,12 +43,33 @@ const std::vector<PC*> Party::members(void) const
     return _members;
 }
 
+void Party::buryTheDead(void)
+{
+    for (unsigned int i = 0; i < _members.size(); i++)
+    {
+        if (_members.at(i)->stamina() <= 0)
+        {
+            _bench.push_back(_members.at(i));
+            _members.erase(_members.begin() + i);
+            i--;
+        }
+    }
+}
+
 PC* Party::leader(void) const
 {
     if (_members.size() >= 1)
         return _members.at(0);
 
     return nullptr;
+}
+
+PC* Party::memberAt(unsigned int index) const
+{
+    if (index < 0 || index > _members.size())
+        return nullptr;
+
+    return _members.at(index);
 }
 
 PC* Party::addLeader(void)
@@ -100,6 +122,9 @@ bool Party::isPlayerParty(void) const
  */
 bool Party::isDefeated(void) const
 {
+    if (_members.size() <= 0)
+        return true;
+
     for(PC* pc : _members)
     {
         if (pc->stamina() > 0)
@@ -120,4 +145,19 @@ int Party::y(int y_)
     if (_members.size() > 0)
         leader()->y(y_);
     return MapObject::y(y_);
+}
+
+/**
+ * When combat ends, restore all "dead" party members to 1HP
+ */
+void Party::endCombat(void)
+{
+    for (unsigned int i = 0; i < _bench.size(); i++)
+    {
+        PC* pc = _bench.at(i);
+        pc->stamina(1);
+        _members.push_back(pc);
+    }
+
+    _bench = std::vector<PC*>(0);
 }

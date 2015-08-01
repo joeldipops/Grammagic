@@ -71,6 +71,7 @@ Play::PlayState CombatManager::start(GameMap* map_)
             state(Play::PlayState::GameOver);
     }
 
+    map_->party()->endCombat();
     for (Combatable* mob : field.combatants())
     {
         mob->endCombat();

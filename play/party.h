@@ -14,8 +14,11 @@ namespace Play
             ~Party(void);
             PC* leader(void) const;
             const std::vector<PC*> members(void) const;
+            PC* memberAt(unsigned int) const;
             PC* addMember(void);
             PC* addLeader(void);
+            void buryTheDead(void);
+            void endCombat(void);
 
             int getIndexOf(const Mob*) const;
             bool isDefeated(void) const;
@@ -28,6 +31,8 @@ namespace Play
 
         private:
             std::vector<PC*> _members;
+            std::vector<PC*> _bench;
+
     };
 }
 #endif

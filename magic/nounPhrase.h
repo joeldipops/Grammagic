@@ -4,6 +4,7 @@
 #include "nounish.h"
 #include "adjective.h"
 #include "noun.h"
+
 namespace Magic
 {
     class NounPhrase : public Nounish

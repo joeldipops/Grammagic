@@ -1,17 +1,18 @@
 #ifndef SAVELOAD_H_INCLUDED
 #define SAVELOAD_H_INCLUDED
 
+#include <string>
+
 #include "../play/pc.h"
 #include "../play/party.h"
-#include <string>
 
 namespace Persistence
 {
     enum SavedObjectCode
     {
-        NewSpell = 'A',
-        PCPosition = 'B',
-        NewMember = 'C',
+        NewSpell,
+        PCPosition,
+        NewMember,
         HealRune,
         EnemyRune,
         CasterRune,
@@ -38,6 +39,8 @@ namespace Persistence
         EnhanceRune,
         StrongestRune,
         WeakestRune,
+        AllyRune,
+        MemberRune
     };
 
     class SaveLoad

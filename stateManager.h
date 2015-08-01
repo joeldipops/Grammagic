@@ -1,8 +1,9 @@
 #ifndef STATEMANAGER_H_INCLUDED
 #define STATEMANAGER_H_INCLUDED
 
-#include "util/assetCache.h"
 #include <SDL2/SDL.h>
+
+#include "util/assetCache.h"
 #include "globalConstants.h"
 
 namespace Core

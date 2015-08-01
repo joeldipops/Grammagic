@@ -1,9 +1,9 @@
 #ifndef MAPOBJECT_H_INCLUDED
 #define MAPOBJECT_H_INCLUDED
 
-#include "util/utils.h"
-
 #include <string>
+
+#include "util/utils.h"
 
 using namespace Util;
 

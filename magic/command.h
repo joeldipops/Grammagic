@@ -5,6 +5,7 @@
 #include "properNoun.h"
 #include "verb.h"
 #include "../menuItem.h"
+
 class Mob;
 namespace Play { class BattleField; }
 

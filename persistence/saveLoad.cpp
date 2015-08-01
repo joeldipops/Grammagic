@@ -86,6 +86,10 @@ std::vector<char> SaveLoad::getSpellBytes(const PC& pc) const
                 result.push_back(SavedObjectCode::StrongestRune);
             else if (word == &Commands::WEAKEST)
                 result.push_back(SavedObjectCode::WeakestRune);
+            else if (word == &Commands::ALLY)
+                result.push_back(SavedObjectCode::AllyRune);
+            else if (word == &Commands::MEMBER)
+                result.push_back(SavedObjectCode::MemberRune);
             else
                 throw;
         }
@@ -278,6 +282,16 @@ void SaveLoad::load(Party& party) const
                 if (!spellInProgress)
                     throw;
                 workingSpell.addComponent(&Commands::WEAKEST);
+                break;
+            case SavedObjectCode::AllyRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::ALLY);
+                break;
+            case SavedObjectCode::MemberRune:
+                if (!spellInProgress)
+                    throw;
+                workingSpell.addComponent(&Commands::MEMBER);
                 break;
             default: throw;
         }

@@ -149,10 +149,15 @@ int Mob::maxStamina(void) const
  */
 int Mob::changeStamina(int delta)
 {
-    if (_stamina + delta <= _maxStamina)
-        _stamina += delta;
-    else
+    int newStamina = _stamina + delta;
+
+    if (newStamina < 0)
+        _stamina = 0;
+    else if (newStamina > _maxStamina)
         _stamina = _maxStamina;
+    else
+        _stamina = newStamina;
+
     return _stamina;
 }
 

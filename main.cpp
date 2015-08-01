@@ -1,17 +1,17 @@
 #include <string>
-#include "res/strings.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <stdlib.h>
+#include <time.h>
+
+#include "res/strings.h"
 #include "util/assetCache.h"
 #include "globalConstants.h"
 #include "title/titleStateManager.h"
 #include "play/playStateManager.h"
 #include "play/pc.h"
 #include "persistence/saveLoad.h"
-
-#include <stdlib.h>
-#include <time.h>
 
 #include "magic/battleCommands.h"
 
@@ -109,7 +109,12 @@ int main ()
 {
     Commands::allCommands.push_back(&Commands::ALL);
     Commands::allCommands.push_back(&Commands::CASTER);
+    Commands::allCommands.push_back(&Commands::HEAVIER);
+
     Commands::allCommands.push_back(&Commands::ENEMY);
+    Commands::allCommands.push_back(&Commands::ALLY);
+    Commands::allCommands.push_back(&Commands::MEMBER);
+    Commands::allCommands.push_back(&Commands::LIGHTER);
 
     Commands::allCommands.push_back(&Commands::HEAL);
     Commands::allCommands.push_back(&Commands::HURT);
@@ -136,8 +141,6 @@ int main ()
     Commands::allCommands.push_back(&Commands::STRONGEST);
     Commands::allCommands.push_back(&Commands::WEAKEST);
 
-    Commands::allCommands.push_back(&Commands::HEAVIER);
-    Commands::allCommands.push_back(&Commands::LIGHTER);
     Commands::allCommands.push_back(&Commands::FASTER);
 
     Core::Grammar program;

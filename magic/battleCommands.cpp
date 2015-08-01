@@ -6,6 +6,15 @@ std::vector<Word*> Commands::allCommands = std::vector<Word*>();
 // A mob hostile to the caster.
 Noun Commands::ENEMY = Noun(enemies, std::string("ENEMY"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 
+// The caster
+ProperNoun Commands::CASTER = ProperNoun(self, std::string("CASTER"), Modifier(.8), Modifier(1.0), Modifier(1.0));
+
+// The caster's allies
+Noun Commands::ALLY = Noun(allies, std::string("ALLY"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+
+// Any member of the caster's party.
+Noun Commands::MEMBER = Noun(members, std::string("MEMBER"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
+
 // The mob with the most or least stamina
 Adjective Commands::FRESHEST = Adjective(freshest, std::string("FRESHEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
 Adjective Commands::SICKEST = Adjective(sickest, std::string("SICKEST"), Modifier(1.0), Modifier(1.0), Modifier(1.0));
@@ -28,9 +37,6 @@ Adjective Commands::WEAKEST = Adjective(weakest, std::string("WEAKEST"), Modifie
 
 // Equally distribute effect over all candidates
 Adjective Commands::ALL = Adjective(all, std::string("ALL"), Modifier(1.1), Modifier(1.2), Modifier(1.05));
-
-// The caster
-ProperNoun Commands::CASTER = ProperNoun(self, std::string("CASTER"), Modifier(.8), Modifier(1.0), Modifier(1.0));
 
 // Buff an ally's defence or reduce an enemy's
 Verb Commands::DEFEND = Verb(defend, std::string("DEFEND"), Modifier(50), Modifier(10), Modifier(5000), -1, 1, 0, true);

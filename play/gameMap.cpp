@@ -162,13 +162,14 @@ void GameMap::kill(MapObject* mob)
 }
 
 /**
- * Removes any mob from the map and from existence if they ha   ve 0 stamina.
+ * Removes any mob from the map and from existence if they have 0 stamina.
  */
 void GameMap::buryTheDead()
 {
     MapObject* m;
     for(unsigned int i = 0; i < _contents.size(); i++)
     {
+        party()->buryTheDead();
         m = _contents.at(i);
         if (!m->isMob())
             continue;

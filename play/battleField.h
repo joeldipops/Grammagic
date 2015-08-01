@@ -1,9 +1,10 @@
 #ifndef BATTLEFIELD_H_INCLUDED
 #define BATTLEFIELD_H_INCLUDED
 
-#include "../mapObject.h"
 #include <vector>
 #include <queue>
+
+#include "../mapObject.h"
 #include "../globalConstants.h"
 #include "combatable.h"
 
@@ -28,13 +29,16 @@ namespace Play
             bool isVictory(void) const;
             bool isDefeat(void) const;
 
-            void toBin(Combatable*);
+            void addToField(Combatable*, bool isPlayerAllied);
 
         private:
             bool _isInCombat;
             std::vector<Combatable*> _rubbishBin;
             std::vector<Mob*> _pcs;
             std::vector<Mob*> _hostiles;
+            std::vector<Combatable*> _playerAllied;
+            std::vector<Combatable*> _nonPlayerAllied;
+
     };
 }
 

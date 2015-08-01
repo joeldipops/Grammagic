@@ -1,15 +1,16 @@
 #ifndef VIEWMANAGER_H_INCLUDED
 #define VIEWMANAGER_H_INCLUDED
 
+#include <algorithm>
+#include <vector>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL.h>
+
 #include "util/assetCache.h"
 #include "menuItem.h"
 #include "util/utils.h"
 #include "globalConstants.h"
 
-#include <algorithm>
-#include <vector>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL.h>
 class ViewManager
 {
     public:

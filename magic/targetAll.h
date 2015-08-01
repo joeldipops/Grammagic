@@ -1,12 +1,11 @@
 #ifndef TARGETALL_H_INCLUDED
 #define TARGETALL_H_INCLUDED
 
-#include "../mapObject.h"
-#include "../play/combatable.h"
-
 #include <vector>
 #include <algorithm>
 
+#include "../mapObject.h"
+#include "../play/combatable.h"
 
 namespace Magic
 {

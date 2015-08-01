@@ -2,6 +2,7 @@
 #define NOUN_H_INCLUDED
 
 #include <vector>
+
 #include "word.h"
 #include "modifier.h"
 #include "../mapObject.h"

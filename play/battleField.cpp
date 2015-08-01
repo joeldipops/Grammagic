@@ -29,6 +29,8 @@ BattleField::BattleField(GameMap* map_)
     }
 
     std::vector<void*> _rubbishBin = std::vector<void*>(0);
+    std::vector<Combatable*> _playerAllied(0);
+    std::vector<Combatable*> _nonPlayerAllied(0);
 }
 
 /**
@@ -36,6 +38,9 @@ BattleField::BattleField(GameMap* map_)
  */
 BattleField::~BattleField(void)
 {
+    _playerAllied = std::vector<Combatable*>(0);
+    _nonPlayerAllied = std::vector<Combatable*>(0);
+
     for(Combatable* item : _rubbishBin)
     {
         delete item;
@@ -114,6 +119,18 @@ bool BattleField::areAllied(const Combatable* one, const Combatable* other) cons
         if (mob == other)
             found++;
     }
+
+    if (found == 2)
+        return true;
+
+    for (Combatable* mob : _nonPlayerAllied)
+    {
+        if (mob == one)
+            found++;
+        if (mob == other)
+            found++;
+    }
+
     return found % 2 == 0;
 }
 
@@ -155,7 +172,12 @@ std::vector<Combatable*> BattleField::combatants(void)
 /**
  * Keep track of an obj that was allocated during combat.
  */
-void BattleField::toBin(Combatable* rubbish)
+void BattleField::addToField(Combatable* mob, bool isPlayerAllied)
 {
-    _rubbishBin.push_back(rubbish);
+    _rubbishBin.push_back(mob);
+
+    if (isPlayerAllied)
+        _playerAllied.push_back(mob);
+    else
+        _nonPlayerAllied.push_back(mob);
 }

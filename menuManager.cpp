@@ -96,12 +96,6 @@ Play::PlayState MenuManager::start(Party& party)
         }
     }
 
-    // Resolve all spells.
-    for (Command* cmd : party.leader()->commands())
-    {
-        cmd->spell()->resolve();
-    }
-
     return result();
 }
 
@@ -138,25 +132,29 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
             columnItemCount = itemCount;
             index = _selectedMemberIndex;
             break;
-        case MenuState::SelectSpell:
-            itemCount = party.leader()->spellSlots() > int(party.leader()->spells()->size())
-                ? party.leader()->spells()->size() + 1
-                : party.leader()->spellSlots();
+        case MenuState::SelectSpell: {
+            PC* member = party.memberAt(_selectedMemberIndex);
+            itemCount = member->spellSlots() > int(member->spells()->size())
+                ? member->spells()->size() + 1
+                : member->spellSlots();
             index = _selectedSpellIndex;
             columnItemCount = 1;
             break;
+        }
         case MenuState::SelectRune:
             index = _selectedRuneIndex;
             itemCount = Commands::allCommands.size() + 1;
             columnItemCount = _viewManager.menuItemsPerColumn();
             break;
-        case MenuState::SelectComponent:
+        case MenuState::SelectComponent: {
+            PC* member = party.memberAt(_selectedMemberIndex);
             index = _selectedComponentIndex;
-            itemCount = party.leader()->runeSlots() > selectedSpellLength(party.leader())
-                ? selectedSpellLength(party.leader()) + 1
-                : party.leader()->runeSlots();
+            itemCount = member->runeSlots() > selectedSpellLength(member)
+                ? selectedSpellLength(member) + 1
+                : member->runeSlots();
             columnItemCount = 1;
             break;
+        }
         default:
             return false;
     }
@@ -284,7 +282,7 @@ bool MenuManager::processSpellCommand(void)
 
 bool MenuManager::processRuneCommand(const Party& party)
 {
-    PC* pc = party.members().at(_selectedMemberIndex);
+    PC* pc = party.memberAt(_selectedMemberIndex);
     if (int(pc->spells()->size()) <= _selectedSpellIndex)
         pc->spells()->push_back(Command("", Spell(std::vector<Word*>(0))));
 

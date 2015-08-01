@@ -2,7 +2,6 @@
 #define VERB_H_INCLUDED
 
 #include "../play/combatable.h"
-
 #include "modifier.h"
 #include "word.h"
 #include "../globalConstants.h"

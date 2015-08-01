@@ -1,9 +1,10 @@
 #ifndef GAMEMAP_H_INCLUDED
 #define GAMEMAP_H_INCLUDED
 
+#include <vector>
+
 #include "mob.h"
 #include "mapCell.h"
-#include <vector>
 #include "../util/utils.h"
 #include "pc.h"
 #include "party.h"

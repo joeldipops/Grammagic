@@ -121,7 +121,7 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex)
     SDL_Rect rect{ _partyVp.x + cursorXOffset, _partyVp.y, _partyVp.w - cursorXOffset, 150 };
     for (unsigned int i = 0; i < party.members().size(); i++)
     {
-        PC* pc = party.members().at(i);
+        PC* pc = party.memberAt(i);
         const int TEXT_WIDTH = 22;
         const int TEXT_HEIGHT = 19;
         const int LABEL_GAP = 60;
@@ -219,9 +219,9 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, std
                 {
                     drawBorder(_spellsVp, borderWidth, &textColour, true);
                     drawBorder(_runesVp, borderWidth, &textColour, true);
-                    renderSpells(*party.members().at(model.SelectedPCIndex), model.SelectedSpellIndex, model.SelectedComponentIndex);
+                    renderSpells(*party.memberAt(model.SelectedPCIndex), model.SelectedSpellIndex, model.SelectedComponentIndex);
                     if (model.SelectedRuneIndex >= 0)
-                        renderRunes(*party.members().at(model.SelectedPCIndex), model.SelectedRuneIndex);
+                        renderRunes(*party.memberAt(model.SelectedPCIndex), model.SelectedRuneIndex);
                 }
             }
             break;

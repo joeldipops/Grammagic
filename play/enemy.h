@@ -3,7 +3,9 @@
 
 #include "mob.h"
 #include "gameMap.h"
+
 using namespace Magic;
+
 class Enemy : public Mob
 {
     public:

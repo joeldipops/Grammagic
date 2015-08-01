@@ -2,6 +2,7 @@
 #define WORD_H_INCLUDED
 
 #include <string>
+
 #include "../globalConstants.h"
 #include "modifier.h"
 

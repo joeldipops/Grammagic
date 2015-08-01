@@ -1,9 +1,10 @@
 #ifndef ADJECTIVE_H_INCLUDED
 #define ADJECTIVE_H_INCLUDED
 
+#include <vector>
+
 #include "word.h"
 #include "../mapObject.h"
-#include <vector>
 #include "../play/battleField.h"
 
 class Mob;

@@ -27,6 +27,8 @@ namespace Magic
             static std::vector<Word*> allCommands;
             static ProperNoun CASTER;
             static Noun ENEMY;
+            static Noun ALLY; // Excludes the caster.
+            static Noun MEMBER; // Includes the caster.
             static Verb HURT;
             static Verb HEAL;
             static Verb HASTEN;
@@ -79,14 +81,66 @@ namespace Magic
                 }
 
                 return result;
-            }
+            };
 
+            static std::vector<Combatable*> allies(Mob* caster, BattleField* battleField)
+            {
+                std::vector<Combatable*> result;
+                std::vector<Mob*> candidates;
+
+                if (caster->type() == MobType::PlayerCharacter)
+                    candidates = battleField->pcs();
+                else
+                    candidates =  battleField->hostiles();
+
+                for (Mob* m : candidates)
+                {
+                    if (m != caster)
+                        result.push_back(m);
+                }
+
+                return result;
+            };
+
+            static std::vector<Combatable*> members(Mob* caster, BattleField* battleField)
+            {
+                std::vector<Combatable*> result;
+                std::vector<Mob*> candidates;
+
+                if (caster->type() == MobType::PlayerCharacter)
+                    candidates = battleField->pcs();
+                else
+                    candidates =  battleField->hostiles();
+
+                for (Mob* m : candidates)
+                {
+                    result.push_back(m);
+                }
+
+                return result;
+            };
 
             // Adjectives
             static Combatable* all(Mob* caster, BattleField* field, std::vector<Combatable*> candidates)
             {
                 TargetAll* result = new TargetAll(candidates);
-                field->toBin(result);
+
+                bool isPlayerAllied = field->areAllied(caster, field->pcs().at(0));
+
+                // Should the target be considered an ally or an of the caster?
+                unsigned int allyCount = 0;
+                for (const Combatable* c : candidates)
+                {
+                    if (field->areAllied(caster, c))
+                        allyCount++;
+                }
+
+
+                if (allyCount > candidates.size() / 2.0)
+                    field->addToField(result, isPlayerAllied);
+                else
+                    field->addToField(result, !isPlayerAllied);
+
                 return result;
             }
 

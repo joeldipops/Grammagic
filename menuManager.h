@@ -1,6 +1,8 @@
 #ifndef MENUMANAGER_H_INCLUDED
 #define MENUMANAGER_H_INCLUDE
 
+#include <SDL2/SDL.h>
+
 #include "stateManager.h"
 #include "play/mob.h"
 #include "menuViewManager.h"
@@ -8,8 +10,6 @@
 #include "persistence/saveLoad.h"
 #include "res/strings.h"
 #include "util/utils.h"
-
-#include <SDL2/SDL.h>
 
 namespace Play
 {
