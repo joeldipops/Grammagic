@@ -1,4 +1,5 @@
 #include "targetAll.h"
+
 using namespace Magic;
 
 TargetAll::TargetAll(std::vector<Combatable*> all_)

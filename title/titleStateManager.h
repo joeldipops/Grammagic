@@ -5,6 +5,7 @@
 #include "../title/titleViewManager.h"
 #include "../stateManager.h"
 #include "../util/utils.h"
+#include "../res/strings.h"
 
 class TitleStateManager final : Core::StateManager<Title::TitleState, Core::CoreState>
 {

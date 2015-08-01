@@ -20,10 +20,13 @@ class Mob : public MapObject, public Combatable
         virtual MobType type(void) const;
 
 
-        bool isSeen(const MapObject&);
+        bool isSeen(const MapObject&) const;
+        bool isSensed(const MapObject&) const;
         bool isMob(void) const { return true; };
 
         // Stats
+        int rangeOfSense(int);
+        int rangeOfSense(void) const;
         int rangeOfSight(int);
         int rangeOfSight(void) const;
 
@@ -75,6 +78,7 @@ class Mob : public MapObject, public Combatable
         float defaultSkill(float);
 
         static std::vector<Command*> toPointers(const std::vector<Command>& source);
+        bool isInRange(const MapObject&, int value) const;
 
     private:
         MobType _type;
@@ -82,6 +86,7 @@ class Mob : public MapObject, public Combatable
         int _stamina;
         int _maxStamina;
         int _rangeOfSight;
+        int _rangeOfSense;
         int _selectedCommandIndex = 0;
 
         int _unblockTime = 0;

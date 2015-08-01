@@ -1,5 +1,4 @@
 #include "combatManager.h"
-#include <iostream>
 
 using namespace Magic;
 

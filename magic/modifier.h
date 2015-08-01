@@ -1,9 +1,12 @@
 #ifndef MODIFIER_H_INCLUDED
 #define MODIFIER_H_INCLUDED
 
+#include <math.h>
+
 #include "../util/utils.h"
 
 using namespace Util;
+
 namespace Magic
 {
     class Modifier

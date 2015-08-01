@@ -104,6 +104,10 @@ std::vector<char> SaveLoad::getSpellBytes(const PC& pc) const
 void SaveLoad::load(Party& party) const
 {
     std::vector<char> data = Util::readFile(_path.c_str());
+
+    if (data.size() <= 0)
+        return;
+
     std::vector<Spell> spells = std::vector<Spell>();
 
     Spell workingSpell;

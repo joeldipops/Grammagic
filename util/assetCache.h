@@ -6,6 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include <map>
 #include <string>
+#include <iostream>
 
 class AssetCache
 {

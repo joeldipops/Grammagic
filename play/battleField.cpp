@@ -1,6 +1,10 @@
 #include "battleField.h"
+
+// Forward references
 #include "mob.h"
-#include "../play/gameMap.h"
+#include "gameMap.h"
+
+using namespace Play;
 
 BattleField::BattleField(GameMap* map_)
 {

@@ -1,5 +1,4 @@
 #include "titleStateManager.h"
-#include "../res/strings.h"
 
 const MenuItem TitleStateManager::START = MenuItem(Strings::Start);
 const MenuItem TitleStateManager::QUIT = MenuItem(Strings::Quit);

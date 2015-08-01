@@ -1,11 +1,11 @@
 #include "rune.h"
 
+using namespace Magic;
+
 const SDL_Colour Rune::VERB_COLOUR = SDL_Colour { 0xFF, 0xFF, 0x00, 0xFF };
 const SDL_Colour Rune::NOUN_COLOUR = SDL_Colour { 0x00, 0xFF, 0xFF, 0xFF };
 const SDL_Colour Rune::ADJECTIVE_COLOUR = SDL_Colour { 0xFF, 0x00, 0x88, 0xFF };
 const SDL_Colour Rune::ADVERB_COLOUR = SDL_Colour { 0x88, 0xFF, 0xFF, 0xFF };
-
-using namespace Magic;
 
 Rune::Rune(Word* word_)
     : MenuItem(word_->name())

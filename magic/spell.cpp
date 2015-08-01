@@ -1,5 +1,8 @@
 #include "spell.h"
+
+// Forward Reference
 #include "../play/mob.h"
+
 using namespace Magic;
 
 DummyAdjective Spell::_dummy = DummyAdjective(Spell::_randomObj, "", Modifier(0, 1.0), Modifier(0, 1.0), Modifier(0, 1.0));

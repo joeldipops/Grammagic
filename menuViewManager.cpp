@@ -1,7 +1,5 @@
 #include "menuViewManager.h"
 
-#include <iostream>
-
 using namespace Play;
 
 const SDL_Rect MenuViewManager::_menuControl = SDL_Rect { 6, 6, 175, 50 };

@@ -1,5 +1,10 @@
 #include "nounPhrase.h"
+
 using namespace Magic;
+
+/**
+ * Constructor
+ */
 NounPhrase::NounPhrase(Noun* noun, Adjective* adjective)
     :Nounish(
         "",

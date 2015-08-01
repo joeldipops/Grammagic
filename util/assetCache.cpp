@@ -1,5 +1,4 @@
 #include "assetCache.h"
-#include <iostream>
 
 AssetCache::AssetCache() {}
 

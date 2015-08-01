@@ -1,9 +1,4 @@
 #include "mob.h"
-#include "../magic/nounish.h"
-#include "../magic/nounPhrase.h"
-#include "../util/utils.h"
-
-#include <iostream>
 
 using namespace Magic;
 
@@ -26,6 +21,7 @@ Mob::Mob(MobType type)
     _maxStamina = 100;
     _stamina = 100;
     _rangeOfSight = 1;
+    _rangeOfSense = 3;
     _type = type;
     switch(type)
     {
@@ -176,7 +172,9 @@ std::string Mob::portraitFileName(std::string portraitFileName_)
     return _portraitFileName;
 }
 
-
+/**
+ * Gets and sets the distance at which the enemy will start attacking you.
+ */
 int Mob::rangeOfSight(int range)
 {
     _rangeOfSight = range;
@@ -185,6 +183,19 @@ int Mob::rangeOfSight(int range)
 int Mob::rangeOfSight(void) const
 {
     return _rangeOfSight;
+}
+
+/**
+ * Gets and sets the distance at which the enemy will start chasing you.
+ */
+int Mob::rangeOfSense(int range)
+{
+    _rangeOfSense = range;
+    return _rangeOfSense;
+}
+int Mob::rangeOfSense(void) const
+{
+    return _rangeOfSense;
 }
 
 std::vector<Command*> Mob::commands(void) const
@@ -246,17 +257,28 @@ int Mob::selectedCommandIndex(unsigned int index)
 }
 
 
+
+bool Mob::isSensed(const MapObject& target) const
+{
+    return isInRange(target, _rangeOfSense);
+}
+
 /**
  * Checks whether a mob can be seen.
  * @param target The mob that may or may not be visible.
  * @return True if the given mob can be seen by this Mob, false otherwise.
  */
-bool Mob::isSeen(const MapObject& target)
+bool Mob::isSeen(const MapObject& target) const
+{
+    return isInRange(target, _rangeOfSight);
+}
+
+bool Mob::isInRange(const MapObject& target, int value) const
 {
     if (&target == this)
         return false;
-    return (abs(target.x() - x()) <= _rangeOfSight)
-        && (abs(target.y() - y()) <= _rangeOfSight);
+    return (abs(target.x() - x()) <= value)
+        && (abs(target.y() - y()) <= value);
 }
 
 /**

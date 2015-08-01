@@ -2,12 +2,14 @@
 
 using namespace Magic;
 
+/**
+ * Constructor
+ */
 ProperNoun::ProperNoun(Targeter target, std::string name, Modifier effect, Modifier cost, Modifier duration)
     : Nounish(name, effect, cost, duration)
 {
     _target = target;
 }
-
 
 /**
  * Selects the target from a mob, item or terrain on the battlefield according to the _target function.

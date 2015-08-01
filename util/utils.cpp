@@ -20,10 +20,17 @@ void Util::sleep(int milliseconds)
 bool Util::writeFile(const char* fileName, const std::vector<char>& data)
 {
     std::ofstream file(fileName, std::ofstream::binary);
-    file.write(data.data(), int(data.size()));
-    file.close();
-
-    return true;
+    if (file.is_open())
+    {
+        file.write(data.data(), int(data.size()));
+        file.close();
+        return true;
+    }
+    else
+    {
+        std::cout << fileName << "does not exist.";
+        return false;
+    }
 }
 
 /**
@@ -38,7 +45,11 @@ bool Util::writeFile(const char* fileName, const std::vector<char>& data)
     std::ifstream file(fileName, std::ios::in|std::ios::binary|std::ios::ate);
 
     if (!file.is_open())
+    {
+        std::cout << fileName << "could not be read.";
         return std::vector<char>();
+    }
+
 
     size = file.tellg();
 

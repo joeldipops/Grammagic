@@ -1,5 +1,5 @@
 #include "modifier.h"
-#include <math.h>
+
 using namespace Magic;
 
 Modifier::Modifier(){}

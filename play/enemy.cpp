@@ -1,5 +1,4 @@
 #include "enemy.h"
-#include <stdlib.h>
 
 Enemy::Enemy(void) : Mob(MobType::Hostile)
 {

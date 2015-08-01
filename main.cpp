@@ -12,7 +12,6 @@
 #include "play/playStateManager.h"
 #include "play/pc.h"
 #include "persistence/saveLoad.h"
-
 #include "magic/battleCommands.h"
 
 const std::string Strings::Heading = "Grammagic";
@@ -79,7 +78,12 @@ namespace Core
                         }
                         case CoreState::Load: {
                             io.load(player);
-                            state = play.start(player);
+
+                            // Load was not successful.
+                            if (player.members().size() <= 0)
+                                state = CoreState::Play;
+                            else
+                                state = play.start(player);
                             break;
                         }
                         case CoreState::Play: {

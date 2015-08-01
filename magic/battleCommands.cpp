@@ -1,6 +1,7 @@
 #include "battleCommands.h"
 
 using namespace Magic;
+
 std::vector<Word*> Commands::allCommands = std::vector<Word*>();
 
 // A mob hostile to the caster.

@@ -1,5 +1,7 @@
 #include "command.h"
+
 using namespace Magic;
+
 /**
  * Static function that executes spell type commands with the appropriate context.
  * @param _this the command used to cast the spell.
