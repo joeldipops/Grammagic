@@ -87,13 +87,6 @@ bool GameMap::place(MapObject* mob, int x, int y, bool canReplace)
         return false;
 
     MapCell* cell = getCell(x, y);
-    if (cell->contents() != nullptr)
-    {
-        if (canReplace)
-            kill(cell->contents());
-        else
-            return false;
-    }
 
     if (mob->isPlayerParty())
     {
@@ -101,10 +94,20 @@ bool GameMap::place(MapObject* mob, int x, int y, bool canReplace)
         _contents.at(0) = mob;
     }
     else
+    {
+        if (cell->contents() != nullptr)
+        {
+            if (canReplace)
+                kill(cell->contents());
+            else
+                return false;
+        }
         _contents.push_back(mob);
+    }
+
 
     mob->location(x, y);
-    mob = cell->contents(mob);
+    cell->contents(mob);
 
     return true;
 }
@@ -164,7 +167,7 @@ void GameMap::kill(MapObject* mob)
 /**
  * Removes any mob from the map and from existence if they have 0 stamina.
  */
-void GameMap::buryTheDead()
+void GameMap::buryTheDead(void)
 {
     MapObject* m;
     for(unsigned int i = 0; i < _contents.size(); i++)
@@ -186,14 +189,18 @@ void GameMap::buryTheDead()
 }
 
 /**
- *
+ * Gets information on a specific cell on the map.
  * @param x
  * @param y
  * @return
  */
 MapCell* GameMap::getCell(int x, int y)
 {
-    return &_cells[x + (y * _width)];
+    unsigned int index = x + (y * width());
+    if (index < _cells.size())
+        return &_cells.at(index);
+
+    return nullptr;
 }
 /**
  *

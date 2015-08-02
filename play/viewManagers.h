@@ -26,12 +26,12 @@ class MapViewManager : public ViewManager
         static const int CELL_WIDTH = 50;
         static const int CELL_HEIGHT = 50;
         MapViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-        void render(const GameMap&, const Play::PlayState);
+        void render(const GameMap*, const Play::PlayState);
 
     private:
-        void renderHealthBar(const Mob&);
-        void renderContents(const GameMap&);
-        void renderTerrain(const GameMap&);
+        void renderHealthBar(const Mob&, int x, int y);
+        void renderContents(const GameMap&, const SDL_Rect& visible);
+        void renderTerrain(const GameMap* gameMap, const SDL_Rect& visible);
 };
 
 class MiniMapViewManager : public ViewManager

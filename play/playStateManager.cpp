@@ -2,7 +2,7 @@
 
 using namespace Play;
 
-const bool REGEN_MAP = true;
+const bool REGEN_MAP = false;
 const SDL_Rect CONTROL_VIEW = {0, 0, 1000, 150};
 const SDL_Rect MINIMAP_VIEW = {1000, 0, 200, 150};
 const SDL_Rect STATS_VIEW = {1000, 150, 200, 650};
@@ -136,7 +136,7 @@ bool PlayStateManager::processMovementState(void)
             continue;
 
         Enemy* nme = (Enemy*) mob;
-        hasUpdate |= nme->aiMove(_map);
+        hasUpdate |= nme->aiMove(*_map);
     }
 
     while(SDL_PollEvent(&event) != 0 && oldState == state())
@@ -276,7 +276,7 @@ void PlayStateManager::render()
     SDL_SetRenderDrawColor(renderer(), 0x00, 0x00, 0x00, 0xFF);
     SDL_RenderClear(renderer());
 
-    _mapView->render(*_map, state());
+    _mapView->render(_map, state());
     _controlView->render(_map->party()->leader(), state());
     _statsView->render(*_map, state());
     _miniMapView->render();
@@ -421,6 +421,7 @@ std::vector<MapFileBlock> PlayStateManager::tempMapFile()
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
+        //MapFileBlock::generateTestCell(GrassTerrain, MobType::Hostile),
         MapFileBlock::generateTestCell(GrassTerrain, MobType::Hostile),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
@@ -527,7 +528,7 @@ std::vector<MapFileBlock> PlayStateManager::tempMapFile()
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
-        MapFileBlock::generateTestCell(GrassTerrain),
+        MapFileBlock::generateTestCell(GrassTerrain, MobType::Hostile),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
         MapFileBlock::generateTestCell(GrassTerrain),
@@ -566,7 +567,6 @@ std::vector<MapFileBlock> PlayStateManager::tempMapFile()
         MapFileBlock::generateTestCell(WallTerrain),
         MapFileBlock::generateTestCell(WallTerrain),
         MapFileBlock::generateTestCell(WallTerrain),
-        MapFileBlock::generateTestCell(WallTerrain, MobType::Hostile),
         MapFileBlock::generateTestCell(WallTerrain),
         MapFileBlock::generateTestCell(WallTerrain),
         MapFileBlock::generateTestCell(WallTerrain),
@@ -583,6 +583,7 @@ std::vector<MapFileBlock> PlayStateManager::tempMapFile()
         MapFileBlock::generateTestCell(WallTerrain),
         MapFileBlock::generateTestCell(WallTerrain),
         MapFileBlock::generateTestCell(WallTerrain),
+        MapFileBlock::generateTestCell(WallTerrain)
     };
 
     return result;

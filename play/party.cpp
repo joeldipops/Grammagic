@@ -47,13 +47,17 @@ void Party::buryTheDead(void)
 {
     for (unsigned int i = 0; i < _members.size(); i++)
     {
-        if (_members.at(i)->stamina() <= 0)
+        PC* member = _members.at(i);
+        if (member->stamina() <= 0)
         {
-            _bench.push_back(_members.at(i));
+            _bench.push_back(member);
             _members.erase(_members.begin() + i);
             i--;
         }
     }
+    // set any new leader's loc
+    x(x());
+    y(y());
 }
 
 PC* Party::leader(void) const

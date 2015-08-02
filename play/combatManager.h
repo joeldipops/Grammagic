@@ -30,6 +30,7 @@ namespace Magic
             bool processHostileTurn(Enemy*, BattleField*);
             void render(void);
             bool moveCursor(Mob* mob, Core::InputPress input);
+            void buryTheDead(void);
 
             // views
             ControlViewManager* _controlView;

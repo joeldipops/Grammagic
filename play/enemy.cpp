@@ -3,7 +3,7 @@
 Enemy::Enemy(void) : Mob(MobType::Hostile)
 {
     imageFileName(RESOURCE_LOCATION + "enemy.png");
-    _physicalStrength = 10;
+    _physicalStrength = 30;
     _combatDelay = 2000;
     _movementDelay = 500;
     //_speed = 1.0;
@@ -24,19 +24,40 @@ int Enemy::combatDelay(void) const
  * @param map The map the mob should move around.
  * @return true if the move was succesful.
  */
-bool Enemy::aiMove(GameMap* map_)
+bool Enemy::aiMove(GameMap& map_)
 {
-    bool xR = (rand() % 100) > 50;
-    bool yR = (rand() % 100) > 50;
+    int dX = 0;
+    int dY = 0;
 
+    // Chase the party.
+    if (isSensed((MapObject&)*map_.party()))
+    {
+        int tX = map_.party()->x();
+        int tY = map_.party()->y();
+
+        if (tX > x())
+            dX = 1;
+        else if (tX < x())
+            dX = -1;
+
+        if (tY > y())
+            dY = 1;
+        else if (tY < y())
+            dY = -1;
+    }
+    // Or just move randomly
+    else
+    {
+        dY = (rand() % 100) > 50 ? 1 : -1;
+        dX = (rand() % 100) > 50 ? 1 : -1;
+    }
 
     block(SDL_GetTicks() + _movementDelay + (rand() % 200 - 100));
-    return map_->moveMob(
-        this,
-        xR ? x() + 1 : x() - 1,
-        yR ? y() + 1 : y() - 1
-    );
-    return false;
+
+    if (dX == 0 && dY == 0)
+        return false;
+
+    return map_.moveMob(this, x() + dX, y() + dY);
 }
 
 /**
@@ -54,18 +75,24 @@ void Enemy::aiAct(BattleField* field)
  */
 void Enemy::attack(BattleField* field)
 {
-    for (unsigned int i = 0; i < field->combatants().size(); i++)
+    // A limit to stop us looping forever if we are implausibly unlucky.
+    const int randFail = 10;
+    unsigned int iter = 0;
+    while(iter < randFail)
     {
-        if (!field->areAllied(this, field->combatants().at(i)))
-        {
-            Combatable* target = field->combatants().at(i);
+        int i = rand() % field->combatants().size();
+        Combatable* target = field->combatants().at(i);
 
+        // Do damage to the target and then ollie outie.
+        if (!field->areAllied(this, target))
+        {
             target->changeStamina(-1 * _physicalStrength * target->defence());
+            block(SDL_GetTicks() + (_combatDelay / speed()));
             break;
         }
-    }
 
-    block(SDL_GetTicks() + (_combatDelay / speed()));
+        iter++;
+    }
 }
 
 int Enemy::movementDelay(void) const

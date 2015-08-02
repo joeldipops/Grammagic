@@ -32,8 +32,8 @@ Play::PlayState CombatManager::start(GameMap* map_)
     while(field.isInCombat())
     {
         Util::sleep(50);
-        _map->buryTheDead();
 
+        buryTheDead();
 
         if (rerender)
             render();
@@ -81,15 +81,28 @@ Play::PlayState CombatManager::start(GameMap* map_)
     return result();
 }
 
+/**
+ * Cleans up mobs whose stamina is <= 0
+ */
+void CombatManager::buryTheDead(void)
+{
+    // If selected pc is out of it, assign a new leader.
+    if (_selectedMemberIndex >= 0
+    &&  _map->party()->memberAt(_selectedMemberIndex)->stamina() <= 0
+    )
+        _selectedMemberIndex = -1;
+    _map->buryTheDead();
+}
+
 void CombatManager::render(void)
 {
     SDL_SetRenderDrawColor(renderer(), 0x00, 0x00, 0x00, 0xFF);
     SDL_RenderClear(renderer());
 
     Play::PlayState state = Play::PlayState::Combat;
-    _mapView->render(*_map, state);
+    _mapView->render(_map, state);
     if (_selectedMemberIndex >= 0)
-        _controlView->render(_map->party()->members().at(_selectedMemberIndex), state);
+        _controlView->render(_map->party()->memberAt(_selectedMemberIndex), state);
     else
         _controlView->render(nullptr, PlayState::Combat);
     _statsView->render(*_map, state, _selectedMemberIndex);

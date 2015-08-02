@@ -10,7 +10,7 @@ class Enemy : public Mob
 {
     public:
         Enemy(void);
-        bool aiMove(GameMap*);
+        bool aiMove(GameMap&);
         void aiAct(BattleField*);
         int movementDelay(void) const;
         int combatDelay() const;
