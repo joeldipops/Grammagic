@@ -41,3 +41,8 @@ std::string PC::className(void) const
 {
     return _jobClass.name();
 }
+
+bool PC::isPlayerControlled(void) const
+{
+    return true;
+}

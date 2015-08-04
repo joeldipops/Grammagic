@@ -70,11 +70,7 @@ Play::PlayState CombatManager::start(GameMap* map_)
             state(Play::PlayState::GameOver);
     }
 
-    map_->party()->endCombat();
-    for (Combatable* mob : field.combatants())
-    {
-        mob->endCombat();
-    }
+    _field->endCombat();
 
     _field = nullptr;
     _map = nullptr;
@@ -87,10 +83,12 @@ Play::PlayState CombatManager::start(GameMap* map_)
 void CombatManager::buryTheDead(void)
 {
     // If selected pc is out of it, assign a new leader.
-    if (_selectedMemberIndex >= 0
+    if (_selectedMemberIndex >= int(_map->party()->members().size())
+    || (_selectedMemberIndex >= 0
     &&  _map->party()->memberAt(_selectedMemberIndex)->stamina() <= 0
-    )
+    ))
         _selectedMemberIndex = -1;
+
     _map->buryTheDead();
 }
 

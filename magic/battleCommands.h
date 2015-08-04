@@ -218,7 +218,7 @@ namespace Magic
 
                     if (result == nullptr)
                         result = mob;
-                    else if (mob->stamina() < result->stamina())
+                    else if (mob->stamina() > result->stamina())
                         result = mob;
                 }
 
@@ -234,7 +234,7 @@ namespace Magic
 
                     if (result == nullptr)
                         result = mob;
-                    else if (mob->stamina() > result->stamina())
+                    else if (mob->stamina() < result->stamina())
                         result = mob;
                 }
 

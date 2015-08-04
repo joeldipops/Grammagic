@@ -22,6 +22,7 @@ class PC : public Mob
         int runeSlots(void) const;
         std::string name(void) const;
         std::string className(void) const;
+        bool isPlayerControlled(void) const;
 
     private:
         int _spellSlots;

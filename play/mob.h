@@ -23,6 +23,7 @@ class Mob : public MapObject, public Combatable
         bool isSeen(const MapObject&) const;
         bool isSensed(const MapObject&) const;
         bool isMob(void) const { return true; };
+        virtual bool isPlayerControlled(void) const { return false; };
 
         // Stats
         int rangeOfSense(int);

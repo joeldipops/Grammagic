@@ -3,7 +3,7 @@
 Enemy::Enemy(void) : Mob(MobType::Hostile)
 {
     imageFileName(RESOURCE_LOCATION + "enemy.png");
-    _physicalStrength = 30;
+    _physicalStrength = 20;
     _combatDelay = 2000;
     _movementDelay = 500;
     //_speed = 1.0;

@@ -30,6 +30,7 @@ namespace Play
             bool isDefeat(void) const;
 
             void addToField(Combatable*, bool isPlayerAllied);
+            void endCombat(void);
 
         private:
             bool _isInCombat;
@@ -38,6 +39,8 @@ namespace Play
             std::vector<Mob*> _hostiles;
             std::vector<Combatable*> _playerAllied;
             std::vector<Combatable*> _nonPlayerAllied;
+            GameMap* _map;
+
 
     };
 }

@@ -28,7 +28,6 @@ namespace Play
         private:
             // Set up
             GameMap* loadMap(void);
-            std::vector<Mob> buildMobs(int, std::vector<MapCell>);
             void render(void);
             void renderTerrain();
             void renderMobs();

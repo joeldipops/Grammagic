@@ -12,12 +12,15 @@ GameMap::GameMap(int width, int height)
     _width = width;
     _height = height;
     _cells = std::vector<MapCell>(width * height);
-    _contents = std::vector<MapObject*>();
+    _contents = std::vector<MapObject*>(0);
     _contents.reserve(width * height);
     // Reserve the first spot for the PC mob.
     _contents.push_back(nullptr);
 }
 
+/**
+ * Destructor.
+ */
 GameMap::~GameMap()
 {
     // One as PC is a special case
@@ -148,19 +151,29 @@ bool GameMap::moveMob(MapObject* mob, Location loc)
 }
 
 /**
- * Remove a mob from the map, and from existence
- * @param Mob the Mob to remove.
+ * removes a mob from the map.
  */
-void GameMap::kill(MapObject* mob)
+void GameMap::remove(MapObject* mob)
 {
     // Remove from the map.
-    getCell(mob->x(), mob->y())->empty();
+    MapCell* cell = getCell(mob->x(), mob->y());
+    if (cell != nullptr)
+        cell->empty();
 
     for (unsigned int i = 0; i < _contents.size(); i++)
     {
         if (mob == _contents.at(i))
             _contents.erase(_contents.begin() + i);
     }
+}
+
+/**
+ * Remove a mob from the map, and from existence
+ * @param Mob the Mob to remove.
+ */
+void GameMap::kill(MapObject* mob)
+{
+    remove(mob);
     delete mob;
 }
 
@@ -196,21 +209,30 @@ void GameMap::buryTheDead(void)
  */
 MapCell* GameMap::getCell(int x, int y)
 {
+    if (x < 0 || x >= width())
+        return nullptr;
+    if (y < 0 || y >= height())
+        return nullptr;
+
     unsigned int index = x + (y * width());
     if (index < _cells.size())
         return &_cells.at(index);
 
     return nullptr;
 }
-/**
- *
- * @param x
- * @param y
- * @return
- */
+
 const MapCell* GameMap::getCell(int x, int y) const
 {
-    return &_cells[x + (y * _width)];
+    if (x < 0 || x >= width())
+        return nullptr;
+    if (y < 0 || y >= height())
+        return nullptr;
+
+    unsigned int index = x + (y * width());
+    if (index < _cells.size())
+        return &_cells.at(index);
+
+    return nullptr;
 }
 
 void GameMap::setCell(int x, int y, MapCell* value)

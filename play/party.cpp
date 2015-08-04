@@ -70,7 +70,7 @@ PC* Party::leader(void) const
 
 PC* Party::memberAt(unsigned int index) const
 {
-    if (index < 0 || index > _members.size())
+    if (index < 0 || index >= _members.size())
         return nullptr;
 
     return _members.at(index);

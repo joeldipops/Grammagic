@@ -20,10 +20,10 @@ namespace Play
             GameMap(int, int);
             ~GameMap();
 
+            bool place(MapObject*, int, int, bool = false);
+            void remove(MapObject* mob);
             void kill(MapObject*);
             void buryTheDead();
-
-            bool place(MapObject*, int, int, bool = false);
 
             bool moveMob(MapObject*, Location);
             bool moveMob(MapObject*, int, int);

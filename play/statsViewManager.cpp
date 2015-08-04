@@ -26,7 +26,7 @@ void StatsViewManager::render(const GameMap& gameMap, const Play::PlayState stat
         int x = port.x + port.w + radius;
         int y = port.y + radius;
 
-        if (pc->isBlocked())
+        if (state == PlayState::Combat && pc->isBlocked())
         {
             int degree = 3.6 * pc->elapsedWait();
             if (degree > 0)
