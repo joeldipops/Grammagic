@@ -230,7 +230,7 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, std
 
     if (message != nullptr)
     {
-        drawMessage(*message, messageBoxOuter, messageBoxInner, DEFAULT_BORDER_WIDTH);
+        drawMessage(*message, letterSize, messageBoxOuter, true);
     }
 
     SDL_RenderPresent(renderer());

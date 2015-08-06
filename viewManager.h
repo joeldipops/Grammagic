@@ -20,7 +20,7 @@ class ViewManager
         static const SDL_Colour invisible;
 
         static const SDL_Rect messageBoxOuter;
-        static const SDL_Rect messageBoxInner;
+        static const SDL_Rect letterSize;
         static const int DEFAULT_BORDER_WIDTH;
 
         static const SDL_Rect _control;
@@ -37,7 +37,7 @@ class ViewManager
         void fillViewport(const SDL_Colour*);
         void drawBorder(const int, const SDL_Colour*);
         void drawBorder(const SDL_Rect&, const int, const SDL_Colour*, const bool);
-        void drawOptionBox(const SDL_Rect*, const std::string, const int, const SDL_Colour*, const SDL_Colour*, const SDL_Colour*);
+        void drawOptionBox(const SDL_Rect*, const std::string&, const int, const SDL_Colour*, const SDL_Colour*, const SDL_Colour*);
         void drawControls(
             const std::vector<const MenuItem*>*, const int, const SDL_Rect* = nullptr,
             const SDL_Rect* = nullptr, bool = true
@@ -58,7 +58,7 @@ class ViewManager
         std::string displayMultiplier(float) const;
 
         void drawSector(int cx, int cy, int r, int degStart, int degEnd);
-        void drawMessage(const std::string, const SDL_Rect&, const SDL_Rect&, int);
+        void drawMessage(const std::string&, const SDL_Rect&, const SDL_Rect&, bool shrinkToFit = false);
 
     private:
         void addToQuad(std::vector<std::vector<Util::Location>>&,int, int, int, int);

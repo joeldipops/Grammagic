@@ -24,13 +24,14 @@
 	<stdint.h>
 	"mapObject.h"
 
-1438427177 /home/joel/Projects/Grammagic/util/utils.h
+1438774752 /home/joel/Projects/Grammagic/util/utils.h
 	<vector>
 	<algorithm>
 	<chrono>
 	<thread>
 	<fstream>
 	<iostream>
+	<sstream>
 
 1438398437 /home/joel/Projects/Grammagic/mapObject.h
 	<string>
@@ -55,7 +56,7 @@
 	"stateEnums.h"
 	"mob.h"
 
-1438398398 /home/joel/Projects/Grammagic/viewManager.h
+1438852609 /home/joel/Projects/Grammagic/viewManager.h
 	<algorithm>
 	<vector>
 	<SDL2/SDL_ttf.h>
@@ -304,7 +305,7 @@
 	<string>
 	<stdint.h>
 
-1438251010 source:/home/joel/Projects/Grammagic/viewManager.cpp
+1438853817 source:/home/joel/Projects/Grammagic/viewManager.cpp
 	"viewManager.h"
 
 1435477394 source:/home/joel/Projects/Grammagic/controlViewManager.cpp
@@ -558,7 +559,7 @@
 	"../play/mob.h"
 	"../play/gameMap.h"
 
-1438496491 source:/home/joel/Projects/Grammagic/play/enemy.cpp
+1438688716 source:/home/joel/Projects/Grammagic/play/enemy.cpp
 	"enemy.h"
 
 1438481544 /home/joel/Projects/Grammagic/play/enemy.h
@@ -749,7 +750,7 @@
 1438428017 source:/home/joel/Projects/Grammagic/magic/battleCommands.cpp
 	"battleCommands.h"
 
-1438427489 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
+1438853577 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
 	"menuViewManager.h"
 
 1438168085 /home/joel/Projects/Grammagic/menuViewManager.h
@@ -771,7 +772,7 @@
 	"res/strings.h"
 	"util/utils.h"
 
-1438332315 source:/home/joel/Projects/Grammagic/menuManager.cpp
+1438853840 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
 1438163236 /home/joel/Projects/Grammagic/globalConstants.h
@@ -815,7 +816,7 @@
 	"../screenViewContainer.h"
 	"../play/enemy.h"
 
-1438688625 source:/home/joel/Projects/Grammagic/play/battleField.cpp
+1438688893 source:/home/joel/Projects/Grammagic/play/battleField.cpp
 	"battleField.h"
 	"mob.h"
 	"gameMap.h"
@@ -840,7 +841,7 @@
 
 1437388688 /home/joel/Projects/Grammagic/persistence/saveable.h
 
-1438426642 source:/home/joel/Projects/Grammagic/util/utils.cpp
+1438776231 source:/home/joel/Projects/Grammagic/util/utils.cpp
 	"utils.h"
 
 1438398593 /home/joel/Projects/Grammagic/magic/targetAll.h

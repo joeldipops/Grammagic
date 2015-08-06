@@ -7,6 +7,7 @@
 #include <thread>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 namespace Util
 {
@@ -107,6 +108,9 @@ namespace Util
     bool writeFile(const char* fileName, const std::vector<char>& data);
 
     std::vector<char> readFile(const char* fileName);
+
+    std::vector<std::string> split(const std::string &s, char token);
+
 }
 
 #endif

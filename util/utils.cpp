@@ -1,5 +1,6 @@
 #include "utils.h"
 
+
 using namespace Util;
 
 /**
@@ -59,5 +60,21 @@ bool Util::writeFile(const char* fileName, const std::vector<char>& data)
     file.close();
 
     result.assign(data, data+size);
+    return result;
+}
+
+/**
+ * Returns an array of strings by splitting a string according to a given delimiter.
+ */
+std::vector<std::string> Util::split(const std::string &s, char token)
+{
+    std::vector<std::string> result(0);
+    std::stringstream ss(s);
+    std::string item;
+
+    while (std::getline(ss, item, token))
+    {
+        result.push_back(item);
+    }
     return result;
 }

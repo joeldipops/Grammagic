@@ -8,7 +8,7 @@ const SDL_Colour ViewManager::selectedColour = { 0xFF, 0xFF, 0xFF, 0xFF };
 const SDL_Colour ViewManager::invisible = { 0xFF, 0xFF, 0xFF, 0x00 };
 const SDL_Rect ViewManager::_control = SDL_Rect { 15, 15, 200, 55 };
 const SDL_Rect ViewManager::messageBoxOuter = SDL_Rect { WIDTH / 2 - 150, (HEIGHT / 2) - 200, 300, 150 };
-const SDL_Rect ViewManager::messageBoxInner = SDL_Rect { 25, 10, 200, 75 };;
+const SDL_Rect ViewManager::letterSize = SDL_Rect { 0, 0, 20, 40 };
 
 const int ViewManager::controlBorderWidth = 5;
 const int ViewManager::DEFAULT_BORDER_WIDTH = 7;
@@ -116,18 +116,63 @@ void ViewManager::drawHorizontalControls(
 }
 
 /**
- * Displays a message box.
- * @param The message.
- * @param outer The outer boundary of the box.
- * @param inner The actual position of the text inside the box, scoped to within the outer box.
- * @param borderWidth The width of the border on the outer boundary.
+ * Displays text to the screen.
+ * @param message The text to display
+ * @param letterSize The average size of one letter or space.
+ * @param maximum The maximum amount of area allowed for the message.
+ * @param border If true, a border will be drawn around the message.
  */
-void ViewManager::drawMessage(const std::string message, const SDL_Rect& outer, const SDL_Rect& inner, int borderWidth)
+void ViewManager::drawMessage(const std::string& message, const SDL_Rect& letterSize, const SDL_Rect& maximum, bool showBorder)
 {
-    SDL_Rect rect = SDL_Rect { outer.x + inner.x, outer.y + inner.y, inner.w, inner.h };
+    const int paddingX = 10;
+    const int paddingY = 5;
+    SDL_Rect outer { maximum.x, maximum.y, 0, 0};
+    SDL_Rect inner { maximum.x + paddingX, maximum.y + paddingY, 0, 0 };
 
-    drawOptionBox(&rect, message, 0, &hudColour, &selectedColour, &invisible);
-    drawBorder(outer, borderWidth, &textColour, true);
+    if (int(message.length() * letterSize.w) < maximum.w)
+    {
+        inner.w = message.length() * letterSize.w;
+        inner.h = letterSize.h;
+
+        outer.w = inner.w + paddingX * 2;
+        outer.h = inner.h + paddingY * 2;
+
+        drawOptionBox(&inner, message, 0, &hudColour, &selectedColour, &selectedColour);
+    }
+    else
+    {
+        int maxX = maximum.x + maximum.w;
+        int maxY = maximum.y + maximum.h;
+
+        SDL_Rect rect { maximum.x + paddingX, maximum.y + paddingY, 0, letterSize.h };
+        std::vector<std::string> words = Util::split(message, ' ');
+        for (std::string word : words)
+        {
+            int width = word.length() * letterSize.w;
+
+            // Go down to the next line.
+            if (rect.x + width > maxX)
+            {
+                if (rect.x + width > outer.x + outer.w)
+                    outer.w = rect.x - outer.x;
+
+                rect.y = rect.y + rect.h;
+                rect.x = maximum.x + paddingX;
+                if (rect.y + rect.h > maxY)
+                    break;
+            }
+            rect.w = width;
+
+            drawOptionBox(&rect, word, 0, &hudColour, &invisible, &selectedColour);
+
+
+            rect.x = rect.x + rect.w + letterSize.w;
+        }
+        outer.h = rect.y + rect.h + paddingY - outer.y;
+    }
+
+    if (showBorder)
+        drawBorder(outer, 3, &selectedColour, true);
 }
 
 /**
@@ -255,7 +300,7 @@ std::string ViewManager::displayMultiplier(float value) const
 /**
  * Render a box with a border and text in the middle.
  */
-void ViewManager::drawOptionBox(const SDL_Rect* rect, const std::string text, int borderWidth, const SDL_Colour* bgColour, const SDL_Colour* fgColour, const SDL_Colour* textColour)
+void ViewManager::drawOptionBox(const SDL_Rect* rect, const std::string& text, int borderWidth, const SDL_Colour* bgColour, const SDL_Colour* fgColour, const SDL_Colour* textColour)
 {
     // Background
     SDL_SetRenderDrawColor(_renderer, bgColour->r, bgColour->g, bgColour->b, bgColour->a);
