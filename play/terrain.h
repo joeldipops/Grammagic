@@ -1,13 +1,8 @@
 #ifndef TERRAIN_H_INCLUDED
 #define TERRAIN_H_INCLUDED
 
-enum TerrainType
-{
-    WallTerrain,
-    GrassTerrain
-};
-
 #include "../mapObject.h"
+#include "../globalConstants.h"
 
 class Terrain : public MapObject
 {

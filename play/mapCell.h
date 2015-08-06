@@ -9,8 +9,9 @@ namespace Play
     class MapCell
     {
         public:
-            MapCell();
+            MapCell(void);
             MapCell(TerrainType);
+            ~MapCell(void);
             Terrain* terrain(Terrain* = nullptr);
             const Terrain* terrain(void) const;
             MapObject* contents(MapObject* = nullptr);

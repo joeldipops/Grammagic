@@ -238,7 +238,7 @@ GameMap* PlayStateManager::loadMap(void)
     {
         int width = gameMap->width();
 
-        int position = (i - 2) / 2;
+        int position = (i - 2) / MapFileBlock::BYTES_PER_CELL;
         int x = position % width;
         int y = position / width;
 
@@ -246,23 +246,26 @@ GameMap* PlayStateManager::loadMap(void)
         gameMap->setCell(x, y, &cell);
 
         MobType contents = MobType(mapData[i+1]);
+
         if (contents == MobType::None)
             continue;
 
-        MapObject* mob;
+        MapObject* mob = nullptr;
         switch(contents)
         {
             case MobType::Hostile:
-                mob = new Enemy();break;
+                mob = new Enemy();
+                break;
             case MobType::PartyOfMobs:
             case MobType::PlayerCharacter: {
                 mob = new Party(std::vector<PC*> {new PC()});
                 break;
             }
             default:
-                mob = new Mob(contents);
+                break;
         }
-        gameMap->place(mob, x, y);
+        if (mob != nullptr)
+            gameMap->place(mob, x, y);
     }
     gameMap->contents().shrink_to_fit();
     return gameMap;
@@ -298,7 +301,7 @@ void PlayStateManager::writeMapFile(const char* fileName, const int width, const
     dataBytes.push_back(width);
     dataBytes.push_back(height);
 
-    for (auto const &cell : *data)
+    for (auto const & cell : *data)
     {
         dataBytes.push_back(char(cell.terrainType));
         dataBytes.push_back(char(cell.mobType));

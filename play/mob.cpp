@@ -38,9 +38,7 @@ Mob::Mob(MobType type)
  * Destructor
  */
 Mob::~Mob()
-{
-}
-
+{}
 
 /**
  * Gets the type mob this is.

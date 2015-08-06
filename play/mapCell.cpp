@@ -2,6 +2,11 @@
 
 MapCell::MapCell(){}
 
+MapCell::~MapCell()
+{
+    _contents = nullptr;
+}
+
 /**
  * Constructor
  * @param terrain The terrain in this cell of the map.

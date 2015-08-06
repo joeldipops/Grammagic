@@ -17,14 +17,14 @@ void MapViewManager::render(const GameMap* gameMap, const Play::PlayState state)
 
 
     SDL_Rect visible {
-        gameMap->party()->x() - gameMap->width() / 2,
-        gameMap->party()->y() - gameMap->height() / 2,
+        gameMap->party()->x() - (viewPort().w / CELL_WIDTH)  / 2,
+        gameMap->party()->y() - (viewPort().h / CELL_HEIGHT) / 2,
         gameMap->width(),
         gameMap->height()
     };
 
     renderTerrain(gameMap, visible);
-    renderContents(*gameMap, visible);
+    renderContents(gameMap, visible);
 }
 
 /**
@@ -62,10 +62,9 @@ void MapViewManager::renderTerrain(const GameMap* gameMap, const SDL_Rect& visib
  * Renders each mob in the map.
  * @param mobs The list of mobs to render.
  */
-void MapViewManager::renderContents(const GameMap& gameMap, const SDL_Rect& visible)
+void MapViewManager::renderContents(const GameMap* gameMap, const SDL_Rect& visible)
 {
-    const std::vector<MapObject*> contents = gameMap.contents();
-    for (const MapObject* mob : gameMap.contents())
+    for (const MapObject* mob : gameMap->contents())
     {
         // Mob is not visible.
         if (mob->x() < visible.x || mob->x() > visible.x + visible.w)
@@ -86,7 +85,7 @@ void MapViewManager::renderContents(const GameMap& gameMap, const SDL_Rect& visi
             renderHealthBar(*(Mob*)mob, mob->x() - visible.x, mob->y() - visible.y);
     }
 
-    Mob& leader = *(Mob*)gameMap.party()->leader();
+    Mob& leader = *(Mob*)gameMap->party()->leader();
     renderHealthBar(leader, leader.x() - visible.x, leader.y() - visible.y);
 }
 

@@ -30,7 +30,7 @@ class MapViewManager : public ViewManager
 
     private:
         void renderHealthBar(const Mob&, int x, int y);
-        void renderContents(const GameMap&, const SDL_Rect& visible);
+        void renderContents(const GameMap*, const SDL_Rect& visible);
         void renderTerrain(const GameMap* gameMap, const SDL_Rect& visible);
 };
 

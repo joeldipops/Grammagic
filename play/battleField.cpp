@@ -12,6 +12,12 @@ using namespace Play;
  */
 BattleField::BattleField(GameMap* map_)
 {
+    // All party members will be in the combat.
+    for (Mob* c : map_->party()->members())
+    {
+        _pcs.push_back(c);
+    }
+
     // Place the rest of the party on the map in random positions around the  party leader.
     int startX = rand() % 3 - 1;
     int startY = rand() % 3 - 1;
@@ -45,13 +51,7 @@ BattleField::BattleField(GameMap* map_)
         }
     }
 
-    // All party members will be in the combat.
-    for (Mob* c : map_->party()->members())
-    {
-        _pcs.push_back(c);
-    }
-
-    // Along with any enemies that can see any member of the party.
+    // Any enemies that can see any member of the party should be in the combat.
     for(unsigned int i = 1; i < map_->contents().size(); i++)
     {
         if (!map_->contents().at(i)->isMob())

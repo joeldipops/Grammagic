@@ -237,7 +237,9 @@ const MapCell* GameMap::getCell(int x, int y) const
 
 void GameMap::setCell(int x, int y, MapCell* value)
 {
-    _cells[x + (y * _width)] = *value;
+    unsigned int index = x + (y * _width);
+    if (index < _cells.size())
+        _cells[x + (y * _width)] = *value;
 }
 
 /**

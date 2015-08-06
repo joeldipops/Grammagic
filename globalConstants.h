@@ -7,13 +7,19 @@
 enum MobType
 {
     // There is no mob here.
-    None,
+    None = '0',
     // This mob is directly controlled by the player
-    PlayerCharacter,
+    PlayerCharacter = '2',
     // Some other NPC
-    Hostile,
+    Hostile = '3',
 
-    PartyOfMobs
+    PartyOfMobs = '4'
+};
+
+enum TerrainType
+{
+    WallTerrain = 'w',
+    GrassTerrain = 'g'
 };
 
 namespace Title
