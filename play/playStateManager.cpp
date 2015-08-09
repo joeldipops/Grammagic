@@ -50,7 +50,7 @@ Core::CoreState PlayStateManager::start(Party& party)
     if (REGEN_MAP)
     {
         std::vector<MapFileBlock> file = tempMapFile();
-        writeMapFile("map", 20, 13, &file);
+        writeMapFile("res/maps/map1_1", 20, 13, &file);
     }
 
     // Load the map
@@ -68,9 +68,8 @@ Core::CoreState PlayStateManager::start(Party& party)
     while(state() != PlayState::Exit)
     {
         // Free up the CPU to do other shit each iteration.
-        //
-        if (!rerender)
-            Util::sleep(50);
+        //if (!rerender)
+          //  Util::sleep(50);
 
         if(_map->party()->isDefeated())
         {
@@ -81,9 +80,9 @@ Core::CoreState PlayStateManager::start(Party& party)
 
         _map->buryTheDead();
 
-
         if (rerender)
             render();
+        rerender = false;
 
         switch(state())
         {
@@ -136,7 +135,7 @@ bool PlayStateManager::processMovementState(void)
             continue;
 
         Enemy* nme = (Enemy*) mob;
-        hasUpdate |= nme->aiMove(*_map);
+        //hasUpdate |= nme->aiMove(*_map);
     }
 
     while(SDL_PollEvent(&event) != 0 && oldState == state())
@@ -230,45 +229,11 @@ void PlayStateManager::exit(const Core::CoreState nextState)
  */
 GameMap* PlayStateManager::loadMap(void)
 {
-    std::vector<char> mapData = Util::readFile("map");
-    int length = mapData.size();
-    GameMap* gameMap = new GameMap(mapData[0], mapData[1]);
-
-    for (int i = 2; i < length; i+= MapFileBlock::BYTES_PER_CELL)
-    {
-        int width = gameMap->width();
-
-        int position = (i - 2) / MapFileBlock::BYTES_PER_CELL;
-        int x = position % width;
-        int y = position / width;
-
-        MapCell cell = MapCell(TerrainType(mapData[i]));
-        gameMap->setCell(x, y, &cell);
-
-        MobType contents = MobType(mapData[i+1]);
-
-        if (contents == MobType::None)
-            continue;
-
-        MapObject* mob = nullptr;
-        switch(contents)
-        {
-            case MobType::Hostile:
-                mob = new Enemy();
-                break;
-            case MobType::PartyOfMobs:
-            case MobType::PlayerCharacter: {
-                mob = new Party(std::vector<PC*> {new PC()});
-                break;
-            }
-            default:
-                break;
-        }
-        if (mob != nullptr)
-            gameMap->place(mob, x, y);
-    }
-    gameMap->contents().shrink_to_fit();
+    GameMap* gameMap = new GameMap();
+    gameMap->loadChunk(1, 1, "res/maps/map1_1");
+    gameMap->requestNextChunk();
     return gameMap;
+
 }
 
 /**
@@ -285,6 +250,7 @@ void PlayStateManager::render()
     _miniMapView->render();
 
     SDL_RenderPresent(renderer());
+
 }
 
 

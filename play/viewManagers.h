@@ -23,8 +23,6 @@ class ControlViewManager : public ViewManager
 class MapViewManager : public ViewManager
 {
     public:
-        static const int CELL_WIDTH = 50;
-        static const int CELL_HEIGHT = 50;
         MapViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
         void render(const GameMap*, const Play::PlayState);
 

@@ -16,13 +16,7 @@ void MapViewManager::render(const GameMap* gameMap, const Play::PlayState state)
     ViewManager::render();
 
 
-    SDL_Rect visible {
-        gameMap->party()->x() - (viewPort().w / CELL_WIDTH)  / 2,
-        gameMap->party()->y() - (viewPort().h / CELL_HEIGHT) / 2,
-        gameMap->width(),
-        gameMap->height()
-    };
-
+    SDL_Rect visible = gameMap->visible();
     renderTerrain(gameMap, visible);
     renderContents(gameMap, visible);
 }
@@ -34,10 +28,14 @@ void MapViewManager::render(const GameMap* gameMap, const Play::PlayState state)
 void MapViewManager::renderTerrain(const GameMap* gameMap, const SDL_Rect& visible)
 {
     const std::string blank = "res/hidden.png";
+
     for(int y = visible.y; y < visible.h; y++)
     {
         for(int x = visible.x; x < visible.w; x++)
         {
+            if (x >= gameMap->width() || y >= gameMap->height())
+                continue;
+
             SDL_Rect rect = { (x - visible.x) * CELL_WIDTH, (y - visible.y) * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT };
             std::string fileName;
 
@@ -66,15 +64,22 @@ void MapViewManager::renderContents(const GameMap* gameMap, const SDL_Rect& visi
 {
     for (const MapObject* mob : gameMap->contents())
     {
-        // Mob is not visible.
-        if (mob->x() < visible.x || mob->x() > visible.x + visible.w)
+        const int x = mob->x();
+        const int y = mob->y();
+        if (x < 0 || x > gameMap->width())
             continue;
-        if (mob->y() < visible.y || mob->y() > visible.y + visible.h)
+        if (y < 0 || y > gameMap->height())
+            continue;
+
+        // Mob is not visible.
+        if (x < visible.x || x > visible.w)
+            continue;
+        if (y < visible.y || y > visible.h)
             continue;
 
         SDL_Rect rect = {
-            (mob->x() - visible.x) * CELL_WIDTH + (CELL_WIDTH / 4),
-            (mob->y() - visible.y) * CELL_HEIGHT + (CELL_HEIGHT / 4),
+            (x - visible.x) * CELL_WIDTH + (CELL_WIDTH / 4),
+            (y - visible.y) * CELL_HEIGHT + (CELL_HEIGHT / 4),
             CELL_WIDTH / 2, CELL_HEIGHT / 2
         };
 
@@ -82,7 +87,7 @@ void MapViewManager::renderContents(const GameMap* gameMap, const SDL_Rect& visi
         SDL_RenderCopy(renderer(), image, NULL, &rect);
 
         if (mob->isMob())
-            renderHealthBar(*(Mob*)mob, mob->x() - visible.x, mob->y() - visible.y);
+            renderHealthBar(*(Mob*)mob, x - visible.x, y - visible.y);
     }
 
     Mob& leader = *(Mob*)gameMap->party()->leader();

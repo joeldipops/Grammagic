@@ -38,12 +38,14 @@ const Terrain* MapCell::terrain(void) const
  * @param mob The mob that's placed on this cell.
  * @param The mob on this cell after the update.
  */
+MapObject* MapCell::contents(void) const { return _contents; }
 MapObject* MapCell::contents(MapObject* contents_)
 {
     if (contents_ != nullptr)
         _contents = contents_;
     return _contents;
 }
+
 
 /**
  * Removes any mobs from this cell.

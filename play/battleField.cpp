@@ -36,7 +36,7 @@ BattleField::BattleField(GameMap* map_)
         int y = partyY + indexY;
 
         MapCell* cell = map_->getCell(x, y);
-        if (!cell->terrain()->isDense())
+        if (cell != nullptr && !cell->terrain()->isDense())
             if (cell->contents() == nullptr)
             {
                 map_->place(_pcs.at(partyIndex), x, y);

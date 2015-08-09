@@ -39,18 +39,17 @@ bool Util::writeFile(const char* fileName, const std::vector<char>& data)
  * @param fileName the file to read.
  * @return The file's contents as an array of bytes.
  */
- std::vector<char> Util::readFile(const char* fileName)
+ std::vector<char> Util::readFile(const std::string& fileName)
  {
     std::vector<char> result ;
     std::streampos size;
-    std::ifstream file(fileName, std::ios::in|std::ios::binary|std::ios::ate);
+    std::ifstream file(fileName.c_str(), std::ios::in|std::ios::binary|std::ios::ate);
 
     if (!file.is_open())
     {
         std::cout << fileName << "could not be read.";
         return std::vector<char>();
     }
-
 
     size = file.tellg();
 

@@ -2,20 +2,16 @@
 
 using namespace Play;
 
+//{LIFE CYCLE
 /**
  * Contructs a rectangular map with the given dimensions.
- * @param width
- * @param height
  */
-GameMap::GameMap(int width, int height)
+GameMap::GameMap()
 {
-    _width = width;
-    _height = height;
-    _cells = std::vector<MapCell>(width * height);
     _contents = std::vector<MapObject*>(0);
-    _contents.reserve(width * height);
     // Reserve the first spot for the PC mob.
     _contents.push_back(nullptr);
+    _cells = std::map<unsigned long, MapCell>();
 }
 
 /**
@@ -28,51 +24,201 @@ GameMap::~GameMap()
         kill(_contents.at(i));
     _contents = std::vector<MapObject*>(0);
 }
+//}
 
-/**
- * Get the width of the map in number of cells.
- * @return
- */
-int GameMap::width(void) const
-{
-    return _width;
-}
-
-/**
- * Get the height of the map in number of cell.s
- * @return
- */
-int GameMap::height(void) const
-{
-    return _height;
-}
-
-/**
- *
- * @param cells
- * @return
- */
-std::vector<MapCell>* GameMap::cells(std::vector<MapCell>* cells)
-{
-    if (cells != nullptr)
-        _cells = *cells;
-    return &_cells;
-}
+//{PROPERTIES
 
 /**
  * Gets or sets the list of mobs that exist on this map.
  * @param mobs
  * @return
  */
-std::vector<MapObject*> GameMap::contents(std::vector<MapObject*> contents_)
+std::vector<MapObject*> GameMap::contents(std::vector<MapObject*> contents_) { return _contents = contents_; }
+std::vector<MapObject*> GameMap::contents(void) const { return _contents; }
+//}
+
+//{METHODS
+int GameMap::width(void) const
 {
-    _contents = contents_;
-    return _contents;
+    return _maxX * CHUNK_WIDTH + CHUNK_WIDTH;
 }
-std::vector<MapObject*> GameMap::contents(void) const
+
+int GameMap::height(void) const
 {
-    return _contents;
+    return _maxY * CHUNK_HEIGHT + CHUNK_HEIGHT;
 }
+
+bool GameMap::requestNextChunk(void)
+{
+    int x = party()->x() / CHUNK_WIDTH;
+    int y = party()->y() / CHUNK_HEIGHT;
+    SDL_Rect v = visible();
+
+    const int minVisibleX = v.x / CHUNK_WIDTH;
+    const int minVisibleY = v.y / CHUNK_HEIGHT;
+    const int maxVisibleX = (v.w) / CHUNK_WIDTH;
+    const int maxVisibleY = (v.h) / CHUNK_HEIGHT;
+
+    // Keep the chunk we're standing in.
+    loadChunk(x, y);
+
+    if (minVisibleX < x)
+    {
+        loadChunk(minVisibleX, y);
+        if (minVisibleY < y)
+            loadChunk(minVisibleX, minVisibleY);
+        if (maxVisibleY > y)
+            loadChunk(minVisibleX, maxVisibleY);
+    }
+    if (minVisibleY < y)
+    {
+        loadChunk(x, minVisibleY);
+        if (maxVisibleX > x)
+            loadChunk(maxVisibleX, maxVisibleY);
+    }
+    if (maxVisibleX > x)
+    {
+        loadChunk(maxVisibleX, y);
+        if (maxVisibleY > y)
+            loadChunk(maxVisibleX, maxVisibleY);
+    }
+    if (maxVisibleY > y)
+        loadChunk(x, maxVisibleY);
+
+    return false;
+}
+
+bool GameMap::loadChunk(int cX, int cY)
+{
+    const std::string path = "res/maps/map";
+    return loadChunk(cX, cY, path + std::to_string(cX) + "_" + std::to_string(cY));
+}
+
+/**
+ * Loads a chunk of map from file the resizes & reindexes the in-memory map to add it.
+ * @param x The x co-ordinate of the global map chunk.
+ * @param y The y co-ordinate of the global map chunk.
+ * @param path Path to the file where the chunk is stored.
+ */
+bool GameMap::loadChunk(int cX, int cY, std::string path)
+{
+    if (cX < 0 || cY < 0)
+        return false;
+
+    bool wasFound = false;
+    // Check if this chunk is already in memory.
+    for (unsigned int i = 0; i < _chunks.size(); i++)
+    {
+        SDL_Rect chunk = _chunks.at(i);
+        if (chunk.x == cX && chunk.y == cY)
+        {
+            wasFound = true;
+            // if it's already at the front of the queue, then we're good.
+            if (i != 0)
+            {
+                // bring to front of queue.
+                _chunks.erase(_chunks.begin() + i);
+                _chunks.push_front(chunk);
+            }
+        }
+        // We already have this chunk so we don't need to do anything else.
+        if (wasFound)
+            return false;
+    }
+
+    std::vector<char> mapData = Util::readFile(path);
+    if (!mapData.size())
+        return false;
+
+    // Clean up
+    if (_chunks.size() >= CHUNK_LIMIT)
+    {
+        SDL_Rect toRemove = _chunks.back();
+        removeChunk(toRemove.x, toRemove.y);
+        _chunks.pop_back();
+    }
+
+    // Add new chunk to the queue.
+    _chunks.push_front(SDL_Rect {cX, cY, 0, 0});
+
+    // find extremes
+    int oldMaxX = _maxX;
+    int oldMaxY = _maxY;
+    _maxX = _maxY = 0;
+    for (const SDL_Rect& chunk : _chunks)
+    {
+        if (chunk.x > _maxX)
+            _maxX = chunk.x;
+        if (chunk.y > _maxY)
+            _maxY = chunk.y;
+    }
+
+    // Reindex if necessary.
+    if (_maxX > oldMaxX)
+    {
+        const int newWidth = _maxX * CHUNK_WIDTH + CHUNK_WIDTH;
+        const int oldWidth = oldMaxX * CHUNK_WIDTH + CHUNK_WIDTH;
+        const int oldHeight = oldMaxY * CHUNK_HEIGHT + CHUNK_HEIGHT;
+
+        std::map<unsigned long, MapCell> temp;
+        for (int y = 0; y < oldHeight; y++)
+        {
+            for (int x = 0; x < oldWidth; x++)
+            {
+                unsigned int index = x + (oldWidth * y);
+                if (_cells.count(index) <= 0)
+                    continue;
+
+                MapCell cell = _cells.at(index);
+                temp[x + (newWidth * y)] = cell;
+            }
+        }
+
+        _cells = temp;
+    }
+    // I don't know if ultimately I want to do it this way, or if I really should reindex
+    // when the map shrinks, but fuck it, it'll fix my immediate bug.
+    else
+        _maxX = oldMaxX;
+
+    // - 1 to avoid some text-file artifact I'm getting
+    for (unsigned int i = 0; i < mapData.size() -1; i+= MapFileBlock::BYTES_PER_CELL)
+    {
+        int position = i / MapFileBlock::BYTES_PER_CELL;
+        int x = (position % CHUNK_WIDTH) + cX * CHUNK_WIDTH;
+        int y = (position / CHUNK_WIDTH) + cY * CHUNK_HEIGHT;
+
+        MapCell cell = MapCell(TerrainType(mapData[i]));
+        setCell(x, y, &cell);
+
+        MobType contents = MobType(mapData[i+1]);
+
+        if (contents == MobType::None)
+            continue;
+
+        MapObject* mob = nullptr;
+        switch(contents)
+        {
+            case MobType::Hostile:
+                mob = new Enemy();
+                break;
+            case MobType::PartyOfMobs:
+            case MobType::PlayerCharacter: {
+                if (party() == nullptr)
+                    mob = new Party(std::vector<PC*> {new PC()});
+                break;
+            }
+            default:
+                break;
+        }
+        if (mob != nullptr)
+            place(mob, x, y);
+    }
+
+    return true;
+}
+
+
 
 /**
  * Places a mob on to the map at the specified position.
@@ -83,13 +229,10 @@ std::vector<MapObject*> GameMap::contents(void) const
  */
 bool GameMap::place(MapObject* mob, int x, int y, bool canReplace)
 {
-    if (x < 0 || x >= width())
-        return false;
-
-    if (y < 0 || y >= height())
-        return false;
-
     MapCell* cell = getCell(x, y);
+
+    if (cell == nullptr)
+        return false;
 
     if (mob->isPlayerParty())
     {
@@ -209,13 +352,8 @@ void GameMap::buryTheDead(void)
  */
 MapCell* GameMap::getCell(int x, int y)
 {
-    if (x < 0 || x >= width())
-        return nullptr;
-    if (y < 0 || y >= height())
-        return nullptr;
-
     unsigned int index = x + (y * width());
-    if (index < _cells.size())
+    if (_cells.count(index) > 0)
         return &_cells.at(index);
 
     return nullptr;
@@ -223,13 +361,8 @@ MapCell* GameMap::getCell(int x, int y)
 
 const MapCell* GameMap::getCell(int x, int y) const
 {
-    if (x < 0 || x >= width())
-        return nullptr;
-    if (y < 0 || y >= height())
-        return nullptr;
-
     unsigned int index = x + (y * width());
-    if (index < _cells.size())
+    if (_cells.count(index) >= 1)
         return &_cells.at(index);
 
     return nullptr;
@@ -237,9 +370,37 @@ const MapCell* GameMap::getCell(int x, int y) const
 
 void GameMap::setCell(int x, int y, MapCell* value)
 {
-    unsigned int index = x + (y * _width);
-    if (index < _cells.size())
-        _cells[x + (y * _width)] = *value;
+    unsigned int index = x + (y * width());
+    _cells[index] = *value;
+}
+
+/**
+ * Frees up memory
+ * @param x of the chunk
+ * @param y of the chunk
+ */
+void GameMap::removeChunk(int cX, int cY)
+{
+    int startX = cX * CHUNK_WIDTH;
+    int startY = cY * CHUNK_HEIGHT;
+
+    for (unsigned int y = startY; y < startY + CHUNK_HEIGHT; y++)
+    {
+        for (unsigned int x = startX; x < startX + CHUNK_WIDTH; x++)
+        {
+            int index = x + (y * CHUNK_WIDTH);
+            if (_cells.count(index) >= 1)
+            {
+                if (_cells.at(index).contents() != nullptr)
+                {
+                    MapObject* d = _cells.at(index).contents();
+                    kill(d);
+                }
+
+                _cells.erase(index);
+            }
+        }
+    }
 }
 
 /**
@@ -253,14 +414,15 @@ bool GameMap::moveMob(MapObject* mob, int x, int y)
 {
     if (x < 0 || x >= width())
         return false;
-
     if (y < 0 || y >= height())
         return false;
 
     MapCell* cell = getCell(x, y);
-    if (cell->terrain()->isDense())
+    if (cell == nullptr)
         return false;
 
+    if (cell->terrain()->isDense())
+        return false;
 
     if (cell->contents() != nullptr && cell->contents()->isDense())
         return false;
@@ -270,5 +432,27 @@ bool GameMap::moveMob(MapObject* mob, int x, int y)
     mob->location(x, y);
     mob = cell->contents(mob);
     getCell(oldX, oldY)->empty();
+
+    if (mob->isPlayerParty())
+        requestNextChunk();
     return true;
 }
+
+/**
+ * Returns a rect representing the area of the map that is currently on screen
+ * (sorta).
+ */
+const SDL_Rect GameMap::visible(void) const
+{
+    int x = party()->x() - int(HORIZONTAL_VISION);
+    int y = party()->y() - int(VERTICAL_VISION);
+    return SDL_Rect
+    {
+        x,
+        y,
+        x + 1 + int(HORIZONTAL_VISION) * 2,
+        y + 1 + int(VERTICAL_VISION) * 2
+    };
+
+}
+//}

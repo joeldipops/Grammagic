@@ -15,6 +15,7 @@ namespace Play
             Terrain* terrain(Terrain* = nullptr);
             const Terrain* terrain(void) const;
             MapObject* contents(MapObject* = nullptr);
+            MapObject* contents(void) const;
             void empty(void);
 
         private:

@@ -24,7 +24,7 @@ Terrain::Terrain(TerrainType type)
             break;
         default:
             isDense(false);
-            imageFileName(RESOURCE_LOCATION + "blank.png");
+            imageFileName(RESOURCE_LOCATION + "hidden.png");
             break;
     }
 }

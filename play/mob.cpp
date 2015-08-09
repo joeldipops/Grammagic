@@ -20,7 +20,7 @@ Mob::Mob(MobType type)
 
     _maxStamina = 100;
     _stamina = 100;
-    _rangeOfSight = 1;
+    _rangeOfSight = 0;
     _rangeOfSense = 3;
     _type = type;
     switch(type)
@@ -29,7 +29,7 @@ Mob::Mob(MobType type)
         case MobType::Hostile:
             break;
         default:
-            imageFileName(RESOURCE_LOCATION + "blank.png");
+            imageFileName(RESOURCE_LOCATION + "hidden.png");
             break;
     }
 }
@@ -38,7 +38,8 @@ Mob::Mob(MobType type)
  * Destructor
  */
 Mob::~Mob()
-{}
+{
+}
 
 /**
  * Gets the type mob this is.
