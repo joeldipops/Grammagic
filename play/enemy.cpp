@@ -6,7 +6,6 @@ Enemy::Enemy(void) : Mob(MobType::Hostile)
     _physicalStrength = 20;
     _combatDelay = 2000;
     _movementDelay = 500;
-    //_speed = 1.0;
 }
 
 MobType Enemy::type(void) const

@@ -116,22 +116,24 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
 
 void MenuViewManager::renderPCs(const Party& party, int memberIndex, int selectedPosition)
 {
-    bool isOrdering = selectedPosition >= 0;
+    bool isOrdering = selectedPosition >= 0 && memberIndex >= 0;
     SDL_Rect templateRect{ _partyVp.x + cursorXOffset, _partyVp.y, _partyVp.w - cursorXOffset, 150 };
     for (unsigned int i = 0; i < party.members().size(); i++)
     {
-        int position = i;
+        unsigned int position = i;
+        unsigned int uMemberIndex = memberIndex;
+        unsigned int uSelectedPosition = selectedPosition;
         if (isOrdering)
         {
-            if (memberIndex == i)
+            if (uMemberIndex == i)
             {
-                position = selectedPosition;
+                position = uSelectedPosition;
             }
             else
             {
-                if (selectedPosition <= i && i <= memberIndex)
+                if (uSelectedPosition <= i && i <= uMemberIndex)
                     position = i + 1;
-                else if (memberIndex <= i && i <= selectedPosition)
+                else if (uMemberIndex <= i && i <= uSelectedPosition)
                     position = i - 1;
                 else
                     position = i;
@@ -140,8 +142,8 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex, int selecte
 
         SDL_Rect rect
         {
-            templateRect.x + ((position == selectedPosition && isOrdering) ? cursorXOffset : 0),
-            templateRect.y + (templateRect.h * position),
+            templateRect.x + ((position == uSelectedPosition && isOrdering) ? cursorXOffset : 0),
+            templateRect.y + (templateRect.h * int(position)),
             templateRect.w,
             templateRect.h
         };
@@ -178,7 +180,7 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex, int selecte
 
         // Draw stamina.
         std::string label = "Stamina";
-        SDL_Rect stmLabelRect { rect.x + classRect.w, rect.y + 3, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
+        SDL_Rect stmLabelRect { rect.x + TEXT_WIDTH * 10, rect.y + 3, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
 
         SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &stmLabelRect);
 

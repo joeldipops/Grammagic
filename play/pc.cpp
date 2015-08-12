@@ -1,5 +1,17 @@
 #include "pc.h"
 
+using namespace Play;
+
+PC::PC(const Templates::PCTemplate& tmpl)
+: Mob(tmpl, MobType::PlayerCharacter)
+{
+    _name = tmpl.Name;
+    otherCommands()->push_back(Command("Flee", Commands::FLEE));
+    _runeSlots = 5;
+    _spellSlots = 7;
+    _jobClass = JobClass();
+}
+
 PC::PC(void) : Mob(MobType::PlayerCharacter)
 {
     otherCommands()->push_back(Command("Flee", Commands::FLEE));

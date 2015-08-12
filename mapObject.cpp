@@ -1,7 +1,5 @@
 #include "mapObject.h"
 
-const std::string MapObject::RESOURCE_LOCATION = "res/";
-
 MapObject::MapObject(void){}
 
 /**

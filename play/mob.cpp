@@ -1,8 +1,36 @@
 #include "mob.h"
 
 using namespace Magic;
+using namespace Play;
 
 Mob::Mob() {}
+
+Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
+: Mob(type_, true)
+{
+    _maxStamina = tmpl.Stamina;
+    _stamina = _maxStamina;
+    _rangeOfSight = tmpl.RangeOfSight;
+    _rangeOfSense = tmpl.RangeOfSense;
+    defaultSpeed(tmpl.Speed);
+    defaultSkill(tmpl.Skill);
+    defaultResistance(tmpl.Resistance);
+    defaultDefence(tmpl.Defence);
+    portraitFileName(tmpl.PortraitPath);
+    imageFileName(tmpl.ImagePath);
+}
+
+Mob::Mob(MobType type_, bool)
+{
+    _type = type_;
+    if (type_ != MobType::None)
+        isDense(true);
+    else
+        isDense(false);
+
+    _spellCommands = std::vector<Command>();
+    _otherCommands = std::vector<Command>();
+}
 
 /**
  * Constructs a mob of the given type.

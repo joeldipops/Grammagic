@@ -7,7 +7,8 @@
 #include "../mapObject.h"
 #include "../play/battleField.h"
 
-class Mob;
+namespace Play { class Mob; }
+
 using namespace Play;
 namespace Magic
 {

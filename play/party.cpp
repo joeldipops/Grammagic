@@ -102,6 +102,16 @@ PC* Party::addMember(void)
     return pc;
 }
 
+PC* Party::addMember(const Templates::PCTemplate& tmpl)
+{
+    PC* pc = new PC(tmpl);
+    if (_members.size() <= 0)
+        pc->location(x(), y());
+
+    _members.push_back(pc);
+    return pc;
+}
+
 /**
  * Finds the position of a specific pc in the party.
  * pc The pc to look for.

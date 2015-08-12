@@ -8,9 +8,9 @@
 #include "../globalConstants.h"
 #include "combatable.h"
 
-class Mob;
 namespace Play
 {
+    class Mob;
     class GameMap;
 
     class BattleField {

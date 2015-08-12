@@ -11,7 +11,7 @@
 #include "../play/battleField.h"
 #include "../util/utils.h"
 
-class Mob;
+namespace Play { class Mob; }
 namespace Magic
 {
     class Spell

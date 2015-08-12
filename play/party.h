@@ -2,6 +2,7 @@
 #define PARTY_H_INCLUDED
 
 #include "../mapObject.h"
+#include "../res/templates.h"
 #include "pc.h"
 
 namespace Play
@@ -14,13 +15,15 @@ namespace Play
             ~Party(void);
             PC* leader(void) const;
             const std::vector<PC*> members(void) const;
-            PC* memberAt(unsigned int) const;
-            PC* addMember(void);
             PC* addLeader(void);
+            PC* addMember(void);
+            PC* addMember(const Templates::PCTemplate&);
+            PC* removeMemeber(PC*);
 
             void buryTheDead(void);
             void endCombat(void);
 
+            PC* memberAt(unsigned int) const;
             int getIndexOf(const Mob*) const;
             void reorder(int, int);
 

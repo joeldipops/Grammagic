@@ -6,7 +6,8 @@
 #include "../play/battleField.h"
 #include "modifier.h"
 
-class Mob;
+namespace Play { class Mob; }
+
 namespace Magic
 {
     typedef Combatable* (*Targeter)(Mob*, BattleField*);

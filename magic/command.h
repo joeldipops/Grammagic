@@ -6,44 +6,45 @@
 #include "verb.h"
 #include "../menuItem.h"
 
-class Mob;
-namespace Play { class BattleField; }
+
+namespace Play { class BattleField; class Mob; }
 
 namespace Magic
 {
 
-class Command;
+    class Command;
 
-/**
- * Casts a spell or carries out some other in-combat command.
- * @param _this The command being carried out.
- * @param battlefield holds various data on combat currently in progress.
- * @return The time before the mob that made the command can act again.
- */
+    /**
+    * Casts a spell or carries out some other in-combat command.
+    * @param _this The command being carried out.
+    * @param battlefield holds various data on combat currently in progress.
+    * @return The time before the mob that made the command can act again.
+    */
 
-typedef int (*Effect)(Command* _this, Mob*, BattleField*);
+    typedef int (*Effect)(Command* _this, Mob*, BattleField*);
 
-class Command : public MenuItem
-{
-    public:
-        Command(void){};
-        Command(std::string, Effect);
-        Command(std::string, Spell);
-        ~Command(void);
+    class Command : public MenuItem
+    {
+        public:
+            Command(void){};
+            Command(std::string, Effect);
+            Command(std::string, Spell);
+            ~Command(void);
 
-        std::string name(void) const;
-        const std::vector<Word*> components(void) const;
-        int execute(Mob*, BattleField*);
-        bool edit(std::vector<Word*> components);
-        bool isValid(void) const;
-        Spell* spell(void);
-        const Spell* spell(void) const;
+            std::string name(void) const;
+            const std::vector<Word*> components(void) const;
+            int execute(Mob*, BattleField*);
+            bool edit(std::vector<Word*> components);
+            bool isValid(void) const;
+            Spell* spell(void);
+            const Spell* spell(void) const;
 
-    private:
-        Effect _effect;
-        Spell _spell;
-        bool _hasSpell = false;
-        static int spellCaster(Command* _this, Mob* caster, BattleField*);
-};
+        private:
+            Effect _effect;
+            Spell _spell;
+            bool _hasSpell = false;
+            static int spellCaster(Command* _this, Mob* caster, BattleField*);
+    };
 }
+
 #endif

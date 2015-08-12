@@ -94,12 +94,11 @@ namespace Magic
     };
 }
 
-
 const int WIDTH = 1200;
 const int HEIGHT = 800;
 const int CELL_WIDTH = 50;
 const int CELL_HEIGHT = 50;
-
+const std::string RESOURCE_LOCATION = "res/";
 
 const int BITS_PER_PIXEL = 32;
 const std::string SAVE_FILE = "grammagic.save";

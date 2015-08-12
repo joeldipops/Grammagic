@@ -25,9 +25,6 @@ class MapObject
         virtual bool isMob(void) const { return false; };
         virtual bool isPlayerParty(void) const {return false;};
 
-
-        static const std::string RESOURCE_LOCATION;
-
     protected:
         bool isDense(bool);
     private:

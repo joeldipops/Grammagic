@@ -292,7 +292,7 @@ SDL_Texture* ViewManager::formatFontTexture(std::string text, const SDL_Colour* 
  */
 std::string ViewManager::displayMultiplier(float value) const
 {
-    int result = int((value - 1) * 100);
+    int result = int(value * 100);
     return std::to_string(result);
 }
 

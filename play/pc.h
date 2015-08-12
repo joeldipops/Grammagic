@@ -3,6 +3,7 @@
 
 #include "mob.h"
 #include "../magic/battleCommands.h"
+#include "../res/templates.h"
 
 // TODO - BWAARRPP
 class JobClass
@@ -18,6 +19,7 @@ class PC : public Mob
 {
     public:
         PC(void);
+        PC(const Templates::PCTemplate&);
         int spellSlots(void) const;
         int runeSlots(void) const;
         std::string name(void) const;

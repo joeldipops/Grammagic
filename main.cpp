@@ -13,6 +13,7 @@
 #include "play/pc.h"
 #include "persistence/saveLoad.h"
 #include "magic/battleCommands.h"
+#include "res/templates.h"
 
 const std::string Strings::Heading = "Grammagic";
 const std::string Strings::Stamina = "Stamina";
@@ -87,9 +88,9 @@ namespace Core
                             break;
                         }
                         case CoreState::Play: {
-                            player.addMember();
-                            player.addMember();
-                            player.addMember();
+                            player.addMember(Templates::Data::A);
+                            player.addMember(Templates::Data::B);
+                            player.addMember(Templates::Data::C);
                             state = play.start(player);
                             break;
                         }
