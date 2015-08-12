@@ -116,6 +116,16 @@ PC* Party::addMember(void)
     return -1;
 }
 
+/**
+ * Move the member at oldPosition to newPosition in the lineup.
+ */
+void Party::reorder(int oldPosition, int newPosition)
+{
+    PC* member = _members.at(oldPosition);
+    _members.erase(_members.begin() + oldPosition);
+    _members.insert(_members.begin() + newPosition, member);
+}
+
 bool Party::isPlayerParty(void) const
 {
     return true;

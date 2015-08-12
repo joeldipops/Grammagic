@@ -14,6 +14,7 @@ MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
     _selectedRuneIndex = -1;
     _selectedComponentIndex = -1;
     _selectedMemberIndex = -1;
+    _selectedPositionIndex = -1;
     _menu = std::vector<MenuItem> { MAGIC, SAVE, PARTY };
 }
 
@@ -41,6 +42,8 @@ Play::PlayState MenuManager::start(Party& party)
                 _selectedSpellIndex, // SelectedSpellIndex
                 _selectedComponentIndex, // SelectedComponentIndex
                 _selectedRuneIndex, // SelectedRuneIndex
+                _selectedPositionIndex
+
             };
             _viewManager.render(party, vm, _message.length() > 0 ? &_message : nullptr);
         }
@@ -119,18 +122,26 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
     int index = 0;
     unsigned int itemCount = 0;
     int columnItemCount = 0;
+    int* indexToUpdate = nullptr;
     switch(state())
     {
         case MenuState::SelectMenu:
             itemCount = _menu.size();
             index = _selectedMenuIndex;
+            indexToUpdate = &_selectedMenuIndex;
             columnItemCount = itemCount;
             break;
         case MenuState::SelectMember:
-        case MenuState::ReorderMember:
             itemCount = party.members().size();
             columnItemCount = itemCount;
             index = _selectedMemberIndex;
+            indexToUpdate = &_selectedMemberIndex;
+            break;
+        case MenuState::ReorderMember:
+            itemCount = party.members().size();
+            columnItemCount = itemCount;
+            index = _selectedPositionIndex;
+            indexToUpdate = &_selectedPositionIndex;
             break;
         case MenuState::SelectSpell: {
             PC* member = party.memberAt(_selectedMemberIndex);
@@ -138,17 +149,20 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
                 ? member->spells()->size() + 1
                 : member->spellSlots();
             index = _selectedSpellIndex;
+            indexToUpdate = &_selectedSpellIndex;
             columnItemCount = 1;
             break;
         }
         case MenuState::SelectRune:
             index = _selectedRuneIndex;
+            indexToUpdate = &_selectedRuneIndex;
             itemCount = Commands::allCommands.size() + 1;
             columnItemCount = _viewManager.menuItemsPerColumn();
             break;
         case MenuState::SelectComponent: {
             PC* member = party.memberAt(_selectedMemberIndex);
             index = _selectedComponentIndex;
+            indexToUpdate = &_selectedComponentIndex;
             itemCount = member->runeSlots() > selectedSpellLength(member)
                 ? selectedSpellLength(member) + 1
                 : member->runeSlots();
@@ -161,27 +175,10 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
 
     result = StateManager::moveCursor(input, index, itemCount, columnItemCount);
 
-    if (result != index)
+    if (result != index && indexToUpdate != nullptr)
     {
-        switch(state())
-        {
-            case MenuState::SelectMenu:
-                _selectedMenuIndex = result;
-                return true;
-            case MenuState::SelectSpell:
-                _selectedSpellIndex = result;
-                return true;
-            case MenuState::SelectRune:
-                _selectedRuneIndex = result;
-                return true;
-            case MenuState::SelectComponent:
-                _selectedComponentIndex = result;
-                return true;
-            case MenuState::SelectMember:
-                _selectedMemberIndex = result;
-                return true;
-            default: return false;
-        }
+        *indexToUpdate = result;
+        return true;
     }
 
     return false;
@@ -201,6 +198,10 @@ bool MenuManager::processCancel(void)
             return true;
         case MenuState::SelectSpell:
             _selectedSpellIndex = -1;
+            state(MenuState::SelectMember);
+            return true;
+        case MenuState::ReorderMember:
+            _selectedPositionIndex = -1;
             state(MenuState::SelectMember);
             return true;
         case MenuState::SelectMember:
@@ -230,39 +231,53 @@ bool MenuManager::processCommand(Party& party)
         case MenuState::SelectMember:
             return processMemberCommand();
         case MenuState::ReorderMember:
-            return false;
+            return processReorderMemberCommand(party);
     }
     return false;
 }
 
 bool MenuManager::processMenuCommand(const Party& party)
 {
-    MenuItem item = _menu.at(_selectedMenuIndex);
-    if (item.equals(MAGIC))
+    switch(MainMenuItem(_selectedMenuIndex))
     {
-        _selectedMemberIndex = 0;
-        state(MenuState::SelectMember);
-        return true;
+        case MainMenuItem::PartySelected:
+        case MainMenuItem::MagicSelected:
+            _selectedMemberIndex = 0;
+            state(MenuState::SelectMember);
+            return true;
+        case MainMenuItem::SaveSelected: {
+            Persistence::SaveLoad io = Persistence::SaveLoad(SAVE_FILE);
+            io.save(party);
+            _message = Strings::SaveComplete;
+            return true;
+        }
+        default:
+            return false;
     }
-    else if (item.equals(SAVE))
-    {
-        Persistence::SaveLoad io = Persistence::SaveLoad(SAVE_FILE);
-        io.save(party);
-        _message = Strings::SaveComplete;
-        return true;
-    }
-    else if (item.equals(PARTY))
-    {
-        //state(MenuState::SelectPc);
-    }
-
-    return false;
 }
 
 bool MenuManager::processMemberCommand(void)
 {
-    _selectedSpellIndex = 0;
-    state(MenuState::SelectSpell);
+    switch(MainMenuItem(_selectedMenuIndex))
+    {
+        case MainMenuItem::MagicSelected:
+            _selectedSpellIndex = 0;
+            state(MenuState::SelectSpell);
+            return true;
+        case MainMenuItem::PartySelected:
+            state(MenuState::ReorderMember);
+            _selectedPositionIndex = _selectedMemberIndex;
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool MenuManager::processReorderMemberCommand(Party& party)
+{
+    party.reorder(_selectedMemberIndex, _selectedPositionIndex);
+    _selectedMemberIndex = _selectedPositionIndex;
+    state(MenuState::SelectMember);
     return true;
 }
 

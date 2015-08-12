@@ -27,11 +27,15 @@ namespace Play
 
             int selectedSpellLength(PC*) const;
             bool moveCursor(Party& party, Core::InputPress input);
+
+            // What happens when you hit ok when on various menu items.
             bool processMenuCommand(const Party& party);
             bool processMemberCommand(void);
             bool processRuneCommand(const Party& party);
             bool processSpellCommand(void);
             bool processComponentCommand(void);
+            bool processReorderMemberCommand(Party& party);
+
             bool processCommand(Party& party);
             bool processCancel(void);
 
@@ -41,6 +45,7 @@ namespace Play
             int _selectedSpellIndex;
             int _selectedRuneIndex;
             int _selectedComponentIndex;
+            int _selectedPositionIndex;
             std::vector<MenuItem> _menu;
             std::string _message = "";
     };

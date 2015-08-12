@@ -114,11 +114,39 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
     }
 }
 
-void MenuViewManager::renderPCs(const Party& party, int memberIndex)
+void MenuViewManager::renderPCs(const Party& party, int memberIndex, int selectedPosition)
 {
-    SDL_Rect rect{ _partyVp.x + cursorXOffset, _partyVp.y, _partyVp.w - cursorXOffset, 150 };
+    bool isOrdering = selectedPosition >= 0;
+    SDL_Rect templateRect{ _partyVp.x + cursorXOffset, _partyVp.y, _partyVp.w - cursorXOffset, 150 };
     for (unsigned int i = 0; i < party.members().size(); i++)
     {
+        int position = i;
+        if (isOrdering)
+        {
+            if (memberIndex == i)
+            {
+                position = selectedPosition;
+            }
+            else
+            {
+                if (selectedPosition <= i && i <= memberIndex)
+                    position = i + 1;
+                else if (memberIndex <= i && i <= selectedPosition)
+                    position = i - 1;
+                else
+                    position = i;
+            }
+        }
+
+        SDL_Rect rect
+        {
+            templateRect.x + ((position == selectedPosition && isOrdering) ? cursorXOffset : 0),
+            templateRect.y + (templateRect.h * position),
+            templateRect.w,
+            templateRect.h
+        };
+
+
         PC* pc = party.memberAt(i);
         const int TEXT_WIDTH = 22;
         const int TEXT_HEIGHT = 19;
@@ -126,6 +154,7 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex)
         const int MARGIN_Y = 20;
 
         const SDL_Colour* colour;
+
         if (memberIndex == int(i))
             colour = &selectedColour;
         else
@@ -190,7 +219,6 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex)
         SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &stmValueRect);
 
         drawBorder(rect, 3, colour, false);
-        rect = SDL_Rect { rect.x, rect.y + rect.h, rect.w, rect.h };
     }
 }
 
@@ -207,14 +235,17 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, std
     switch(model.SelectedMenuItem)
     {
         case MagicSelected:
+        case PartySelected:
             switch (model.state)
             {
                 case MenuState::SelectMenu:
                 case MenuState::SelectMember:
                     renderPCs(party, model.SelectedPCIndex);
                     break;
-                default:
-                {
+                case MenuState::ReorderMember:
+                    renderPCs(party, model.SelectedPCIndex, model.SelectedPositionIndex);
+                    break;
+                default: {
                     drawBorder(_spellsVp, borderWidth, &textColour, true);
                     drawBorder(_runesVp, borderWidth, &textColour, true);
                     renderSpells(*party.memberAt(model.SelectedPCIndex), model.SelectedSpellIndex, model.SelectedComponentIndex);

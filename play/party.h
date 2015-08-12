@@ -17,17 +17,17 @@ namespace Play
             PC* memberAt(unsigned int) const;
             PC* addMember(void);
             PC* addLeader(void);
+
             void buryTheDead(void);
             void endCombat(void);
 
             int getIndexOf(const Mob*) const;
+            void reorder(int, int);
+
             bool isDefeated(void) const;
             bool isPlayerParty(void) const;
-            int x(int);
-            int y(int);
-            using MapObject::x;
-            using MapObject::y;
-
+            int x(int); using MapObject::x;
+            int y(int); using MapObject::y;
 
         private:
             std::vector<PC*> _members;

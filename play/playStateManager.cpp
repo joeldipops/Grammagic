@@ -135,7 +135,7 @@ bool PlayStateManager::processMovementState(void)
             continue;
 
         Enemy* nme = (Enemy*) mob;
-        //hasUpdate |= nme->aiMove(*_map);
+        hasUpdate |= nme->aiMove(*_map);
     }
 
     while(SDL_PollEvent(&event) != 0 && oldState == state())

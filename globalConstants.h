@@ -77,8 +77,8 @@ namespace Play
     {
         MagicSelected,
         SaveSelected,
-        SaveComplete,
-        PartySelected
+        PartySelected,
+        SaveComplete
     };
 }
 

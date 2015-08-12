@@ -20,7 +20,7 @@ Mob::Mob(MobType type)
 
     _maxStamina = 100;
     _stamina = 100;
-    _rangeOfSight = 0;
+    _rangeOfSight = 1;
     _rangeOfSense = 3;
     _type = type;
     switch(type)

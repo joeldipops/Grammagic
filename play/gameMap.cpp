@@ -388,7 +388,7 @@ void GameMap::removeChunk(int cX, int cY)
     {
         for (unsigned int x = startX; x < startX + CHUNK_WIDTH; x++)
         {
-            int index = x + (y * CHUNK_WIDTH);
+            int index = x + (y * width());
             if (_cells.count(index) >= 1)
             {
                 if (_cells.at(index).contents() != nullptr)

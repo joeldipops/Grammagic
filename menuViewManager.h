@@ -21,6 +21,7 @@ namespace Play
             int SelectedSpellIndex;
             int SelectedComponentIndex;
             int SelectedRuneIndex;
+            int SelectedPositionIndex;
     };
 
     class MenuViewManager : public ViewManager
@@ -38,7 +39,7 @@ namespace Play
 
             void renderSpells(const PC&, int, int);
             void renderRunes(const PC&, int);
-            void renderPCs(const Party&, int);
+            void renderPCs(const Party&, int, int = -1);
 
             static const SDL_Rect _menuControl;
             static const int borderWidth = 5;
