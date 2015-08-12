@@ -48,11 +48,12 @@ namespace Persistence
         public:
             SaveLoad(std::string);
             void save(const Party& party);
-            std::vector<char> getSpellBytes(const PC& pc) const;
             void load(Party& party) const;
 
         private:
             std::string _path;
+            std::vector<byte> getSpellBytes(const PC& pc) const;
+            void pushNumeric(std::vector<byte>&, unsigned short);
     };
 }
 

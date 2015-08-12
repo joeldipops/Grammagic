@@ -126,7 +126,7 @@ bool GameMap::loadChunk(int cX, int cY, std::string path)
             return false;
     }
 
-    std::vector<char> mapData = Util::readFile(path);
+    std::vector<byte> mapData = Util::readFile(path);
     if (!mapData.size())
         return false;
 
@@ -205,7 +205,7 @@ bool GameMap::loadChunk(int cX, int cY, std::string path)
             case MobType::PartyOfMobs:
             case MobType::PlayerCharacter: {
                 if (party() == nullptr)
-                    mob = new Party(std::vector<PC*> {new PC()});
+                    mob = new Party();
                 break;
             }
             default:

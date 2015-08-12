@@ -18,12 +18,12 @@ void Util::sleep(int milliseconds)
  * @param data The bytes to write.
  * @return True if successful, false otherwise.
  */
-bool Util::writeFile(const char* fileName, const std::vector<char>& data)
+bool Util::writeFile(const std::string& fileName, const std::vector<byte>& data)
 {
-    std::ofstream file(fileName, std::ofstream::binary);
+    std::ofstream file(fileName.c_str(), std::ofstream::binary);
     if (file.is_open())
     {
-        file.write(data.data(), int(data.size()));
+        file.write(reinterpret_cast<const char*>(data.data()), int(data.size()));
         file.close();
         return true;
     }
@@ -39,28 +39,47 @@ bool Util::writeFile(const char* fileName, const std::vector<char>& data)
  * @param fileName the file to read.
  * @return The file's contents as an array of bytes.
  */
- std::vector<char> Util::readFile(const std::string& fileName)
+ std::vector<byte> Util::readFile(const std::string& fileName)
  {
-    std::vector<char> result ;
+    std::vector<byte> result ;
     std::streampos size;
     std::ifstream file(fileName.c_str(), std::ios::in|std::ios::binary|std::ios::ate);
 
     if (!file.is_open())
     {
         std::cout << fileName << "could not be read.";
-        return std::vector<char>();
+        return std::vector<byte>();
     }
 
     size = file.tellg();
 
-    char* data = new char[size];
+    byte* data = new byte[size];
     file.seekg(0, std::ios::beg);
-    file.read(data, size);
+    file.read(reinterpret_cast<char*>(data), size);
     file.close();
 
-    result.assign(data, data+size);
+    result.assign(data, data + size);
     return result;
 }
+
+std::vector<byte> Util::splitShort(unsigned short value)
+{
+    std::vector<byte> result(2);
+
+    result.at(0) = value & 0x00FF;
+    result.at(1) = (value >> 8);
+
+    return result;
+}
+
+unsigned short Util::fuseShort(byte high, byte low)
+{
+    unsigned short result = 0;
+    result = (result<<8) + high;
+    result = (result<<8) + low;
+    return result;
+}
+
 
 /**
  * Returns an array of strings by splitting a string according to a given delimiter.

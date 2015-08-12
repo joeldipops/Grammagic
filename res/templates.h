@@ -3,6 +3,8 @@
 
 #include <string>
 #include "../globalConstants.h"
+#include "strings.h"
+#include "../res/templates.h"
 
 namespace Templates
 {
@@ -13,7 +15,7 @@ namespace Templates
     {
         std::string ImagePath;
         std::string PortraitPath;
-        int Stamina;
+        short Stamina;
         float Speed;
         float Resistance;
         float Defence;
@@ -22,15 +24,22 @@ namespace Templates
         unsigned int RangeOfSight;
     };
 
+    enum PartyMemberCode
+    {
+        A, B, C, D, E, F
+    };
+
     struct PCTemplate : public MobTemplate
     {
         std::string Name;
+        PartyMemberCode MemberCode;
     };
 
     struct EnemyTemplate : public MobTemplate
     {
         float Attack;
     };
+
     struct Data
     {
         public:

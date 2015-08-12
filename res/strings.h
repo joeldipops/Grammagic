@@ -14,5 +14,9 @@ class Strings {
         static const std::string Magic;
         static const std::string SaveComplete;
         static const std::string Party;
+        static const std::string AName;
+        static const std::string BName;
+        static const std::string CName;
+
 };
 #endif

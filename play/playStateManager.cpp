@@ -258,10 +258,10 @@ void PlayStateManager::render()
 /**
  *
  */
-void PlayStateManager::writeMapFile(const char* fileName, const int width, const int height, const std::vector<MapFileBlock>* data)
+void PlayStateManager::writeMapFile(const std::string& fileName, const int width, const int height, const std::vector<MapFileBlock>* data)
 {
     int fileSize =  (data->size() * MapFileBlock::BYTES_PER_CELL)+2;
-    std::vector<char> dataBytes = std::vector<char>(0);
+    std::vector<byte> dataBytes = std::vector<byte>(0);
     dataBytes.reserve(fileSize);
 
     dataBytes.push_back(width);
@@ -269,8 +269,8 @@ void PlayStateManager::writeMapFile(const char* fileName, const int width, const
 
     for (auto const & cell : *data)
     {
-        dataBytes.push_back(char(cell.terrainType));
-        dataBytes.push_back(char(cell.mobType));
+        dataBytes.push_back(byte(cell.terrainType));
+        dataBytes.push_back(byte(cell.mobType));
     }
 
     Util::writeFile(fileName, dataBytes);

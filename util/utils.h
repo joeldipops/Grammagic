@@ -11,7 +11,7 @@
 
 namespace Util
 {
-
+    typedef unsigned char byte;
     // TODO Learn to do operator overloading to make this prettier
     template<typename N>
     struct Nullable
@@ -105,11 +105,15 @@ namespace Util
 
     void sleep(int milliseconds);
 
-    bool writeFile(const char* fileName, const std::vector<char>& data);
+    bool writeFile(const std::string& fileName, const std::vector<byte>& data);
 
-    std::vector<char> readFile(const std::string& fileName);
+    std::vector<byte> readFile(const std::string& fileName);
 
     std::vector<std::string> split(const std::string &s, char token);
+
+    std::vector<byte> splitShort(unsigned short);
+
+    unsigned short fuseShort(byte high, byte low);
 
 }
 

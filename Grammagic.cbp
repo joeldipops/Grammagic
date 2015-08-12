@@ -61,6 +61,7 @@
 		<Unit filename="menuManager.h" />
 		<Unit filename="menuViewManager.cpp" />
 		<Unit filename="menuViewManager.h" />
+		<Unit filename="mobFactory.h" />
 		<Unit filename="persistence/saveLoad.cpp" />
 		<Unit filename="persistence/saveLoad.h" />
 		<Unit filename="play/battleField.cpp" />
@@ -107,6 +108,8 @@
 		<Unit filename="res/maps/map2_1" />
 		<Unit filename="res/pc.png" />
 		<Unit filename="res/strings.h" />
+		<Unit filename="res/templates.cpp" />
+		<Unit filename="res/templates.h" />
 		<Unit filename="res/valid.png" />
 		<Unit filename="res/wall.png" />
 		<Unit filename="rune.cpp" />

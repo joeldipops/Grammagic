@@ -39,7 +39,7 @@ namespace Play
             int changeStamina(int);
             int stamina(int);
             int stamina(void) const;
-            int maxStamina(void) const;
+            unsigned short maxStamina(void) const;
 
             float changeSpeed(float);
             float speed(void) const;
@@ -90,7 +90,7 @@ namespace Play
             MobType _type;
 
             int _stamina;
-            int _maxStamina;
+            short _maxStamina;
             int _rangeOfSight;
             int _rangeOfSense;
             int _selectedCommandIndex = 0;

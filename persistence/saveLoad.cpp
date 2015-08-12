@@ -1,6 +1,7 @@
 #include "saveLoad.h"
 
 using namespace Persistence;
+using namespace Templates;
 
 SaveLoad::SaveLoad(std::string path_)
 {
@@ -9,25 +10,37 @@ SaveLoad::SaveLoad(std::string path_)
 
 void SaveLoad::save(const Party& party)
 {
-    std::vector<char> data = std::vector<char>();
+    std::vector<byte> data = std::vector<byte>();
 
    // Start with the PC location.
-    data.push_back(SavedObjectCode::PCPosition);
-    data.push_back(party.x());
-    data.push_back(party.y());
+    //data.push_back(SavedObjectCode::PCPosition);
+    //data.push_back(party.x());
+    //data.push_back(party.y());
     for (PC* pc : party.members())
     {
         data.push_back(SavedObjectCode::NewMember);
-        std::vector<char> spells = getSpellBytes(*pc);
+        data.push_back(pc->memberCode());
+        pushNumeric(data, pc->maxStamina());
+        pushNumeric(data, (unsigned short)(pc->defaultSkill() * 100));
+        pushNumeric(data, (unsigned short)(pc->defaultSpeed() * 100));
+        pushNumeric(data, (unsigned short)(pc->defaultResistance() * 100));
+        pushNumeric(data, (unsigned short)(pc->defaultDefence() * 100));
+        std::vector<byte> spells = getSpellBytes(*pc);
         data.insert(data.end(), spells.begin(), spells.end());
     }
 
-    Util::writeFile(_path.c_str(), data);
+    Util::writeFile(_path, data);
 }
 
-std::vector<char> SaveLoad::getSpellBytes(const PC& pc) const
+void SaveLoad::pushNumeric(std::vector<byte>& data, unsigned short value)
 {
-    std::vector<char> result = std::vector<char>();
+    std::vector<byte> bytes = Util::splitShort(value);
+    data.insert(data.end(), bytes.begin(), bytes.end());
+}
+
+std::vector<byte> SaveLoad::getSpellBytes(const PC& pc) const
+{
+    std::vector<byte> result = std::vector<byte>();
     for (unsigned int i = 0; i < pc.spells()->size(); i++)
     {
         result.push_back(SavedObjectCode::NewSpell);
@@ -103,7 +116,7 @@ std::vector<char> SaveLoad::getSpellBytes(const PC& pc) const
  */
 void SaveLoad::load(Party& party) const
 {
-    std::vector<char> data = Util::readFile(_path.c_str());
+    std::vector<byte> data = Util::readFile(_path.c_str());
 
     if (data.size() <= 0)
         return;
@@ -126,11 +139,11 @@ void SaveLoad::load(Party& party) const
                 }
 
                 spellInProgress = false;
-                party.x(int(data.at(i+1)));
-                party.y(int(data.at(i+2)));
+                //party.x(int(data.at(i+1)));
+                //party.y(int(data.at(i+2)));
                 i+= 2;
                 break;
-            case SavedObjectCode::NewMember:
+            case SavedObjectCode::NewMember: {
                 if (spellInProgress)
                 {
                     workingSpell.resolve();
@@ -141,11 +154,37 @@ void SaveLoad::load(Party& party) const
                     spells = std::vector<Spell>();
                 }
                 spellInProgress = false;
-                if (pc == nullptr)
-                    pc = party.addLeader();
-                else
-                    pc = party.addMember();
+                Templates::PCTemplate t = Templates::PCTemplate();
+                t.MemberCode = PartyMemberCode(data.at(++i));
+
+                switch(t.MemberCode)
+                {
+                    case PartyMemberCode::A:
+                        t.Name = Strings::AName;
+                        t.ImagePath = RESOURCE_LOCATION + "a-image.png";
+                        t.PortraitPath = RESOURCE_LOCATION + "a-portrait.png";
+                        break;
+                    case PartyMemberCode::B:
+                        t.Name = Strings::BName;
+                        t.ImagePath = RESOURCE_LOCATION + "b-image.png";
+                        t.PortraitPath = RESOURCE_LOCATION + "b-portrait.png";
+                        break;
+                    case PartyMemberCode::C:
+                        t.Name = Strings::CName;
+                        t.ImagePath = RESOURCE_LOCATION + "c-image.png";
+                        t.PortraitPath = RESOURCE_LOCATION + "c-portrait.png";
+                        break;
+                    default: throw;
+                }
+
+                t.Stamina = fuseShort(data.at(++i), data.at(++i));
+                t.Skill = float(fuseShort(data.at(++i), data.at(++i)) / 100.0);
+                t.Speed = float(fuseShort(data.at(++i), data.at(++i)) / 100.0);
+                t.Resistance = float(fuseShort(data.at(++i), data.at(++i)) / 100.0);
+                t.Defence = float(fuseShort(data.at(++i), data.at(++i)) / 100.0);
+                pc = party.addMember(t);
                 break;
+            }
             case SavedObjectCode::NewSpell:
                 if (spellInProgress)
                 {

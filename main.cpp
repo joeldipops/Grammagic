@@ -24,6 +24,9 @@ const std::string Strings::Save = "Save";
 const std::string Strings::SaveComplete = "Save Complete";
 const std::string Strings::Magic = "Magic";
 const std::string Strings::Party = "Party";
+const std::string Strings::AName = "Aayee";
+const std::string Strings::BName = "Beaey";
+const std::string Strings::CName = "Cie";
 
 using namespace Magic;
 using namespace Play;

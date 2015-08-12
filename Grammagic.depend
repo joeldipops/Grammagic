@@ -24,7 +24,7 @@
 	<stdint.h>
 	"mapObject.h"
 
-1439007756 /home/joel/Projects/Grammagic/util/utils.h
+1439377983 /home/joel/Projects/Grammagic/util/utils.h
 	<vector>
 	<algorithm>
 	<chrono>
@@ -33,7 +33,7 @@
 	<iostream>
 	<sstream>
 
-1439347986 /home/joel/Projects/Grammagic/mapObject.h
+1439369150 /home/joel/Projects/Grammagic/mapObject.h
 	<string>
 	"util/utils.h"
 
@@ -313,7 +313,7 @@
 	"res/strings.h"
 	"command.h"
 
-1437990375 /home/joel/Projects/Grammagic/res/strings.h
+1439368463 /home/joel/Projects/Grammagic/res/strings.h
 	<string>
 
 1439347364 source:/home/joel/Projects/Grammagic/mapObject.cpp
@@ -337,7 +337,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1439354982 source:/home/joel/Projects/Grammagic/main.cpp
+1439377514 source:/home/joel/Projects/Grammagic/main.cpp
 	<string>
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
@@ -396,7 +396,7 @@
 	"../mapObject.h"
 	"../globalConstants.h"
 
-1439354818 /home/joel/Projects/Grammagic/play/mob.h
+1439374468 /home/joel/Projects/Grammagic/play/mob.h
 	<vector>
 	<string>
 	"../mapObject.h"
@@ -405,7 +405,7 @@
 	"combatable.h"
 	"../res/templates.h"
 
-1439285051 source:/home/joel/Projects/Grammagic/play/gameMap.cpp
+1439377712 source:/home/joel/Projects/Grammagic/play/gameMap.cpp
 	"gameMap.h"
 
 1439004091 source:/home/joel/Projects/Grammagic/play/mapCell.cpp
@@ -417,7 +417,7 @@
 1438251010 source:/home/joel/Projects/Grammagic/play/miniMapViewManager.cpp
 	"viewManagers.h"
 
-1439354875 source:/home/joel/Projects/Grammagic/play/mob.cpp
+1439374512 source:/home/joel/Projects/Grammagic/play/mob.cpp
 	"mob.h"
 
 1436354150 /home/joel/Projects/Grammagic/play/battleCommands.h
@@ -430,10 +430,10 @@
 	"../combat/adjective.h"
 	"../combat/noun.h"
 
-1439285082 source:/home/joel/Projects/Grammagic/play/playStateManager.cpp
+1439377968 source:/home/joel/Projects/Grammagic/play/playStateManager.cpp
 	"playStateManager.h"
 
-1438599527 /home/joel/Projects/Grammagic/play/playStateManager.h
+1439378118 /home/joel/Projects/Grammagic/play/playStateManager.h
 	<iostream>
 	<fstream>
 	<vector>
@@ -758,7 +758,7 @@
 1438428017 source:/home/joel/Projects/Grammagic/magic/battleCommands.cpp
 	"battleCommands.h"
 
-1439356200 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
+1439356220 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
 	"menuViewManager.h"
 
 1439297544 /home/joel/Projects/Grammagic/menuViewManager.h
@@ -802,12 +802,12 @@
 1436586373 source:/home/joel/Projects/Grammagic/magic/adverb.cpp
 	"adverb.h"
 
-1439354443 /home/joel/Projects/Grammagic/play/pc.h
+1439371406 /home/joel/Projects/Grammagic/play/pc.h
 	"mob.h"
 	"../magic/battleCommands.h"
 	"../res/templates.h"
 
-1439354519 source:/home/joel/Projects/Grammagic/play/pc.cpp
+1439371964 source:/home/joel/Projects/Grammagic/play/pc.cpp
 	"pc.h"
 
 1439344038 /home/joel/Projects/Grammagic/play/battleField.h
@@ -840,17 +840,17 @@
 	"play/pc.h"
 	<string>
 
-1438426713 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
+1439378613 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
 	"saveLoad.h"
 
-1438398478 /home/joel/Projects/Grammagic/persistence/saveLoad.h
+1439377672 /home/joel/Projects/Grammagic/persistence/saveLoad.h
 	<string>
 	"../play/pc.h"
 	"../play/party.h"
 
 1437388688 /home/joel/Projects/Grammagic/persistence/saveable.h
 
-1439007715 source:/home/joel/Projects/Grammagic/util/utils.cpp
+1439378490 source:/home/joel/Projects/Grammagic/util/utils.cpp
 	"utils.h"
 
 1438398593 /home/joel/Projects/Grammagic/magic/targetAll.h
@@ -862,10 +862,10 @@
 1438427934 source:/home/joel/Projects/Grammagic/magic/targetAll.cpp
 	"targetAll.h"
 
-1439355199 source:/home/joel/Projects/Grammagic/play/party.cpp
+1439370119 source:/home/joel/Projects/Grammagic/play/party.cpp
 	"party.h"
 
-1439355174 /home/joel/Projects/Grammagic/play/party.h
+1439369789 /home/joel/Projects/Grammagic/play/party.h
 	"../mapObject.h"
 	"../res/templates.h"
 	"pc.h"
@@ -875,10 +875,12 @@
 1439352331 /home/joel/Projects/Grammagic/res/partyMembers.h
 	<string>
 
-1439354251 source:/home/joel/Projects/Grammagic/res/templates.cpp
+1439371339 source:/home/joel/Projects/Grammagic/res/templates.cpp
 	"templates.h"
 
-1439354436 /home/joel/Projects/Grammagic/res/templates.h
+1439373924 /home/joel/Projects/Grammagic/res/templates.h
 	<string>
 	"../globalConstants.h"
+	"strings.h"
+	"../res/templates.h"
 

@@ -15,8 +15,7 @@ namespace Play
             ~Party(void);
             PC* leader(void) const;
             const std::vector<PC*> members(void) const;
-            PC* addLeader(void);
-            PC* addMember(void);
+            PC* addLeader(const Templates::PCTemplate&);
             PC* addMember(const Templates::PCTemplate&);
             PC* removeMemeber(PC*);
 

@@ -10,7 +10,6 @@ Party::Party(void)
 {
     _members = std::vector<PC*>(0);
     _bench = std::vector<PC*>(0);
-    imageFileName(RESOURCE_LOCATION + "pc.png");
     isDense(true);
     x(0);
     y(0);
@@ -23,6 +22,8 @@ Party::Party(std::vector<PC*> members_)
     :MapObject()
 {
     _members = members_;
+    if (_members.size() > 0)
+        imageFileName(_members.at(0)->imageFileName());
 }
 
 /**
@@ -76,9 +77,9 @@ PC* Party::memberAt(unsigned int index) const
     return _members.at(index);
 }
 
-PC* Party::addLeader(void)
+PC* Party::addLeader(const Templates::PCTemplate& tmpl)
 {
-    PC* pc = new PC();
+    PC* pc = new PC(tmpl);
     if (_members.size() >= 1)
     {
         delete _members.at(0);
@@ -88,26 +89,17 @@ PC* Party::addLeader(void)
         _members.push_back(pc);
 
     pc->location(x(), y());
-    return pc;
-}
-
-
-PC* Party::addMember(void)
-{
-    if (_members.size() <= 0)
-        return addLeader();
-
-    PC* pc = new PC();
-    _members.push_back(pc);
+    imageFileName(pc->imageFileName());
     return pc;
 }
 
 PC* Party::addMember(const Templates::PCTemplate& tmpl)
 {
-    PC* pc = new PC(tmpl);
-    if (_members.size() <= 0)
-        pc->location(x(), y());
 
+    if (_members.size() <= 0)
+        return addLeader(tmpl);
+
+    PC* pc = new PC(tmpl);
     _members.push_back(pc);
     return pc;
 }
@@ -134,6 +126,8 @@ void Party::reorder(int oldPosition, int newPosition)
     PC* member = _members.at(oldPosition);
     _members.erase(_members.begin() + oldPosition);
     _members.insert(_members.begin() + newPosition, member);
+    imageFileName(leader()->imageFileName());
+    leader()->location(x(), y());
 }
 
 bool Party::isPlayerParty(void) const

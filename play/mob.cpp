@@ -160,7 +160,7 @@ int Mob::stamina(void) const
     return _stamina;
 }
 
-int Mob::maxStamina(void) const
+unsigned short Mob::maxStamina(void) const
 {
     return _maxStamina;
 }

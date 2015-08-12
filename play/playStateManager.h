@@ -33,7 +33,7 @@ namespace Play
             void renderMobs();
             void renderHud();
             std::vector<char> readFile(const char*);
-            void writeMapFile(const char* fileName, const int width, const int height, const std::vector<MapFileBlock>* data);
+            void writeMapFile(const std::string& fileName, const int width, const int height, const std::vector<MapFileBlock>* data);
 
             // Main Loop
             bool processMovementState(void);

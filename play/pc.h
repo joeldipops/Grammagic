@@ -18,18 +18,19 @@ class JobClass
 class PC : public Mob
 {
     public:
-        PC(void);
         PC(const Templates::PCTemplate&);
         int spellSlots(void) const;
         int runeSlots(void) const;
         std::string name(void) const;
         std::string className(void) const;
         bool isPlayerControlled(void) const;
+        Templates::PartyMemberCode memberCode(void) const;
 
     private:
         int _spellSlots;
         int _runeSlots;
         std::string _name;
+        Templates::PartyMemberCode _memberCode;
         JobClass _jobClass;
 };
 #endif
