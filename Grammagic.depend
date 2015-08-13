@@ -396,7 +396,7 @@
 	"../mapObject.h"
 	"../globalConstants.h"
 
-1439374468 /home/joel/Projects/Grammagic/play/mob.h
+1439462720 /home/joel/Projects/Grammagic/play/mob.h
 	<vector>
 	<string>
 	"../mapObject.h"
@@ -405,7 +405,7 @@
 	"combatable.h"
 	"../res/templates.h"
 
-1439377712 source:/home/joel/Projects/Grammagic/play/gameMap.cpp
+1439462243 source:/home/joel/Projects/Grammagic/play/gameMap.cpp
 	"gameMap.h"
 
 1439004091 source:/home/joel/Projects/Grammagic/play/mapCell.cpp
@@ -417,7 +417,7 @@
 1438251010 source:/home/joel/Projects/Grammagic/play/miniMapViewManager.cpp
 	"viewManagers.h"
 
-1439374512 source:/home/joel/Projects/Grammagic/play/mob.cpp
+1439462753 source:/home/joel/Projects/Grammagic/play/mob.cpp
 	"mob.h"
 
 1436354150 /home/joel/Projects/Grammagic/play/battleCommands.h
@@ -566,13 +566,14 @@
 	"../play/mob.h"
 	"../play/gameMap.h"
 
-1439345362 source:/home/joel/Projects/Grammagic/play/enemy.cpp
+1439462091 source:/home/joel/Projects/Grammagic/play/enemy.cpp
 	"enemy.h"
 
-1439347956 /home/joel/Projects/Grammagic/play/enemy.h
+1439461922 /home/joel/Projects/Grammagic/play/enemy.h
 	"mob.h"
 	"gameMap.h"
 	"../globalConstants.h"
+	"../res/templates.h"
 
 1436349052 source:/home/joel/Projects/Grammagic/combat/combatManager.cpp
 	"combatManager.h"
@@ -783,7 +784,7 @@
 1439339580 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
-1439348600 /home/joel/Projects/Grammagic/globalConstants.h
+1439462184 /home/joel/Projects/Grammagic/globalConstants.h
 	<SDL2/SDL.h>
 	<string>
 
@@ -875,10 +876,10 @@
 1439352331 /home/joel/Projects/Grammagic/res/partyMembers.h
 	<string>
 
-1439371339 source:/home/joel/Projects/Grammagic/res/templates.cpp
+1439462978 source:/home/joel/Projects/Grammagic/res/templates.cpp
 	"templates.h"
 
-1439373924 /home/joel/Projects/Grammagic/res/templates.h
+1439461989 /home/joel/Projects/Grammagic/res/templates.h
 	<string>
 	"../globalConstants.h"
 	"strings.h"

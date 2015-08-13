@@ -199,8 +199,15 @@ bool GameMap::loadChunk(int cX, int cY, std::string path)
         MapObject* mob = nullptr;
         switch(contents)
         {
+            case MobType::E2:
+                mob = new Enemy(Templates::Data::E2);
+                break;
+            case MobType::B1:
+                mob = new Enemy(Templates::Data::B1);
+                break;
+            case MobType::E1:
             case MobType::Hostile:
-                mob = new Enemy();
+                mob = new Enemy(Templates::Data::E1);
                 break;
             case MobType::PartyOfMobs:
             case MobType::PlayerCharacter: {

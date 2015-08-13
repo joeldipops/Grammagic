@@ -4,6 +4,7 @@
 #include "mob.h"
 #include "gameMap.h"
 #include "../globalConstants.h"
+#include "../res/templates.h"
 
 using namespace Magic;
 namespace Play
@@ -11,7 +12,7 @@ namespace Play
     class Enemy : public Mob
     {
         public:
-            Enemy(void);
+            Enemy(const Templates::EnemyTemplate&);
             bool aiMove(GameMap&);
             void aiAct(BattleField*);
             int movementDelay(void) const;

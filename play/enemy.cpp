@@ -1,11 +1,12 @@
 #include "enemy.h"
 
-Enemy::Enemy(void) : Mob(MobType::Hostile)
+using namespace Play;
+
+Enemy::Enemy(const Templates::EnemyTemplate& tmpl) : Mob(tmpl, MobType::Hostile)
 {
-    imageFileName(RESOURCE_LOCATION + "enemy.png");
-    _physicalStrength = 20;
-    _combatDelay = 2000;
-    _movementDelay = 500;
+    _physicalStrength = tmpl.Attack;
+    _combatDelay = tmpl.AttackDelay;
+    _movementDelay = tmpl.MovementDelay;
 }
 
 MobType Enemy::type(void) const

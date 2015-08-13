@@ -38,14 +38,27 @@ namespace Templates
     struct EnemyTemplate : public MobTemplate
     {
         float Attack;
+        int AttackDelay;
+        int MovementDelay;
     };
 
     struct Data
     {
         public:
+            // Starting Stats of Playable Characters.
             static const PCTemplate A;
             static const PCTemplate B;
             static const PCTemplate C;
+            static const PCTemplate D;
+            static const PCTemplate E;
+            static const PCTemplate F;
+
+            // Stats of Enemies
+            static const EnemyTemplate E1;
+            static const EnemyTemplate E2;
+
+            // Stats of Bosses
+            static const EnemyTemplate B1;
     };
 
 }

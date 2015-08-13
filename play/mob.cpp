@@ -3,11 +3,9 @@
 using namespace Magic;
 using namespace Play;
 
-Mob::Mob() {}
-
 Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
-: Mob(type_, true)
 {
+    _type = type_;
     _maxStamina = tmpl.Stamina;
     _stamina = _maxStamina;
     _rangeOfSight = tmpl.RangeOfSight;
@@ -18,11 +16,7 @@ Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
     defaultDefence(tmpl.Defence);
     portraitFileName(tmpl.PortraitPath);
     imageFileName(tmpl.ImagePath);
-}
 
-Mob::Mob(MobType type_, bool)
-{
-    _type = type_;
     if (type_ != MobType::None)
         isDense(true);
     else
@@ -30,36 +24,6 @@ Mob::Mob(MobType type_, bool)
 
     _spellCommands = std::vector<Command>();
     _otherCommands = std::vector<Command>();
-}
-
-/**
- * Constructs a mob of the given type.
- * @param type A mob type, such as PC or Demon Monster Firefighter.
- */
-Mob::Mob(MobType type)
-{
-    if (type != MobType::None)
-        isDense(true);
-    else
-        isDense(false);
-
-    _spellCommands = std::vector<Command>();
-    _otherCommands = std::vector<Command>();
-
-    _maxStamina = 100;
-    _stamina = 100;
-    _rangeOfSight = 1;
-    _rangeOfSense = 3;
-    _type = type;
-    switch(type)
-    {
-        case MobType::PlayerCharacter:
-        case MobType::Hostile:
-            break;
-        default:
-            imageFileName(RESOURCE_LOCATION + "hidden.png");
-            break;
-    }
 }
 
 /**

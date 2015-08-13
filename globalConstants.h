@@ -13,7 +13,10 @@ enum MobType
     // Some other NPC
     Hostile = '3',
 
-    PartyOfMobs = '4'
+    PartyOfMobs = '4',
+    E1 = '5',
+    E2 = '6',
+    B1 = '7'
 };
 
 enum TerrainType

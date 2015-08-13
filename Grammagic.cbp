@@ -61,7 +61,6 @@
 		<Unit filename="menuManager.h" />
 		<Unit filename="menuViewManager.cpp" />
 		<Unit filename="menuViewManager.h" />
-		<Unit filename="mobFactory.h" />
 		<Unit filename="persistence/saveLoad.cpp" />
 		<Unit filename="persistence/saveLoad.h" />
 		<Unit filename="play/battleField.cpp" />
