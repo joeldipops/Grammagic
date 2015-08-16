@@ -7,6 +7,7 @@ Enemy::Enemy(const Templates::EnemyTemplate& tmpl) : Mob(tmpl, MobType::Hostile)
     _physicalStrength = tmpl.Attack;
     _combatDelay = tmpl.AttackDelay;
     _movementDelay = tmpl.MovementDelay;
+    _combatAction = tmpl.CombatAction;
 }
 
 MobType Enemy::type(void) const
@@ -66,36 +67,10 @@ bool Enemy::aiMove(GameMap& map_)
  */
 void Enemy::aiAct(BattleField* field)
 {
-    attack(field);
+    int dur = _combatAction(this, field);
+    block(SDL_GetTicks() + (dur / speed()));
 }
 
-/**
- * Does a fixed amount of damage to some enemy mob.
- * @param field The battlefield.
- */
-void Enemy::attack(BattleField* field)
-{
-    // A limit to stop us looping forever if we are implausibly unlucky.
-    const int randFail = 10;
-    unsigned int iter = 0;
-    while(iter < randFail)
-    {
-        int i = rand() % field->combatants().size();
-        Combatable* target = field->combatants().at(i);
+int Enemy::movementDelay(void) const { return _movementDelay; }
 
-        // Do damage to the target and then ollie outie.
-        if (!field->areAllied(this, target))
-        {
-            target->changeStamina(-1 * _physicalStrength * target->defence());
-            block(SDL_GetTicks() + (_combatDelay / speed()));
-            break;
-        }
-
-        iter++;
-    }
-}
-
-int Enemy::movementDelay(void) const
-{
-    return _movementDelay;
-}
+float Enemy::physicalStrength(void) const { return _physicalStrength; }

@@ -9,6 +9,8 @@
 using namespace Magic;
 namespace Play
 {
+    typedef int (*AiAction)(Mob* actor, BattleField* field);
+
     class Enemy : public Mob
     {
         public:
@@ -16,13 +18,15 @@ namespace Play
             bool aiMove(GameMap&);
             void aiAct(BattleField*);
             int movementDelay(void) const;
-            int combatDelay() const;
+            int combatDelay(void) const;
+            float physicalStrength(void) const;
             MobType type(void) const;
 
         private:
             int _movementDelay;
             int _combatDelay;
             int _physicalStrength;
+            AiAction _combatAction;
             void attack(BattleField*);
     };
 }

@@ -27,7 +27,7 @@ MenuViewManager::MenuViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
 void MenuViewManager::renderRunes(const PC& pc, int runeIndex)
 {
     std::vector<Rune> runes = std::vector<Rune>();
-    for (Word* word : Commands::allCommands)
+    for (Word* word : Templates::Commands::allCommands)
     {
         Rune item = Rune(word);
         runes.push_back(item);
@@ -49,9 +49,9 @@ void MenuViewManager::renderRunes(const PC& pc, int runeIndex)
  */
 void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPosition)
 {
-    SDL_Texture* cursor = assets()->get("res/cursor.png");
-    SDL_Texture* valid = assets()->get("res/valid.png");
-    SDL_Texture* invalid = assets()->get("res/invalid.png");
+    SDL_Texture* cursor = assets()->get(RESOURCE_LOCATION + "cursor.png");
+    SDL_Texture* valid = assets()->get(RESOURCE_LOCATION + "valid.png");
+    SDL_Texture* invalid = assets()->get(RESOURCE_LOCATION + "invalid.png");
 
     SDL_Rect rect = SDL_Rect { _spellsVp.x + marginLeft, _spellsVp.y, WIDTH, _control.y + _control.h };
 

@@ -1,4 +1,5 @@
 #include "templates.h"
+#include "battleCommands.h"
 using namespace Templates;
 
 PCTemplate GetA() // "Albert" archetype
@@ -49,10 +50,15 @@ const PCTemplate GetC() //"All Rounder" archetype
 };
 const PCTemplate Data::C = GetC();
 
+int aiAttack(Play::Mob* actor, Play::BattleField* field)
+{
+    return Commands::ATTACK(nullptr, actor, field);
+}
 
 const EnemyTemplate GetE1()
 {
     EnemyTemplate result;
+    result.CombatAction = aiAttack;
     result.ImagePath = RESOURCE_LOCATION + "e1.png";
     result.Stamina = 50;
     result.Attack = 10;
@@ -71,6 +77,7 @@ const EnemyTemplate Data::E1 = GetE1();
 const EnemyTemplate GetE2()
 {
     EnemyTemplate result;
+    result.CombatAction = aiAttack;
     result.ImagePath = RESOURCE_LOCATION + "e2.png";
     result.Stamina = 100;
     result.Attack = 8;
@@ -89,17 +96,18 @@ const EnemyTemplate Data::E2 = GetE2();
 const EnemyTemplate GetB1()
 {
     EnemyTemplate result;
+    result.CombatAction = aiAttack;
     result.ImagePath = RESOURCE_LOCATION + "b1.png";
-    result.Stamina = 150;
+    result.Stamina = 300;
     result.Attack = 25;
     result.Speed = 1.1;
     result.Resistance = 1.5;
     result.Defence = 2.0;
     result.Skill = 1.5;
-    result.RangeOfSense = 0;
-    result.RangeOfSight = 0;
+    result.RangeOfSense = 1;
+    result.RangeOfSight = 1;
     result.AttackDelay = 3000;
-    result.MovementDelay = 3000;
+    result.MovementDelay = 2000;
     return result;
 };
 const EnemyTemplate Data::B1 = GetB1();

@@ -3,7 +3,7 @@
 
 #include "util/utils.h"
 #include "viewManager.h"
-#include "magic/battleCommands.h"
+#include "res/battleCommands.h"
 #include "rune.h"
 #include "play/pc.h"
 #include "globalConstants.h"

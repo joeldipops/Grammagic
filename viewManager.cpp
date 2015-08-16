@@ -225,14 +225,14 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const 
 
         if (selectedIndex >= visiblePerPage)
         {
-            SDL_Texture* arrowLeft = _assets->get("res/arrow-left.png");
+            SDL_Texture* arrowLeft = _assets->get(RESOURCE_LOCATION + "arrow-left.png");
             SDL_Rect arrowRect = SDL_Rect { view.x + borderWidth + 2, view.y + (view.h / 2), 15, 15 };
             SDL_RenderCopy(_renderer, arrowLeft, NULL, &arrowRect);
             rect.x += arrowOffset;
         }
         if (int(items->size()) > visiblePerPage)
         {
-            SDL_Texture* arrowRight = _assets->get("res/arrow-right.png");
+            SDL_Texture* arrowRight = _assets->get(RESOURCE_LOCATION + "arrow-right.png");
             SDL_Rect arrowRect = SDL_Rect { view.x + view.w - borderWidth - 2 - 15, view.y + (view.h / 2), 15, 15 };
             SDL_RenderCopy(_renderer, arrowRight, NULL, &arrowRect);
         }

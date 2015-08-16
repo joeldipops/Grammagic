@@ -12,7 +12,7 @@
 #include "play/playStateManager.h"
 #include "play/pc.h"
 #include "persistence/saveLoad.h"
-#include "magic/battleCommands.h"
+#include "res/battleCommands.h"
 #include "res/templates.h"
 
 const std::string Strings::Heading = "Grammagic";
@@ -31,7 +31,7 @@ const std::string Strings::CName = "Cie";
 using namespace Magic;
 using namespace Play;
 using namespace Persistence;
-
+using namespace Templates;
 namespace Core
 {
     class Grammar

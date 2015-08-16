@@ -156,7 +156,7 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
         case MenuState::SelectRune:
             index = _selectedRuneIndex;
             indexToUpdate = &_selectedRuneIndex;
-            itemCount = Commands::allCommands.size() + 1;
+            itemCount = Templates::Commands::allCommands.size() + 1;
             columnItemCount = _viewManager.menuItemsPerColumn();
             break;
         case MenuState::SelectComponent: {
@@ -309,7 +309,7 @@ bool MenuManager::processRuneCommand(const Party& party)
         return true;
     }
 
-    workingSpell->component(_selectedComponentIndex, Commands::allCommands.at(_selectedRuneIndex - 1));
+    workingSpell->component(_selectedComponentIndex, Templates::Commands::allCommands.at(_selectedRuneIndex - 1));
     if (_selectedComponentIndex + 1 < pc->runeSlots())
         _selectedComponentIndex++;
     return true;

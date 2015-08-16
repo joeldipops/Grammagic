@@ -2,7 +2,7 @@
 #define PC_H_INCLUDED
 
 #include "mob.h"
-#include "../magic/battleCommands.h"
+#include "../res/battleCommands.h"
 #include "../res/templates.h"
 
 // TODO - BWAARRPP

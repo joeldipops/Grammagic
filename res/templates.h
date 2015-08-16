@@ -2,12 +2,23 @@
 #define PARTY_MEMBERS_H
 
 #include <string>
-#include "../globalConstants.h"
+#include <vector>
+
 #include "strings.h"
-#include "../res/templates.h"
+
+#include "../globalConstants.h"
+
+namespace Magic { class Command; }
+namespace Play
+{
+    class Mob;
+    class BattleField;
+    typedef int (*AiAction)(Mob* actor, BattleField* field);
+}
 
 namespace Templates
 {
+    struct Commands;
     /**
      * The default / initial properties and stats of a mob
      */
@@ -22,6 +33,7 @@ namespace Templates
         float Skill;
         unsigned int RangeOfSense;
         unsigned int RangeOfSight;
+        std::vector<Magic::Command*> Commands;
     };
 
     enum PartyMemberCode
@@ -40,6 +52,7 @@ namespace Templates
         float Attack;
         int AttackDelay;
         int MovementDelay;
+        Play::AiAction CombatAction;
     };
 
     struct Data
