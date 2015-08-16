@@ -1,5 +1,5 @@
-#ifndef NOUNPHRASE_H_INCLUDED
-#define NOUNPHRASE_H_INCLUDED
+#ifndef NOUN_PHRASE_H_INCLUDED
+#define NOUN_PHRASE_H_INCLUDED
 
 #include "nounish.h"
 #include "adjective.h"

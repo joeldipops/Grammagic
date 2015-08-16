@@ -2,6 +2,7 @@
 
 using namespace Play;
 
+//{Lifecycle
 /**
  * Constructor
  */
@@ -13,6 +14,7 @@ Party::Party(void)
     isDense(true);
     x(0);
     y(0);
+    facing(Direction::SOUTH);
 }
 
 /**
@@ -38,10 +40,16 @@ Party::~Party(void)
 
     _members = std::vector<PC*>(0);
 }
+//}
 
-const std::vector<PC*> Party::members(void) const
+//{Properties
+const std::vector<PC*> Party::members(void) const { return _members; }
+//}
+
+//{Methods
+std::string Party::onInspect(Party*)
 {
-    return _members;
+    return "";
 }
 
 void Party::buryTheDead(void)
@@ -179,3 +187,4 @@ void Party::endCombat(void)
 
     _bench = std::vector<PC*>(0);
 }
+//}

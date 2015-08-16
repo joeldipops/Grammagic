@@ -2,12 +2,19 @@
 
 using namespace Magic;
 
+//{Lifecycle
+/**
+ * Constructor
+ */
 TargetAll::TargetAll(std::vector<Combatable*> all_)
     :Combatable()
 {
     _all = all_;
 }
+//}
 
+
+//{Methods
 /**
  * Equally distributes effect across each obj.
  */
@@ -143,7 +150,6 @@ float TargetAll::calculateMean(std::vector<int> elements) const
     return total / float(elements.size());
 }
 
-
 /**
  *
  */
@@ -153,4 +159,5 @@ float TargetAll::getDistribution(float amount) const
         return 0;
     return amount / float(_all.size());
 }
+//}
 

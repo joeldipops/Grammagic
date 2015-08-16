@@ -14,10 +14,11 @@ class ControlViewManager : public ViewManager
 {
     public:
         ControlViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-        void render(const Mob*, Play::PlayState);
+        void render(const Mob*, Play::PlayState, const std::string& = "");
 
     private:
         void writeHeading(void);
+        void writeMessage(const std::string&);
 };
 
 class MapViewManager : public ViewManager

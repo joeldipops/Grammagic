@@ -46,7 +46,6 @@ MapObject* MapCell::contents(MapObject* contents_)
     return _contents;
 }
 
-
 /**
  * Removes any mobs from this cell.
  */

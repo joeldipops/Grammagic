@@ -61,7 +61,7 @@ std::string Command::name(void) const
 {
     for(Word* w : components())
     {
-        if (w->type() == WordType::AVerb)
+        if (w->type() == WordType::VERB)
             return w->name();
     }
 

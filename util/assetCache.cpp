@@ -1,6 +1,7 @@
 #include "assetCache.h"
 
-AssetCache::AssetCache() {}
+//{Lifecycle
+//AssetCache::AssetCache() {}
 
 /**
  * Constructor
@@ -19,7 +20,9 @@ AssetCache::~AssetCache(void)
 {
         emptyCache();
 }
+//}
 
+//{Methods
 /**
  * Loads an asset, either, from file, or from the cache.
  * @param fileName The filename of the asset.
@@ -114,3 +117,4 @@ void AssetCache::emptyCache(void)
         item.second = nullptr;
     }
 }
+//}

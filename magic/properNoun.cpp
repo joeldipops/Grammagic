@@ -2,6 +2,7 @@
 
 using namespace Magic;
 
+//{Lifecycle
 /**
  * Constructor
  */
@@ -10,7 +11,9 @@ ProperNoun::ProperNoun(Targeter target, std::string name, Modifier effect, Modif
 {
     _target = target;
 }
+//}
 
+//{Methods
 /**
  * Selects the target from a mob, item or terrain on the battlefield according to the _target function.
  * @param caster The mob casting the spell.
@@ -24,10 +27,11 @@ Combatable* ProperNoun::acquireTarget(Mob* caster, BattleField* battleField)
 
 WordType ProperNoun::type(void) const
 {
-    return WordType::ANounPhrase;
+    return WordType::NOUN_PHRASE;
 }
 
 const std::vector<Word*> ProperNoun::components(void) const
 {
     return std::vector<Word*> {(Word*)this};
 }
+//}

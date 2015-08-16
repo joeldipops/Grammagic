@@ -22,14 +22,14 @@ SDL_Colour Rune::colour(void) const
 {
     switch(_word->type())
     {
-        case WordType::AVerb:
+        case WordType::VERB:
             return VERB_COLOUR;
-        case WordType::ANoun:
-        case WordType::ANounPhrase:
+        case WordType::NOUN:
+        case WordType::NOUN_PHRASE:
             return NOUN_COLOUR;
-        case WordType::AnAdjective:
+        case WordType::ADJECTIVE:
             return ADJECTIVE_COLOUR;
-        case WordType::AnAdverb:
+        case WordType::ADVERB:
             return ADVERB_COLOUR;
         default:
             return MenuItem::colour();

@@ -51,7 +51,7 @@ class ViewManager
             const SDL_Rect* = nullptr
         );
         SDL_Renderer* renderer(void);
-        SDL_Rect viewPort(void);
+        SDL_Rect viewPort(void) const;
         AssetCache* assets(void);
         TTF_Font* font(void);
         SDL_Texture* formatFontTexture(const std::string, const SDL_Colour*);

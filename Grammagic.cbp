@@ -30,8 +30,6 @@
 		<Unit filename="magic/adjective.h" />
 		<Unit filename="magic/adverb.cpp" />
 		<Unit filename="magic/adverb.h" />
-		<Unit filename="magic/battleCommands.cpp" />
-		<Unit filename="magic/battleCommands.h" />
 		<Unit filename="magic/command.cpp" />
 		<Unit filename="magic/command.h" />
 		<Unit filename="magic/modifier.cpp" />
@@ -97,7 +95,6 @@
 		<Unit filename="res/enemy.png" />
 		<Unit filename="res/font.ttf" />
 		<Unit filename="res/grass.png" />
-		<Unit filename="res/hidden.png" />
 		<Unit filename="res/images/a-image.png" />
 		<Unit filename="res/images/a-portrait.png" />
 		<Unit filename="res/images/arrow-left.png" />
@@ -129,7 +126,6 @@
 		<Unit filename="res/strings.h" />
 		<Unit filename="res/templates.cpp" />
 		<Unit filename="res/templates.h" />
-		<Unit filename="res/valid.png" />
 		<Unit filename="res/wall.png" />
 		<Unit filename="rune.cpp" />
 		<Unit filename="rune.h" />

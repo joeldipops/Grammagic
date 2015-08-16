@@ -16,7 +16,7 @@ Adjective::Adjective(Selecter selecter, std::string n, Modifier e, Modifier c, M
  */
 WordType Adjective::type(void) const
 {
-    return WordType::AnAdjective;
+    return WordType::ADJECTIVE;
 }
 
 /**

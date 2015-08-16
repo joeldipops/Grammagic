@@ -18,7 +18,7 @@ namespace Play
             PC* addLeader(const Templates::PCTemplate&);
             PC* addMember(const Templates::PCTemplate&);
             PC* removeMemeber(PC*);
-
+            std::string onInspect(Party*);
             void buryTheDead(void);
             void endCombat(void);
 

@@ -3,16 +3,22 @@
 
 #include "../mapObject.h"
 #include "../globalConstants.h"
+#include "party.h"
 
-class Terrain : public MapObject
+namespace Play
 {
-    public:
-        Terrain(void);
-        Terrain(TerrainType);
-        TerrainType Type(void);
-    protected:
-        TerrainType Type(TerrainType);
-    private:
-        TerrainType _terrainType;
-};
+    class Terrain : public MapObject
+    {
+        public:
+            Terrain(void);
+            Terrain(TerrainType);
+            TerrainType type(void) const;
+            std::string onInspect(Party*);
+            std::string onEnter(Party*);
+
+        private:
+            TerrainType _terrainType;
+    };
+}
+
 #endif

@@ -34,7 +34,7 @@ Combatable* NounPhrase::acquireTarget(Mob* caster, BattleField* field)
 
 WordType NounPhrase::type(void) const
 {
-    return WordType::ANounPhrase;
+    return WordType::NOUN_PHRASE;
 }
 
 const std::vector<Word*> NounPhrase::components(void) const

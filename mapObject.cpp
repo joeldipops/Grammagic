@@ -1,5 +1,7 @@
 #include "mapObject.h"
 
+using namespace Play;
+
 MapObject::MapObject(void){}
 
 /**
@@ -7,13 +9,10 @@ MapObject::MapObject(void){}
  * @param name The filename.
  * @return the filename
  */
+std::string MapObject::imageFileName(void) const { return _imageFileName; }
 std::string MapObject::imageFileName(std::string name)
 {
     _imageFileName = name;
-    return _imageFileName;
-}
-const std::string MapObject::imageFileName(void) const
-{
     return _imageFileName;
 }
 
@@ -51,10 +50,7 @@ Location MapObject::location(const Location* loc)
  * @param x The horizontal co-ordinate of the map
  * @return
  */
-int MapObject::x(void) const
-{
-    return _x;
-}
+int MapObject::x(void) const { return _x; }
 int MapObject::x(int x_)
 {
     _x = x_;
@@ -66,10 +62,7 @@ int MapObject::x(int x_)
  * @param y The vertical co-ordinate on the map
  * @return
  */
-int MapObject::y(void) const
-{
-    return _y;
-}
+int MapObject::y(void) const { return _y; }
 int MapObject::y(int y_)
 {
     _y = y_;
@@ -81,12 +74,19 @@ int MapObject::y(int y_)
  * @param The density.
  * @return The density.
  */
-bool MapObject::isDense(void)
-{
-    return _isDense;
-}
+bool MapObject::isDense(void) { return _isDense; }
 bool MapObject::isDense(bool isDense_)
 {
     _isDense = isDense_;
     return _isDense;
+}
+
+/**
+ * Gets or sets the direction the mob is facing.
+ */
+Direction MapObject::facing(void) const { return _facing; }
+Direction MapObject::facing(Direction facing_)
+{
+    _facing = facing_;
+    return _facing;
 }

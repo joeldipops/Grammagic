@@ -164,6 +164,12 @@ bool PlayStateManager::processMovementState(void)
                     case SDLK_d:
                         hasUpdate = moveMob(pc, Core::InputPress::RIGHT);
                         break;
+                    case SDLK_LEFTBRACKET:
+                        hasUpdate = processCancel();
+                            break;
+                    case SDLK_RIGHTBRACKET:
+                        hasUpdate = processInspectCommand(_map->party());
+                        break;
                     case SDLK_RETURN:
                         hasUpdate = false;
                         state(PlayState::Menu);
@@ -190,6 +196,22 @@ bool PlayStateManager::processMovementState(void)
     return hasUpdate;
 }
 
+bool PlayStateManager::processInspectCommand(Party* party)
+{
+   //_message = "";
+   return false;
+}
+
+bool PlayStateManager::processCancel(void)
+{
+    if (_message.size() > 0)
+    {
+        _message = "";
+        return true;
+    }
+    return false;
+}
+
 /**
  * Moves the mob one cell in the requested direction, if possible.
  * @param mob The mob to be moved.
@@ -203,12 +225,16 @@ bool PlayStateManager::moveMob(MapObject* mob, Core::InputPress input)
     switch(input)
     {
         case Core::InputPress::UP:
+            mob->facing(Direction::NORTH);
             y--; break;
         case Core::InputPress::LEFT:
+            mob->facing(Direction::WEST);
             x--; break;
         case Core::InputPress::DOWN:
+            mob->facing(Direction::SOUTH);
             y++; break;
         case Core::InputPress::RIGHT:
+            mob->facing(Direction::EAST);
             x++; break;
     }
 
@@ -245,7 +271,7 @@ void PlayStateManager::render()
     SDL_RenderClear(renderer());
 
     _mapView->render(_map, state());
-    _controlView->render(_map->party()->leader(), state());
+    _controlView->render(_map->party()->leader(), state(), _message);
     _statsView->render(*_map, state());
     _miniMapView->render();
 

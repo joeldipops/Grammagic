@@ -3,35 +3,47 @@
 
 #include <string>
 
+#include "globalConstants.h"
 #include "util/utils.h"
 
 using namespace Util;
 
-class MapObject
+namespace Play
 {
-    public:
-        MapObject(void);
-        virtual ~MapObject(void) {};
-        bool isDense(void);
-        std::string imageFileName(std::string);
-        const std::string imageFileName(void) const;
+    class Party;
+    class MapObject
+    {
+        public:
+            MapObject(void);
+            virtual ~MapObject(void) {};
+            bool isDense(void);
+            std::string imageFileName(std::string);
+            std::string imageFileName(void) const;
 
-        Location location(int, int);
-        Location location(const Location*);
-        virtual int x(int);
-        virtual int x(void) const;
-        virtual int y(int);
-        virtual int y(void) const;
-        virtual bool isMob(void) const { return false; };
-        virtual bool isPlayerParty(void) const {return false;};
+            virtual std::string onInspect(Party*) = 0;
 
-    protected:
-        bool isDense(bool);
-    private:
-        bool _isDense;
-        std::string _imageFileName;
-        int _x;
-        int _y;
-};
+            Location location(int, int);
+            Location location(const Location*);
+
+            Direction facing(void) const;
+            Direction facing(Direction);
+
+            virtual int x(int);
+            virtual int x(void) const;
+            virtual int y(int);
+            virtual int y(void) const;
+            virtual bool isMob(void) const { return false; };
+            virtual bool isPlayerParty(void) const {return false;};
+
+        protected:
+            bool isDense(bool);
+        private:
+            bool _isDense;
+            std::string _imageFileName;
+            int _x;
+            int _y;
+            Direction _facing = Direction::NONE;
+    };
+}
 
 #endif

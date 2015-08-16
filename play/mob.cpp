@@ -24,6 +24,7 @@ Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
 
     _spellCommands = std::vector<Command>();
     _otherCommands = std::vector<Command>();
+    facing(Direction::SOUTH);
 }
 
 /**
@@ -33,29 +34,25 @@ Mob::~Mob()
 {
 }
 
+std::string Mob::onInspect(Party*)
+{
+    return "";
+}
+
 /**
  * Gets the type mob this is.
  */
-MobType Mob::type(void) const
-{
-    return _type;
-}
+MobType Mob::type(void) const { return _type; }
 
 /**
  * Gets the time, in milliseconds, at which a mob can perform commands again.
  */
-int Mob::unblockTime(void) const
-{
-    return _unblockTime;
-}
+int Mob::unblockTime(void) const { return _unblockTime; }
 
 /**
  * returns true if the mob is blocked from performing commands, otherwise false.
  */
-bool Mob::isBlocked(void) const
-{
-    return _isBlocked;
-}
+bool Mob::isBlocked(void) const { return _isBlocked; }
 
 /**
  * Blocks the mob from performing commands until a given amount of time has passed.

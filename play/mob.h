@@ -26,6 +26,7 @@ namespace Play
             bool isSensed(const MapObject&) const;
             bool isMob(void) const { return true; };
             virtual bool isPlayerControlled(void) const { return false; };
+            std::string onInspect(Party*);
 
             // Stats
             int rangeOfSense(int);

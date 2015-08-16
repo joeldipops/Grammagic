@@ -83,17 +83,26 @@ namespace Play
         PartySelected,
         SaveComplete
     };
+
+    enum Direction
+    {
+        NONE,
+        NORTH,
+        SOUTH,
+        EAST,
+        WEST
+    };
 }
 
 namespace Magic
 {
     enum WordType
     {
-        AVerb,
-        AnAdjective,
-        ANoun,
-        AnAdverb,
-        ANounPhrase
+        VERB,
+        ADJECTIVE,
+        NOUN,
+        ADVERB,
+        NOUN_PHRASE
     };
 }
 

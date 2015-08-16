@@ -37,13 +37,15 @@ namespace Play
 
             // Main Loop
             bool processMovementState(void);
+            bool processInspectCommand(Party*);
+            bool processCancel(void);
             bool moveMob(MapObject*, Core::InputPress);
 
             // other
             void exit(const Core::CoreState = Core::CoreState::Exit);
 
             // Properties
-            SDL_Window* _window = NULL;
+            std::string _message;
             ControlViewManager* _controlView = nullptr;
             StatsViewManager* _statsView = nullptr;
             ViewManager* _miniMapView = nullptr;

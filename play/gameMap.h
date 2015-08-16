@@ -17,15 +17,6 @@ namespace Play
 {
     class MapCell;
 
-    struct Boundary
-    {
-        bool IsOnAny;
-        bool IsOnNorth;
-        bool IsOnEast;
-        bool IsOnSouth;
-        bool IsOnWest;
-    };
-
     class GameMap
     {
         public:

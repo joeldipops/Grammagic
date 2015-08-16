@@ -9,6 +9,6 @@ Adverb::Adverb(std::string n, Modifier e, Modifier c, Modifier d)
 
 WordType Adverb::type(void) const
 {
-    return WordType::AnAdverb;
+    return WordType::ADVERB;
 }
 

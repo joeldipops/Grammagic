@@ -1,5 +1,7 @@
 #include "terrain.h"
 
+using namespace Play;
+
 /**
  * Empty Constructor
  */
@@ -30,21 +32,11 @@ Terrain::Terrain(TerrainType type)
 }
 
 /**
- *
- * @return
+ * Gets the type of terrain.
  */
-TerrainType Terrain::Type(void)
-{
-    return _terrainType;
-}
+TerrainType Terrain::type(void) const { return _terrainType; }
 
-/**
- *
- * @param type
- * @return
- */
-TerrainType Terrain::Type(TerrainType type)
+std::string Terrain::onInspect(Party*)
 {
-    _terrainType = type;
-    return _terrainType;
+    return "";
 }

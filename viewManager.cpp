@@ -2,6 +2,9 @@
 
 using namespace Util;
 
+// Constants
+//{
+
 const SDL_Colour ViewManager::hudColour = { 0x19, 0x19, 0x70, 0xFF };
 const SDL_Colour ViewManager::textColour = { 0x69, 0x69, 0x69, 0xFF };
 const SDL_Colour ViewManager::selectedColour = { 0xFF, 0xFF, 0xFF, 0xFF };
@@ -12,7 +15,9 @@ const SDL_Rect ViewManager::letterSize = SDL_Rect { 0, 0, 20, 40 };
 
 const int ViewManager::controlBorderWidth = 5;
 const int ViewManager::DEFAULT_BORDER_WIDTH = 7;
+//}
 
+//{LifeCycle
 /**
  * Constructor
  * @param renderer SDL Renderer for drawing within the view port.
@@ -35,6 +40,32 @@ ViewManager::~ViewManager(void)
     _assets = nullptr;
 }
 
+//}
+
+//{Properties
+/**
+ * @return the renderer object for use by sub classes
+ */
+SDL_Renderer* ViewManager::renderer(void) { return _renderer; }
+
+/**
+ * @return a copy of the viewport rectangle for use by sub classes
+ */
+SDL_Rect ViewManager::viewPort(void) const { return _viewPort; }
+
+/**
+ * @return the asset cache for use by sub classes.
+ */
+AssetCache* ViewManager::assets(void) { return _assets; }
+
+/**
+ * If a menu is being used, gives how many items vertically it has.
+ * @return Number of menu items per vertical column.
+ */
+int ViewManager::menuItemsPerColumn(void) const { return _menuItemsPerColumn; }
+//}
+
+//{Methods
 /**
  * Renders visual elements within the given view port.  Must be overriden for specific visuals.
  */
@@ -42,39 +73,6 @@ void ViewManager::render()
 {
     _menuItemsPerColumn = 0;
     SDL_RenderSetViewport(_renderer, &_viewPort);
-}
-
-/**
- * @return the renderer object for use by sub classes
- */
-SDL_Renderer* ViewManager::renderer(void)
-{
-    return _renderer;
-}
-
-/**
- * @return the viewport rectangle for use by sub classes
- */
-SDL_Rect ViewManager::viewPort(void)
-{
-    return _viewPort;
-}
-
-/**
- * @return the asset cache for use by sub classes.
- */
-AssetCache* ViewManager::assets(void)
-{
-    return _assets;
-}
-
-/**
- * If a menu is being used, gives how many items vertically it has.
- * @return Number of menu items per vertical column.
- */
-int ViewManager::menuItemsPerColumn(void) const
-{
-    return _menuItemsPerColumn;
 }
 
 
@@ -531,3 +529,4 @@ void ViewManager::drawSector(int icx, int icy, int r, int startDegree, int endDe
             i = 0;
     }
 }
+//}

@@ -2,6 +2,10 @@
 
 using namespace Magic;
 
+//{Lifecycle
+/**
+ * Constructor
+ */
 Word::Word(std::string name, Modifier effect, Modifier cost, Modifier duration)
 {
     _name = name;
@@ -10,45 +14,38 @@ Word::Word(std::string name, Modifier effect, Modifier cost, Modifier duration)
     _duration = duration;
 }
 
+/**
+ * Destructor
+ */
 Word::~Word(void) {}
+//}
 
-const std::string Word::name(void) const
-{
-    return _name;
-}
+//{Properties
+const std::string Word::name(void) const { return _name; }
 
-bool Word::isDummy(void) const
-{
-    return false;
-}
-
-
-const Modifier* Word::effect(void) const
-{
-    return &_effect;
-}
+const Modifier* Word::effect(void) const { return &_effect; }
 Modifier Word::effect(Modifier effect_)
 {
     _effect = effect_;
     return _effect;
 }
 
-const Modifier* Word::cost(void) const
-{
-    return &_cost;
-}
+const Modifier* Word::cost(void) const { return &_cost; }
 Modifier Word::cost(Modifier cost_)
 {
     _cost = cost_;
     return _cost;
 }
 
-const Modifier* Word::duration(void) const
-{
-    return &_duration;
-}
+const Modifier* Word::duration(void) const { return &_duration; }
 Modifier Word::duration(Modifier duration_)
 {
     _duration = duration_;
     return _duration;
+}
+//}
+
+bool Word::isDummy(void) const
+{
+    return false;
 }

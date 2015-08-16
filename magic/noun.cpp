@@ -11,7 +11,7 @@ Noun::Noun(MultiTargeter targeter, std::string n, Modifier e, Modifier c, Modifi
 
 WordType Noun::type(void) const
 {
-    return WordType::ANoun;
+    return WordType::NOUN;
 }
 
 

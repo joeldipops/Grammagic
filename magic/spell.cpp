@@ -8,6 +8,7 @@ using namespace Magic;
 DummyAdjective Spell::_dummy = DummyAdjective(Spell::_randomObj, "", Modifier(0, 1.0), Modifier(0, 1.0), Modifier(0, 1.0));
 
 
+//{Static Functions
 /**
  * Static function to determine if a list of words can be turned in to a valid spell.
  * @param A candidate list of spell components.
@@ -23,8 +24,8 @@ bool Spell::verify(std::vector<Word*> components)
     {
         switch(components.at(i)->type())
         {
-            case WordType::ANoun:
-            case WordType::ANounPhrase:
+            case WordType::NOUN:
+            case WordType::NOUN_PHRASE:
                 // Can't have more than one of each (yet)
                 if (hasTarget && hasSource)
                     return false;
@@ -33,13 +34,13 @@ bool Spell::verify(std::vector<Word*> components)
                 else
                     hasSource = true;
                 break;
-            case WordType::AnAdjective:
+            case WordType::ADJECTIVE:
                 if (hasTarget && hasSource)
                     return false;
                 // An adjective must be followed by a noun
                 if (components.size() <= i+1)
                     return false;
-                if (components.at(i+1)->type() != WordType::ANoun)
+                if (components.at(i+1)->type() != WordType::NOUN)
                     return false;
                 if (hasSource)
                     hasTarget = true;
@@ -48,7 +49,7 @@ bool Spell::verify(std::vector<Word*> components)
                 // We just did two components at once.
                 i++;
                 break;
-            case WordType::AVerb:
+            case WordType::VERB:
                 // Can't have more than one verb (yet)
                 if (hasAction)
                     return false;
@@ -62,22 +63,12 @@ bool Spell::verify(std::vector<Word*> components)
 
     return hasTarget && hasSource && hasAction;
 }
+//}
 
+//{LifeCycle
 /**
- * Destructor
+ * Constructor
  */
-Spell::~Spell(void)
-{
-    for (Word* w : _rubbishBin)
-    {
-        delete w;
-        w = nullptr;
-    }
-
-    _rubbishBin = std::vector<Word*>(0);
-}
-
-
 Spell::Spell(std::vector<Word*> components_)
 {
 
@@ -94,6 +85,29 @@ Spell::Spell(std::vector<Word*> components_)
     }
 }
 
+/**
+ * Destructor
+ */
+Spell::~Spell(void)
+{
+    for (Word* w : _rubbishBin)
+    {
+        delete w;
+        w = nullptr;
+    }
+
+    _rubbishBin = std::vector<Word*>(0);
+}
+//}
+
+//{Properties
+/**
+ * Gets a list of each word in the spell.
+ */
+const std::vector<Word*> Spell::components(void) const { return _components; }
+//}
+
+//{Methods
 /**
  * Takes the current component list and attempts to turn it in to a spell.
  * @return true if spell was valid, false otherwise.
@@ -129,7 +143,7 @@ bool Spell::edit(std::vector<Word*> components_)
         switch(components_.at(i)->type())
         {
             // If we encounter a noun without an adjective, use the dummy adjective.
-            case WordType::ANoun: {
+            case WordType::NOUN: {
                 if (source != nullptr && target != nullptr)
                     return false;
 
@@ -142,7 +156,7 @@ bool Spell::edit(std::vector<Word*> components_)
                     source = temp;
                 break;
             }
-            case WordType::ANounPhrase:
+            case WordType::NOUN_PHRASE:
                 // Can't have more than one of each (yet)
                 if (target != nullptr && source != nullptr)
                     return false;
@@ -151,13 +165,13 @@ bool Spell::edit(std::vector<Word*> components_)
                 else
                     source = (Nounish*) components_.at(i);
                 break;
-            case WordType::AnAdjective: {
+            case WordType::ADJECTIVE: {
                 if (target != nullptr && source != nullptr)
                     return false;
                 // An adjective must be followed by a noun
                 if (components_.size() <= i + 1)
                     return false;
-                if (components_.at(i+1)->type() != WordType::ANoun)
+                if (components_.at(i+1)->type() != WordType::NOUN)
                     return false;
 
                 NounPhrase* temp = new NounPhrase((Noun*)components_.at(i+1), (Adjective*)components_.at(i));
@@ -170,13 +184,13 @@ bool Spell::edit(std::vector<Word*> components_)
                 i++;
                 break;
             }
-            case WordType::AVerb:
+            case WordType::VERB:
                 // Can't have more than one verb (yet)
                 if (action != nullptr)
                     return false;
                 action = (Verb*) components_.at(i);
                 break;
-            case WordType::AnAdverb:
+            case WordType::ADVERB:
                 adverbs.push_back((Adverb*)components_.at(i));
                 break;
             default:
@@ -212,14 +226,6 @@ bool Spell::edit(std::vector<Word*> components_)
     _components = components_;
     return true;
 
-}
-
-/**
- * Gets a list of each word in the spell.
- */
-const std::vector<Word*> Spell::components(void) const
-{
-    return _components;
 }
 
 const Word* Spell::component(unsigned int index) const
@@ -344,4 +350,4 @@ int Spell::cast(Mob* caster, BattleField* battleField)
 
     return ceil(totalDuration / caster->speed());
 }
-
+//}

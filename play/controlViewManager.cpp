@@ -2,14 +2,18 @@
 
 ControlViewManager::ControlViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) : ViewManager(r, v, a) {}
 
-void ControlViewManager::render(const Mob* pc, Play::PlayState state)
+void ControlViewManager::render(const Mob* pc, Play::PlayState state, const std::string& message)
 {
     ViewManager::render();
     fillViewport(&hudColour);
     switch(state)
     {
         case Play::PlayState::Movement:
-            writeHeading(); break;
+            if (message.size() > 0)
+                writeMessage(message);
+            else
+                writeHeading();
+            break;
         case Play::PlayState::Combat: {
             if (pc == nullptr)
                 break;
@@ -27,6 +31,20 @@ void ControlViewManager::render(const Mob* pc, Play::PlayState state)
     }
 
     drawBorder(DEFAULT_BORDER_WIDTH, &textColour);
+}
+
+/**
+ * Draws a message in the view, such as dialogue or information
+ */
+void ControlViewManager::writeMessage(const std::string& message)
+{
+    SDL_Rect vp = viewPort();
+    vp.x = vp.x + 4;
+    vp.y = vp.y + 4;
+    vp.w = vp.w - 8;
+    vp.h = vp.h - 8;
+    SDL_Rect letterSize {0, 0, vp.h / 4, vp.h / 4};
+    drawMessage(message, letterSize, viewPort(), false);
 }
 
 void ControlViewManager::writeHeading(void)
