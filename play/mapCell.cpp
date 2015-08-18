@@ -46,6 +46,14 @@ MapObject* MapCell::contents(MapObject* contents_)
     return _contents;
 }
 
+PlayStateContainer& MapCell::onInspect(PlayStateContainer& data)
+{
+    if (_contents != nullptr)
+        return _contents->onInspect(data);
+    else
+        return _terrain.onInspect(data);
+}
+
 /**
  * Removes any mobs from this cell.
  */

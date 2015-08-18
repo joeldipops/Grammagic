@@ -159,5 +159,10 @@ float TargetAll::getDistribution(float amount) const
         return 0;
     return amount / float(_all.size());
 }
+
+void TargetAll::endCombat(void)
+{
+    return;
+}
 //}
 

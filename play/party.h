@@ -17,8 +17,8 @@ namespace Play
             const std::vector<PC*> members(void) const;
             PC* addLeader(const Templates::PCTemplate&);
             PC* addMember(const Templates::PCTemplate&);
-            PC* removeMemeber(PC*);
-            std::string onInspect(Party*);
+            PC* removeMember(PC*);
+            PlayStateContainer& onInspect(PlayStateContainer&);
             void buryTheDead(void);
             void endCombat(void);
 

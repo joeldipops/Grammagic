@@ -25,6 +25,8 @@ namespace Magic
             virtual float defence(void) const;
             virtual float skill(void) const;
 
+            void endCombat(void);
+
         private:
             float getDistribution(float) const;
             float calculateMean(std::vector<float>) const;

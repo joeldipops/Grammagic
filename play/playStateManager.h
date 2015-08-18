@@ -19,6 +19,13 @@
 
 namespace Play
 {
+    struct PlayStateContainer
+    {
+        PlayState State;
+        std::string Message;
+        GameMap* Map;
+    };
+
     class PlayStateManager : public Core::StateManager<PlayState, Core::CoreState>
     {
         public:

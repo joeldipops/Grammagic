@@ -47,9 +47,9 @@ const std::vector<PC*> Party::members(void) const { return _members; }
 //}
 
 //{Methods
-std::string Party::onInspect(Party*)
+PlayStateContainer& Party::onInspect(PlayStateContainer& data)
 {
-    return "";
+    return data;
 }
 
 void Party::buryTheDead(void)

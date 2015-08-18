@@ -1,4 +1,5 @@
 #include "mob.h"
+#include "playStateManager.h"
 
 using namespace Magic;
 using namespace Play;
@@ -34,9 +35,10 @@ Mob::~Mob()
 {
 }
 
-std::string Mob::onInspect(Party*)
+PlayStateContainer& Mob::onInspect(PlayStateContainer& data)
 {
-    return "";
+    data.Message = "I'm a mob";
+    return data;
 }
 
 /**
@@ -414,6 +416,7 @@ float Mob::changeSpeed(float multiplier)
 void Mob::endCombat(void)
 {
     unblock();
+    isInCombat(false);
     _speedMultiplier = 1.0;
     _resistanceMultiplier = 1.0;
     _defenceMultiplier = 1.0;

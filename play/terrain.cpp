@@ -1,4 +1,5 @@
 #include "terrain.h"
+#include "playStateManager.h"
 
 using namespace Play;
 
@@ -36,7 +37,8 @@ Terrain::Terrain(TerrainType type)
  */
 TerrainType Terrain::type(void) const { return _terrainType; }
 
-std::string Terrain::onInspect(Party*)
+PlayStateContainer& Terrain::onInspect(PlayStateContainer& data)
 {
-    return "";
+    data.Message = "I'm a terrain";
+    return data;
 }

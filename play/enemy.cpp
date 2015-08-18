@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include "playStateManager.h"
 
 using namespace Play;
 
@@ -69,6 +70,13 @@ void Enemy::aiAct(BattleField* field)
 {
     int dur = _combatAction(this, field);
     block(SDL_GetTicks() + (dur / speed()));
+}
+
+PlayStateContainer& Enemy::onInspect(PlayStateContainer& data)
+{
+    data.State = PlayState::Combat;
+    isInCombat(true);
+    return data;
 }
 
 int Enemy::movementDelay(void) const { return _movementDelay; }

@@ -61,6 +61,12 @@ BattleField::BattleField(GameMap* map_)
         if (m->isPlayerControlled())
             continue;
 
+        if (m->isInCombat())
+        {
+            _hostiles.push_back(m);
+            continue;
+        }
+
         // If a mob can see any party member, that mob should be in the combat.
         for (const PC* pc : map_->party()->members())
         {

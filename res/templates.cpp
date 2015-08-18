@@ -85,7 +85,7 @@ const EnemyTemplate GetE2()
     result.Resistance = .9;
     result.Defence = 1.0;
     result.Skill = 1.2;
-    result.RangeOfSense = 2;
+    result.RangeOfSense = 0;
     result.RangeOfSight = 2;
     result.AttackDelay = 3000;
     result.MovementDelay = 3000;
@@ -104,8 +104,8 @@ const EnemyTemplate GetB1()
     result.Resistance = 1.5;
     result.Defence = 2.0;
     result.Skill = 1.5;
-    result.RangeOfSense = 1;
-    result.RangeOfSight = 1;
+    result.RangeOfSense = 4;
+    result.RangeOfSight = 0;
     result.AttackDelay = 3000;
     result.MovementDelay = 2000;
     return result;

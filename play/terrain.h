@@ -13,7 +13,7 @@ namespace Play
             Terrain(void);
             Terrain(TerrainType);
             TerrainType type(void) const;
-            std::string onInspect(Party*);
+            PlayStateContainer& onInspect(PlayStateContainer&);
             std::string onEnter(Party*);
 
         private:

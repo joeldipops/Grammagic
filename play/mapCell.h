@@ -16,6 +16,7 @@ namespace Play
             const Terrain* terrain(void) const;
             MapObject* contents(MapObject* = nullptr);
             MapObject* contents(void) const;
+            PlayStateContainer& onInspect(PlayStateContainer&);
             void empty(void);
 
         private:

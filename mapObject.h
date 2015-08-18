@@ -11,6 +11,7 @@ using namespace Util;
 namespace Play
 {
     class Party;
+    struct PlayStateContainer;
     class MapObject
     {
         public:
@@ -20,7 +21,7 @@ namespace Play
             std::string imageFileName(std::string);
             std::string imageFileName(void) const;
 
-            virtual std::string onInspect(Party*) = 0;
+            virtual PlayStateContainer& onInspect(PlayStateContainer&) = 0;
 
             Location location(int, int);
             Location location(const Location*);

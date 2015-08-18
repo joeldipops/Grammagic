@@ -15,7 +15,11 @@ class Combatable
         virtual float resistance(void) const = 0;
         virtual float defence(void) const = 0;
         virtual float skill(void) const = 0;
-        virtual void endCombat(void) { return; };
+        virtual bool isInCombat(void) {return _isInCombat; };
+        virtual bool isInCombat(bool isInCombat_) {_isInCombat = isInCombat_; return _isInCombat; };
+        virtual void endCombat(void) = 0;
+    private:
+        bool _isInCombat;
 };
 
 #endif

@@ -198,8 +198,31 @@ bool PlayStateManager::processMovementState(void)
 
 bool PlayStateManager::processInspectCommand(Party* party)
 {
-   //_message = "";
-   return false;
+    int x = party->x();
+    int y = party->y();
+    switch(party->facing())
+    {
+        case Direction::NORTH:
+            y--; break;
+        case Direction::SOUTH:
+            y++; break;
+        case Direction::EAST:
+            x++; break;
+        case Direction::WEST:
+            x--; break;
+        default: break;
+    }
+
+    PlayStateContainer data;
+    data.Message = _message;
+    data.State = state();
+    data.Map = _map;
+
+    data = _map->onInspect(x, y, data);
+
+    _message = data.Message;
+    state(data.State);
+    return true;
 }
 
 bool PlayStateManager::processCancel(void)

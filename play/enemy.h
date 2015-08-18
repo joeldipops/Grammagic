@@ -17,6 +17,7 @@ namespace Play
             Enemy(const Templates::EnemyTemplate&);
             bool aiMove(GameMap&);
             void aiAct(BattleField*);
+            PlayStateContainer& onInspect(PlayStateContainer&);
             int movementDelay(void) const;
             int combatDelay(void) const;
             float physicalStrength(void) const;

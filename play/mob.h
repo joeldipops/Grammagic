@@ -26,7 +26,7 @@ namespace Play
             bool isSensed(const MapObject&) const;
             bool isMob(void) const { return true; };
             virtual bool isPlayerControlled(void) const { return false; };
-            std::string onInspect(Party*);
+            virtual PlayStateContainer& onInspect(PlayStateContainer&);
 
             // Stats
             int rangeOfSense(int);
@@ -86,7 +86,6 @@ namespace Play
 
         private:
             MobType _type;
-
             int _stamina;
             short _maxStamina;
             int _rangeOfSight;

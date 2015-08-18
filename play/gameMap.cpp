@@ -300,6 +300,11 @@ bool GameMap::moveMob(MapObject* mob, Location loc)
     return moveMob(mob, loc.X, loc.Y);
 }
 
+PlayStateContainer& GameMap::onInspect(int x, int y, PlayStateContainer& data)
+{
+    return getCell(x, y)->onInspect(data);
+}
+
 /**
  * removes a mob from the map.
  */
