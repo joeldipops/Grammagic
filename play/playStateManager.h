@@ -44,6 +44,7 @@ namespace Play
 
             // Main Loop
             bool processMovementState(void);
+            bool processMessage(void);
             bool processInspectCommand(Party*);
             bool processCancel(void);
             bool moveMob(MapObject*, Core::InputPress);

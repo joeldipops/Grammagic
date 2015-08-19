@@ -7,11 +7,10 @@ using namespace Play;
  * Constructor
  */
 Party::Party(void)
-    :MapObject()
+    :MapObject(Templates::MapObjectTemplate {"", true, nullptr})
 {
     _members = std::vector<PC*>(0);
     _bench = std::vector<PC*>(0);
-    isDense(true);
     x(0);
     y(0);
     facing(Direction::SOUTH);
@@ -21,7 +20,7 @@ Party::Party(void)
  * Constructor takes list of members.
  */
 Party::Party(std::vector<PC*> members_)
-    :MapObject()
+    :MapObject(Templates::MapObjectTemplate {"", true, nullptr})
 {
     _members = members_;
     if (_members.size() > 0)

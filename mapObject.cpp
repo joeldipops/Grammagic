@@ -2,7 +2,11 @@
 
 using namespace Play;
 
-MapObject::MapObject(void){}
+MapObject::MapObject(const Templates::MapObjectTemplate& tmpl)
+{
+    _isDense = tmpl.IsDense;
+    _imageFileName = tmpl.ImagePath;
+}
 
 /**
  * Sets and gets the path to this object's image.

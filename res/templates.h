@@ -13,18 +13,30 @@ namespace Play
 {
     class Mob;
     class BattleField;
+    struct PlayStateContainer;
     typedef int (*AiAction)(Mob* actor, BattleField* field);
+    typedef PlayStateContainer& (*PlayEventHandler)(PlayStateContainer&);
 }
 
 namespace Templates
 {
     struct Commands;
+
+    /**
+     * The default/initial properties and handlers of any map object
+     */
+    struct MapObjectTemplate
+    {
+        std::string ImagePath;
+        bool IsDense;
+        Play::PlayEventHandler OnInspect;
+    };
+
     /**
      * The default / initial properties and stats of a mob
      */
-    struct MobTemplate
+    struct MobTemplate : public MapObjectTemplate
     {
-        std::string ImagePath;
         std::string PortraitPath;
         short Stamina;
         float Speed;
@@ -53,6 +65,11 @@ namespace Templates
         int AttackDelay;
         int MovementDelay;
         Play::AiAction CombatAction;
+    };
+
+    struct TerrainTemplate : public MapObjectTemplate
+    {
+        Play::PlayEventHandler OnEnter;
     };
 
     struct Data

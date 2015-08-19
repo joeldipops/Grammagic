@@ -34,6 +34,7 @@ namespace Play
         private:
             std::vector<PC*> _members;
             std::vector<PC*> _bench;
+            static Templates::MapObjectTemplate ctrTmpl;
 
     };
 }

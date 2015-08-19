@@ -5,6 +5,7 @@ using namespace Magic;
 using namespace Play;
 
 Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
+    :MapObject(tmpl)
 {
     _type = type_;
     _maxStamina = tmpl.Stamina;

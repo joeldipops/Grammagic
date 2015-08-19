@@ -60,6 +60,7 @@ namespace Play
         Menu,
         Combat,
         Movement,
+        Message,
         Victory,
         GameOver,
         Exit
@@ -106,13 +107,13 @@ namespace Magic
     };
 }
 
-const int WIDTH = 1200;
-const int HEIGHT = 800;
 const int CELL_WIDTH = 50;
 const int CELL_HEIGHT = 50;
+const unsigned int WIDTH = 1200;
+const unsigned int HEIGHT = 800;
 const std::string RESOURCE_LOCATION = "res/images/";
 
-const int BITS_PER_PIXEL = 32;
+const unsigned int BITS_PER_PIXEL = 32;
 const std::string SAVE_FILE = "grammagic.save";
 
 

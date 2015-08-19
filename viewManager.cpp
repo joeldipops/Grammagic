@@ -119,9 +119,11 @@ void ViewManager::drawHorizontalControls(
  * @param letterSize The average size of one letter or space.
  * @param maximum The maximum amount of area allowed for the message.
  * @param border If true, a border will be drawn around the message.
+ * @return The number of characters shown.
  */
-void ViewManager::drawMessage(const std::string& message, const SDL_Rect& letterSize, const SDL_Rect& maximum, bool showBorder)
+unsigned int ViewManager::drawMessage(const std::string& message, const SDL_Rect& letterSize, const SDL_Rect& maximum, bool showBorder)
 {
+    unsigned int result = 0;
     const int paddingX = 10;
     const int paddingY = 5;
     SDL_Rect outer { maximum.x, maximum.y, 0, 0};
@@ -136,6 +138,7 @@ void ViewManager::drawMessage(const std::string& message, const SDL_Rect& letter
         outer.h = inner.h + paddingY * 2;
 
         drawOptionBox(&inner, message, 0, &hudColour, &selectedColour, &selectedColour);
+        result = message.length();
     }
     else
     {
@@ -159,18 +162,22 @@ void ViewManager::drawMessage(const std::string& message, const SDL_Rect& letter
                 if (rect.y + rect.h > maxY)
                     break;
             }
+
             rect.w = width;
 
             drawOptionBox(&rect, word, 0, &hudColour, &invisible, &selectedColour);
 
 
             rect.x = rect.x + rect.w + letterSize.w;
+            result += word.length() + 1;
         }
         outer.h = rect.y + rect.h + paddingY - outer.y;
     }
 
     if (showBorder)
         drawBorder(outer, 3, &selectedColour, true);
+
+    return result;
 }
 
 /**

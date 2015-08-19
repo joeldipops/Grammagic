@@ -4,11 +4,13 @@ ControlViewManager::ControlViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* 
 
 void ControlViewManager::render(const Mob* pc, Play::PlayState state, const std::string& message)
 {
+    _lastDrawnCharCount = 0;
     ViewManager::render();
     fillViewport(&hudColour);
     switch(state)
     {
         case Play::PlayState::Movement:
+        case Play::PlayState::Message:
             if (message.size() > 0)
                 writeMessage(message);
             else
@@ -44,7 +46,7 @@ void ControlViewManager::writeMessage(const std::string& message)
     vp.w = vp.w - 8;
     vp.h = vp.h - 8;
     SDL_Rect letterSize {0, 0, vp.h / 4, vp.h / 4};
-    drawMessage(message, letterSize, viewPort(), false);
+    _lastDrawnCharCount = drawMessage(message, letterSize, viewPort(), false);
 }
 
 void ControlViewManager::writeHeading(void)
@@ -53,3 +55,5 @@ void ControlViewManager::writeHeading(void)
     SDL_Rect textArea = SDL_Rect { viewPort().x + 20, viewPort().y + 5, viewPort().w - 40, viewPort().h - 10 };
     SDL_RenderCopy(renderer(), texture, NULL, &textArea);
 }
+
+unsigned int ControlViewManager::lastDrawnCharCount(void) const { return _lastDrawnCharCount; }

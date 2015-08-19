@@ -15,10 +15,13 @@ class ControlViewManager : public ViewManager
     public:
         ControlViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
         void render(const Mob*, Play::PlayState, const std::string& = "");
+        unsigned int lastDrawnCharCount(void) const;
 
     private:
         void writeHeading(void);
         void writeMessage(const std::string&);
+        unsigned int _lastDrawnCharCount;
+
 };
 
 class MapViewManager : public ViewManager

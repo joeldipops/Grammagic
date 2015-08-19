@@ -86,6 +86,9 @@ Core::CoreState PlayStateManager::start(Party& party)
 
         switch(state())
         {
+            case PlayState::Message:
+                rerender = processMessage();
+                continue;
             case PlayState::Menu:
                 state(menuManager.start(party));
                 continue;
@@ -107,6 +110,43 @@ Core::CoreState PlayStateManager::start(Party& party)
     }
 
     return result();
+}
+
+/**
+ * Shows a message if one exists and waits for a button press.
+ */
+bool PlayStateManager::processMessage(void)
+{
+    SDL_Event event;
+    PlayState oldState = state();
+    Util::sleep(50);
+    bool result = false;
+    while(SDL_PollEvent(&event) != 0 && oldState == state())
+    {
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                _message = "";
+                exit();
+                return false;
+            case SDL_KEYDOWN:
+                switch(event.key.keysym.sym)
+                {
+                   case SDLK_LEFTBRACKET:
+                   case SDLK_RIGHTBRACKET:
+                        result = true;
+                        if (_message.length() < _controlView->lastDrawnCharCount())
+                            _message = "";
+                        else
+                            _message = _message.substr(_controlView->lastDrawnCharCount());
+                        break;
+                }
+        }
+    }
+    if (_message == "")
+        state(PlayState::Movement);
+
+    return result;
 }
 
 /**
@@ -166,7 +206,7 @@ bool PlayStateManager::processMovementState(void)
                         break;
                     case SDLK_LEFTBRACKET:
                         hasUpdate = processCancel();
-                            break;
+                        break;
                     case SDLK_RIGHTBRACKET:
                         hasUpdate = processInspectCommand(_map->party());
                         break;

@@ -58,7 +58,7 @@ class ViewManager
         std::string displayMultiplier(float) const;
 
         void drawSector(int cx, int cy, int r, int degStart, int degEnd);
-        void drawMessage(const std::string&, const SDL_Rect&, const SDL_Rect&, bool shrinkToFit = false);
+        unsigned int drawMessage(const std::string&, const SDL_Rect&, const SDL_Rect&, bool shrinkToFit = false);
 
     private:
         void addToQuad(std::vector<std::vector<Util::Location>>&,int, int, int, int);

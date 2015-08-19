@@ -5,6 +5,7 @@
 
 #include "globalConstants.h"
 #include "util/utils.h"
+#include "res/templates.h"
 
 using namespace Util;
 
@@ -12,10 +13,12 @@ namespace Play
 {
     class Party;
     struct PlayStateContainer;
+    struct MapObjectTemplate;
+    typedef PlayStateContainer& (*PlayEventHandler)(PlayStateContainer&);
     class MapObject
     {
         public:
-            MapObject(void);
+            MapObject(const Templates::MapObjectTemplate&);
             virtual ~MapObject(void) {};
             bool isDense(void);
             std::string imageFileName(std::string);

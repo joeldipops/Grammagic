@@ -6,13 +6,16 @@ using namespace Play;
 /**
  * Empty Constructor
  */
-Terrain::Terrain(){}
+Terrain::Terrain()
+    :MapObject(Templates::MapObjectTemplate{"", true, nullptr})
+{}
 
 /**
  * Constructor
  * @param type
  */
 Terrain::Terrain(TerrainType type)
+    :MapObject(Templates::MapObjectTemplate{ "", false, nullptr})
 {
     _terrainType = type;
     switch(_terrainType)
@@ -39,6 +42,5 @@ TerrainType Terrain::type(void) const { return _terrainType; }
 
 PlayStateContainer& Terrain::onInspect(PlayStateContainer& data)
 {
-    data.Message = "I'm a terrain";
     return data;
 }
