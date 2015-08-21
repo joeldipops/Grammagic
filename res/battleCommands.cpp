@@ -77,7 +77,7 @@ static Combatable* all(Mob* caster, BattleField* field, std::vector<Combatable*>
     bool isPlayerAllied = field->areAllied(caster, field->pcs().at(0));
 
     // Should the target be considered an ally or an of the caster?
-    unsigned int allyCount = 0;
+    natural allyCount = 0;
     for (const Combatable* c : candidates)
     {
         if (field->areAllied(caster, c))
@@ -96,7 +96,7 @@ static Combatable* all(Mob* caster, BattleField* field, std::vector<Combatable*>
 static Combatable* exposed(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = candidates.at(i);
 
@@ -112,7 +112,7 @@ static Combatable* exposed(Mob* caster, BattleField* battleField, std::vector<Co
 static Combatable* warded(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = (Combatable*) candidates.at(i);
 
@@ -128,7 +128,7 @@ static Combatable* warded(Mob* caster, BattleField* battleField, std::vector<Com
 static Combatable* vulnerable(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = candidates.at(i);
 
@@ -144,7 +144,7 @@ static Combatable* vulnerable(Mob* caster, BattleField* battleField, std::vector
 static Combatable* guarded(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = candidates.at(i);
 
@@ -161,7 +161,7 @@ static Combatable* guarded(Mob* caster, BattleField* battleField, std::vector<Co
 static Combatable* freshest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = candidates.at(i);
 
@@ -177,7 +177,7 @@ static Combatable* freshest(Mob* caster, BattleField* battleField, std::vector<C
 static Combatable* sickest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = candidates.at(i);
 
@@ -194,7 +194,7 @@ static Combatable* sickest(Mob* caster, BattleField* battleField, std::vector<Co
 static Combatable* strongest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = candidates.at(i);
 
@@ -210,7 +210,7 @@ static Combatable* strongest(Mob* caster, BattleField* battleField, std::vector<
 static Combatable* weakest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = candidates.at(i);
 
@@ -227,7 +227,7 @@ static Combatable* weakest(Mob* caster, BattleField* battleField, std::vector<Co
 static Combatable* fastest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = candidates.at(i);
 
@@ -243,7 +243,7 @@ static Combatable* fastest(Mob* caster, BattleField* battleField, std::vector<Co
 static Combatable* slowest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
 {
     Combatable* result = nullptr;
-    for(unsigned int i = 0; i < candidates.size(); i++)
+    for(natural i = 0; i < candidates.size(); i++)
     {
         Combatable* mob = candidates.at(i);
 
@@ -339,7 +339,7 @@ int Commands::ATTACK(Command* command, Mob* actor, BattleField* field)
     const int ATTACK_DURATION = 1000;
     // A limit to stop us looping forever if we are implausibly unlucky.
     const int randFail = 10;
-    unsigned int iter = 0;
+    natural iter = 0;
     while(iter < randFail)
     {
         int i = rand() % field->combatants().size();

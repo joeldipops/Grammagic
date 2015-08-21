@@ -12,7 +12,7 @@ void StatsViewManager::render(const GameMap& gameMap, const Play::PlayState stat
     SDL_Rect rect;
     SDL_Rect port = SDL_Rect {1, 1, (viewPort().w / 2) - 5, 80};
 
-    for(unsigned int i = 0; i < gameMap.party()->members().size(); i++)
+    for(natural i = 0; i < gameMap.party()->members().size(); i++)
     {
         const PC* pc = gameMap.party()->members().at(i);
         const SDL_Colour* colour = state == PlayState::Combat && selectedMemberIndex != int(i)

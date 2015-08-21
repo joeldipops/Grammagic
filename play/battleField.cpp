@@ -25,7 +25,7 @@ BattleField::BattleField(GameMap* map_)
     int indexX = startX;
     int indexY = startY;
     bool startChecking = false;
-    unsigned int partyIndex = 1;
+    natural partyIndex = 1;
 
     int partyX = map_->party()->x();
     int partyY = map_->party()->y();
@@ -52,7 +52,7 @@ BattleField::BattleField(GameMap* map_)
     }
 
     // Any enemies that can see any member of the party should be in the combat.
-    for(unsigned int i = 1; i < map_->contents().size(); i++)
+    for(natural i = 1; i < map_->contents().size(); i++)
     {
         if (!map_->contents().at(i)->isMob())
             continue;
@@ -164,7 +164,7 @@ std::vector<Mob*> BattleField::getDue(void)
         // Now is the time to clean up dead mobs.
         if (item->stamina() <= 0)
         {
-            unsigned int i;
+            natural i;
             for (i = 0; i < _hostiles.size(); i++)
                 if (item == _hostiles.at(i))
                     _hostiles.erase(_hostiles.begin() + i);

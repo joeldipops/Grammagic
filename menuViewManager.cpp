@@ -118,11 +118,11 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex, int selecte
 {
     bool isOrdering = selectedPosition >= 0 && memberIndex >= 0;
     SDL_Rect templateRect{ _partyVp.x + cursorXOffset, _partyVp.y, _partyVp.w - cursorXOffset, 150 };
-    for (unsigned int i = 0; i < party.members().size(); i++)
+    for (natural i = 0; i < party.members().size(); i++)
     {
-        unsigned int position = i;
-        unsigned int uMemberIndex = memberIndex;
-        unsigned int uSelectedPosition = selectedPosition;
+        natural position = i;
+        natural uMemberIndex = memberIndex;
+        natural uSelectedPosition = selectedPosition;
         if (isOrdering)
         {
             if (uMemberIndex == i)

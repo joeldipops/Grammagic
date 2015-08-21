@@ -56,4 +56,4 @@ void ControlViewManager::writeHeading(void)
     SDL_RenderCopy(renderer(), texture, NULL, &textArea);
 }
 
-unsigned int ControlViewManager::lastDrawnCharCount(void) const { return _lastDrawnCharCount; }
+natural ControlViewManager::lastDrawnCharCount(void) const { return _lastDrawnCharCount; }

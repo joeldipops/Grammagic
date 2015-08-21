@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <string>
+#include "core.h"
 
 enum MobType
 {
@@ -109,11 +110,11 @@ namespace Magic
 
 const int CELL_WIDTH = 50;
 const int CELL_HEIGHT = 50;
-const unsigned int WIDTH = 1200;
-const unsigned int HEIGHT = 800;
+const natural WIDTH = 1200;
+const natural HEIGHT = 800;
 const std::string RESOURCE_LOCATION = "res/images/";
 
-const unsigned int BITS_PER_PIXEL = 32;
+const natural BITS_PER_PIXEL = 32;
 const std::string SAVE_FILE = "grammagic.save";
 
 

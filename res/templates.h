@@ -43,8 +43,8 @@ namespace Templates
         float Resistance;
         float Defence;
         float Skill;
-        unsigned int RangeOfSense;
-        unsigned int RangeOfSight;
+        natural RangeOfSense;
+        natural RangeOfSight;
         std::vector<Magic::Command*> Commands;
     };
 

@@ -52,11 +52,11 @@ namespace Play
             std::map<int, MapCell>* cells(std::map<int, MapCell>* = nullptr);
             void removeChunk(int x, int y);
 
-            static const unsigned int CHUNK_LIMIT = 5;
-            static const unsigned int CHUNK_WIDTH = 40;
-            static const unsigned int CHUNK_HEIGHT = 40;
-            static const unsigned int HORIZONTAL_VISION = 10;
-            static const unsigned int VERTICAL_VISION = 6;
+            static const natural CHUNK_LIMIT = 5;
+            static const natural CHUNK_WIDTH = 40;
+            static const natural CHUNK_HEIGHT = 40;
+            static const natural HORIZONTAL_VISION = 10;
+            static const natural VERTICAL_VISION = 6;
 
             std::vector<MapObject*> _contents;
             std::map<unsigned long, MapCell> _cells;

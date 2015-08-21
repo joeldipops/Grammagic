@@ -20,7 +20,7 @@ GameMap::GameMap()
 GameMap::~GameMap()
 {
     // One as PC is a special case
-    for(unsigned int i = 1; i < _contents.size(); i++)
+    for(natural i = 1; i < _contents.size(); i++)
         kill(_contents.at(i));
     _contents = std::vector<MapObject*>(0);
 }
@@ -107,7 +107,7 @@ bool GameMap::loadChunk(int cX, int cY, std::string path)
 
     bool wasFound = false;
     // Check if this chunk is already in memory.
-    for (unsigned int i = 0; i < _chunks.size(); i++)
+    for (natural i = 0; i < _chunks.size(); i++)
     {
         SDL_Rect chunk = _chunks.at(i);
         if (chunk.x == cX && chunk.y == cY)
@@ -165,7 +165,7 @@ bool GameMap::loadChunk(int cX, int cY, std::string path)
         {
             for (int x = 0; x < oldWidth; x++)
             {
-                unsigned int index = x + (oldWidth * y);
+                natural index = x + (oldWidth * y);
                 if (_cells.count(index) <= 0)
                     continue;
 
@@ -182,7 +182,7 @@ bool GameMap::loadChunk(int cX, int cY, std::string path)
         _maxX = oldMaxX;
 
     // - 1 to avoid some text-file artifact I'm getting
-    for (unsigned int i = 0; i < mapData.size() -1; i+= MapFileBlock::BYTES_PER_CELL)
+    for (natural i = 0; i < mapData.size() -1; i+= MapFileBlock::BYTES_PER_CELL)
     {
         int position = i / MapFileBlock::BYTES_PER_CELL;
         int x = (position % CHUNK_WIDTH) + cX * CHUNK_WIDTH;
@@ -315,7 +315,7 @@ void GameMap::remove(MapObject* mob)
     if (cell != nullptr)
         cell->empty();
 
-    for (unsigned int i = 0; i < _contents.size(); i++)
+    for (natural i = 0; i < _contents.size(); i++)
     {
         if (mob == _contents.at(i))
             _contents.erase(_contents.begin() + i);
@@ -338,7 +338,7 @@ void GameMap::kill(MapObject* mob)
 void GameMap::buryTheDead(void)
 {
     MapObject* m;
-    for(unsigned int i = 0; i < _contents.size(); i++)
+    for(natural i = 0; i < _contents.size(); i++)
     {
         party()->buryTheDead();
         m = _contents.at(i);
@@ -364,7 +364,7 @@ void GameMap::buryTheDead(void)
  */
 MapCell* GameMap::getCell(int x, int y)
 {
-    unsigned int index = x + (y * width());
+    natural index = x + (y * width());
     if (_cells.count(index) > 0)
         return &_cells.at(index);
 
@@ -373,7 +373,7 @@ MapCell* GameMap::getCell(int x, int y)
 
 const MapCell* GameMap::getCell(int x, int y) const
 {
-    unsigned int index = x + (y * width());
+    natural index = x + (y * width());
     if (_cells.count(index) >= 1)
         return &_cells.at(index);
 
@@ -382,7 +382,7 @@ const MapCell* GameMap::getCell(int x, int y) const
 
 void GameMap::setCell(int x, int y, MapCell* value)
 {
-    unsigned int index = x + (y * width());
+    natural index = x + (y * width());
     _cells[index] = *value;
 }
 
@@ -396,9 +396,9 @@ void GameMap::removeChunk(int cX, int cY)
     int startX = cX * CHUNK_WIDTH;
     int startY = cY * CHUNK_HEIGHT;
 
-    for (unsigned int y = startY; y < startY + CHUNK_HEIGHT; y++)
+    for (natural y = startY; y < startY + CHUNK_HEIGHT; y++)
     {
-        for (unsigned int x = startX; x < startX + CHUNK_WIDTH; x++)
+        for (natural x = startX; x < startX + CHUNK_WIDTH; x++)
         {
             int index = x + (y * width());
             if (_cells.count(index) >= 1)

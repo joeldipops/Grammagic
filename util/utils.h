@@ -8,10 +8,10 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include "../core.h"
 
 namespace Util
 {
-    typedef unsigned char byte;
     // TODO Learn to do operator overloading to make this prettier
     template<typename N>
     struct Nullable
@@ -86,7 +86,7 @@ namespace Util
     {
         std::vector<const T*> result = std::vector<const T*>(0);
         result.reserve(source.size());
-        for (unsigned int i = 0; i < source.size(); i++)
+        for (natural i = 0; i < source.size(); i++)
         {
             result.push_back(&source.at(i));
         }

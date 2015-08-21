@@ -121,9 +121,9 @@ void ViewManager::drawHorizontalControls(
  * @param border If true, a border will be drawn around the message.
  * @return The number of characters shown.
  */
-unsigned int ViewManager::drawMessage(const std::string& message, const SDL_Rect& letterSize, const SDL_Rect& maximum, bool showBorder)
+natural ViewManager::drawMessage(const std::string& message, const SDL_Rect& letterSize, const SDL_Rect& maximum, bool showBorder)
 {
-    unsigned int result = 0;
+    natural result = 0;
     const int paddingX = 10;
     const int paddingY = 5;
     SDL_Rect outer { maximum.x, maximum.y, 0, 0};
@@ -190,7 +190,7 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
     // Cast MenuItems to const before calling.
     std::vector<const MenuItem*> cItems = std::vector<const MenuItem*>(0);
     cItems.reserve(items->size());
-    for (unsigned int i = 0; i < items->size(); i++)
+    for (natural i = 0; i < items->size(); i++)
     {
         const MenuItem* n = items->at(i);
         cItems.push_back(n);

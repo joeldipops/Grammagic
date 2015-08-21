@@ -20,7 +20,7 @@ bool Spell::verify(std::vector<Word*> components)
     bool hasSource = false;
     bool hasAction = false;
 
-    for (unsigned int i = 0; i < components.size(); i++)
+    for (natural i = 0; i < components.size(); i++)
     {
         switch(components.at(i)->type())
         {
@@ -138,7 +138,7 @@ bool Spell::edit(std::vector<Word*> components_)
 
     Verb* action = nullptr;
     std::vector<Adverb*> adverbs = std::vector<Adverb*>(0);
-    for (unsigned int i = 0; i < components_.size(); i++)
+    for (natural i = 0; i < components_.size(); i++)
     {
         switch(components_.at(i)->type())
         {
@@ -228,12 +228,12 @@ bool Spell::edit(std::vector<Word*> components_)
 
 }
 
-const Word* Spell::component(unsigned int index) const
+const Word* Spell::component(natural index) const
 {
     return components().at(index);
 }
 
-Word* Spell::component(unsigned int index, Word* word)
+Word* Spell::component(natural index, Word* word)
 {
     if (_components.size() > index)
         _components.at(index) = word;
@@ -316,7 +316,7 @@ int Spell::cast(Mob* caster, BattleField* battleField)
     totalDuration = _source->duration()->multiply(totalDuration);
 
     Adverb* word;
-    for (unsigned int i = 0; i < _adverbs.size(); i++)
+    for (natural i = 0; i < _adverbs.size(); i++)
     {
         word = _adverbs.at(i);
 

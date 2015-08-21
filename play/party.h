@@ -22,7 +22,7 @@ namespace Play
             void buryTheDead(void);
             void endCombat(void);
 
-            PC* memberAt(unsigned int) const;
+            PC* memberAt(natural) const;
             int getIndexOf(const Mob*) const;
             void reorder(int, int);
 

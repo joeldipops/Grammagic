@@ -32,7 +32,7 @@ Party::Party(std::vector<PC*> members_)
  */
 Party::~Party(void)
 {
-    for(unsigned int i = 0; i < _members.size(); i++)
+    for(natural i = 0; i < _members.size(); i++)
     {
         delete _members.at(i);
     }
@@ -53,7 +53,7 @@ PlayStateContainer& Party::onInspect(PlayStateContainer& data)
 
 void Party::buryTheDead(void)
 {
-    for (unsigned int i = 0; i < _members.size(); i++)
+    for (natural i = 0; i < _members.size(); i++)
     {
         PC* member = _members.at(i);
         if (member->stamina() <= 0)
@@ -76,7 +76,7 @@ PC* Party::leader(void) const
     return nullptr;
 }
 
-PC* Party::memberAt(unsigned int index) const
+PC* Party::memberAt(natural index) const
 {
     if (index < 0 || index >= _members.size())
         return nullptr;
@@ -117,7 +117,7 @@ PC* Party::addMember(const Templates::PCTemplate& tmpl)
  */
  int Party::getIndexOf(const Mob* pc) const
 {
-    for(unsigned int i = 0; i < _members.size(); i++)
+    for(natural i = 0; i < _members.size(); i++)
     {
         if (pc == _members.at(i))
             return i;
@@ -177,7 +177,7 @@ int Party::y(int y_)
  */
 void Party::endCombat(void)
 {
-    for (unsigned int i = 0; i < _bench.size(); i++)
+    for (natural i = 0; i < _bench.size(); i++)
     {
         PC* pc = _bench.at(i);
         pc->stamina(1);

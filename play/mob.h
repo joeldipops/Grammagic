@@ -55,7 +55,7 @@ namespace Play
             float skill(void) const;
             float defaultSkill(void) const;
 
-            int selectedCommandIndex(unsigned int);
+            int selectedCommandIndex(natural);
             int selectedCommandIndex(void) const;
             Command* selectedCommand(void) const;
             const std::string portraitFileName(void) const;

@@ -120,7 +120,7 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
 {
     int result = 0;
     int index = 0;
-    unsigned int itemCount = 0;
+    natural itemCount = 0;
     int columnItemCount = 0;
     int* indexToUpdate = nullptr;
     switch(state())

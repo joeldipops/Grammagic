@@ -41,7 +41,7 @@ void SaveLoad::pushNumeric(std::vector<byte>& data, unsigned short value)
 std::vector<byte> SaveLoad::getSpellBytes(const PC& pc) const
 {
     std::vector<byte> result = std::vector<byte>();
-    for (unsigned int i = 0; i < pc.spells()->size(); i++)
+    for (natural i = 0; i < pc.spells()->size(); i++)
     {
         result.push_back(SavedObjectCode::NewSpell);
 
@@ -126,7 +126,7 @@ void SaveLoad::load(Party& party) const
     Spell workingSpell;
     PC* pc;
     bool spellInProgress = false;
-    for (unsigned int i = 0; i < data.size(); i++)
+    for (natural i = 0; i < data.size(); i++)
     {
         switch(SavedObjectCode(data.at(i)))
         {
