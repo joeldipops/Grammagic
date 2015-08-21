@@ -14,7 +14,7 @@ namespace Play
     class Party;
     struct PlayStateContainer;
     struct MapObjectTemplate;
-    typedef PlayStateContainer& (*PlayEventHandler)(PlayStateContainer&);
+    typedef PlayStateContainer& (*PlayEventHandler)(MapObject*, PlayStateContainer&);
     class MapObject
     {
         public:
@@ -41,12 +41,14 @@ namespace Play
 
         protected:
             bool isDense(bool);
+            const PlayEventHandler onInspectFn(void) const;
         private:
             bool _isDense;
             std::string _imageFileName;
             int _x;
             int _y;
             Direction _facing = Direction::NONE;
+            PlayEventHandler _onInspect;
     };
 }
 

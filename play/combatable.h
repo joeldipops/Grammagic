@@ -10,6 +10,7 @@ class Combatable
         virtual float changeSpeed(float) = 0;
         virtual float changeDefence(float) = 0;
         virtual float changeResistance(float) = 0;
+        virtual unsigned short maxStamina(void) const = 0;
         virtual int stamina(void) const = 0;
         virtual float speed(void) const = 0;
         virtual float resistance(void) const = 0;

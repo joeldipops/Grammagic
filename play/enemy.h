@@ -9,7 +9,7 @@
 using namespace Magic;
 namespace Play
 {
-    typedef int (*AiAction)(Mob* actor, BattleField* field);
+    typedef int (*AiAction)(Mob* context, BattleField* field);
 
     class Enemy : public Mob
     {

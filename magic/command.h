@@ -21,7 +21,7 @@ namespace Magic
     * @return The time before the mob that made the command can act again.
     */
 
-    typedef int (*Effect)(Command* _this, Mob*, BattleField*);
+    typedef int (*Effect)(Command* context, Mob*, BattleField*);
 
     class Command : public MenuItem
     {

@@ -19,6 +19,7 @@ namespace Magic
             virtual float changeResistance(float);
             virtual float changeSkill(float);
 
+            virtual unsigned short maxStamina(void) const;
             virtual int stamina(void) const;
             virtual float speed(void) const;
             virtual float resistance(void) const;

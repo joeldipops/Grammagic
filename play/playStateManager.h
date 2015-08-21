@@ -39,7 +39,7 @@ namespace Play
             void renderTerrain();
             void renderMobs();
             void renderHud();
-            std::vector<char> readFile(const char*);
+            //std::vector<char> readFile(const char*);
             void writeMapFile(const std::string& fileName, const int width, const int height, const std::vector<MapFileBlock>* data);
 
             // Main Loop
@@ -49,8 +49,10 @@ namespace Play
             bool processCancel(void);
             bool moveMob(MapObject*, Core::InputPress);
 
-            // other
+            // Util
             void exit(const Core::CoreState = Core::CoreState::Exit);
+            PlayStateContainer buildEventData(void) const;
+            void writeBackEventData(const PlayStateContainer& data);
 
             // Properties
             std::string _message;

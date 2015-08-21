@@ -13,9 +13,11 @@ namespace Play
 {
     class Mob;
     class BattleField;
+    class MapObject;
     struct PlayStateContainer;
-    typedef int (*AiAction)(Mob* actor, BattleField* field);
-    typedef PlayStateContainer& (*PlayEventHandler)(PlayStateContainer&);
+
+    typedef int (*AiAction)(Mob* context, BattleField* field);
+    typedef PlayStateContainer& (*PlayEventHandler)(MapObject* context, PlayStateContainer&);
 }
 
 namespace Templates
@@ -82,6 +84,10 @@ namespace Templates
             static const PCTemplate D;
             static const PCTemplate E;
             static const PCTemplate F;
+
+            static const TerrainTemplate Grass;
+            static const TerrainTemplate Wall;
+            static const TerrainTemplate Hut;
 
             // Stats of Enemies
             static const EnemyTemplate E1;

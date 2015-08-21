@@ -23,7 +23,8 @@ enum MobType
 enum TerrainType
 {
     WallTerrain = 'w',
-    GrassTerrain = 'g'
+    GrassTerrain = 'g',
+    HutTerrain = 'h'
 };
 
 namespace Title

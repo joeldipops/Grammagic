@@ -188,7 +188,22 @@ bool GameMap::loadChunk(int cX, int cY, std::string path)
         int x = (position % CHUNK_WIDTH) + cX * CHUNK_WIDTH;
         int y = (position / CHUNK_WIDTH) + cY * CHUNK_HEIGHT;
 
-        MapCell cell = MapCell(TerrainType(mapData[i]));
+        MapCell cell;
+        switch (TerrainType(mapData[i]))
+        {
+            case TerrainType::GrassTerrain:
+                cell = MapCell(Templates::Data::Grass);
+                break;
+            case TerrainType::WallTerrain:
+                cell = MapCell(Templates::Data::Wall);
+                break;
+            case TerrainType::HutTerrain:
+                cell = MapCell(Templates::Data::Hut);
+                break;
+            default:
+                break;
+        }
+
         setCell(x, y, &cell);
 
         MobType contents = MobType(mapData[i+1]);
@@ -422,7 +437,7 @@ void GameMap::removeChunk(int cX, int cY)
  * @param y
  * @return true if move was successful, false otherwise
  */
-bool GameMap::moveMob(MapObject* mob, int x, int y)
+bool GameMap::moveMob(MapObject* mob, int x, int y, PlayStateContainer* data)
 {
     if (x < 0 || x >= width())
         return false;
@@ -442,7 +457,7 @@ bool GameMap::moveMob(MapObject* mob, int x, int y)
     int oldX = mob->x();
     int oldY = mob->y();
     mob->location(x, y);
-    mob = cell->contents(mob);
+    cell->enter(mob, data);
     getCell(oldX, oldY)->empty();
 
     if (mob->isPlayerParty())

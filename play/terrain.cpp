@@ -14,33 +14,24 @@ Terrain::Terrain()
  * Constructor
  * @param type
  */
-Terrain::Terrain(TerrainType type)
-    :MapObject(Templates::MapObjectTemplate{ "", false, nullptr})
+Terrain::Terrain(const Templates::TerrainTemplate& tmpl)
+    :MapObject(tmpl)
 {
-    _terrainType = type;
-    switch(_terrainType)
-    {
-        case GrassTerrain:
-            isDense(false);
-            imageFileName(RESOURCE_LOCATION + "grass.png");
-            break;
-        case WallTerrain:
-            isDense(true);
-            imageFileName(RESOURCE_LOCATION + "wall.png");
-            break;
-        default:
-            isDense(false);
-            imageFileName(RESOURCE_LOCATION + "hidden.png");
-            break;
-    }
+    _onEnter = tmpl.OnEnter;
 }
-
-/**
- * Gets the type of terrain.
- */
-TerrainType Terrain::type(void) const { return _terrainType; }
 
 PlayStateContainer& Terrain::onInspect(PlayStateContainer& data)
 {
+    if (onInspectFn() != nullptr)
+        return onInspectFn()(this, data);
+
+    return data;
+}
+
+PlayStateContainer& Terrain::onEnter(PlayStateContainer& data)
+{
+    if (_onEnter != nullptr)
+        return _onEnter(this, data);
+
     return data;
 }

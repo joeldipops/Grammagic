@@ -6,6 +6,7 @@ MapObject::MapObject(const Templates::MapObjectTemplate& tmpl)
 {
     _isDense = tmpl.IsDense;
     _imageFileName = tmpl.ImagePath;
+    _onInspect = tmpl.OnInspect;
 }
 
 /**
@@ -48,6 +49,7 @@ Location MapObject::location(const Location* loc)
     return Location(&_x, &_y);
 }
 
+const PlayEventHandler MapObject::onInspectFn(void) const { return _onInspect; }
 
 /**
  * Gets or sets the Mob's X position.

@@ -38,7 +38,7 @@ namespace Play
 
             PlayStateContainer& onInspect(int x, int y, PlayStateContainer&);
             bool moveMob(MapObject*, Location);
-            bool moveMob(MapObject*, int, int);
+            bool moveMob(MapObject*, int, int, PlayStateContainer* = nullptr);
             MapCell* getCell(int x, int y);
             const MapCell* getCell(int x, int y) const;
             void setCell(int x, int y, MapCell*);

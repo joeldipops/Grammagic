@@ -27,6 +27,7 @@ const std::string Strings::Party = "Party";
 const std::string Strings::AName = "Aayee";
 const std::string Strings::BName = "Beaey";
 const std::string Strings::CName = "Cie";
+const std::string Strings::HutDescription = "A safe place to rest";
 
 using namespace Magic;
 using namespace Play;

@@ -17,6 +17,7 @@ class Strings {
         static const std::string AName;
         static const std::string BName;
         static const std::string CName;
+        static const std::string HutDescription;
 
 };
 #endif

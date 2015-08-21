@@ -1,7 +1,10 @@
 #include "templates.h"
 #include "battleCommands.h"
+#include "strings.h"
+#include "../play/playStateManager.h"
 using namespace Templates;
 
+//{Party Members
 PCTemplate GetA() // "Albert" archetype
 {
     PCTemplate result;
@@ -49,10 +52,12 @@ const PCTemplate GetC() //"All Rounder" archetype
     return result;
 };
 const PCTemplate Data::C = GetC();
+//}
 
-int aiAttack(Play::Mob* actor, Play::BattleField* field)
+//{Types of Enemy
+int aiAttack(Play::Mob* context, Play::BattleField* field)
 {
-    return Commands::ATTACK(nullptr, actor, field);
+    return Commands::ATTACK(nullptr, context, field);
 }
 
 const EnemyTemplate GetE1()
@@ -111,4 +116,52 @@ const EnemyTemplate GetB1()
     return result;
 };
 const EnemyTemplate Data::B1 = GetB1();
+//}
 
+//{Types of Terrain
+const TerrainTemplate GetWall()
+{
+    TerrainTemplate result;
+    result.ImagePath = RESOURCE_LOCATION + "wall.png";
+    result.IsDense = true;
+    return result;
+};
+const TerrainTemplate Data::Wall = GetWall();
+
+const TerrainTemplate GetGrass()
+{
+    TerrainTemplate result;
+    result.ImagePath = RESOURCE_LOCATION + "grass.png";
+    result.IsDense = false;
+    return result;
+};
+const TerrainTemplate Data::Grass = GetGrass();
+
+PlayStateContainer& healAtHut(MapObject* context, PlayStateContainer& data)
+{
+    for(Mob* member : data.Map->party()->members())
+    {
+        member->changeStamina(member->maxStamina() - member->stamina());
+    }
+    data.Message = "You are fighting fit";
+    return data;
+}
+PlayStateContainer& inspectHut(MapObject* context, PlayStateContainer& data)
+{
+    data.Message = Strings::HutDescription;
+    data.State = PlayState::Message;
+    return data;
+}
+
+
+const TerrainTemplate GetHut()
+{
+    TerrainTemplate result;
+    result.ImagePath = RESOURCE_LOCATION + "hut.png";
+    result.IsDense = false;
+    result.OnEnter = healAtHut;
+    result.OnInspect = inspectHut;
+    return result;
+};
+const TerrainTemplate Data::Hut = GetHut();
+//}

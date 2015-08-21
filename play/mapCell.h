@@ -10,11 +10,12 @@ namespace Play
     {
         public:
             MapCell(void);
-            MapCell(TerrainType);
+            MapCell(const Templates::TerrainTemplate&);
             ~MapCell(void);
             Terrain* terrain(Terrain* = nullptr);
             const Terrain* terrain(void) const;
-            MapObject* contents(MapObject* = nullptr);
+            PlayStateContainer* enter(MapObject*, PlayStateContainer*);
+            MapObject* contents(MapObject*);
             MapObject* contents(void) const;
             PlayStateContainer& onInspect(PlayStateContainer&);
             void empty(void);

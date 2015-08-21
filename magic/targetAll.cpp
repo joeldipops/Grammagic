@@ -160,6 +160,11 @@ float TargetAll::getDistribution(float amount) const
     return amount / float(_all.size());
 }
 
+unsigned short TargetAll::maxStamina(void) const
+{
+    return 0;
+}
+
 void TargetAll::endCombat(void)
 {
     return;

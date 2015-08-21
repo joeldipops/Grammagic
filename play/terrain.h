@@ -3,6 +3,7 @@
 
 #include "../mapObject.h"
 #include "../globalConstants.h"
+#include "../res/templates.h"
 #include "party.h"
 
 namespace Play
@@ -11,13 +12,11 @@ namespace Play
     {
         public:
             Terrain(void);
-            Terrain(TerrainType);
-            TerrainType type(void) const;
+            Terrain(const Templates::TerrainTemplate&);
             PlayStateContainer& onInspect(PlayStateContainer&);
-            std::string onEnter(Party*);
-
+            PlayStateContainer& onEnter(PlayStateContainer&);
         private:
-            TerrainType _terrainType;
+            PlayEventHandler _onEnter;
     };
 }
 

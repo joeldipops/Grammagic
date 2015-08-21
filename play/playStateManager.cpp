@@ -253,16 +253,36 @@ bool PlayStateManager::processInspectCommand(Party* party)
         default: break;
     }
 
+    PlayStateContainer data = buildEventData();
+    writeBackEventData(
+        _map->onInspect(x, y, data)
+    );
+
+    return true;
+}
+
+/**
+ * Builds an object that can be passed along to event handlers deep in the map.
+ */
+PlayStateContainer PlayStateManager::buildEventData(void) const
+{
     PlayStateContainer data;
     data.Message = _message;
     data.State = state();
     data.Map = _map;
+    return data;
+}
 
-    data = _map->onInspect(x, y, data);
-
+/**
+ * If data was changed by event handlers, write it back to the manager.
+ */
+void PlayStateManager::writeBackEventData(const PlayStateContainer& data)
+{
     _message = data.Message;
-    state(data.State);
-    return true;
+    if (data.State == state() && _message.length() > 0)
+        state(PlayState::Message);
+    else
+        state(data.State);
 }
 
 bool PlayStateManager::processCancel(void)
@@ -301,7 +321,9 @@ bool PlayStateManager::moveMob(MapObject* mob, Core::InputPress input)
             x++; break;
     }
 
-    bool result = _map->moveMob(mob, x, y);
+    PlayStateContainer data = buildEventData();
+    bool result = _map->moveMob(mob, x, y, &data);
+    writeBackEventData(data);
 
     return result;
 }
@@ -339,10 +361,7 @@ void PlayStateManager::render()
     _miniMapView->render();
 
     SDL_RenderPresent(renderer());
-
 }
-
-
 
 /**
  *

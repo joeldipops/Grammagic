@@ -1,4 +1,5 @@
 #include "mapCell.h"
+#include "playStateManager.h"
 
 MapCell::MapCell(){}
 
@@ -11,9 +12,9 @@ MapCell::~MapCell()
  * Constructor
  * @param terrain The terrain in this cell of the map.
  */
-MapCell::MapCell(TerrainType type)
+MapCell::MapCell(const Templates::TerrainTemplate& tmpl)
 {
-    _terrain = Terrain(type);
+    _terrain = Terrain(tmpl);
     _contents = nullptr;
 }
 
@@ -43,8 +44,25 @@ MapObject* MapCell::contents(MapObject* contents_)
 {
     if (contents_ != nullptr)
         _contents = contents_;
+
     return _contents;
 }
+
+PlayStateContainer* MapCell::enter(MapObject* mob, PlayStateContainer* data)
+{
+    _contents = mob;
+
+    if (data == nullptr)
+        return data;
+
+
+    PlayStateContainer& result = *data;
+    _terrain.onEnter(result);
+    data->Message = result.Message;
+    data->State = result.State;
+    return data;
+}
+
 
 PlayStateContainer& MapCell::onInspect(PlayStateContainer& data)
 {
