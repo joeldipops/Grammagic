@@ -17,5 +17,6 @@ WordType Noun::type(void) const
 
 std::vector<Combatable*> Noun::acquireCandidates(Mob* caster, BattleField* field)
 {
-    return _targeter(caster, field);
+    SpellData data;
+    return _targeter(caster, field, data);
 }

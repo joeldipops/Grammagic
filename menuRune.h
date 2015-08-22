@@ -1,16 +1,16 @@
-#ifndef RUNE_H_INCLUDED
-#define RUNE_H_INCLUDED
+#ifndef MENURUNE_H_INCLUDED
+#define MENURUNE_H_INCLUDED
 
 #include "menuItem.h"
 #include "magic/word.h"
 #include "globalConstants.h"
 
-class Rune : public MenuItem
+class MenuRune : public MenuItem
 {
     public:
-        Rune() {};
-        Rune(Magic::Word*);
-        virtual ~Rune(void);
+        MenuRune() {};
+        MenuRune(Magic::Word*);
+        virtual ~MenuRune(void);
         SDL_Colour colour(void) const;
 
     private:

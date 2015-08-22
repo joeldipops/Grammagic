@@ -24,7 +24,8 @@ WordType Adjective::type(void) const
  */
 Combatable* Adjective::selectTarget(Mob* caster, BattleField* field, std::vector<Combatable*> candidates)
 {
-    return _selecter(caster, field, candidates);
+    SpellData data;
+    return _selecter(caster, field, candidates, data);
 }
 //-------------------------- Dummy Adjective -----------
 

@@ -4,7 +4,7 @@
 #include "util/utils.h"
 #include "viewManager.h"
 #include "res/battleCommands.h"
-#include "rune.h"
+#include "menuRune.h"
 #include "play/pc.h"
 #include "globalConstants.h"
 #include "play/party.h"

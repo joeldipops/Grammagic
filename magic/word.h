@@ -5,6 +5,7 @@
 
 #include "../globalConstants.h"
 #include "modifier.h"
+#include "magicTypedefs.h"
 
 namespace Magic
 {

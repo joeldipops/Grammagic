@@ -7,6 +7,7 @@
 #include "../mapObject.h"
 #include "../play/combatable.h"
 
+using namespace Play;
 namespace Magic
 {
     class TargetAll : public Combatable

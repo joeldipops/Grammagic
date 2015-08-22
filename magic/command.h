@@ -14,15 +14,6 @@ namespace Magic
 
     class Command;
 
-    /**
-    * Casts a spell or carries out some other in-combat command.
-    * @param _this The command being carried out.
-    * @param battlefield holds various data on combat currently in progress.
-    * @return The time before the mob that made the command can act again.
-    */
-
-    typedef int (*Effect)(Command* context, Mob*, BattleField*);
-
     class Command : public MenuItem
     {
         public:

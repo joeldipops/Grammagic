@@ -14,10 +14,11 @@
 class ViewManager
 {
     public:
-        static const SDL_Colour hudColour;
-        static const SDL_Colour textColour;
-        static const SDL_Colour selectedColour;
-        static const SDL_Colour invisible;
+        static const SDL_Colour BG_COLOUR;
+        static const SDL_Colour TEXT_COLOUR;
+        static const SDL_Colour SELECTED_COLOUR;
+        static const SDL_Colour HIGHLIGHTED_COLOUR;
+        static const SDL_Colour INVISIBLE;
 
         static const SDL_Rect messageBoxOuter;
         static const SDL_Rect letterSize;
@@ -47,8 +48,9 @@ class ViewManager
             const SDL_Rect* = nullptr, bool = true
         );
         void drawHorizontalControls(
-            const std::vector<MenuItem*>*, const int, const SDL_Rect* = nullptr,
-            const SDL_Rect* = nullptr
+            const std::vector<MenuItem*>*, const int,
+            const SDL_Rect* = nullptr, const SDL_Rect* = nullptr,
+            const SDL_Colour* = nullptr, const SDL_Colour* = nullptr
         );
         SDL_Renderer* renderer(void);
         SDL_Rect viewPort(void) const;

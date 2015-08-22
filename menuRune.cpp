@@ -1,24 +1,24 @@
-#include "rune.h"
+#include "menuRune.h"
 
 using namespace Magic;
 
-const SDL_Colour Rune::VERB_COLOUR = SDL_Colour { 0xFF, 0xFF, 0x00, 0xFF };
-const SDL_Colour Rune::NOUN_COLOUR = SDL_Colour { 0x00, 0xFF, 0xFF, 0xFF };
-const SDL_Colour Rune::ADJECTIVE_COLOUR = SDL_Colour { 0xFF, 0x00, 0x88, 0xFF };
-const SDL_Colour Rune::ADVERB_COLOUR = SDL_Colour { 0x88, 0xFF, 0xFF, 0xFF };
+const SDL_Colour MenuRune::VERB_COLOUR = SDL_Colour { 0xFF, 0xFF, 0x00, 0xFF };
+const SDL_Colour MenuRune::NOUN_COLOUR = SDL_Colour { 0x00, 0xFF, 0xFF, 0xFF };
+const SDL_Colour MenuRune::ADJECTIVE_COLOUR = SDL_Colour { 0xFF, 0x00, 0x88, 0xFF };
+const SDL_Colour MenuRune::ADVERB_COLOUR = SDL_Colour { 0x88, 0xFF, 0xFF, 0xFF };
 
-Rune::Rune(Word* word_)
+MenuRune::MenuRune(Word* word_)
     : MenuItem(word_->name())
 {
     _word = word_;
 }
 
-Rune::~Rune(void) {}
+MenuRune::~MenuRune(void) {}
 
 /**
  * Returns a colour based on the contained word type.
  */
-SDL_Colour Rune::colour(void) const
+SDL_Colour MenuRune::colour(void) const
 {
     switch(_word->type())
     {

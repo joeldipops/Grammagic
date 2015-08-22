@@ -4,6 +4,471 @@
 #include "../play/playStateManager.h"
 using namespace Templates;
 
+//{Runes
+
+static Combatable* all(Mob* caster, BattleField* field, const std::vector<Combatable*>& candidates, SpellData&)
+{
+    TargetAll* result = new TargetAll(candidates);
+
+    bool isPlayerAllied = field->areAllied(caster, field->pcs().at(0));
+
+    // Should the target be considered an ally or an of the caster?
+    natural allyCount = 0;
+    for (const Combatable* c : candidates)
+    {
+        if (field->areAllied(caster, c))
+            allyCount++;
+    }
+
+
+    if (allyCount > candidates.size() / 2.0)
+        field->addToField(result, isPlayerAllied);
+    else
+        field->addToField(result, !isPlayerAllied);
+
+    return result;
+}
+const RuneTemplate GetALL()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "ALL";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetMultipleTarget;
+    result.SelectTarget = all;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::ALL = GetALL();
+
+static Combatable* self (Mob* caster, BattleField*, SpellData&)
+{
+    return (Combatable*) caster;
+};
+const RuneTemplate GetCASTER()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "CASTER";
+    result.ImagePath = "";
+    result.GetTarget = self;
+    result.GetMultipleTarget;
+    result.SelectTarget;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::CASTER = GetCASTER();
+
+
+static std::vector<Combatable*> enemies(Mob* caster, BattleField* battleField, SpellData&)
+{
+    std::vector<Combatable*> result;
+    std::vector<Mob*> candidates;
+
+    if (caster->type() == MobType::PlayerCharacter)
+        candidates =  battleField->hostiles();
+    else
+        candidates = battleField->pcs();
+
+    for (Mob* m : candidates)
+    {
+        result.push_back(m);
+    }
+
+    return result;
+};
+const RuneTemplate GetENEMY()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "ENEMY";
+    result.ImagePath = "";
+    result.GetTarget;
+    result.GetMultipleTarget = enemies;
+    result.SelectTarget;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::ENEMY = GetENEMY();
+
+static std::vector<Combatable*> allies(Mob* caster, BattleField* battleField, SpellData&)
+{
+    std::vector<Combatable*> result;
+    std::vector<Mob*> candidates;
+
+    if (caster->type() == MobType::PlayerCharacter)
+        candidates = battleField->pcs();
+    else
+        candidates =  battleField->hostiles();
+
+    for (Mob* m : candidates)
+    {
+        if (m != caster)
+            result.push_back(m);
+    }
+
+    return result;
+};
+const RuneTemplate GetALLY()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "ALLY";
+    result.ImagePath = "";
+    result.GetTarget;
+    result.GetMultipleTarget = allies;
+    result.SelectTarget;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::ALLY = GetALLY();
+
+static std::vector<Combatable*> members(Mob* caster, BattleField* battleField, SpellData& data)
+{
+    std::vector<Combatable*> result;
+    std::vector<Mob*> candidates;
+
+    if (caster->type() == MobType::PlayerCharacter)
+        candidates = battleField->pcs();
+    else
+        candidates =  battleField->hostiles();
+
+    for (Mob* m : candidates)
+    {
+        result.push_back(m);
+    }
+
+    return result;
+};
+
+const RuneTemplate GetMEMBER()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "MEMBER";
+    result.ImagePath = "";
+    result.GetTarget;
+    result.GetMultipleTarget = members;
+    result.SelectTarget = all;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::MEMBER = GetMEMBER();
+
+Combatable* most(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+{
+    Combatable* result = nullptr;
+    for(natural i = 0; i < candidates.size(); i++)
+    {
+        Combatable* mob = candidates.at(i);
+
+        if (result == nullptr)
+            result = mob;
+        else
+        {
+            float resultValue;
+            float mobValue;
+            switch(data.stat)
+            {
+                case Stat::SKILL:
+                    resultValue = result->skill();
+                    mobValue = mob->skill();
+                    break;
+                case Stat::DEFENSE:
+                    resultValue = result->defence();
+                    mobValue = mob->defence();
+                    break;
+                case Stat::SPEED:
+                    resultValue = result->speed();
+                    mobValue = mob->speed();
+                    break;
+                case Stat::RESISTANCE:
+                    resultValue = result->resistance();
+                    mobValue = mob->resistance();
+                    break;
+                case Stat::STAMINA:
+                    resultValue = result->stamina();
+                    mobValue = mob->stamina();
+                    break;
+                default: break;
+            }
+            if (data.isHigh)
+            {
+                if (mobValue < resultValue)
+                    result = mob;
+            }
+            else
+            {
+                if (mobValue > resultValue)
+                    result = mob;
+            }
+        }
+    }
+
+    return result;
+};
+
+void changeStat(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
+{
+    if (!data.isHigh)
+        effect *= -1;
+
+    source->changeStamina(cost * -1);
+    switch(data.stat)
+    {
+        case Stat::STAMINA:
+            target->changeStamina(effect);
+            return;
+        case Stat::SKILL:
+            target->changeSkill(1 + (float(effect) / 100.0));
+            return;
+        case Stat::DEFENSE:
+            target->changeDefence(1 + (float(effect) / 100.0));
+            return;
+        case Stat::SPEED:
+            target->changeSpeed(1 + (float(effect) / 100.0));
+            return;
+        case Stat::RESISTANCE:
+            target->changeResistance(1 + (float(effect) / 100.0));
+            return;
+        default:
+            break;
+    }
+}
+
+const RuneTemplate GetHIGH()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "HIGH";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetMultipleTarget;
+    result.SelectTarget = all;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::HIGH = GetHIGH();
+
+const RuneTemplate GetLOW()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "LOW";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetMultipleTarget;
+    result.SelectTarget = all;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::LOW = GetLOW();
+
+
+Combatable* mostStamina (Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+{
+    data.stat = Stat::STAMINA;
+    return most(caster, battleField, candidates, data);
+}
+const RuneTemplate GetSTAMINA()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "STAMINA";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetMultipleTarget;
+    result.SelectTarget = mostStamina;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::STAMINA = GetSTAMINA();
+
+Combatable* mostSpeed (Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+{
+    data.stat = Stat::SPEED;
+    return most(caster, battleField, candidates, data);
+}
+const RuneTemplate GetSPEED()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "SPEED";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetMultipleTarget;
+    result.SelectTarget = mostSpeed;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::SPEED = GetSPEED();
+
+Combatable* mostDefence(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+{
+    data.stat = Stat::DEFENSE;
+    return most(caster, battleField, candidates, data);
+}
+const RuneTemplate GetDEFENCE()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "DEFENCE";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetMultipleTarget;
+    result.SelectTarget = mostDefence;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::DEFENCE = GetDEFENCE();
+
+Combatable* mostResistance(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+{
+    data.stat = Stat::RESISTANCE;
+    return most(caster, battleField, candidates, data);
+}
+const RuneTemplate GetRESISTANCE()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "RESISTANCE";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetMultipleTarget;
+    result.SelectTarget = mostResistance;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::RESISTANCE = GetRESISTANCE();
+
+Combatable* mostSkill(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+{
+    data.stat = Stat::SKILL;
+    return most(caster, battleField, candidates, data);
+}
+const RuneTemplate GetSKILL()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "SKILL";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetMultipleTarget;
+    result.SelectTarget = all;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::SKILL = GetSKILL();
+
+const RuneTemplate GetSPELL()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "SPELL";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetMultipleTarget;
+    result.SelectTarget = all;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::SPELL = GetSPELL();
+
+//}
+
+
 //{Party Members
 PCTemplate GetA() // "Albert" archetype
 {

@@ -4,7 +4,7 @@
 using namespace Templates;
 // Specific Nouns
 //{
-static Combatable* self (Mob* caster, BattleField*)
+static Combatable* self (Mob* caster, BattleField*, SpellData&)
 {
     return (Combatable*) caster;
 };
@@ -13,7 +13,7 @@ static Combatable* self (Mob* caster, BattleField*)
 
 // General Nouns
 //{
-static std::vector<Combatable*> enemies(Mob* caster, BattleField* battleField)
+static std::vector<Combatable*> enemies(Mob* caster, BattleField* battleField, SpellData&)
 {
     std::vector<Combatable*> result;
     std::vector<Mob*> candidates;
@@ -31,7 +31,7 @@ static std::vector<Combatable*> enemies(Mob* caster, BattleField* battleField)
     return result;
 };
 
-static std::vector<Combatable*> allies(Mob* caster, BattleField* battleField)
+static std::vector<Combatable*> allies(Mob* caster, BattleField* battleField, SpellData&)
 {
     std::vector<Combatable*> result;
     std::vector<Mob*> candidates;
@@ -50,7 +50,7 @@ static std::vector<Combatable*> allies(Mob* caster, BattleField* battleField)
     return result;
 };
 
-static std::vector<Combatable*> members(Mob* caster, BattleField* battleField)
+static std::vector<Combatable*> members(Mob* caster, BattleField* battleField, SpellData&)
 {
     std::vector<Combatable*> result;
     std::vector<Mob*> candidates;
@@ -70,7 +70,7 @@ static std::vector<Combatable*> members(Mob* caster, BattleField* battleField)
 //}
 // Adjectives
 //{
-static Combatable* all(Mob* caster, BattleField* field, std::vector<Combatable*> candidates)
+static Combatable* all(Mob* caster, BattleField* field, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     TargetAll* result = new TargetAll(candidates);
 
@@ -93,7 +93,7 @@ static Combatable* all(Mob* caster, BattleField* field, std::vector<Combatable*>
     return result;
 }
 
-static Combatable* exposed(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* exposed(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -109,7 +109,7 @@ static Combatable* exposed(Mob* caster, BattleField* battleField, std::vector<Co
     return result;
 };
 
-static Combatable* warded(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* warded(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -125,7 +125,7 @@ static Combatable* warded(Mob* caster, BattleField* battleField, std::vector<Com
     return result;
 };
 
-static Combatable* vulnerable(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* vulnerable(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -141,7 +141,7 @@ static Combatable* vulnerable(Mob* caster, BattleField* battleField, std::vector
     return result;
 };
 
-static Combatable* guarded(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* guarded(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -158,7 +158,7 @@ static Combatable* guarded(Mob* caster, BattleField* battleField, std::vector<Co
 };
 
 
-static Combatable* freshest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* freshest(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -174,7 +174,7 @@ static Combatable* freshest(Mob* caster, BattleField* battleField, std::vector<C
     return result;
 };
 
-static Combatable* sickest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* sickest(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -191,7 +191,7 @@ static Combatable* sickest(Mob* caster, BattleField* battleField, std::vector<Co
 };
 
 
-static Combatable* strongest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* strongest(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -207,7 +207,7 @@ static Combatable* strongest(Mob* caster, BattleField* battleField, std::vector<
     return result;
 };
 
-static Combatable* weakest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* weakest(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -224,7 +224,7 @@ static Combatable* weakest(Mob* caster, BattleField* battleField, std::vector<Co
 };
 
 
-static Combatable* fastest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* fastest(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -240,7 +240,7 @@ static Combatable* fastest(Mob* caster, BattleField* battleField, std::vector<Co
     return result;
 };
 
-static Combatable* slowest(Mob* caster, BattleField* battleField, std::vector<Combatable*> candidates)
+static Combatable* slowest(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -259,61 +259,61 @@ static Combatable* slowest(Mob* caster, BattleField* battleField, std::vector<Co
 
 // Verbs
 //{
-static void defend(Combatable* source, Combatable* target, int cost, int effect)
+static void defend(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(cost * -1);
     target->changeDefence(1 + (float(effect) / 100.0));
 };
 
-static void endanger(Combatable* source, Combatable* target, int cost, int effect)
+static void endanger(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(cost * -1);
     target->changeDefence(1 - (float(effect) / 100.0));
 };
 
-static void ward(Combatable* source, Combatable* target, int cost, int effect)
+static void ward(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(cost * -1);
     target->changeResistance(1 + (float(effect) / 100.0));
 };
 
-static void expose(Combatable* source, Combatable* target, int cost, int effect)
+static void expose(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(cost * -1);
     target->changeResistance(1 - (float(effect) / 100.0));
 };
 
-static void weaken(Combatable* source, Combatable* target, int cost, int effect)
+static void weaken(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(ceil(cost*-1));
     target->changeStamina(ceil(effect*-1));
 };
 
-static void strengthen(Combatable* source, Combatable* target, int cost, int effect)
+static void strengthen(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(ceil(cost*-1));
     target->changeStamina(ceil(effect));
 };
 
-static void hasten(Combatable* source, Combatable* target, int cost, int effect)
+static void hasten(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(cost * -1);
     target->changeSpeed(1 + (float(effect) / 100.0));
 };
 
-static void slow(Combatable* source, Combatable* target, int cost, int effect)
+static void slow(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(cost * -1);
     target->changeSpeed(1 - (float(effect) / 100.0));
 };
 
-static void enhance(Combatable* source, Combatable* target, int cost, int effect)
+static void enhance(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(cost * -1);
     target->changeSkill(1  + (float(effect) / 100.0));
 };
 
-static void impair(Combatable* source, Combatable* target, int cost, int effect)
+static void impair(Combatable* source, Combatable* target, int cost, int effect, SpellData&)
 {
     source->changeStamina(cost * -1);
     target->changeSkill(1 - (float(effect) / 100.0));

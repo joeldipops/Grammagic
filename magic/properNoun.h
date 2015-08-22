@@ -10,8 +10,6 @@ namespace Play { class Mob; }
 
 namespace Magic
 {
-    typedef Combatable* (*Targeter)(Mob*, BattleField*);
-
     class ProperNoun : public Nounish
     {
         public:

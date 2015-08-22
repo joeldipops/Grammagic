@@ -25,6 +25,8 @@
 			<Add option="-lSDL2_ttf" />
 			<Add option="-lSDL2_image" />
 		</Linker>
+		<Unit filename="adjectivePhrase.h" />
+		<Unit filename="core.h" />
 		<Unit filename="globalConstants.h" />
 		<Unit filename="magic/adjective.cpp" />
 		<Unit filename="magic/adjective.h" />
@@ -32,6 +34,7 @@
 		<Unit filename="magic/adverb.h" />
 		<Unit filename="magic/command.cpp" />
 		<Unit filename="magic/command.h" />
+		<Unit filename="magic/magicTypedefs.h" />
 		<Unit filename="magic/modifier.cpp" />
 		<Unit filename="magic/modifier.h" />
 		<Unit filename="magic/noun.cpp" />
@@ -41,6 +44,7 @@
 		<Unit filename="magic/nounish.h" />
 		<Unit filename="magic/properNoun.cpp" />
 		<Unit filename="magic/properNoun.h" />
+		<Unit filename="magic/rune.h" />
 		<Unit filename="magic/spell.cpp" />
 		<Unit filename="magic/spell.h" />
 		<Unit filename="magic/targetAll.cpp" />
@@ -57,6 +61,8 @@
 		<Unit filename="menuItem.h" />
 		<Unit filename="menuManager.cpp" />
 		<Unit filename="menuManager.h" />
+		<Unit filename="menuRune.cpp" />
+		<Unit filename="menuRune.h" />
 		<Unit filename="menuViewManager.cpp" />
 		<Unit filename="menuViewManager.h" />
 		<Unit filename="persistence/saveLoad.cpp" />
@@ -87,14 +93,9 @@
 		<Unit filename="play/terrain.cpp" />
 		<Unit filename="play/terrain.h" />
 		<Unit filename="play/viewManagers.h" />
-		<Unit filename="res/arrow-left.png" />
-		<Unit filename="res/arrow-right.png" />
 		<Unit filename="res/battleCommands.cpp" />
 		<Unit filename="res/battleCommands.h" />
-		<Unit filename="res/cursor.png" />
-		<Unit filename="res/enemy.png" />
 		<Unit filename="res/font.ttf" />
-		<Unit filename="res/grass.png" />
 		<Unit filename="res/images/a-image.png" />
 		<Unit filename="res/images/a-portrait.png" />
 		<Unit filename="res/images/arrow-left.png" />
@@ -107,14 +108,11 @@
 		<Unit filename="res/images/cursor.png" />
 		<Unit filename="res/images/e1.png" />
 		<Unit filename="res/images/e2.png" />
-		<Unit filename="res/images/font.ttf" />
 		<Unit filename="res/images/grass.png" />
 		<Unit filename="res/images/hidden.png" />
 		<Unit filename="res/images/invalid.png" />
 		<Unit filename="res/images/valid.png" />
 		<Unit filename="res/images/wall.png" />
-		<Unit filename="res/invalid.png" />
-		<Unit filename="res/magician.png" />
 		<Unit filename="res/maps/map0_0" />
 		<Unit filename="res/maps/map0_1" />
 		<Unit filename="res/maps/map0_1.design" />
@@ -122,13 +120,9 @@
 		<Unit filename="res/maps/map1_1" />
 		<Unit filename="res/maps/map1_1.design" />
 		<Unit filename="res/maps/map2_1" />
-		<Unit filename="res/pc.png" />
 		<Unit filename="res/strings.h" />
 		<Unit filename="res/templates.cpp" />
 		<Unit filename="res/templates.h" />
-		<Unit filename="res/wall.png" />
-		<Unit filename="rune.cpp" />
-		<Unit filename="rune.h" />
 		<Unit filename="screenViewContainer.h" />
 		<Unit filename="stateManager.cpp" />
 		<Unit filename="stateManager.h" />

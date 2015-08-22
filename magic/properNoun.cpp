@@ -22,7 +22,8 @@ ProperNoun::ProperNoun(Targeter target, std::string name, Modifier effect, Modif
  */
 Combatable* ProperNoun::acquireTarget(Mob* caster, BattleField* battleField)
 {
-    return _target(caster, battleField);
+    SpellData data;
+    return _target(caster, battleField, data);
 }
 
 WordType ProperNoun::type(void) const

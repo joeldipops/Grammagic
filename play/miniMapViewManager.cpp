@@ -5,8 +5,8 @@ MiniMapViewManager::MiniMapViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* 
 void MiniMapViewManager::render(void)
 {
     ViewManager::render();
-    fillViewport(&hudColour);
-    drawBorder(DEFAULT_BORDER_WIDTH, &textColour);
+    fillViewport(&BG_COLOUR);
+    drawBorder(DEFAULT_BORDER_WIDTH, &TEXT_COLOUR);
 }
 
 

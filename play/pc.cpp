@@ -8,7 +8,7 @@ PC::PC(const Templates::PCTemplate& tmpl)
     _name = tmpl.Name;
     _memberCode = tmpl.MemberCode;
     otherCommands()->push_back(Command("Flee", Templates::Commands::FLEE));
-    _runeSlots = 5;
+    _runeSlots = 6;
     _spellSlots = 7;
     _jobClass = JobClass();
 }

@@ -42,7 +42,7 @@ namespace Magic
             std::vector<Word*> _components;
 
             static DummyAdjective _dummy;
-            static Combatable* _randomObj (Mob* caster, BattleField* field, std::vector<Combatable*> candidates)
+            static Combatable* _randomObj (Mob* caster, BattleField* field, const std::vector<Combatable*>& candidates, SpellData&)
             {
                 int index  = rand() % candidates.size();
                 return candidates.at(index);

@@ -27,6 +27,16 @@ enum TerrainType
     HutTerrain = 'h'
 };
 
+enum Stat
+{
+    STAMINA,
+    SKILL,
+    DEFENSE,
+    RESISTANCE,
+    STRENGTH,
+    SPEED
+};
+
 namespace Title
 {
     enum TitleState

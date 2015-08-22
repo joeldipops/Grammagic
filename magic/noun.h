@@ -12,8 +12,6 @@ namespace Play { class Mob; }
 using namespace Play;
 namespace Magic
 {
-    typedef std::vector<Combatable*> (*MultiTargeter) (Mob*, BattleField*);
-
     class Noun : public Word
     {
         public:

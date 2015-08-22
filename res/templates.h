@@ -1,5 +1,5 @@
-#ifndef PARTY_MEMBERS_H
-#define PARTY_MEMBERS_H
+#ifndef TEMPLATES_H
+#define TEMPLATES_H
 
 #include <string>
 #include <vector>
@@ -7,6 +7,7 @@
 #include "strings.h"
 
 #include "../globalConstants.h"
+#include "../magic/magicTypedefs.h"
 
 namespace Magic { class Command; }
 namespace Play
@@ -23,6 +24,25 @@ namespace Play
 namespace Templates
 {
     struct Commands;
+
+    struct RuneTemplate
+    {
+        std::string Name;
+        std::string ImagePath;
+        Magic::Targeter GetTarget;
+        Magic::MultiTargeter GetMultipleTarget;
+        Magic::Selecter SelectTarget;
+        Magic::Action PerformAction;
+        Stat RelatedStat;
+
+        int AddEffect;
+        int AddCost;
+        int AddDuration;
+
+        float ModEffect;
+        float ModCost;
+        float ModDuration;
+    };
 
     /**
      * The default/initial properties and handlers of any map object
@@ -95,6 +115,22 @@ namespace Templates
 
             // Stats of Bosses
             static const EnemyTemplate B1;
+
+            // All Runes
+            static const RuneTemplate ALL;
+            static const RuneTemplate CASTER;
+            static const RuneTemplate ENEMY;
+            static const RuneTemplate ALLY; // Excludes the caster.
+            static const RuneTemplate MEMBER; // Includes the caster.
+            static const RuneTemplate HIGH;
+            static const RuneTemplate LOW;
+            static const RuneTemplate STAMINA;
+            static const RuneTemplate SPEED;
+            static const RuneTemplate DEFENCE;
+            static const RuneTemplate RESISTANCE;
+            static const RuneTemplate SKILL;
+            static const RuneTemplate STRENGTH;
+            static const RuneTemplate SPELL;
     };
 
 }

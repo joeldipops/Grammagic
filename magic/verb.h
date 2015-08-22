@@ -8,8 +8,6 @@
 
 namespace Magic
 {
-    typedef void (*Action) (Combatable*, Combatable*, int, int);
-
     class Verb : public Word
     {
         public:

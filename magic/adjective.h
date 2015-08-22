@@ -12,8 +12,6 @@ namespace Play { class Mob; }
 using namespace Play;
 namespace Magic
 {
-    typedef Combatable* (*Selecter) (Mob*, BattleField*, std::vector<Combatable*>);
-
     class Adjective : public Word {
         public:
             Adjective(){};

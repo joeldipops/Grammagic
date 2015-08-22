@@ -346,7 +346,8 @@ int Spell::cast(Mob* caster, BattleField* battleField)
     if (!_action->isBoon())
         totalEffect *= target->resistance();
 
-    _action->action()(source, target, totalCost, totalEffect);
+    SpellData data;
+    _action->action()(source, target, totalCost, totalEffect, data);
 
     return ceil(totalDuration / caster->speed());
 }

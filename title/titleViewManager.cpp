@@ -9,6 +9,6 @@ void TitleViewManager::render(std::vector<MenuItem*> commands, int selectedIndex
     SDL_SetRenderDrawColor(renderer(), 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(renderer());
 
-    drawBorder(5, &textColour);
+    drawBorder(5, &TEXT_COLOUR);
     drawControls(&commands, selectedIndex);
 }
