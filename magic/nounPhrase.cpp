@@ -29,7 +29,7 @@ NounPhrase::NounPhrase(Noun* noun, Adjective* adjective)
 Combatable* NounPhrase::acquireTarget(Mob* caster, BattleField* field)
 {
     std::vector<Combatable*> candidates = _targeter->acquireCandidates(caster, field);
-    return _specifier->selectTarget(caster, field, candidates);
+    return _specifier->SelectTargetFromCandidates(caster, field, candidates);
 }
 
 WordType NounPhrase::type(void) const

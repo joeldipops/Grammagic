@@ -22,7 +22,7 @@ WordType Adjective::type(void) const
 /**
  * Choose a single spell target from a filtered list of candidates
  */
-Combatable* Adjective::selectTarget(Mob* caster, BattleField* field, std::vector<Combatable*> candidates)
+Combatable* Adjective::SelectTargetFromCandidates(Mob* caster, BattleField* field, std::vector<Combatable*> candidates)
 {
     SpellData data;
     return _selecter(caster, field, candidates, data);

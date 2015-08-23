@@ -2,6 +2,7 @@
 #define MAGICTYPEDEFS_H_INCLUDED
 
 #include <vector>
+#include "../globalConstants.h"
 
 namespace Play
 {
@@ -17,8 +18,10 @@ namespace Magic
     {
         Stat stat;
         bool isHigh;
+        int effect;
+        int cost;
+        int duration;
     };
-
 
     class Command;
 
@@ -49,6 +52,11 @@ namespace Magic
     * @return The time before the mob that made the command can act again.
     */
     typedef int (*Effect)(Command* context, Mob*, BattleField*);
+
+    /**
+     * Performs operations and transformations on the spell itself without changing the target, source or effect.
+     */
+    typedef SpellData& (*MetaAction)(SpellData&);
 }
 
 #endif

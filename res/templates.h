@@ -30,10 +30,10 @@ namespace Templates
         std::string Name;
         std::string ImagePath;
         Magic::Targeter GetTarget;
-        Magic::MultiTargeter GetMultipleTarget;
-        Magic::Selecter SelectTarget;
+        Magic::MultiTargeter GetTargetCandidates;
+        Magic::Selecter SelectTargetFromCandidates;
         Magic::Action PerformAction;
-        Stat RelatedStat;
+        Magic::MetaAction MetaAction;
 
         int AddEffect;
         int AddCost;
@@ -42,6 +42,8 @@ namespace Templates
         float ModEffect;
         float ModCost;
         float ModDuration;
+
+        Magic::AdverbFlag Flag;
     };
 
     /**

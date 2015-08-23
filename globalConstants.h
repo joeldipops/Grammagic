@@ -109,13 +109,21 @@ namespace Play
 
 namespace Magic
 {
+    enum AdverbFlag
+    {
+        NA,
+        HIGH,
+        LOW
+    };
+
     enum WordType
     {
         VERB,
         ADJECTIVE,
         NOUN,
         ADVERB,
-        NOUN_PHRASE
+        NOUN_PHRASE,
+        MODIFIER
     };
 }
 

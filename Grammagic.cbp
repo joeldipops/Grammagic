@@ -25,7 +25,6 @@
 			<Add option="-lSDL2_ttf" />
 			<Add option="-lSDL2_image" />
 		</Linker>
-		<Unit filename="adjectivePhrase.h" />
 		<Unit filename="core.h" />
 		<Unit filename="globalConstants.h" />
 		<Unit filename="magic/adjective.cpp" />
@@ -44,6 +43,7 @@
 		<Unit filename="magic/nounish.h" />
 		<Unit filename="magic/properNoun.cpp" />
 		<Unit filename="magic/properNoun.h" />
+		<Unit filename="magic/rune.cpp" />
 		<Unit filename="magic/rune.h" />
 		<Unit filename="magic/spell.cpp" />
 		<Unit filename="magic/spell.h" />

@@ -16,7 +16,7 @@ namespace Magic
         public:
             Adjective(){};
             Adjective(Selecter, std::string, Modifier, Modifier, Modifier);
-            Combatable* selectTarget(Mob*, BattleField*, std::vector<Combatable*>);
+            Combatable* SelectTargetFromCandidates(Mob*, BattleField*, std::vector<Combatable*>);
             WordType type(void) const;
 
         private:

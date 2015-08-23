@@ -34,8 +34,8 @@ const RuneTemplate GetALL()
     result.Name = "ALL";
     result.ImagePath = "";
     result.GetTarget ;
-    result.GetMultipleTarget;
-    result.SelectTarget = all;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates = all;
     result.PerformAction;
 
     result.AddEffect = 0;
@@ -59,8 +59,8 @@ const RuneTemplate GetCASTER()
     result.Name = "CASTER";
     result.ImagePath = "";
     result.GetTarget = self;
-    result.GetMultipleTarget;
-    result.SelectTarget;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates;
     result.PerformAction;
 
     result.AddEffect = 0;
@@ -98,8 +98,8 @@ const RuneTemplate GetENEMY()
     result.Name = "ENEMY";
     result.ImagePath = "";
     result.GetTarget;
-    result.GetMultipleTarget = enemies;
-    result.SelectTarget;
+    result.GetTargetCandidates = enemies;
+    result.SelectTargetFromCandidates;
     result.PerformAction;
 
     result.AddEffect = 0;
@@ -137,8 +137,8 @@ const RuneTemplate GetALLY()
     result.Name = "ALLY";
     result.ImagePath = "";
     result.GetTarget;
-    result.GetMultipleTarget = allies;
-    result.SelectTarget;
+    result.GetTargetCandidates = allies;
+    result.SelectTargetFromCandidates;
     result.PerformAction;
 
     result.AddEffect = 0;
@@ -176,8 +176,8 @@ const RuneTemplate GetMEMBER()
     result.Name = "MEMBER";
     result.ImagePath = "";
     result.GetTarget;
-    result.GetMultipleTarget = members;
-    result.SelectTarget = all;
+    result.GetTargetCandidates = members;
+    result.SelectTargetFromCandidates = all;
     result.PerformAction;
 
     result.AddEffect = 0;
@@ -190,6 +190,36 @@ const RuneTemplate GetMEMBER()
     return result;
 };
 const RuneTemplate Templates::Data::MEMBER = GetMEMBER();
+
+SpellData& modifySpell(SpellData& data, float metaCost, float metaEffect, float metaDuration)
+{
+    data.cost *= 1 + metaCost;
+    data.duration *= 1 + metaEffect;
+    data.effect *= 1 + metaDuration;
+    return  data;
+}
+
+
+const RuneTemplate GetSPELL()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "SPELL";
+    result.ImagePath = "";
+    result.GetTarget ;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates;
+    result.PerformAction;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::SPELL = GetSPELL();
 
 Combatable* most(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
@@ -272,15 +302,21 @@ void changeStat(Combatable* source, Combatable* target, int cost, int effect, Sp
     }
 }
 
+SpellData& heavySpell(SpellData& data)
+{
+    return modifySpell(data, .9, 1, .1);
+}
+
 const RuneTemplate GetHIGH()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "HIGH";
     result.ImagePath = "";
     result.GetTarget ;
-    result.GetMultipleTarget;
-    result.SelectTarget = all;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates;
     result.PerformAction;
+    result.MetaAction = heavySpell;
 
     result.AddEffect = 0;
     result.AddCost = 0;
@@ -293,15 +329,21 @@ const RuneTemplate GetHIGH()
 };
 const RuneTemplate Templates::Data::HIGH = GetHIGH();
 
+SpellData& lightSpell(SpellData& data)
+{
+    return modifySpell(data, -.5, -.5, 0);
+}
+
 const RuneTemplate GetLOW()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "LOW";
     result.ImagePath = "";
     result.GetTarget ;
-    result.GetMultipleTarget;
-    result.SelectTarget = all;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates = all;
     result.PerformAction;
+    result.MetaAction = lightSpell;
 
     result.AddEffect = 0;
     result.AddCost = 0;
@@ -326,8 +368,8 @@ const RuneTemplate GetSTAMINA()
     result.Name = "STAMINA";
     result.ImagePath = "";
     result.GetTarget ;
-    result.GetMultipleTarget;
-    result.SelectTarget = mostStamina;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates = mostStamina;
     result.PerformAction;
 
     result.AddEffect = 0;
@@ -341,6 +383,11 @@ const RuneTemplate GetSTAMINA()
 };
 const RuneTemplate Templates::Data::STAMINA = GetSTAMINA();
 
+SpellData& fastSpell(SpellData& data)
+{
+    return modifySpell(data, 0, 0, -.25);
+}
+
 Combatable* mostSpeed (Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     data.stat = Stat::SPEED;
@@ -352,9 +399,10 @@ const RuneTemplate GetSPEED()
     result.Name = "SPEED";
     result.ImagePath = "";
     result.GetTarget ;
-    result.GetMultipleTarget;
-    result.SelectTarget = mostSpeed;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates = mostSpeed;
     result.PerformAction;
+    result.MetaAction = fastSpell;
 
     result.AddEffect = 0;
     result.AddCost = 0;
@@ -378,8 +426,8 @@ const RuneTemplate GetDEFENCE()
     result.Name = "DEFENCE";
     result.ImagePath = "";
     result.GetTarget ;
-    result.GetMultipleTarget;
-    result.SelectTarget = mostDefence;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates = mostDefence;
     result.PerformAction;
 
     result.AddEffect = 0;
@@ -404,8 +452,8 @@ const RuneTemplate GetRESISTANCE()
     result.Name = "RESISTANCE";
     result.ImagePath = "";
     result.GetTarget ;
-    result.GetMultipleTarget;
-    result.SelectTarget = mostResistance;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates = mostResistance;
     result.PerformAction;
 
     result.AddEffect = 0;
@@ -430,8 +478,8 @@ const RuneTemplate GetSKILL()
     result.Name = "SKILL";
     result.ImagePath = "";
     result.GetTarget ;
-    result.GetMultipleTarget;
-    result.SelectTarget = all;
+    result.GetTargetCandidates;
+    result.SelectTargetFromCandidates = all;
     result.PerformAction;
 
     result.AddEffect = 0;
@@ -444,27 +492,6 @@ const RuneTemplate GetSKILL()
     return result;
 };
 const RuneTemplate Templates::Data::SKILL = GetSKILL();
-
-const RuneTemplate GetSPELL()
-{
-    RuneTemplate result = RuneTemplate();
-    result.Name = "SPELL";
-    result.ImagePath = "";
-    result.GetTarget ;
-    result.GetMultipleTarget;
-    result.SelectTarget = all;
-    result.PerformAction;
-
-    result.AddEffect = 0;
-    result.AddCost = 0;
-    result.AddDuration = 0;
-
-    result.ModEffect = 1.0;
-    result.ModCost = 1.0;
-    result.ModDuration = 1.0;
-    return result;
-};
-const RuneTemplate Templates::Data::SPELL = GetSPELL();
 
 //}
 
