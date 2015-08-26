@@ -16,6 +16,9 @@ namespace Magic
     {
         public:
             Noun(){};
+            Noun(Rune* properNoun);
+            Noun(Rune* aux, Rune* adj, Rune* noun);
+            Noun(Rune* adj, Rune* noun);
             Noun(MultiTargeter, std::string, Modifier, Modifier, Modifier);
             std::vector<Combatable*> acquireCandidates(Mob*, BattleField*);
             WordType type(void) const;

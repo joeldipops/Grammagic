@@ -31,7 +31,7 @@ WordType ProperNoun::type(void) const
     return WordType::NOUN_PHRASE;
 }
 
-const std::vector<Word*> ProperNoun::components(void) const
+const std::vector<Word*> ProperNoun::components_Deprecated(void) const
 {
     return std::vector<Word*> {(Word*)this};
 }

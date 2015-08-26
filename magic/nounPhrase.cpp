@@ -37,7 +37,7 @@ WordType NounPhrase::type(void) const
     return WordType::NOUN_PHRASE;
 }
 
-const std::vector<Word*> NounPhrase::components(void) const
+const std::vector<Word*> NounPhrase::components_Deprecated(void) const
 {
     std::vector<Word*> result  = std::vector<Word*> (0);
     result.reserve(2);

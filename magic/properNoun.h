@@ -14,10 +14,11 @@ namespace Magic
     {
         public:
             ProperNoun(){};
+            ProperNoun(Rune* noun);
             ProperNoun(Targeter, std::string, Modifier, Modifier, Modifier);
 
             WordType type(void) const;
-            const std::vector<Word*> components(void) const;
+            const std::vector<Word*> components_Deprecated(void) const;
 
             Combatable* acquireTarget(Mob*, BattleField*);
         private:

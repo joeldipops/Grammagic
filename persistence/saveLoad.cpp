@@ -45,7 +45,7 @@ std::vector<byte> SaveLoad::getSpellBytes(const PC& pc) const
     {
         result.push_back(SavedObjectCode::NewSpell);
 
-        for (Word* word : pc.spells()->at(i).components())
+        for (Word* word : pc.spells()->at(i).components_Deprecated())
         {
             if (word == &Commands::FASTER)
                 result.push_back(SavedObjectCode::FasterRune);
@@ -134,7 +134,7 @@ void SaveLoad::load(Party& party) const
             case SavedObjectCode::PCPosition:
                 if (spellInProgress)
                 {
-                    workingSpell.resolve();
+                    workingSpell.resolve_Deprecated();
                     spells.push_back(workingSpell);
                 }
 
@@ -146,7 +146,7 @@ void SaveLoad::load(Party& party) const
             case SavedObjectCode::NewMember: {
                 if (spellInProgress)
                 {
-                    workingSpell.resolve();
+                    workingSpell.resolve_Deprecated();
                     spells.push_back(workingSpell);
 
                     for (Spell s : spells)
@@ -188,7 +188,7 @@ void SaveLoad::load(Party& party) const
             case SavedObjectCode::NewSpell:
                 if (spellInProgress)
                 {
-                    workingSpell.resolve();
+                    workingSpell.resolve_Deprecated();
                     spells.push_back(workingSpell);
                 }
 
@@ -344,7 +344,7 @@ void SaveLoad::load(Party& party) const
         throw;
     if (spellInProgress)
     {
-        workingSpell.resolve();
+        workingSpell.resolve_Deprecated();
         spells.push_back(workingSpell);
     }
 

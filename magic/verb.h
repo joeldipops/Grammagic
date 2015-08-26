@@ -12,6 +12,8 @@ namespace Magic
     {
         public:
             Verb(){};
+            Verb(const Rune* action);
+            Verb(const Rune* aux, const Rune* action);
             Verb(Action, std::string, Modifier, Modifier, Modifier, float = 1, float = 1, float = 1, bool = false);
             Action action(void);
             WordType type(void) const;

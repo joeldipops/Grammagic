@@ -10,6 +10,7 @@ namespace Magic
     {
         public:
             Adverb() {};
+            Adverb(Rune* adv);
             Adverb(std::string, Modifier, Modifier, Modifier);
             WordType type(void) const;
     };

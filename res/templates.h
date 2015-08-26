@@ -43,7 +43,7 @@ namespace Templates
         float ModCost;
         float ModDuration;
 
-        Magic::AdverbFlag Flag;
+        Magic::Modality Flag;
     };
 
     /**

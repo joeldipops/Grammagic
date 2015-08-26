@@ -19,6 +19,9 @@ Verb::Verb(
     _isSameMultiplier = isSameMultiplier_;
     _isBoon = isBoon_;
 }
+
+Verb::Verb(const Rune* action) {};
+Verb::Verb(const Rune* aux, const Rune* action){};
 //}
 
 //{Properties

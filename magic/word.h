@@ -4,6 +4,7 @@
 #include <string>
 
 #include "../globalConstants.h"
+#include "rune.h"
 #include "modifier.h"
 #include "magicTypedefs.h"
 
@@ -12,7 +13,8 @@ namespace Magic
     class Word
     {
         public:
-            Word(){};
+            Word(void){};
+            Word(const Rune*){};
             Word(std::string, Modifier, Modifier, Modifier);
             virtual ~Word();
             const std::string name(void) const;

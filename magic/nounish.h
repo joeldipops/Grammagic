@@ -17,7 +17,7 @@ namespace Magic
             Nounish(){};
             Nounish(std::string name, Modifier effect, Modifier cost, Modifier duration) : Word(name, effect, cost, duration){};
 
-            virtual const std::vector<Word*> components(void) const = 0;
+            virtual const std::vector<Word*> components_Deprecated(void) const = 0;
             virtual Combatable* acquireTarget(Mob*, BattleField*) = 0;
     };
 }

@@ -17,7 +17,7 @@ namespace Magic
     struct SpellData
     {
         Stat stat;
-        bool isHigh;
+        Modality modality;
         int effect;
         int cost;
         int duration;

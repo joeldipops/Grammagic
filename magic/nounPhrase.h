@@ -16,7 +16,7 @@ namespace Magic
             // Override base
             Combatable* acquireTarget(Mob*, BattleField*);
             WordType type(void) const;
-            const std::vector<Word*> components(void) const;
+            const std::vector<Word*> components_Deprecated(void) const;
 
         private:
             Noun* _targeter;

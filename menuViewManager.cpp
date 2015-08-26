@@ -67,7 +67,7 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
         if (i < int(pc.spells()->size()))
         {
             const Command* command = &pc.spells()->at(i);
-            std::vector<Word*> words = command->components();
+            std::vector<Word*> words = command->components_Deprecated();
 
             std::vector<MenuRune> runes = std::vector<MenuRune>(0);
             pointers.reserve(words.size());
@@ -91,7 +91,7 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
             }
 
             SDL_Rect validRect = SDL_Rect { rect.w - 40, rect.y + cursorYOffset, 30, 30 };
-            if (command->spell()->isValid(true))
+            if (command->spell()->isValid_Deprecated(true))
                 SDL_RenderCopy(renderer(), valid, 0, &validRect);
             else
                 SDL_RenderCopy(renderer(), invalid, 0, &validRect);

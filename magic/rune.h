@@ -8,11 +8,12 @@ namespace Templates { class RuneTemplate; }
 
 namespace Magic
 {
+    /*
     class Verb;
     class Noun;
     class Adjective;
     class Adverb;
-
+*/
     class Rune
     {
         public:
@@ -21,23 +22,27 @@ namespace Magic
 
             std::string name(void) const;
             std::string imagePath(void) const;
-            Modifier effect(void) const;
-            Modifier cost(void) const;
-            Modifier duration(void) const;
+            int addEffect(void) const;
+            int addCost(void) const;
+            int addDuration(void) const;
+
+            float modEffect(void) const;
+            float modCost(void) const;
+            float modDuration(void) const;
 
             bool isAdjective(void) const;
             bool isNoun(void) const;
             bool isVerb(void) const;
             bool isAdverb(void) const;
             bool isProperNoun(void) const;
-            bool isModifier(void) const;
+            bool isAuxilliary(void) const;
 
             Targeter getTargetFn(void) const;
             MultiTargeter getTargetCandidatesFn(void) const;
             Selecter selectTargetFromCandidatesFn(void) const;
             Action performActionFn(void) const;
             MetaAction metaActionFn(void) const;
-            AdverbFlag adverbFlag(void) const;
+            Modality modality(void) const;
 
         private:
             std::string _name;
@@ -47,7 +52,7 @@ namespace Magic
             Selecter _selectTargetFromCandidates = nullptr;
             Action _performAction = nullptr;
             MetaAction _metaAction = nullptr;
-            AdverbFlag _adverbFlag = AdverbFlag::NA;
+            Modality _modality = Modality::NA;
 
             int _addEffect = 0;
             int _addCost = 0;

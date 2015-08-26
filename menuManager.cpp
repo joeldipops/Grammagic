@@ -112,7 +112,7 @@ int MenuManager::selectedSpellLength(PC* pc) const
     if (int(pc->spells()->size()) <= _selectedSpellIndex)
         return 0;
 
-    return (int) pc->spells()->at(_selectedSpellIndex).spell()->components().size();
+    return (int) pc->spells()->at(_selectedSpellIndex).spell()->components_Deprecated().size();
 }
 
 

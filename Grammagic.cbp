@@ -31,6 +31,8 @@
 		<Unit filename="magic/adjective.h" />
 		<Unit filename="magic/adverb.cpp" />
 		<Unit filename="magic/adverb.h" />
+		<Unit filename="magic/auxilliary.cpp" />
+		<Unit filename="magic/auxilliary.h" />
 		<Unit filename="magic/command.cpp" />
 		<Unit filename="magic/command.h" />
 		<Unit filename="magic/magicTypedefs.h" />

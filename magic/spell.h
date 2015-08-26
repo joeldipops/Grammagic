@@ -10,6 +10,7 @@
 #include "nounPhrase.h"
 #include "../play/battleField.h"
 #include "../util/utils.h"
+#include "rune.h"
 
 namespace Play { class Mob; }
 namespace Magic
@@ -17,29 +18,43 @@ namespace Magic
     class Spell
     {
         public:
-            static bool verify(std::vector<Word*>);
+            static bool verify_Deprecated(std::vector<Word*>);
 
             Spell(){};
             Spell(std::vector<Word*>);
+            Spell(std::vector<Rune*> components_);
             ~Spell(void);
-            bool edit(std::vector<Word*>);
-            bool resolve(void);
-            int cast(Mob*, BattleField*);
-            const std::vector<Word*> components(void) const;
+
+            const std::vector<Rune*> components(void) const;
+            bool edit(std::vector<Rune*>);
+
+
+
             const Word* component(natural) const;
             Word* component(natural, Word*);
             void removeComponent(int);
             void addComponent(Word*, bool = false);
-            bool isValid(bool = false) const;
+
+            bool isValid_Deprecated(bool = false) const;
+            bool edit_Deprecated(std::vector<Word*>);
+            bool resolve_Deprecated(void);
+            int cast_Deprecated(Mob*, BattleField*);
+            const std::vector<Word*> components_Deprecated(void) const;
 
         private:
-            Nounish* _target;
-            Nounish* _source;
+            Noun* _target;
+            Noun* _source;
+            Nounish* _target_Deprecated;
+            Nounish* _source_Deprecated;
             Verb* _action;
             std::vector<Adverb*> _adverbs;
             void toBin(Word*);
+            void emptyBin(void);
             std::vector<Word*> _rubbishBin;
-            std::vector<Word*> _components;
+            std::vector<Rune*> _components;
+
+
+            std::vector<Word*> _components_Deprecated;
 
             static DummyAdjective _dummy;
             static Combatable* _randomObj (Mob* caster, BattleField* field, const std::vector<Combatable*>& candidates, SpellData&)

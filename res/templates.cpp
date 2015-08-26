@@ -258,7 +258,7 @@ Combatable* most(Mob* caster, BattleField* battleField, const std::vector<Combat
                     break;
                 default: break;
             }
-            if (data.isHigh)
+            if (data.modality == Modality::HIGH)
             {
                 if (mobValue < resultValue)
                     result = mob;
@@ -276,7 +276,7 @@ Combatable* most(Mob* caster, BattleField* battleField, const std::vector<Combat
 
 void changeStat(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
 {
-    if (!data.isHigh)
+    if (data.modality == Modality::HIGH)
         effect *= -1;
 
     source->changeStamina(cost * -1);
