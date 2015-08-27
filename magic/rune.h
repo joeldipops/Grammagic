@@ -8,12 +8,6 @@ namespace Templates { class RuneTemplate; }
 
 namespace Magic
 {
-    /*
-    class Verb;
-    class Noun;
-    class Adjective;
-    class Adverb;
-*/
     class Rune
     {
         public:

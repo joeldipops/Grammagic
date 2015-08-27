@@ -12,6 +12,9 @@ namespace Play { class Mob; }
 using namespace Play;
 namespace Magic
 {
+    class Noun;
+    typedef Combatable* (*NounTargeter)(Noun* context, Mob* caster, BattleField* field, SpellData& data);
+
     class Noun : public Word
     {
         public:
@@ -22,10 +25,24 @@ namespace Magic
             Noun(MultiTargeter, std::string, Modifier, Modifier, Modifier);
             std::vector<Combatable*> acquireCandidates(Mob*, BattleField*);
             WordType type(void) const;
+            Combatable* acquireTarget(Mob*, BattleField*);
 
         private:
-            MultiTargeter _targeter;
+            MultiTargeter _multiTargeter;
+            MultiTargeter _findCandidates;
+            Targeter _target;
+            Selecter _select;
+            Modality _modality;
+
+            NounTargeter _targetWrapper;
+
+            friend Combatable* properNounAcquire(Noun*, Mob* caster, BattleField* field, SpellData& data);
+            friend Combatable* auxAdjNounAcquire(Noun*, Mob* caster, BattleField* field, SpellData& data);
+            friend Combatable* adjNounAcquire(Noun*, Mob* caster, BattleField* field, SpellData& data);
     };
+    Combatable* properNounAcquire(Noun* context, Mob* caster, BattleField* field, SpellData& data);
+    Combatable* auxAdjNounAcquire(Noun*, Mob* caster, BattleField* field, SpellData& data);
+    Combatable* adjNounAcquire(Noun*, Mob* caster, BattleField* field, SpellData& data);
 }
 
 #endif

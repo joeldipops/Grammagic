@@ -14,7 +14,7 @@ namespace Magic
     {
         public:
             Word(void){};
-            Word(const Rune*){};
+            Word(const std::vector<Rune*>){};
             Word(std::string, Modifier, Modifier, Modifier);
             virtual ~Word();
             const std::string name(void) const;
