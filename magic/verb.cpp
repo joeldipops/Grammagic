@@ -2,6 +2,19 @@
 
 using namespace Magic;
 
+//{Friends
+void Magic::verbAct(Verb* context, Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
+{
+    return context->_action(source, target, cost, effect, data);
+}
+
+void Magic::auxVerbAct(Verb* context, Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
+{
+    data.modality = context->_modality;
+    return context->_action(source, target, cost, effect, data);
+}
+//}
+
 //{Lifecycle
 /**
  * Constructor
@@ -20,8 +33,25 @@ Verb::Verb(
     _isBoon = isBoon_;
 }
 
-Verb::Verb(const Rune* action) {};
-Verb::Verb(const Rune* aux, const Rune* action){};
+Verb::Verb(Rune* action)
+    : Word(std::vector<Rune*> {action})
+{
+    if (!action->isVerb())
+        throw;
+
+    _actionWrapper = verbAct;
+
+
+};
+
+Verb::Verb(Rune* aux, Rune* action)
+    : Word(std::vector<Rune*> {aux, action})
+{
+    if (!aux->isAuxilliary() || !action->isVerb())
+        throw;
+
+    _actionWrapper = auxVerbAct;
+};
 //}
 
 //{Properties

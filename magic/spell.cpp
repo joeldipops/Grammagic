@@ -165,6 +165,7 @@ bool Spell::edit(std::vector<Rune*> components_)
     Noun* source = nullptr;
     Verb* action = nullptr;
     std::vector<Adverb*> adverbs(0);
+try {
     for (natural i = 0; i < components_.size(); i++)
     {
         Rune* rune = components_.at(i);
@@ -267,6 +268,11 @@ bool Spell::edit(std::vector<Rune*> components_)
             addresses.push_back(adv);
         }
     }
+}
+catch (...)
+{
+    return false;
+}
 
     // If we are missing any of these, the spell is invalid.
     if (target == nullptr || action == nullptr || source == nullptr)

@@ -13,6 +13,11 @@ namespace Magic
             Adverb(Rune* adv);
             Adverb(std::string, Modifier, Modifier, Modifier);
             WordType type(void) const;
+
+            SpellData& modifySpell(SpellData&);
+
+        private:
+            MetaAction _modify;
     };
 }
 

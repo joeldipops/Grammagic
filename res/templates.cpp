@@ -319,13 +319,21 @@ Combatable* mostStamina (Mob* caster, BattleField* battleField, const std::vecto
     data.stat = Stat::STAMINA;
     return most(caster, battleField, candidates, data);
 }
+
+
+void changeStamina(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
+{
+    data.stat = Stat::STAMINA;
+    changeStat(source, target, cost, effect, data);
+}
+
 const RuneTemplate GetSTAMINA()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "STAMINA";
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostStamina;
-    result.PerformAction;
+    result.PerformAction = changeStamina;
 
     result.AddEffect = 0;
     result.AddCost = 0;
@@ -348,13 +356,20 @@ Combatable* mostSpeed (Mob* caster, BattleField* battleField, const std::vector<
     data.stat = Stat::SPEED;
     return most(caster, battleField, candidates, data);
 }
+
+void changeSpeed(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
+{
+    data.stat = Stat::SPEED;
+    return changeStat(source, target, cost, effect, data);
+}
+
 const RuneTemplate GetSPEED()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "SPEED";
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostSpeed;
-    result.PerformAction;
+    result.PerformAction = changeSpeed;
     result.MetaAction = fastSpell;
 
     result.AddEffect = 0;
@@ -373,13 +388,20 @@ Combatable* mostDefence(Mob* caster, BattleField* battleField, const std::vector
     data.stat = Stat::DEFENSE;
     return most(caster, battleField, candidates, data);
 }
+
+void changeDefence(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
+{
+    data.stat = Stat::DEFENSE;
+    return changeStat(source, target, cost, effect, data);
+}
+
 const RuneTemplate GetDEFENCE()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "DEFENCE";
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostDefence;
-    result.PerformAction;
+    result.PerformAction = changeDefence;
 
     result.AddEffect = 0;
     result.AddCost = 0;
@@ -397,13 +419,20 @@ Combatable* mostResistance(Mob* caster, BattleField* battleField, const std::vec
     data.stat = Stat::RESISTANCE;
     return most(caster, battleField, candidates, data);
 }
+
+void changeResistance(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
+{
+    data.stat = Stat::RESISTANCE;
+    return changeStat(source, target, cost, effect, data);
+}
+
 const RuneTemplate GetRESISTANCE()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "RESISTANCE";
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostResistance;
-    result.PerformAction;
+    result.PerformAction = changeResistance;
 
     result.AddEffect = 0;
     result.AddCost = 0;
@@ -421,13 +450,20 @@ Combatable* mostSkill(Mob* caster, BattleField* battleField, const std::vector<C
     data.stat = Stat::SKILL;
     return most(caster, battleField, candidates, data);
 }
+
+void changeSkill(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
+{
+    data.stat = Stat::SKILL;
+    return changeStat(source, target, cost, effect, data);
+}
+
 const RuneTemplate GetSKILL()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "SKILL";
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostSkill;
-    result.PerformAction;
+    result.PerformAction = changeSkill;
 
     result.AddEffect = 0;
     result.AddCost = 0;

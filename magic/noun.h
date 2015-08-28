@@ -29,6 +29,7 @@ namespace Magic
 
         private:
             MultiTargeter _multiTargeter;
+
             MultiTargeter _findCandidates;
             Targeter _target;
             Selecter _select;
