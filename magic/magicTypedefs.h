@@ -18,9 +18,9 @@ namespace Magic
     {
         Stat stat;
         Modality modality;
-        int effect;
-        int cost;
-        int duration;
+        float effect;
+        float cost;
+        float duration;
     };
 
     class Command;

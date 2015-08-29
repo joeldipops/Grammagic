@@ -9,7 +9,7 @@
 namespace Magic
 {
     class Verb;
-    typedef void (*VerbAction)(Verb* context, Combatable*, Combatable*, int, int, SpellData&);
+    typedef void (*VerbAction)(const Verb* context, Combatable*, Combatable*, int, int, SpellData&);
     class Verb : public Word
     {
         public:
@@ -22,8 +22,12 @@ namespace Magic
             float enemyCostMultiplier(void) const;
             float allyEffectMultiplier(void) const;
             float isSameMultiplier(void) const;
+            virtual int addEffect(void) const;
+            virtual int addCost(void) const;
+            virtual int addDuration(void) const;
+
             bool isBoon(void) const;
-            void performAction(Combatable*, Combatable*, int, int);
+            void performAction(Combatable*, Combatable*, int, int, SpellData&) const;
 
         private:
             Action _action;
@@ -31,18 +35,20 @@ namespace Magic
 
             VerbAction _actionWrapper;
 
-            friend void verbAct(Verb*, Combatable*, Combatable*, int, int, SpellData&);
-            friend void auxVerbAct(Verb*, Combatable*, Combatable*, int, int, SpellData&);
-
-            // deprecated
+            int _actionEffectBonus;
+            int _actionCostBonus;
+            int _actionDurationBonus;
             float _enemyCostMultiplier;
             float _allyEffectMultiplier;
             float _isSameMultiplier;
             bool _isBoon;
+
+            friend void verbAct(const Verb*, Combatable*, Combatable*, int, int, SpellData&);
+            friend void auxVerbAct(const Verb*, Combatable*, Combatable*, int, int, SpellData&);
     };
 
-    void verbAct(Verb*, Combatable*, Combatable*, int, int, SpellData&);
-    void auxVerbAct(Verb*, Combatable*, Combatable*, int, int, SpellData&);
+    void verbAct(const Verb*, Combatable*, Combatable*, int, int, SpellData&);
+    void auxVerbAct(const Verb*, Combatable*, Combatable*, int, int, SpellData&);
 }
 
 #endif

@@ -2,6 +2,7 @@
 #define SPELL_H_INCLUDED
 
 #include <vector>
+#include <math.h>
 
 #include "word.h"
 #include "nounish.h"
@@ -27,14 +28,14 @@ namespace Magic
 
             const std::vector<Rune*> components(void) const;
             bool edit(std::vector<Rune*>);
-
+            int cast(Mob*, BattleField*);
+            bool resolve(void);
 
 
             const Word* component(natural) const;
             Word* component(natural, Word*);
             void removeComponent(int);
             void addComponent(Word*, bool = false);
-
             bool isValid_Deprecated(bool = false) const;
             bool edit_Deprecated(std::vector<Word*>);
             bool resolve_Deprecated(void);
@@ -42,6 +43,10 @@ namespace Magic
             const std::vector<Word*> components_Deprecated(void) const;
 
         private:
+            int calculateCost(void) const;
+            int calculateEffect(void) const;
+            int calculateDuration(void) const;
+
             Noun* _target;
             Noun* _source;
             Nounish* _target_Deprecated;

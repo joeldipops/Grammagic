@@ -29,11 +29,6 @@ namespace Templates
     {
         std::string Name;
         std::string ImagePath;
-        Magic::Targeter GetTarget;
-        Magic::MultiTargeter GetTargetCandidates;
-        Magic::Selecter SelectTargetFromCandidates;
-        Magic::Action PerformAction;
-        Magic::MetaAction MetaAction;
 
         int AddEffect;
         int AddCost;
@@ -43,7 +38,20 @@ namespace Templates
         float ModCost;
         float ModDuration;
 
+        Magic::MetaAction MetaAction;
         Magic::Modality Flag;
+
+        Magic::Targeter GetTarget;
+        Magic::MultiTargeter GetTargetCandidates;
+        Magic::Selecter SelectTargetFromCandidates;
+
+        Magic::Action PerformAction;
+        float IsSameMultiplier;
+        float EnemyCostMultiplier;
+        float AllyEffectMultiplier;
+        int ActionEffectBonus;
+        int ActionCostBonus;
+        int ActionDurationBonus;
     };
 
     /**

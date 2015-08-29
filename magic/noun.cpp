@@ -79,8 +79,6 @@ WordType Noun::type(void) const
     return WordType::NOUN;
 }
 
-
-
 std::vector<Combatable*> Noun::acquireCandidates(Mob* caster, BattleField* field)
 {
     SpellData data;

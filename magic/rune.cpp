@@ -19,6 +19,12 @@ Rune::Rune(const Templates::RuneTemplate& tmpl)
     _modifyEffect = tmpl.ModEffect;
     _modifyCost = tmpl.ModCost;
     _modifyDuration = tmpl.ModDuration;
+    _isSameMultiplier = tmpl.IsSameMultiplier;
+    _enemyCostMultiplier = tmpl.EnemyCostMultiplier;
+    _allyEffectMultiplier = tmpl.AllyEffectMultiplier;
+    _actionCostBonus = tmpl.ActionCostBonus;
+    _actionDurationBonus = tmpl.ActionDurationBonus;
+    _actionEffectBonus = tmpl.ActionEffectBonus;
 }
 
 Rune::~Rune(void) {}
@@ -93,6 +99,14 @@ float Rune::modCost(void) const { return _modifyCost; }
  * The modifier this rune multiplies the duration of the spell by.
  */
 float Rune::modDuration(void) const { return _modifyDuration; }
+
+float Rune::enemyCostMultiplier(void) const { return _enemyCostMultiplier; }
+float Rune::allyEffectMultiplier(void) const { return _allyEffectMultiplier; }
+float Rune::isSameMultiplier(void) const { return _isSameMultiplier; }
+int Rune::actionEffectBonus(void) const { return _actionEffectBonus; }
+int Rune::actionCostBonus(void) const { return _actionCostBonus; }
+int Rune::actionDurationBonus(void) const { return _actionDurationBonus; }
+
 //}
 
 //{Methods

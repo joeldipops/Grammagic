@@ -20,9 +20,9 @@ namespace Magic
 
             virtual WordType type(void) const = 0;
 
-            int addEffect(void) const;
-            int addCost(void) const;
-            int addDuration(void) const;
+            virtual int addEffect(void) const;
+            virtual int addCost(void) const;
+            virtual int addDuration(void) const;
 
             float modEffect(void) const;
             float modCost(void) const;

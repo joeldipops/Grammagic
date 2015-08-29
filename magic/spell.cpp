@@ -115,29 +115,23 @@ Spell::~Spell(void)
 }
 //}
 
-//{Properties
+//{ Properties
 
 const std::vector<Rune*> Spell::components(void) const { return _components; }
 
-/**
- * Gets a list of each word in the spell.
- */
-const std::vector<Word*> Spell::components_Deprecated(void) const { return _components_Deprecated; }
 //}
 
-//{Methods
-/**
- * Takes the current component list and attempts to turn it in to a spell.
- * @return true if spell was valid, false otherwise.
- */
-bool Spell::resolve_Deprecated(void)
+//{ Methods
+bool Spell::resolve(void)
 {
     _target = nullptr;
     _source = nullptr;
     _action = nullptr;
     _adverbs = std::vector<Adverb*>(0);
-    return edit_Deprecated(_components_Deprecated);
+    return edit(_components);
 }
+
+
 
 /**
  * Keep track of
@@ -165,8 +159,7 @@ bool Spell::edit(std::vector<Rune*> components_)
     Noun* source = nullptr;
     Verb* action = nullptr;
     std::vector<Adverb*> adverbs(0);
-try {
-    for (natural i = 0; i < components_.size(); i++)
+    try { for (natural i = 0; i < components_.size(); i++)
     {
         Rune* rune = components_.at(i);
 
@@ -267,12 +260,10 @@ try {
             adverbs.push_back(adv);
             addresses.push_back(adv);
         }
+    }} catch (...)
+    {
+        return false;
     }
-}
-catch (...)
-{
-    return false;
-}
 
     // If we are missing any of these, the spell is invalid.
     if (target == nullptr || action == nullptr || source == nullptr)
@@ -301,6 +292,179 @@ catch (...)
 
     return true;
 }
+
+int Spell::calculateCost(void) const
+{
+    float result = 0;
+    for (Rune* r : _components)
+        result += r->addCost();
+    for (Rune* r : _components)
+        result *= r->modCost();
+
+    return (int) floor(result);
+}
+
+int Spell::calculateEffect(void) const
+{
+    float result = 0;
+    for (Rune* r : _components)
+        result += r->addEffect();
+    for (Rune* r : _components)
+        result *= r->modEffect();
+
+    return (int) floor(result);
+}
+
+int Spell::calculateDuration(void) const
+{
+    float result = 0;
+    for (Rune* r : _components)
+        result += r->addDuration();
+    for (Rune* r : _components)
+        result *= r->modDuration();
+
+    return (int) floor(result);
+}
+
+int Spell::cast(Mob* caster, BattleField* battleField)
+{
+    // if valid...
+    SpellData data;
+
+    data.cost = calculateCost();
+
+    data.effect = calculateEffect();
+    data.effect *= caster->skill();
+
+    data.duration = calculateDuration();
+    data.duration = ceil(data.duration / caster->speed());
+
+    Combatable* source = _source->acquireTarget(caster, battleField);
+    Combatable* target = _target->acquireTarget(caster, battleField);
+
+    // Prevent actions such as free healing where cost is 10 and effect is 30 = +20 health.
+    if (target == source)
+    {
+        data.effect *= _action->isSameMultiplier();
+        data.cost *= _action->isSameMultiplier();
+    }
+
+    // Ensure there is a penalty for using enemy sources rather than allied ones.
+    if (!battleField->areAllied((Combatable*)caster, source))
+        data.cost *= _action->enemyCostMultiplier();
+
+    if (battleField->areAllied((Combatable*)caster, target))
+        data.effect *= _action->allyEffectMultiplier();
+
+    // Apply meta actions.
+    for (Adverb* word : _adverbs)
+        word->modifySpell(data);
+
+    // Only apply resistance if this is a harmful spell.
+    if  (!_action->isBoon())
+        data.effect *= target->resistance();
+
+    // When calculations are complete, change to ints.
+    data.effect = ceil(data.effect);
+    data.cost = floor(data.cost);
+    data.duration = floor(data.duration);
+
+    _action->performAction(source, target, int(data.cost), int(data.effect), data);
+
+    return data.duration;
+}
+
+//{ Deprecated
+/**
+ * Casts a spell on a target.
+ * @param caster The mob who cast the spell.
+ * @param battlefield cache of information about the current state of the battlefield.
+ * @return The calculated duration of the spell
+ */
+int Spell::cast_Deprecated(Mob* caster, BattleField* battleField)
+{
+    if (!isValid_Deprecated())
+            return -1;
+
+
+    float totalEffect = _action->effect()->add(0);
+    totalEffect = _target_Deprecated->effect()->add(totalEffect);
+    totalEffect = _source_Deprecated->effect()->add(totalEffect);
+    totalEffect = _action->effect()->multiply(totalEffect);
+    totalEffect = _target_Deprecated->effect()->multiply(totalEffect);
+    totalEffect = _source_Deprecated->effect()->multiply(totalEffect);
+
+    // Apply caster power
+    totalEffect *= caster->skill();
+
+    float totalCost = _action->cost()->add(0);
+    totalCost = _target_Deprecated->cost()->add(totalCost);
+    totalCost = _source_Deprecated->cost()->add(totalCost);
+    totalCost = _action->cost()->multiply(totalCost);
+    totalCost = _source_Deprecated->cost()->multiply(totalCost);
+    totalCost = _source_Deprecated->cost()->multiply(totalCost);
+
+    float totalDuration = _action->duration()->add(0);
+    totalDuration = _target_Deprecated->duration()->add(totalDuration);
+    totalDuration = _source_Deprecated->duration()->add(totalDuration);
+    totalDuration = _action->duration()->multiply(totalDuration);
+    totalDuration = _target_Deprecated->duration()->multiply(totalDuration);
+    totalDuration = _source_Deprecated->duration()->multiply(totalDuration);
+
+    Adverb* word;
+    for (natural i = 0; i < _adverbs.size(); i++)
+    {
+        word = _adverbs.at(i);
+
+        totalEffect = word->effect()->modify(totalEffect);
+        totalCost = word->cost()->modify(totalCost);
+        totalDuration = word->duration()->modify(totalDuration);
+    }
+
+    Combatable* target = _target_Deprecated->acquireTarget(caster, battleField);
+    Combatable* source = _source_Deprecated->acquireTarget(caster, battleField);
+
+    // Prevent actions such as free healing where cost is 10 and effect is 30 = +20 health.
+    if (target == source)
+    {
+        totalEffect *= _action->isSameMultiplier();
+        totalCost *= _action->isSameMultiplier();
+    }
+
+    // Ensure there is a penalty for using enemy sources rather than allied ones.
+    if (!battleField->areAllied((Combatable*)caster, source))
+        totalCost *= _action->enemyCostMultiplier();
+
+    if (battleField->areAllied((Combatable*)caster, target))
+        totalEffect *= _action->allyEffectMultiplier();
+
+    // Apply magical resistance.
+    if (!_action->isBoon())
+        totalEffect *= target->resistance();
+
+    SpellData data;
+    _action->action()(source, target, totalCost, totalEffect, data);
+
+    return ceil(totalDuration / caster->speed());
+}
+
+/**
+ * Takes the current component list and attempts to turn it in to a spell.
+ * @return true if spell was valid, false otherwise.
+ */
+bool Spell::resolve_Deprecated(void)
+{
+    _target = nullptr;
+    _source = nullptr;
+    _action = nullptr;
+    _adverbs = std::vector<Adverb*>(0);
+    return edit_Deprecated(_components_Deprecated);
+}
+
+/**
+ * Gets a list of each word in the spell.
+ */
+const std::vector<Word*> Spell::components_Deprecated(void) const { return _components_Deprecated; }
 
 /**
  * Repopulates the spell from a list of words.
@@ -453,78 +617,5 @@ bool Spell::isValid_Deprecated(bool checkUnresolved) const
         return false;
 
     return verify_Deprecated(_components_Deprecated);
-}
-
-/**
- * Casts a spell on a target.
- * @param caster The mob who cast the spell.
- * @param battlefield cache of information about the current state of the battlefield.
- * @return The calculated duration of the spell
- */
-int Spell::cast_Deprecated(Mob* caster, BattleField* battleField)
-{
-    if (!isValid_Deprecated())
-            return -1;
-
-    float totalEffect = _action->effect()->add(0);
-    totalEffect = _target_Deprecated->effect()->add(totalEffect);
-    totalEffect = _source_Deprecated->effect()->add(totalEffect);
-    totalEffect = _action->effect()->multiply(totalEffect);
-    totalEffect = _target_Deprecated->effect()->multiply(totalEffect);
-    totalEffect = _source_Deprecated->effect()->multiply(totalEffect);
-
-    // Apply caster power
-    totalEffect *= caster->skill();
-
-
-    float totalCost = _action->cost()->add(0);
-    totalCost = _target_Deprecated->cost()->add(totalCost);
-    totalCost = _source_Deprecated->cost()->add(totalCost);
-    totalCost = _action->cost()->multiply(totalCost);
-    totalCost = _source_Deprecated->cost()->multiply(totalCost);
-    totalCost = _source_Deprecated->cost()->multiply(totalCost);
-
-    float totalDuration = _action->duration()->add(0);
-    totalDuration = _target_Deprecated->duration()->add(totalDuration);
-    totalDuration = _source_Deprecated->duration()->add(totalDuration);
-    totalDuration = _action->duration()->multiply(totalDuration);
-    totalDuration = _target_Deprecated->duration()->multiply(totalDuration);
-    totalDuration = _source_Deprecated->duration()->multiply(totalDuration);
-
-    Adverb* word;
-    for (natural i = 0; i < _adverbs.size(); i++)
-    {
-        word = _adverbs.at(i);
-
-        totalEffect = word->effect()->modify(totalEffect);
-        totalCost = word->cost()->modify(totalCost);
-        totalDuration = word->duration()->modify(totalDuration);
-    }
-
-    Combatable* target = _target_Deprecated->acquireTarget(caster, battleField);
-    Combatable* source = _source_Deprecated->acquireTarget(caster, battleField);
-
-    // Prevent actions such as free healing where cost is 10 and effect is 30 = +20 health.
-    if (target == source)
-    {
-        totalEffect *= _action->isSameMultiplier();
-        totalCost *= _action->isSameMultiplier();
-    }
-
-    // Ensure there is a penalty for using enemy sources rather than allied ones.
-    if (!battleField->areAllied((Combatable*)caster, source))
-        totalCost *= _action->enemyCostMultiplier();
-
-    if (battleField->areAllied((Combatable*)caster, target))
-        totalEffect *= _action->allyEffectMultiplier();
-
-    // Apply magical resistance.
-    if (!_action->isBoon())
-        totalEffect *= target->resistance();
-
-    SpellData data;
-    _action->action()(source, target, totalCost, totalEffect, data);
-
-    return ceil(totalDuration / caster->speed());
 }
 //}

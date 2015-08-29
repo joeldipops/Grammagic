@@ -648,8 +648,9 @@
 	"verb.h"
 	"../menuItem.h"
 
-1440590066 /home/joel/Projects/Grammagic/magic/spell.h
+1440829479 /home/joel/Projects/Grammagic/magic/spell.h
 	<vector>
+	<math.h>
 	"word.h"
 	"nounish.h"
 	"verb.h"
@@ -659,7 +660,7 @@
 	"../util/utils.h"
 	"rune.h"
 
-1440758220 /home/joel/Projects/Grammagic/magic/word.h
+1440848743 /home/joel/Projects/Grammagic/magic/word.h
 	<string>
 	"../globalConstants.h"
 	"rune.h"
@@ -681,7 +682,7 @@
 	<queue>
 	"../globalConstants.h"
 
-1440755146 /home/joel/Projects/Grammagic/magic/verb.h
+1440848911 /home/joel/Projects/Grammagic/magic/verb.h
 	"../play/combatable.h"
 	"modifier.h"
 	"word.h"
@@ -749,7 +750,7 @@
 1438427883 source:/home/joel/Projects/Grammagic/magic/modifier.cpp
 	"modifier.h"
 
-1440676907 source:/home/joel/Projects/Grammagic/magic/noun.cpp
+1440830622 source:/home/joel/Projects/Grammagic/magic/noun.cpp
 	"noun.h"
 
 1440581700 source:/home/joel/Projects/Grammagic/magic/nounPhrase.cpp
@@ -758,11 +759,11 @@
 1440581708 source:/home/joel/Projects/Grammagic/magic/properNoun.cpp
 	"properNoun.h"
 
-1440755429 source:/home/joel/Projects/Grammagic/magic/spell.cpp
+1440849559 source:/home/joel/Projects/Grammagic/magic/spell.cpp
 	"spell.h"
 	"../play/mob.h"
 
-1440755253 source:/home/joel/Projects/Grammagic/magic/verb.cpp
+1440848796 source:/home/joel/Projects/Grammagic/magic/verb.cpp
 	"verb.h"
 
 1440758391 source:/home/joel/Projects/Grammagic/magic/word.cpp
@@ -895,7 +896,7 @@
 	"strings.h"
 	"../play/playStateManager.h"
 
-1440495572 /home/joel/Projects/Grammagic/res/templates.h
+1440845863 /home/joel/Projects/Grammagic/res/templates.h
 	<string>
 	<vector>
 	"strings.h"
@@ -928,15 +929,15 @@
 1440209903 source:/home/joel/Projects/Grammagic/menuRune.cpp
 	"menuRune.h"
 
-1440494026 /home/joel/Projects/Grammagic/magic/magicTypedefs.h
+1440849258 /home/joel/Projects/Grammagic/magic/magicTypedefs.h
 	<vector>
 	"../globalConstants.h"
 
-1440582836 source:/home/joel/Projects/Grammagic/magic/rune.cpp
+1440848421 source:/home/joel/Projects/Grammagic/magic/rune.cpp
 	"rune.h"
 	"../res/templates.h"
 
-1440675920 /home/joel/Projects/Grammagic/magic/rune.h
+1440848166 /home/joel/Projects/Grammagic/magic/rune.h
 	<string>
 	"modifier.h"
 	"magicTypedefs.h"

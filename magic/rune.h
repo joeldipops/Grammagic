@@ -31,6 +31,13 @@ namespace Magic
             bool isProperNoun(void) const;
             bool isAuxilliary(void) const;
 
+            float enemyCostMultiplier(void) const;
+            float allyEffectMultiplier(void) const;
+            float isSameMultiplier(void) const;
+            int actionEffectBonus(void) const;
+            int actionCostBonus(void) const;
+            int actionDurationBonus(void) const;
+
             Targeter getTargetFn(void) const;
             MultiTargeter getTargetCandidatesFn(void) const;
             Selecter selectTargetFromCandidatesFn(void) const;
@@ -47,6 +54,12 @@ namespace Magic
             Action _performAction = nullptr;
             MetaAction _metaAction = nullptr;
             Modality _modality = Modality::NA;
+            float _isSameMultiplier = 1;
+            float _enemyCostMultiplier = 1;
+            float _allyEffectMultiplier = 1;
+            int _actionEffectBonus = 0;
+            int _actionCostBonus = 0;
+            int _actionDurationBonus = 0;
 
             int _addEffect = 0;
             int _addCost = 0;
