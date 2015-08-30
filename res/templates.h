@@ -27,31 +27,32 @@ namespace Templates
 
     struct RuneTemplate
     {
-        std::string Name;
-        std::string ImagePath;
+        std::string Name = "";
+        std::string ImagePath = "";
 
-        int AddEffect;
-        int AddCost;
-        int AddDuration;
+        int AddEffect = 0;
+        int AddCost = 0;
+        int AddDuration = 0;
 
-        float ModEffect;
-        float ModCost;
-        float ModDuration;
+        float ModEffect = 1;
+        float ModCost = 1;
+        float ModDuration = 1;
 
-        Magic::MetaAction MetaAction;
-        Magic::Modality Flag;
+        Magic::MetaAction MetaAction = nullptr;
+        Magic::Modality Flag = Magic::Modality::NA;
 
-        Magic::Targeter GetTarget;
-        Magic::MultiTargeter GetTargetCandidates;
-        Magic::Selecter SelectTargetFromCandidates;
+        Magic::Targeter GetTarget = nullptr;
+        Magic::MultiTargeter GetTargetCandidates = nullptr;
+        Magic::Selecter SelectTargetFromCandidates = nullptr;
 
-        Magic::Action PerformAction;
-        float IsSameMultiplier;
-        float EnemyCostMultiplier;
-        float AllyEffectMultiplier;
-        int ActionEffectBonus;
-        int ActionCostBonus;
-        int ActionDurationBonus;
+        Magic::Action PerformAction = nullptr;
+        float IsSameMultiplier = 1;
+        float EnemyCostMultiplier = 1;
+        float AllyEffectMultiplier = 1;
+        int ActionEffectBonus = 0;
+        int ActionCostBonus = 0;
+        int ActionDurationBonus = 0;
+        bool IsBoon = false;
     };
 
     /**

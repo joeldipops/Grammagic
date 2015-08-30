@@ -305,11 +305,11 @@ bool MenuManager::processRuneCommand(const Party& party)
 
     if (_selectedRuneIndex == 0)
     {
-        workingSpell->removeComponent(_selectedComponentIndex);
+        workingSpell->removeComponent_Deprecated(_selectedComponentIndex);
         return true;
     }
 
-    workingSpell->component(_selectedComponentIndex, Templates::Commands::allCommands.at(_selectedRuneIndex - 1));
+    workingSpell->component_Deprecated(_selectedComponentIndex, Templates::Commands::allCommands.at(_selectedRuneIndex - 1));
     if (_selectedComponentIndex + 1 < pc->runeSlots())
         _selectedComponentIndex++;
     return true;

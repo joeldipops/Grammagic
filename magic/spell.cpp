@@ -14,6 +14,114 @@ DummyAdjective Spell::_dummy = DummyAdjective(Spell::_randomObj, "", Modifier(0,
  * @param A candidate list of spell components.
  * @return true if the list contains all the components to make a valid spell.
  */
+
+bool Spell::verify(std::vector<Rune*> components_)
+{
+    bool hasSource = false;
+    bool hasAction = false;
+    bool hasTarget = false;
+
+    try { for (natural i = 0; i < components_.size(); i++)
+    {
+        Rune* rune = components_.at(i);
+
+        if (!hasSource)
+        {
+            if (rune->isProperNoun())
+            {
+                // run in case an exception is called.
+                Noun(rune);
+                hasSource = true;
+                continue;
+            }
+
+            if (rune->isAuxilliary())
+            {
+                if (components_.at(i+1)->isAdjective() && components_.at(i+2)->isNoun())
+                {
+                    Noun(rune, components_.at(i+1), components_.at(i+2));
+                    hasSource = true;
+                    i += 2;
+                    continue;
+                }
+            }
+
+            if (rune->isAdjective())
+            {
+                if (components_.at(i+1)->isNoun())
+                {
+                    Noun(rune, components_.at(i+1));
+                    hasSource = true;
+                    i += 1;
+                    continue;
+                }
+            }
+        }
+
+        if (!hasAction)
+        {
+            // Second part of the spell in the action.
+            // [Aux][Verb]
+            // [Verb]
+            if (rune->isAuxilliary())
+            {
+                if (components_.at(i+1)->isVerb())
+                {
+                    Verb(rune, components_.at(i+1));
+                    hasAction = true;
+                    i += 1;
+                    continue;
+                }
+            }
+            if (rune->isVerb())
+            {
+                Verb(rune);
+                hasAction = true;
+                continue;
+            }
+        }
+
+        if (!hasTarget)
+        {
+            if (rune->isProperNoun())
+            {
+                Noun(rune);
+                hasTarget = true;
+                continue;
+            }
+
+            if (rune->isAuxilliary())
+            {
+                if (components_.at(i+1)->isAdjective() && components_.at(i+2)->isNoun())
+                {
+                    Noun(rune, components_.at(i+1), components_.at(i+2));
+                    hasTarget = true;
+                    i += 2;
+                    continue;
+                }
+            }
+
+            if (rune->isAdjective())
+            {
+                if (components_.at(i+1)->isNoun())
+                {
+                    Noun(rune, components_.at(i+1));
+                    hasTarget = true;
+                    i += 1;
+                    continue;
+                }
+            }
+        }
+        if (!rune->isAdverb())
+            return false;
+    }} catch (...)
+    {
+        return false;
+    }
+
+    return hasTarget && hasAction && hasSource;
+}
+
 bool Spell::verify_Deprecated(std::vector<Word*> components_Deprecated)
 {
     bool hasTarget = false;
@@ -87,14 +195,14 @@ Spell::Spell(std::vector<Rune*> components_)
 Spell::Spell(std::vector<Word*> components_)
 {
 
-    _source = nullptr;
-    _target = nullptr;
+    _source_Deprecated = nullptr;
+    _target_Deprecated = nullptr;
     _action = nullptr;
     _adverbs = std::vector<Adverb*>();
     if(!edit_Deprecated(components_))
     {
-        _source = nullptr;
-        _target = nullptr;
+        _source_Deprecated = nullptr;
+        _target_Deprecated = nullptr;
         _action = nullptr;
         _components_Deprecated = components_;
     }
@@ -326,9 +434,27 @@ int Spell::calculateDuration(void) const
     return (int) floor(result);
 }
 
+/**
+ * @param checkUnresolved If true, also check unresolved components.
+ * @return True if the spell can be effectively cast.
+ */
+bool Spell::isValid(bool checkUnresolved) const
+{
+    if (_target != nullptr && _source != nullptr && _action != nullptr)
+        return true;
+
+    // If checkComponents flag is provided, check the "Future" of the spell, not just the current state.eprec
+    if (!checkUnresolved)
+        return false;
+
+    return verify(_components);
+}
+
 int Spell::cast(Mob* caster, BattleField* battleField)
 {
-    // if valid...
+    if (!isValid(false))
+        return -1;
+
     SpellData data;
 
     data.cost = calculateCost();
@@ -373,6 +499,43 @@ int Spell::cast(Mob* caster, BattleField* battleField)
 
     return data.duration;
 }
+
+const Rune* Spell::component(natural index) const
+{
+    return _components.at(index);
+}
+
+Rune* Spell::component(natural index, Rune* rune)
+{
+    if (_components.size() > index)
+        _components.at(index) = rune;
+    else
+    {
+        index = _components.size();
+        _components.push_back(rune);
+    }
+
+    resolve();
+    return _components.at(index);
+}
+
+void Spell::removeComponent(natural index)
+{
+    natural len = _components_Deprecated.size();
+    if (len <= 0)
+        return;
+    if (index >= len)
+        return;
+    _components.erase(_components.begin() + index);
+}
+
+void Spell::addComponent(Rune* rune, bool doResolve)
+{
+    _components.push_back(rune);
+    if (doResolve)
+        resolve();
+}
+//}
 
 //{ Deprecated
 /**
@@ -568,12 +731,12 @@ bool Spell::edit_Deprecated(std::vector<Word*> components_)
 
 }
 
-const Word* Spell::component(natural index) const
+const Word* Spell::component_Deprecated(natural index) const
 {
     return components_Deprecated().at(index);
 }
 
-Word* Spell::component(natural index, Word* word)
+Word* Spell::component_Deprecated(natural index, Word* word)
 {
     if (_components_Deprecated.size() > index)
         _components_Deprecated.at(index) = word;
@@ -583,14 +746,14 @@ Word* Spell::component(natural index, Word* word)
     return _components_Deprecated.at(index);
 }
 
-void Spell::addComponent(Word* word, bool doResolve)
+void Spell::addComponent_Deprecated(Word* word, bool doResolve)
 {
     _components_Deprecated.push_back(word);
     if (doResolve)
         resolve_Deprecated();
 }
 
-void Spell::removeComponent(int index)
+void Spell::removeComponent_Deprecated(int index)
 {
     int len = _components_Deprecated.size();
     if (len <= 0)

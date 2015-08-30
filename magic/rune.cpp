@@ -25,6 +25,7 @@ Rune::Rune(const Templates::RuneTemplate& tmpl)
     _actionCostBonus = tmpl.ActionCostBonus;
     _actionDurationBonus = tmpl.ActionDurationBonus;
     _actionEffectBonus = tmpl.ActionEffectBonus;
+    _isBoon = tmpl.IsBoon;
 }
 
 Rune::~Rune(void) {}
@@ -106,6 +107,7 @@ float Rune::isSameMultiplier(void) const { return _isSameMultiplier; }
 int Rune::actionEffectBonus(void) const { return _actionEffectBonus; }
 int Rune::actionCostBonus(void) const { return _actionCostBonus; }
 int Rune::actionDurationBonus(void) const { return _actionDurationBonus; }
+bool Rune::isBoon(void) const { return _isBoon; }
 
 //}
 

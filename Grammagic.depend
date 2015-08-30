@@ -648,7 +648,7 @@
 	"verb.h"
 	"../menuItem.h"
 
-1440829479 /home/joel/Projects/Grammagic/magic/spell.h
+1440911823 /home/joel/Projects/Grammagic/magic/spell.h
 	<vector>
 	<math.h>
 	"word.h"
@@ -759,11 +759,11 @@
 1440581708 source:/home/joel/Projects/Grammagic/magic/properNoun.cpp
 	"properNoun.h"
 
-1440849559 source:/home/joel/Projects/Grammagic/magic/spell.cpp
+1440912242 source:/home/joel/Projects/Grammagic/magic/spell.cpp
 	"spell.h"
 	"../play/mob.h"
 
-1440848796 source:/home/joel/Projects/Grammagic/magic/verb.cpp
+1440905819 source:/home/joel/Projects/Grammagic/magic/verb.cpp
 	"verb.h"
 
 1440758391 source:/home/joel/Projects/Grammagic/magic/word.cpp
@@ -794,7 +794,7 @@
 	"res/strings.h"
 	"util/utils.h"
 
-1440581737 source:/home/joel/Projects/Grammagic/menuManager.cpp
+1440910375 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
 1440495361 /home/joel/Projects/Grammagic/globalConstants.h
@@ -855,7 +855,7 @@
 	"play/pc.h"
 	<string>
 
-1440583021 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
+1440910432 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
 	"saveLoad.h"
 
 1439377672 /home/joel/Projects/Grammagic/persistence/saveLoad.h
@@ -890,13 +890,13 @@
 1439352331 /home/joel/Projects/Grammagic/res/partyMembers.h
 	<string>
 
-1440759400 source:/home/joel/Projects/Grammagic/res/templates.cpp
+1440905539 source:/home/joel/Projects/Grammagic/res/templates.cpp
 	"templates.h"
 	"battleCommands.h"
 	"strings.h"
 	"../play/playStateManager.h"
 
-1440845863 /home/joel/Projects/Grammagic/res/templates.h
+1440905584 /home/joel/Projects/Grammagic/res/templates.h
 	<string>
 	<vector>
 	"strings.h"
@@ -933,11 +933,11 @@
 	<vector>
 	"../globalConstants.h"
 
-1440848421 source:/home/joel/Projects/Grammagic/magic/rune.cpp
+1440909811 source:/home/joel/Projects/Grammagic/magic/rune.cpp
 	"rune.h"
 	"../res/templates.h"
 
-1440848166 /home/joel/Projects/Grammagic/magic/rune.h
+1440903540 /home/joel/Projects/Grammagic/magic/rune.h
 	<string>
 	"modifier.h"
 	"magicTypedefs.h"

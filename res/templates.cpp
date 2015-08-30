@@ -342,6 +342,11 @@ const RuneTemplate GetSTAMINA()
     result.ModEffect = 1.0;
     result.ModCost = 1.0;
     result.ModDuration = 1.0;
+
+    result.IsBoon = true;
+    result.ActionCostBonus = 15;
+    result.ActionEffectBonus = 30;
+    result.ActionDurationBonus = 3000;
     return result;
 };
 const RuneTemplate Templates::Data::STAMINA = GetSTAMINA();
@@ -379,6 +384,11 @@ const RuneTemplate GetSPEED()
     result.ModEffect = 1.0;
     result.ModCost = 1.0;
     result.ModDuration = 1.0;
+
+    result.IsBoon = true;
+    result.ActionCostBonus = 15;
+    result.ActionEffectBonus = 30;
+    result.ActionDurationBonus = 3000;
     return result;
 };
 const RuneTemplate Templates::Data::SPEED = GetSPEED();
@@ -410,6 +420,11 @@ const RuneTemplate GetDEFENCE()
     result.ModEffect = 1.0;
     result.ModCost = 1.0;
     result.ModDuration = 1.0;
+
+    result.IsBoon = true;
+    result.ActionCostBonus = 15;
+    result.ActionEffectBonus = 30;
+    result.ActionDurationBonus = 3000;
     return result;
 };
 const RuneTemplate Templates::Data::DEFENCE = GetDEFENCE();
@@ -441,6 +456,11 @@ const RuneTemplate GetRESISTANCE()
     result.ModEffect = 1.0;
     result.ModCost = 1.0;
     result.ModDuration = 1.0;
+
+    result.IsBoon = true;
+    result.ActionCostBonus = 15;
+    result.ActionEffectBonus = 30;
+    result.ActionDurationBonus = 3000;
     return result;
 };
 const RuneTemplate Templates::Data::RESISTANCE = GetRESISTANCE();
@@ -472,6 +492,11 @@ const RuneTemplate GetSKILL()
     result.ModEffect = 1.0;
     result.ModCost = 1.0;
     result.ModDuration = 1.0;
+
+    result.IsBoon = true;
+    result.ActionCostBonus = 15;
+    result.ActionEffectBonus = 30;
+    result.ActionDurationBonus = 3000;
     return result;
 };
 const RuneTemplate Templates::Data::SKILL = GetSKILL();
@@ -508,6 +533,8 @@ PCTemplate GetB() // "Brienne" Archetype
     result.Defence = 2.0;
     result.Skill = 0.6;
     result.MemberCode = PartyMemberCode::B;
+
+
     return result;
 };
 const PCTemplate Data::B = GetB();

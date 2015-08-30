@@ -37,6 +37,7 @@ namespace Magic
             int actionEffectBonus(void) const;
             int actionCostBonus(void) const;
             int actionDurationBonus(void) const;
+            bool isBoon(void) const;
 
             Targeter getTargetFn(void) const;
             MultiTargeter getTargetCandidatesFn(void) const;
@@ -60,6 +61,7 @@ namespace Magic
             int _actionEffectBonus = 0;
             int _actionCostBonus = 0;
             int _actionDurationBonus = 0;
+            bool _isBoon = false;
 
             int _addEffect = 0;
             int _addCost = 0;

@@ -39,6 +39,7 @@ Verb::Verb(Rune* action)
     if (!action->isVerb())
         throw;
 
+    _isBoon = action->isBoon();
     _actionCostBonus = action->actionCostBonus();
     _actionDurationBonus = action->actionDurationBonus();
     _actionEffectBonus = action->actionEffectBonus();
@@ -53,6 +54,14 @@ Verb::Verb(Rune* aux, Rune* action)
 {
     if (!aux->isAuxilliary() || !action->isVerb())
         throw;
+
+    _isBoon = action->isBoon();
+    _actionCostBonus = action->actionCostBonus();
+    _actionDurationBonus = action->actionDurationBonus();
+    _actionEffectBonus = action->actionEffectBonus();
+    _isSameMultiplier = action->isSameMultiplier();
+    _enemyCostMultiplier = action->enemyCostMultiplier();
+    _allyEffectMultiplier = action->allyEffectMultiplier();
 
     _actionWrapper = auxVerbAct;
 };

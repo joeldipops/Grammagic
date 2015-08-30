@@ -19,7 +19,8 @@ namespace Magic
     class Spell
     {
         public:
-            static bool verify_Deprecated(std::vector<Word*>);
+            static bool verify(std::vector<Rune*>);
+            bool isValid(bool = false) const;
 
             Spell(){};
             Spell(std::vector<Word*>);
@@ -27,15 +28,22 @@ namespace Magic
             ~Spell(void);
 
             const std::vector<Rune*> components(void) const;
+            const Rune* component(natural) const;
+            Rune* component(natural, Rune*);
+            void removeComponent(natural);
+            void addComponent(Rune*, bool = false);
+
             bool edit(std::vector<Rune*>);
             int cast(Mob*, BattleField*);
             bool resolve(void);
 
 
-            const Word* component(natural) const;
-            Word* component(natural, Word*);
-            void removeComponent(int);
-            void addComponent(Word*, bool = false);
+
+            const Word* component_Deprecated(natural) const;
+            Word* component_Deprecated(natural, Word*);
+            void removeComponent_Deprecated(int);
+            void addComponent_Deprecated(Word*, bool = false);
+            static bool verify_Deprecated(std::vector<Word*>);
             bool isValid_Deprecated(bool = false) const;
             bool edit_Deprecated(std::vector<Word*>);
             bool resolve_Deprecated(void);
