@@ -8,11 +8,10 @@ class MenuItem
 {
     public:
         MenuItem(void);
-        MenuItem(std::string name);
+        MenuItem(const std::string& name);
         virtual ~MenuItem(void) {};
 
-        virtual std::string name(void) const;
-        virtual std::string name(std::string);
+        virtual const std::string& name(void) const;
         virtual SDL_Colour colour(void) const;
         const bool equals(MenuItem) const;
     private:

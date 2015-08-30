@@ -3,9 +3,9 @@
 
 #include <string>
 
-#include "globalConstants.h"
-#include "util/utils.h"
-#include "res/templates.h"
+#include "../globalConstants.h"
+#include "../util/utils.h"
+#include "../res/templates.h"
 
 using namespace Util;
 
@@ -45,8 +45,8 @@ namespace Play
         private:
             bool _isDense;
             std::string _imageFileName;
-            int _x;
-            int _y;
+            int _x = 0;
+            int _y = 0;
             Direction _facing = Direction::NONE;
             PlayEventHandler _onInspect;
     };

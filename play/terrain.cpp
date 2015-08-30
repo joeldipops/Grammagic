@@ -3,11 +3,20 @@
 
 using namespace Play;
 
+//{ Lifecycle
+Templates::MapObjectTemplate getTerrainDefaultTemplate(void)
+{
+    Templates::MapObjectTemplate result;
+    result.ImagePath = "";
+    result.IsDense = true;
+    return result;
+}
+
 /**
  * Empty Constructor
  */
 Terrain::Terrain()
-    :MapObject(Templates::MapObjectTemplate{"", true, nullptr})
+    :MapObject(getTerrainDefaultTemplate())
 {}
 
 /**
@@ -19,6 +28,10 @@ Terrain::Terrain(const Templates::TerrainTemplate& tmpl)
 {
     _onEnter = tmpl.OnEnter;
 }
+
+//}
+
+//{ Methods
 
 PlayStateContainer& Terrain::onInspect(PlayStateContainer& data)
 {
@@ -35,3 +48,5 @@ PlayStateContainer& Terrain::onEnter(PlayStateContainer& data)
 
     return data;
 }
+
+//}

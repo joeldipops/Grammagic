@@ -4,8 +4,8 @@ using namespace Magic;
 
 
 Rune::Rune(const Templates::RuneTemplate& tmpl)
+    :MenuItem(tmpl.Name)
 {
-    _name = tmpl.Name;
     _imagePath = tmpl.ImagePath;
     _getTarget = tmpl.GetTarget;
     _getTargetCandidates = tmpl.GetTargetCandidates;
@@ -31,11 +31,6 @@ Rune::Rune(const Templates::RuneTemplate& tmpl)
 Rune::~Rune(void) {}
 
 //{Properties
-/**
- * String to identify the rune.
- */
-std::string Rune::name(void) const { return _name; }
-
 /**
  * Path to image that represents the rune.
  */

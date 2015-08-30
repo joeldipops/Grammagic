@@ -200,6 +200,8 @@ bool GameMap::loadChunk(int cX, int cY, std::string path)
             case TerrainType::HutTerrain:
                 cell = MapCell(Templates::Data::Hut);
                 break;
+            case TerrainType::CacheTerrain:
+                cell = MapCell(Templates::Data::Cache);
             default:
                 break;
         }
@@ -398,6 +400,9 @@ const MapCell* GameMap::getCell(int x, int y) const
 void GameMap::setCell(int x, int y, MapCell* value)
 {
     natural index = x + (y * width());
+    value->terrain()->location(x, y);
+    if (value->contents() != nullptr)
+        value->contents()->location(x, y);
     _cells[index] = *value;
 }
 

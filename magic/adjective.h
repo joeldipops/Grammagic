@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "word.h"
-#include "../mapObject.h"
+#include "../play/mapObject.h"
 #include "../play/battleField.h"
 
 namespace Play { class Mob; }

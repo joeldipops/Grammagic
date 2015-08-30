@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-#include "../mapObject.h"
+#include "mapObject.h"
 #include "../util/utils.h"
 #include "../magic/command.h"
 #include "combatable.h"

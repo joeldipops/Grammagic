@@ -2,7 +2,7 @@
 #define NOUNISH_H_INCLUDED
 
 #include "word.h"
-#include "../mapObject.h"
+#include "../play/mapObject.h"
 #include "../play/battleField.h"
 
 

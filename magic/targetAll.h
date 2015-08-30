@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "../mapObject.h"
+#include "../play/mapObject.h"
 #include "../play/combatable.h"
 
 using namespace Play;

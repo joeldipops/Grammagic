@@ -5,7 +5,7 @@
 
 #include "word.h"
 #include "modifier.h"
-#include "../mapObject.h"
+#include "../play/mapObject.h"
 #include "../play/battleField.h"
 
 namespace Play { class Mob; }

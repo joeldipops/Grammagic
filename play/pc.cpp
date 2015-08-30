@@ -2,27 +2,23 @@
 
 using namespace Play;
 
+
+//{ Lifecycle
 PC::PC(const Templates::PCTemplate& tmpl)
 : Mob(tmpl, MobType::PlayerCharacter)
 {
     _name = tmpl.Name;
     _memberCode = tmpl.MemberCode;
     otherCommands()->push_back(Command("Flee", Templates::Commands::FLEE));
-    _runeSlots = 6;
-    _spellSlots = 7;
     _jobClass = JobClass();
 }
 
-/**
- * Returns the maximum number of spells a pc can keep at one time.
- */
-int PC::spellSlots(void) const
+PC::~PC(void)
 {
-    return _spellSlots > int(spells()->size())
-    ? spells()->size() + 1
-    : _spellSlots;
 }
+//}
 
+//{ Properties
 /**
  * Returns the maximum number of runes per spell a pc can have.
  */
@@ -38,6 +34,19 @@ std::string PC::name(void) const { return _name; }
  */
 Templates::PartyMemberCode PC::memberCode(void) const { return _memberCode; }
 
+//}
+
+//{ Methods
+/**
+ * Returns the maximum number of spells a pc can keep at one time.
+ */
+int PC::spellSlots(void) const
+{
+    return _spellSlots > int(spells()->size())
+    ? spells()->size() + 1
+    : _spellSlots;
+}
+
 std::string PC::className(void) const
 {
     return _jobClass.name();
@@ -47,3 +56,8 @@ bool PC::isPlayerControlled(void) const
 {
     return true;
 }
+
+//}
+
+
+

@@ -2,7 +2,7 @@
 #define PROPERNOUN_H_INCLUDED
 
 #include "nounish.h"
-#include "../mapObject.h"
+#include "../play/mapObject.h"
 #include "../play/battleField.h"
 #include "modifier.h"
 

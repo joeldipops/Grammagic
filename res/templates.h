@@ -62,7 +62,7 @@ namespace Templates
     {
         std::string ImagePath;
         bool IsDense;
-        Play::PlayEventHandler OnInspect;
+        Play::PlayEventHandler OnInspect = nullptr;
     };
 
     /**
@@ -97,12 +97,12 @@ namespace Templates
         float Attack;
         int AttackDelay;
         int MovementDelay;
-        Play::AiAction CombatAction;
+        Play::AiAction CombatAction = nullptr;
     };
 
     struct TerrainTemplate : public MapObjectTemplate
     {
-        Play::PlayEventHandler OnEnter;
+        Play::PlayEventHandler OnEnter = nullptr;
     };
 
     struct Data
@@ -119,6 +119,7 @@ namespace Templates
             static const TerrainTemplate Grass;
             static const TerrainTemplate Wall;
             static const TerrainTemplate Hut;
+            static const TerrainTemplate Cache;
 
             // Stats of Enemies
             static const EnemyTemplate E1;

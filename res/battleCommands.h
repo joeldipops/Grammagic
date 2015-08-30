@@ -2,7 +2,7 @@
 #define BATTLECOMMANDS_H_INCLUDED
 
 #include "../play/battleField.h"
-#include "../mapObject.h"
+#include "../play/mapObject.h"
 #include "../magic/properNoun.h"
 #include "../magic/verb.h"
 #include "../magic/modifier.h"

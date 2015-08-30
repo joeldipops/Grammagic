@@ -4,7 +4,7 @@
 #include <vector>
 #include <queue>
 
-#include "../mapObject.h"
+#include "mapObject.h"
 #include "../globalConstants.h"
 #include "combatable.h"
 

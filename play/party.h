@@ -1,7 +1,7 @@
 #ifndef PARTY_H_INCLUDED
 #define PARTY_H_INCLUDED
 
-#include "../mapObject.h"
+#include "mapObject.h"
 #include "../res/templates.h"
 #include "pc.h"
 
@@ -30,6 +30,11 @@ namespace Play
             bool isPlayerParty(void) const;
             int x(int); using MapObject::x;
             int y(int); using MapObject::y;
+
+            const std::vector<Rune*> runeCollection(void) const;
+            void addRunes(Rune*);
+            void addRunes(std::vector<Rune*>);
+            std::vector<Rune*> _runeCollection;
 
         private:
             std::vector<PC*> _members;

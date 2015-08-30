@@ -22,7 +22,7 @@ namespace Magic
             Command(std::string, Spell);
             ~Command(void);
 
-            std::string name(void) const;
+            const std::string& name(void) const;
             const std::vector<Word*> components_Deprecated(void) const;
             int execute(Mob*, BattleField*);
             bool edit_Deprecated(std::vector<Word*> components_Deprecated);

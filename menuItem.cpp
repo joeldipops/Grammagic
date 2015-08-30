@@ -1,7 +1,7 @@
 #include "menuItem.h"
 
 MenuItem::MenuItem(void) {}
-MenuItem::MenuItem(std::string name_)
+MenuItem::MenuItem(const std::string& name_)
 {
     _name = name_;
 }
@@ -9,12 +9,7 @@ MenuItem::MenuItem(std::string name_)
 /**
  * Gets or sets the display name of this command.
  */
-std::string MenuItem::name(void) const { return _name; }
-std::string MenuItem::name(std::string name_)
-{
-    _name = name_;
-    return _name;
-}
+const std::string& MenuItem::name(void) const { return _name; }
 
 /**
  * @return The display text colour of this item.

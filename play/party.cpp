@@ -3,11 +3,20 @@
 using namespace Play;
 
 //{Lifecycle
+
+Templates::MapObjectTemplate getPCDefaultTemplate(void)
+{
+    Templates::MapObjectTemplate result;
+    result.ImagePath = "";
+    result.IsDense = true;
+    return result;
+}
+
 /**
  * Constructor
  */
 Party::Party(void)
-    :MapObject(Templates::MapObjectTemplate {"", true, nullptr})
+    :MapObject(getPCDefaultTemplate())
 {
     _members = std::vector<PC*>(0);
     _bench = std::vector<PC*>(0);
@@ -20,7 +29,7 @@ Party::Party(void)
  * Constructor takes list of members.
  */
 Party::Party(std::vector<PC*> members_)
-    :MapObject(Templates::MapObjectTemplate {"", true, nullptr})
+    :MapObject(getPCDefaultTemplate())
 {
     _members = members_;
     if (_members.size() > 0)
@@ -33,16 +42,20 @@ Party::Party(std::vector<PC*> members_)
 Party::~Party(void)
 {
     for(natural i = 0; i < _members.size(); i++)
-    {
         delete _members.at(i);
-    }
 
     _members = std::vector<PC*>(0);
+
+    for(Rune* r : _runeCollection)
+        delete r;
+
+    _runeCollection = std::vector<Rune*>(0);
 }
 //}
 
 //{Properties
 const std::vector<PC*> Party::members(void) const { return _members; }
+const std::vector<Rune*> Party::runeCollection(void) const { return _runeCollection; }
 //}
 
 //{Methods
@@ -185,5 +198,16 @@ void Party::endCombat(void)
     }
 
     _bench = std::vector<PC*>(0);
+}
+
+void Party::addRunes(Rune* rune)
+{
+    if (rune != nullptr)
+        _runeCollection.push_back(rune);
+}
+
+void Party::addRunes(std::vector<Rune*> runes)
+{
+    _runeCollection.insert(_runeCollection.end(), runes.begin(), runes.end());
 }
 //}

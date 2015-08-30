@@ -4,17 +4,17 @@
 #include <string>
 #include "modifier.h"
 #include "magicTypedefs.h"
+#include "../menuItem.h"
 namespace Templates { class RuneTemplate; }
 
 namespace Magic
 {
-    class Rune
+    class Rune : MenuItem
     {
         public:
             Rune(const Templates::RuneTemplate&);
             ~Rune(void);
 
-            std::string name(void) const;
             std::string imagePath(void) const;
             int addEffect(void) const;
             int addCost(void) const;

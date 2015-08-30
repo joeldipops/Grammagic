@@ -57,7 +57,7 @@ const Spell* Command::spell(void) const
 /**
  * Overrides base to return the name of the wrapped spell.
  */
-std::string Command::name(void) const
+const std::string& Command::name(void) const
 {
     for(Word* w : components_Deprecated())
     {

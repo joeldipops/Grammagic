@@ -1,7 +1,7 @@
 #ifndef TERRAIN_H_INCLUDED
 #define TERRAIN_H_INCLUDED
 
-#include "../mapObject.h"
+#include "mapObject.h"
 #include "../globalConstants.h"
 #include "../res/templates.h"
 #include "party.h"

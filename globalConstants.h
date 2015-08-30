@@ -24,7 +24,8 @@ enum TerrainType
 {
     WallTerrain = 'w',
     GrassTerrain = 'g',
-    HutTerrain = 'h'
+    HutTerrain = 'h',
+    CacheTerrain = 'c'
 };
 
 enum Stat

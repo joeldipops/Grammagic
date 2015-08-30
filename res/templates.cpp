@@ -639,6 +639,40 @@ const TerrainTemplate GetGrass()
 };
 const TerrainTemplate Data::Grass = GetGrass();
 
+PlayStateContainer& getAllRunes(MapObject* context, PlayStateContainer& data)
+{
+    std::vector<Rune*> runes;
+    runes.push_back(new Rune(Data::ALL));
+    runes.push_back(new Rune(Data::HIGH));
+    runes.push_back(new Rune(Data::LOW));
+    runes.push_back(new Rune(Data::ALLY));
+    runes.push_back(new Rune(Data::MEMBER));
+    runes.push_back(new Rune(Data::CASTER));
+    runes.push_back(new Rune(Data::ENEMY));
+    runes.push_back(new Rune(Data::DEFENCE));
+    runes.push_back(new Rune(Data::RESISTANCE));
+    runes.push_back(new Rune(Data::SKILL));
+    runes.push_back(new Rune(Data::SPEED));
+    runes.push_back(new Rune(Data::STAMINA));
+
+    data.Map->party()->addRunes(runes);
+    data.Message = "Woo, you picked up a bunch of runes!";
+
+    MapCell cell(Data::Grass);
+    data.Map->setCell(context->x(), context->y(), &cell);
+    return data;
+}
+
+const TerrainTemplate GetCache()
+{
+    TerrainTemplate result;
+    result.ImagePath = RESOURCE_LOCATION + "cache.png";
+    result.IsDense = true;
+    result.OnInspect = getAllRunes;
+    return result;
+};
+const TerrainTemplate Data::Cache = GetCache();
+
 PlayStateContainer& healAtHut(MapObject* context, PlayStateContainer& data)
 {
     for(Mob* member : data.Map->party()->members())
