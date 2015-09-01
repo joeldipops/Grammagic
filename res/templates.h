@@ -53,6 +53,8 @@ namespace Templates
         int ActionCostBonus = 0;
         int ActionDurationBonus = 0;
         bool IsBoon = false;
+
+        Persistence::SavedObjectCode Code = Persistence::SavedObjectCode::UNKNOWN;
     };
 
     /**
@@ -130,6 +132,7 @@ namespace Templates
 
             // All Runes
             static const RuneTemplate ALL;
+            static const RuneTemplate ANY;
             static const RuneTemplate CASTER;
             static const RuneTemplate ENEMY;
             static const RuneTemplate ALLY; // Excludes the caster.

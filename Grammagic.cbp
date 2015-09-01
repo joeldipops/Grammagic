@@ -57,8 +57,6 @@
 		<Unit filename="magic/word.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="mapFileBlock.h" />
-		<Unit filename="mapObject.cpp" />
-		<Unit filename="mapObject.h" />
 		<Unit filename="menuItem.cpp" />
 		<Unit filename="menuItem.h" />
 		<Unit filename="menuManager.cpp" />
@@ -81,6 +79,8 @@
 		<Unit filename="play/gameMap.h" />
 		<Unit filename="play/mapCell.cpp" />
 		<Unit filename="play/mapCell.h" />
+		<Unit filename="play/mapObject.cpp" />
+		<Unit filename="play/mapObject.h" />
 		<Unit filename="play/mapViewManager.cpp" />
 		<Unit filename="play/miniMapViewManager.cpp" />
 		<Unit filename="play/mob.cpp" />

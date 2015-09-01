@@ -22,7 +22,7 @@ PC::~PC(void)
 /**
  * Returns the maximum number of runes per spell a pc can have.
  */
-int PC::runeSlots(void) const { return _runeSlots; }
+natural PC::runeSlots(void) const { return _runeSlots; }
 
 /**
  * The character's name.
@@ -40,9 +40,9 @@ Templates::PartyMemberCode PC::memberCode(void) const { return _memberCode; }
 /**
  * Returns the maximum number of spells a pc can keep at one time.
  */
-int PC::spellSlots(void) const
+natural PC::spellSlots(void) const
 {
-    return _spellSlots > int(spells()->size())
+    return _spellSlots > spells()->size()
     ? spells()->size() + 1
     : _spellSlots;
 }

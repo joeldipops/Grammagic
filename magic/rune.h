@@ -9,12 +9,13 @@ namespace Templates { class RuneTemplate; }
 
 namespace Magic
 {
-    class Rune : MenuItem
+    class Rune : public MenuItem
     {
         public:
             Rune(const Templates::RuneTemplate&);
             ~Rune(void);
 
+            Persistence::SavedObjectCode code(void) const;
             std::string imagePath(void) const;
             int addEffect(void) const;
             int addCost(void) const;
@@ -62,6 +63,7 @@ namespace Magic
             int _actionCostBonus = 0;
             int _actionDurationBonus = 0;
             bool _isBoon = false;
+            Persistence::SavedObjectCode _code;
 
             int _addEffect = 0;
             int _addCost = 0;

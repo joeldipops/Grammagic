@@ -26,6 +26,7 @@ Rune::Rune(const Templates::RuneTemplate& tmpl)
     _actionDurationBonus = tmpl.ActionDurationBonus;
     _actionEffectBonus = tmpl.ActionEffectBonus;
     _isBoon = tmpl.IsBoon;
+    _code = tmpl.Code;
 }
 
 Rune::~Rune(void) {}
@@ -103,6 +104,7 @@ int Rune::actionEffectBonus(void) const { return _actionEffectBonus; }
 int Rune::actionCostBonus(void) const { return _actionCostBonus; }
 int Rune::actionDurationBonus(void) const { return _actionDurationBonus; }
 bool Rune::isBoon(void) const { return _isBoon; }
+Persistence::SavedObjectCode Rune::code(void) const { return _code; }
 
 //}
 
@@ -121,7 +123,7 @@ bool Rune::isProperNoun(void) const
  */
 bool Rune::isNoun(void) const
 {
-    return _selectTargetFromCandidates != nullptr;
+    return _getTargetCandidates != nullptr;
 }
 
 /**

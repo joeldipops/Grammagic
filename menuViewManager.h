@@ -38,7 +38,7 @@ namespace Play
             SDL_Rect _partyVp;
 
             void renderSpells(const PC&, int, int);
-            void renderRunes(const PC&, int);
+            void renderRunes(const Party&, int);
             void renderPCs(const Party&, int, int = -1);
 
             static const SDL_Rect _menuControl;

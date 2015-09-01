@@ -8,41 +8,6 @@
 
 namespace Persistence
 {
-    enum SavedObjectCode
-    {
-        NewSpell,
-        PCPosition,
-        NewMember,
-        HealRune,
-        EnemyRune,
-        CasterRune,
-        HurtRune,
-        HastenRune,
-        SlowRune,
-        HeavierRune,
-        LighterRune,
-        FreshestRune,
-        SickestRune,
-        FastestRune,
-        SlowestRune,
-        FasterRune,
-        GuardedRune,
-        ExposeRune,
-        DefendRune,
-        WardRune,
-        WardedRune,
-        VulnerableRune,
-        ExposedRune,
-        EndangerRune,
-        AllRune,
-        ImpairRune,
-        EnhanceRune,
-        StrongestRune,
-        WeakestRune,
-        AllyRune,
-        MemberRune
-    };
-
     class SaveLoad
     {
         public:

@@ -11,7 +11,7 @@ using namespace Magic;
  */
 int Command::spellCaster(Command* _this, Mob* caster, BattleField* field)
 {
-    return _this->_spell.cast_Deprecated(caster, field);
+    return _this->_spell.cast(caster, field);
 }
 
 /**
@@ -54,34 +54,26 @@ const Spell* Command::spell(void) const
     return &_spell;
 }
 
+const std::vector<Rune*> Command::components(void) const
+{
+    if (_hasSpell)
+        return _spell.components();
+    return std::vector<Rune*>(0);
+}
+
 /**
  * Overrides base to return the name of the wrapped spell.
  */
 const std::string& Command::name(void) const
 {
+    /*
     for(Word* w : components_Deprecated())
     {
         if (w->type() == WordType::VERB)
             return w->name();
     }
-
+    */
     return MenuItem::name();
-}
-
-/**
- * Returns the rune components of an attached spell, if any.
- */
-const std::vector<Word*> Command::components_Deprecated(void) const
-{
-    if (_hasSpell)
-        return _spell.components_Deprecated();
-    return std::vector<Word*>(0);
-}
-
-
-bool Command::edit_Deprecated(std::vector<Word*> components_Deprecated)
-{
-    return _spell.edit_Deprecated(components_Deprecated);
 }
 
 /**

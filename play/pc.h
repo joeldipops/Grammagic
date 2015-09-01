@@ -20,8 +20,8 @@ class PC : public Mob
     public:
         PC(const Templates::PCTemplate&);
         ~PC(void);
-        int spellSlots(void) const;
-        int runeSlots(void) const;
+        natural spellSlots(void) const;
+        natural runeSlots(void) const;
         std::string name(void) const;
         std::string className(void) const;
         bool isPlayerControlled(void) const;
@@ -29,8 +29,8 @@ class PC : public Mob
 
 
     private:
-        int _spellSlots = 7;
-        int _runeSlots = 6;
+        natural _spellSlots = 7;
+        natural _runeSlots = 6;
         std::string _name;
         Templates::PartyMemberCode _memberCode;
         JobClass _jobClass;

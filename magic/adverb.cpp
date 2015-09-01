@@ -10,7 +10,7 @@ Adverb::Adverb(std::string n, Modifier e, Modifier c, Modifier d)
 Adverb::Adverb(Rune* adv)
     :Word(std::vector<Rune*>{adv})
 {
-    if (adv->isAdverb())
+    if (!adv->isAdverb())
         throw;
 
     _modify = adv->metaActionFn();

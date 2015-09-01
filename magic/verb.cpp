@@ -46,6 +46,9 @@ Verb::Verb(Rune* action)
     _isSameMultiplier = action->isSameMultiplier();
     _enemyCostMultiplier = action->enemyCostMultiplier();
     _allyEffectMultiplier = action->allyEffectMultiplier();
+    _action = action->performActionFn();
+    _modality = action->modality();
+
     _actionWrapper = verbAct;
 };
 
@@ -55,6 +58,8 @@ Verb::Verb(Rune* aux, Rune* action)
     if (!aux->isAuxilliary() || !action->isVerb())
         throw;
 
+    _modality = aux->modality();
+
     _isBoon = action->isBoon();
     _actionCostBonus = action->actionCostBonus();
     _actionDurationBonus = action->actionDurationBonus();
@@ -62,6 +67,8 @@ Verb::Verb(Rune* aux, Rune* action)
     _isSameMultiplier = action->isSameMultiplier();
     _enemyCostMultiplier = action->enemyCostMultiplier();
     _allyEffectMultiplier = action->allyEffectMultiplier();
+
+    _action = action->performActionFn();
 
     _actionWrapper = auxVerbAct;
 };

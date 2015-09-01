@@ -32,6 +32,7 @@ const RuneTemplate GetALL()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "ALL";
+    result.Code = Persistence::SavedObjectCode::ALL_RUNE;
     result.ImagePath = "";
     result.SelectTargetFromCandidates = all;
 
@@ -46,6 +47,32 @@ const RuneTemplate GetALL()
 };
 const RuneTemplate Templates::Data::ALL = GetALL();
 
+
+static Combatable* any (Mob* caster, BattleField* field, const std::vector<Combatable*>& candidates, SpellData&)
+{
+    int index  = rand() % candidates.size();
+    return candidates.at(index);
+}
+const RuneTemplate GetANY()
+{
+    RuneTemplate result = RuneTemplate();
+    result.Name = "ANY";
+    result.Code = Persistence::SavedObjectCode::ANY_RUNE;
+    result.ImagePath = "";
+    result.SelectTargetFromCandidates = any;
+
+    result.AddEffect = 0;
+    result.AddCost = 0;
+    result.AddDuration = 0;
+
+    result.ModEffect = 1.0;
+    result.ModCost = 1.0;
+    result.ModDuration = 1.0;
+    return result;
+};
+const RuneTemplate Templates::Data::ANY = GetANY();
+
+
 static Combatable* self (Mob* caster, BattleField*, SpellData&)
 {
     return (Combatable*) caster;
@@ -54,6 +81,7 @@ const RuneTemplate GetCASTER()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "CASTER";
+    result.Code = Persistence::SavedObjectCode::CASTER_RUNE;
     result.ImagePath = "";
     result.GetTarget = self;
 
@@ -90,6 +118,7 @@ const RuneTemplate GetENEMY()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "ENEMY";
+    result.Code = Persistence::SavedObjectCode::ENEMY_RUNE;
     result.ImagePath = "";
     result.GetTargetCandidates = enemies;
 
@@ -126,6 +155,7 @@ const RuneTemplate GetALLY()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "ALLY";
+    result.Code = Persistence::SavedObjectCode::ALLY_RUNE;
     result.ImagePath = "";
     result.GetTargetCandidates = allies;
 
@@ -162,6 +192,7 @@ const RuneTemplate GetMEMBER()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "MEMBER";
+    result.Code = Persistence::SavedObjectCode::MEMBER_RUNE;
     result.ImagePath = "";
     result.GetTargetCandidates = members;
 
@@ -239,7 +270,7 @@ Combatable* most(Mob* caster, BattleField* battleField, const std::vector<Combat
 
 void changeStat(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
 {
-    if (data.modality == Modality::HIGH)
+    if (data.modality == Modality::LOW)
         effect *= -1;
 
     source->changeStamina(cost * -1);
@@ -274,9 +305,12 @@ const RuneTemplate GetHIGH()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "HIGH";
+    result.Code = Persistence::SavedObjectCode::HIGH_RUNE;
     result.ImagePath = "";
     result.PerformAction;
     result.MetaAction = heavySpell;
+
+    result.Flag = Modality::HIGH;
 
     result.AddEffect = 0;
     result.AddCost = 0;
@@ -298,9 +332,12 @@ const RuneTemplate GetLOW()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "LOW";
+    result.Code = Persistence::SavedObjectCode::LOW_RUNE;
     result.ImagePath = "";
     result.PerformAction;
     result.MetaAction = lightSpell;
+
+    result.Flag = Modality::LOW;
 
     result.AddEffect = 0;
     result.AddCost = 0;
@@ -331,6 +368,7 @@ const RuneTemplate GetSTAMINA()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "STAMINA";
+    result.Code = Persistence::SavedObjectCode::STAMINA_RUNE;
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostStamina;
     result.PerformAction = changeStamina;
@@ -372,6 +410,7 @@ const RuneTemplate GetSPEED()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "SPEED";
+    result.Code = Persistence::SavedObjectCode::SPEED_RUNE;
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostSpeed;
     result.PerformAction = changeSpeed;
@@ -409,6 +448,7 @@ const RuneTemplate GetDEFENCE()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "DEFENCE";
+    result.Code = Persistence::SavedObjectCode::DEFENCE_RUNE;
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostDefence;
     result.PerformAction = changeDefence;
@@ -445,6 +485,7 @@ const RuneTemplate GetRESISTANCE()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "RESISTANCE";
+    result.Code = Persistence::SavedObjectCode::RESISTANCE_RUNE;
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostResistance;
     result.PerformAction = changeResistance;
@@ -481,6 +522,7 @@ const RuneTemplate GetSKILL()
 {
     RuneTemplate result = RuneTemplate();
     result.Name = "SKILL";
+    result.Code = Persistence::SavedObjectCode::SKILL_RUNE;
     result.ImagePath = "";
     result.SelectTargetFromCandidates = mostSkill;
     result.PerformAction = changeSkill;
@@ -643,6 +685,7 @@ PlayStateContainer& getAllRunes(MapObject* context, PlayStateContainer& data)
 {
     std::vector<Rune*> runes;
     runes.push_back(new Rune(Data::ALL));
+    runes.push_back(new Rune(Data::ANY));
     runes.push_back(new Rune(Data::HIGH));
     runes.push_back(new Rune(Data::LOW));
     runes.push_back(new Rune(Data::ALLY));

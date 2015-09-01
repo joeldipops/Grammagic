@@ -128,6 +128,30 @@ namespace Magic
     };
 }
 
+namespace Persistence
+{
+    enum SavedObjectCode
+    {
+        UNKNOWN,
+        NEW_SPELL,
+        PC_POSITION,
+        NEW_MEMBER,
+        HIGH_RUNE,
+        LOW_RUNE,
+        CASTER_RUNE,
+        ALL_RUNE,
+        ANY_RUNE,
+        ALLY_RUNE,
+        MEMBER_RUNE,
+        ENEMY_RUNE,
+        STAMINA_RUNE,
+        SKILL_RUNE,
+        SPEED_RUNE,
+        RESISTANCE_RUNE,
+        DEFENCE_RUNE
+    };
+}
+
 const int CELL_WIDTH = 50;
 const int CELL_HEIGHT = 50;
 const natural WIDTH = 1200;

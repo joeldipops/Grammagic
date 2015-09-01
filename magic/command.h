@@ -2,7 +2,6 @@
 #define COMMAND_H_INCLUDED
 
 #include "spell.h"
-#include "properNoun.h"
 #include "verb.h"
 #include "../menuItem.h"
 
@@ -23,10 +22,8 @@ namespace Magic
             ~Command(void);
 
             const std::string& name(void) const;
-            const std::vector<Word*> components_Deprecated(void) const;
+            const std::vector<Rune*> components(void) const;
             int execute(Mob*, BattleField*);
-            bool edit_Deprecated(std::vector<Word*> components_Deprecated);
-            bool isValid_Deprecated(void) const;
             Spell* spell(void);
             const Spell* spell(void) const;
 

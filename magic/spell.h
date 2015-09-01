@@ -5,10 +5,9 @@
 #include <math.h>
 
 #include "word.h"
-#include "nounish.h"
 #include "verb.h"
 #include "adverb.h"
-#include "nounPhrase.h"
+#include "noun.h"
 #include "../play/battleField.h"
 #include "../util/utils.h"
 #include "rune.h"
@@ -37,19 +36,6 @@ namespace Magic
             int cast(Mob*, BattleField*);
             bool resolve(void);
 
-
-
-            const Word* component_Deprecated(natural) const;
-            Word* component_Deprecated(natural, Word*);
-            void removeComponent_Deprecated(int);
-            void addComponent_Deprecated(Word*, bool = false);
-            static bool verify_Deprecated(std::vector<Word*>);
-            bool isValid_Deprecated(bool = false) const;
-            bool edit_Deprecated(std::vector<Word*>);
-            bool resolve_Deprecated(void);
-            int cast_Deprecated(Mob*, BattleField*);
-            const std::vector<Word*> components_Deprecated(void) const;
-
         private:
             int calculateCost(void) const;
             int calculateEffect(void) const;
@@ -57,25 +43,12 @@ namespace Magic
 
             Noun* _target;
             Noun* _source;
-            Nounish* _target_Deprecated;
-            Nounish* _source_Deprecated;
             Verb* _action;
             std::vector<Adverb*> _adverbs;
             void toBin(Word*);
             void emptyBin(void);
             std::vector<Word*> _rubbishBin;
             std::vector<Rune*> _components;
-
-
-            std::vector<Word*> _components_Deprecated;
-
-            static DummyAdjective _dummy;
-            static Combatable* _randomObj (Mob* caster, BattleField* field, const std::vector<Combatable*>& candidates, SpellData&)
-            {
-                int index  = rand() % candidates.size();
-                return candidates.at(index);
-            }
-
     };
 }
 #endif

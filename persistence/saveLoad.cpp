@@ -18,7 +18,7 @@ void SaveLoad::save(const Party& party)
     //data.push_back(party.y());
     for (PC* pc : party.members())
     {
-        data.push_back(SavedObjectCode::NewMember);
+        data.push_back(SavedObjectCode::NEW_MEMBER);
         data.push_back(pc->memberCode());
         pushNumeric(data, pc->maxStamina());
         pushNumeric(data, (unsigned short)(pc->defaultSkill() * 100));
@@ -43,69 +43,10 @@ std::vector<byte> SaveLoad::getSpellBytes(const PC& pc) const
     std::vector<byte> result = std::vector<byte>();
     for (natural i = 0; i < pc.spells()->size(); i++)
     {
-        result.push_back(SavedObjectCode::NewSpell);
+        result.push_back(SavedObjectCode::NEW_SPELL);
 
-        for (Word* word : pc.spells()->at(i).components_Deprecated())
-        {
-            if (word == &Commands::FASTER)
-                result.push_back(SavedObjectCode::FasterRune);
-            else if (word == &Commands::FASTEST)
-                result.push_back(SavedObjectCode::FastestRune);
-            else if (word == &Commands::CASTER)
-                result.push_back(SavedObjectCode::CasterRune);
-            else if (word == &Commands::FRESHEST)
-                result.push_back(SavedObjectCode::FreshestRune);
-            else if (word == &Commands::HASTEN)
-                result.push_back(SavedObjectCode::HastenRune);
-            else if (word == &Commands::HEAL)
-                result.push_back(SavedObjectCode::HealRune);
-            else if (word == &Commands::HEAVIER)
-                result.push_back(SavedObjectCode::HeavierRune);
-            else if (word == &Commands::HURT)
-                result.push_back(SavedObjectCode::HurtRune);
-            else if (word == &Commands::LIGHTER)
-                result.push_back(SavedObjectCode::LighterRune);
-            else if (word == &Commands::SICKEST)
-                result.push_back(SavedObjectCode::SickestRune);
-            else if (word == &Commands::SLOW)
-                result.push_back(SavedObjectCode::SlowRune);
-            else if (word == &Commands::SLOWEST)
-                result.push_back(SavedObjectCode::SlowestRune);
-            else if (word == &Commands::ENEMY)
-                result.push_back(SavedObjectCode::EnemyRune);
-            else if (word == &Commands::DEFEND)
-                result.push_back(SavedObjectCode::DefendRune);
-            else if (word == &Commands::GUARDED)
-                result.push_back(SavedObjectCode::GuardedRune);
-            else if (word == &Commands::WARD)
-                result.push_back(SavedObjectCode::WardRune);
-            else if (word == &Commands::WARDED)
-                result.push_back(SavedObjectCode::WardedRune);
-            else if (word == &Commands::ENDANGER)
-                result.push_back(SavedObjectCode::EndangerRune);
-            else if (word == &Commands::VULNERABLE)
-                result.push_back(SavedObjectCode::VulnerableRune);
-            else if (word == &Commands::EXPOSED)
-                result.push_back(SavedObjectCode::ExposedRune);
-            else if (word == &Commands::EXPOSE)
-                result.push_back(SavedObjectCode::ExposeRune);
-            else if (word == &Commands::ALL)
-                result.push_back(SavedObjectCode::AllRune);
-            else if (word == &Commands::ENHANCE)
-                result.push_back(SavedObjectCode::EnhanceRune);
-            else if (word == &Commands::IMPAIR)
-                result.push_back(SavedObjectCode::ImpairRune);
-            else if (word == &Commands::STRONGEST)
-                result.push_back(SavedObjectCode::StrongestRune);
-            else if (word == &Commands::WEAKEST)
-                result.push_back(SavedObjectCode::WeakestRune);
-            else if (word == &Commands::ALLY)
-                result.push_back(SavedObjectCode::AllyRune);
-            else if (word == &Commands::MEMBER)
-                result.push_back(SavedObjectCode::MemberRune);
-            else
-                throw;
-        }
+        for (Rune* rune : pc.spells()->at(i).components())
+            result.push_back(rune->code());
     }
     return result;
 }
@@ -131,10 +72,10 @@ void SaveLoad::load(Party& party) const
         switch(SavedObjectCode(data.at(i)))
         {
 
-            case SavedObjectCode::PCPosition:
+            case SavedObjectCode::PC_POSITION:
                 if (spellInProgress)
                 {
-                    workingSpell.resolve_Deprecated();
+                    workingSpell.resolve();
                     spells.push_back(workingSpell);
                 }
 
@@ -143,10 +84,10 @@ void SaveLoad::load(Party& party) const
                 //party.y(int(data.at(i+2)));
                 i+= 2;
                 break;
-            case SavedObjectCode::NewMember: {
+            case SavedObjectCode::NEW_MEMBER: {
                 if (spellInProgress)
                 {
-                    workingSpell.resolve_Deprecated();
+                    workingSpell.resolve();
                     spells.push_back(workingSpell);
 
                     for (Spell s : spells)
@@ -185,157 +126,23 @@ void SaveLoad::load(Party& party) const
                 pc = party.addMember(t);
                 break;
             }
-            case SavedObjectCode::NewSpell:
+            case SavedObjectCode::NEW_SPELL:
                 if (spellInProgress)
                 {
-                    workingSpell.resolve_Deprecated();
+                    workingSpell.resolve();
                     spells.push_back(workingSpell);
                 }
 
                 spellInProgress = true;
                 workingSpell = Spell();
                 break;
-            case SavedObjectCode::CasterRune:
+            /*
+            case SavedObjectCode::CASTER_RUNE:
                 if (!spellInProgress)
                     throw;
-                workingSpell.addComponent_Deprecated(&Commands::CASTER);
+                workingSpell.addComponent(&Commands::CASTER);
                 break;
-            case SavedObjectCode::EnemyRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::ENEMY);
-                break;
-            case SavedObjectCode::FastestRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::FASTEST);
-                break;
-            case SavedObjectCode::FasterRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::FASTER);
-                break;
-            case SavedObjectCode::FreshestRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::FRESHEST);
-                break;
-            case SavedObjectCode::SlowRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::SLOW);
-                break;
-            case SavedObjectCode::SlowestRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::SLOWEST);
-                break;
-            case SavedObjectCode::SickestRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::SICKEST);
-                break;
-            case SavedObjectCode::LighterRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::LIGHTER);
-                break;
-            case SavedObjectCode::HurtRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::HURT);
-                break;
-            case SavedObjectCode::HeavierRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::HEAVIER);
-                break;
-            case SavedObjectCode::HealRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::HEAL);
-                break;
-            case SavedObjectCode::HastenRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::HASTEN);
-                break;
-            case SavedObjectCode::DefendRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::DEFEND);
-                break;
-            case SavedObjectCode::WardRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::WARD);
-                break;
-            case SavedObjectCode::ExposeRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::EXPOSED);
-                break;
-            case SavedObjectCode::EndangerRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::ENDANGER);
-                break;
-            case SavedObjectCode::GuardedRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::GUARDED);
-                break;
-            case SavedObjectCode::VulnerableRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::VULNERABLE);
-                break;
-            case SavedObjectCode::WardedRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::WARDED);
-                break;
-            case SavedObjectCode::ExposedRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::EXPOSED);
-                break;
-            case SavedObjectCode::AllRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::ALL);
-                break;
-
-            case SavedObjectCode::EnhanceRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::ENHANCE);
-                break;
-            case SavedObjectCode::ImpairRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::IMPAIR);
-                break;
-            case SavedObjectCode::StrongestRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::STRONGEST);
-                break;
-            case SavedObjectCode::WeakestRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::WEAKEST);
-                break;
-            case SavedObjectCode::AllyRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::ALLY);
-                break;
-            case SavedObjectCode::MemberRune:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent_Deprecated(&Commands::MEMBER);
-                break;
+            */
             default: throw;
         }
 
@@ -344,7 +151,7 @@ void SaveLoad::load(Party& party) const
         throw;
     if (spellInProgress)
     {
-        workingSpell.resolve_Deprecated();
+        workingSpell.resolve();
         spells.push_back(workingSpell);
     }
 

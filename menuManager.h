@@ -25,7 +25,7 @@ namespace Play
             static const MenuItem SAVE;
             static const MenuItem PARTY;
 
-            int selectedSpellLength(PC*) const;
+            natural selectedSpellLength(PC*) const;
             bool moveCursor(Party& party, Core::InputPress input);
 
             // What happens when you hit ok when on various menu items.

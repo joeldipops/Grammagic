@@ -106,13 +106,13 @@ Play::PlayState MenuManager::start(Party& party)
  * @param pc who has a list of spells.
  * @return The number of components in the currently selected spell.
  */
-int MenuManager::selectedSpellLength(PC* pc) const
+natural MenuManager::selectedSpellLength(PC* pc) const
 {
     // We have only just started writing this spell.
     if (int(pc->spells()->size()) <= _selectedSpellIndex)
         return 0;
 
-    return (int) pc->spells()->at(_selectedSpellIndex).spell()->components_Deprecated().size();
+    return pc->spells()->at(_selectedSpellIndex).spell()->components().size();
 }
 
 
@@ -145,7 +145,7 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
             break;
         case MenuState::SelectSpell: {
             PC* member = party.memberAt(_selectedMemberIndex);
-            itemCount = member->spellSlots() > int(member->spells()->size())
+            itemCount = member->spellSlots() > member->spells()->size()
                 ? member->spells()->size() + 1
                 : member->spellSlots();
             index = _selectedSpellIndex;
@@ -156,7 +156,7 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
         case MenuState::SelectRune:
             index = _selectedRuneIndex;
             indexToUpdate = &_selectedRuneIndex;
-            itemCount = Templates::Commands::allCommands.size() + 1;
+            itemCount = party.runeCollection().size() + 1;
             columnItemCount = _viewManager.menuItemsPerColumn();
             break;
         case MenuState::SelectComponent: {
@@ -299,18 +299,18 @@ bool MenuManager::processRuneCommand(const Party& party)
 {
     PC* pc = party.memberAt(_selectedMemberIndex);
     if (int(pc->spells()->size()) <= _selectedSpellIndex)
-        pc->spells()->push_back(Command("", Spell(std::vector<Word*>(0))));
+        pc->spells()->push_back(Command("", Spell(std::vector<Rune*>(0))));
 
     Spell* workingSpell = pc->spells()->at(_selectedSpellIndex).spell();
 
     if (_selectedRuneIndex == 0)
     {
-        workingSpell->removeComponent_Deprecated(_selectedComponentIndex);
+        workingSpell->removeComponent(_selectedComponentIndex);
         return true;
     }
 
-    workingSpell->component_Deprecated(_selectedComponentIndex, Templates::Commands::allCommands.at(_selectedRuneIndex - 1));
-    if (_selectedComponentIndex + 1 < pc->runeSlots())
+    workingSpell->component(_selectedComponentIndex, party.runeCollection().at(_selectedRuneIndex - 1));
+    if (_selectedComponentIndex + 1 < int(pc->runeSlots()))
         _selectedComponentIndex++;
     return true;
 }

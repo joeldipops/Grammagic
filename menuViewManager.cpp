@@ -2,7 +2,7 @@
 
 using namespace Play;
 
-const SDL_Rect MenuViewManager::_menuControl = SDL_Rect { 6, 6, 175, 50 };
+const SDL_Rect MenuViewManager::_menuControl = SDL_Rect { 6, 6, 150, 50 };
 const int MenuViewManager::cursorXOffset = borderWidth + _menuControl.x;
 const int MenuViewManager::cursorYOffset = borderWidth + _menuControl.y;
 
@@ -24,20 +24,13 @@ MenuViewManager::MenuViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
  * @param pc
  * @param runeIndex The rune that the cursor is on.
  */
-void MenuViewManager::renderRunes(const PC& pc, int runeIndex)
+void MenuViewManager::renderRunes(const Party& party, int runeIndex)
 {
-    std::vector<MenuRune> runes = std::vector<MenuRune>();
-    for (Word* word : Templates::Commands::allCommands)
-    {
-        MenuRune item = MenuRune(word);
-        runes.push_back(item);
-    }
-
-    std::vector<MenuRune*> pointers = toPointers(runes);
+    std::vector<Rune*> runes = party.runeCollection();
     std::vector<MenuItem*> items = std::vector<MenuItem*> (0);
     MenuItem item = MenuItem("");
     items.push_back(&item);
-    items.insert(items.end(), pointers.begin(), pointers.end());
+    items.insert(items.end(), runes.begin(), runes.end());
     drawControls(&items, runeIndex, &_runesVp, &_menuControl);
 }
 
@@ -54,63 +47,46 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
 
     SDL_Rect rect = SDL_Rect { _spellsVp.x + marginLeft, _spellsVp.y, WIDTH, _control.y + _control.h };
 
-    for (int i = 0; i < pc.spellSlots(); i++)
+    for (int i = 0; i < int(pc.spellSlots()); i++)
     {
         int position = -1;
         if (i == spellIndex)
         {
             position = componentPosition;
         }
-        std::vector<MenuItem*> pointers = std::vector<MenuItem*>(0);
-        pointers.reserve(pc.runeSlots());
+        std::vector<MenuItem*> menuItems = std::vector<MenuItem*>(0);
 
         if (i < int(pc.spells()->size()))
         {
             const Command* command = &pc.spells()->at(i);
-            std::vector<Word*> words = command->components_Deprecated();
-
-            std::vector<MenuRune> runes = std::vector<MenuRune>(0);
-            pointers.reserve(words.size());
-            runes.reserve(words.size());
-
-            int maxSlots = pc.runeSlots() > int(words.size())
-            ? words.size() + 1
-            : pc.runeSlots();
+            std::vector<Rune*> runes = command->components();
 
             MenuItem emptySlot = MenuItem();
 
-            for (int j = 0; j < maxSlots; j++)
-            {
-                if (j < int(words.size()))
-                {
-                    runes.push_back(MenuRune(words.at(j)));
-                    pointers.push_back((MenuItem*)&runes.at(runes.size()-1));
-                }
-                else
-                    pointers.push_back(&emptySlot);
-            }
+            menuItems.insert(menuItems.end(), runes.begin(), runes.end());
+
+            if (runes.size() < pc.runeSlots())
+                menuItems.push_back(&emptySlot);
 
             SDL_Rect validRect = SDL_Rect { rect.w - 40, rect.y + cursorYOffset, 30, 30 };
-            if (command->spell()->isValid_Deprecated(true))
+            if (command->spell()->isValid(true))
                 SDL_RenderCopy(renderer(), valid, 0, &validRect);
             else
                 SDL_RenderCopy(renderer(), invalid, 0, &validRect);
 
             if (i == spellIndex)
-                drawHorizontalControls(&pointers, position, &rect, &_menuControl, &SELECTED_COLOUR, &HIGHLIGHTED_COLOUR);
+                drawHorizontalControls(&menuItems, position, &rect, &_menuControl, &SELECTED_COLOUR, &HIGHLIGHTED_COLOUR);
             else
-                drawHorizontalControls(&pointers, position, &rect, &_menuControl);
+                drawHorizontalControls(&menuItems, position, &rect, &_menuControl);
         }
         else
         {
-            pointers.push_back(new MenuItem());
+            MenuItem emptySlot = MenuItem();
+            menuItems.push_back(&emptySlot);
             if (i == spellIndex)
-                drawHorizontalControls(&pointers, position, &rect, &_menuControl, &SELECTED_COLOUR, &HIGHLIGHTED_COLOUR);
+                drawHorizontalControls(&menuItems, position, &rect, &_menuControl, &SELECTED_COLOUR, &HIGHLIGHTED_COLOUR);
             else
-                drawHorizontalControls(&pointers, position, &rect, &_menuControl);
-
-            for (MenuItem* item : pointers)
-                delete item;
+                drawHorizontalControls(&menuItems, position, &rect, &_menuControl);
         }
 
         rect = SDL_Rect { rect.x, rect.y + rect.h, rect.w, rect.h};
@@ -254,7 +230,7 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, std
                     drawBorder(_spellsVp, borderWidth, &TEXT_COLOUR, true);
                     drawBorder(_runesVp, borderWidth, &TEXT_COLOUR, true);
                     renderSpells(*party.memberAt(model.SelectedPCIndex), model.SelectedSpellIndex, model.SelectedComponentIndex);
-                    renderRunes(*party.memberAt(model.SelectedPCIndex), model.SelectedRuneIndex);
+                    renderRunes(party, model.SelectedRuneIndex);
                 }
             }
             break;
