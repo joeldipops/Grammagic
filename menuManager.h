@@ -10,6 +10,7 @@
 #include "persistence/saveLoad.h"
 #include "res/strings.h"
 #include "util/utils.h"
+#include "magic/spell.h"
 
 namespace Play
 {

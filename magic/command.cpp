@@ -3,28 +3,6 @@
 using namespace Magic;
 
 /**
- * Static function that executes spell type commands with the appropriate context.
- * @param _this the command used to cast the spell.
- * @param caster The mob that casted the spell.
- *
- * @return milliseconds to wait before the caster can act again.
- */
-int Command::spellCaster(Command* _this, Mob* caster, BattleField* field)
-{
-    return _this->_spell.cast(caster, field);
-}
-
-/**
- * Constructor
- */
-Command::Command(std::string name, Spell spell) : MenuItem(name)
-{
-    _hasSpell = true;
-    _spell = spell;
-    _effect = spellCaster;
-}
-
-/**
  * Constructor
  * @param name The displayed name of the command.
  * @param effect The action carried out by the command.
@@ -42,22 +20,8 @@ Command::~Command()
 
 }
 
-/**
- * @return the wrapped spell.
- */
-Spell* Command::spell(void)
-{
-    return &_spell;
-}
-const Spell* Command::spell(void) const
-{
-    return &_spell;
-}
-
 const std::vector<Rune*> Command::components(void) const
 {
-    if (_hasSpell)
-        return _spell.components();
     return std::vector<Rune*>(0);
 }
 

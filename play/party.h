@@ -36,6 +36,7 @@ namespace Play
             void addRunes(std::vector<Rune*>);
             std::vector<Rune*> _runeCollection;
 
+
         private:
             std::vector<PC*> _members;
             std::vector<PC*> _bench;

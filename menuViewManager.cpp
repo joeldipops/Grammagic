@@ -1,4 +1,5 @@
 #include "menuViewManager.h"
+#include "magic/spell.h"
 
 using namespace Play;
 
@@ -56,9 +57,9 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
         }
         std::vector<MenuItem*> menuItems = std::vector<MenuItem*>(0);
 
-        if (i < int(pc.spells()->size()))
+        if (i < int(pc.spells().size()))
         {
-            const Command* command = &pc.spells()->at(i);
+            const Spell* command = (Spell*) pc.spells().at(i);
             std::vector<Rune*> runes = command->components();
 
             MenuItem emptySlot = MenuItem();
@@ -69,7 +70,7 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
                 menuItems.push_back(&emptySlot);
 
             SDL_Rect validRect = SDL_Rect { rect.w - 40, rect.y + cursorYOffset, 30, 30 };
-            if (command->spell()->isValid(true))
+            if (command->isValid(true))
                 SDL_RenderCopy(renderer(), valid, 0, &validRect);
             else
                 SDL_RenderCopy(renderer(), invalid, 0, &validRect);

@@ -24,8 +24,8 @@ Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
     else
         isDense(false);
 
-    _spellCommands = std::vector<Command>();
-    _otherCommands = std::vector<Command>();
+    _spellCommands = std::vector<Command*>();
+    _otherCommands = std::vector<Command*>();
     facing(Direction::SOUTH);
 }
 
@@ -34,6 +34,19 @@ Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
  */
 Mob::~Mob()
 {
+    for (Command* c : _spellCommands)
+    {
+        delete c;
+        c = nullptr;
+    }
+    _spellCommands = std::vector<Command*>();
+
+    for (Command* c : _otherCommands)
+    {
+        delete c;
+        c = nullptr;
+    }
+    _otherCommands = std::vector<Command*>();
 }
 
 PlayStateContainer& Mob::onInspect(PlayStateContainer& data)
@@ -192,27 +205,20 @@ int Mob::rangeOfSense(void) const
 std::vector<Command*> Mob::commands(void) const
 {
     std::vector<Command*> result = std::vector<Command*>();
+    result.insert(result.end(), _otherCommands.begin(), _otherCommands.end());
+    result.insert(result.end(), _spellCommands.begin(), _spellCommands.end());
 
-    for (natural i = 0; i < _otherCommands.size(); i++)
-    {
-        result.push_back(const_cast<Command*>(&_otherCommands.at(i)));
-    }
-
-    for (natural i = 0; i < _spellCommands.size(); i++)
-    {
-        result.push_back(const_cast<Command*>(&_spellCommands.at(i)));
-    }
     return result;
 }
 
-std::vector<Command>* Mob::spells(void)
+std::vector<Command*>& Mob::spells(void)
 {
-    return &_spellCommands;
+    return _spellCommands;
 }
 
-const std::vector<Command>* Mob::spells(void) const
+const std::vector<Command*>& Mob::spells(void) const
 {
-    return &_spellCommands;
+    return _spellCommands;
 }
 
 
@@ -273,19 +279,11 @@ bool Mob::isInRange(const MapObject& target, int value) const
 }
 
 /**
- * @return The list of commands that can be cast as spells.
- */
-std::vector<Command>* Mob::spellCommands()
-{
-    return &_spellCommands;
-}
-
-/**
  * @return The list of commands that are not spells.
  */
-std::vector<Command>* Mob::otherCommands()
+std::vector<Command*>& Mob::otherCommands()
 {
-    return &_otherCommands;
+    return _otherCommands;
 }
 
 /**

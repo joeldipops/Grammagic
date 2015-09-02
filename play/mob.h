@@ -60,8 +60,8 @@ namespace Play
             Command* selectedCommand(void) const;
             const std::string portraitFileName(void) const;
             std::vector<Command*> commands(void) const;
-            std::vector<Command>* spells(void);
-            const std::vector<Command>* spells(void) const;
+            std::vector<Command*>& spells(void);
+            const std::vector<Command*>& spells(void) const;
             int unblockTime(void) const;
             bool isBlocked(void) const;
             int elapsedWait(void) const;
@@ -73,15 +73,13 @@ namespace Play
 
         protected:
             std::string portraitFileName(std::string);
-            std::vector<Command>* spellCommands(void);
-            std::vector<Command>* otherCommands(void);
+            std::vector<Command*>& otherCommands(void);
 
             float defaultSpeed(float);
             float defaultResistance(float);
             float defaultDefence(float);
             float defaultSkill(float);
 
-            static std::vector<Command*> toPointers(const std::vector<Command>& source);
             bool isInRange(const MapObject&, int value) const;
 
         private:
@@ -96,8 +94,8 @@ namespace Play
             int _blockedTime = 0;
             bool _isBlocked = false;
 
-            std::vector<Command> _spellCommands;
-            std::vector<Command> _otherCommands;
+            std::vector<Command*> _spellCommands;
+            std::vector<Command*> _otherCommands;
             std::string _portraitFileName;
 
             // Base stats.

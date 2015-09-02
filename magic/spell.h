@@ -11,11 +11,12 @@
 #include "../play/battleField.h"
 #include "../util/utils.h"
 #include "rune.h"
+#include "command.h"
 
 namespace Play { class Mob; }
 namespace Magic
 {
-    class Spell
+    class Spell : public Command
     {
         public:
             static bool verify(std::vector<Rune*>);
@@ -33,10 +34,11 @@ namespace Magic
             void addComponent(Rune*, bool = false);
 
             bool edit(std::vector<Rune*>);
-            int cast(Mob*, BattleField*);
+            int execute(Mob*, BattleField*);
             bool resolve(void);
 
         private:
+            static int spellCaster(Command* _this, Mob* caster, BattleField*);
             int calculateCost(void) const;
             int calculateEffect(void) const;
             int calculateDuration(void) const;

@@ -1,4 +1,5 @@
 #include "saveLoad.h"
+#include "../magic/spell.h"
 
 using namespace Persistence;
 using namespace Templates;
@@ -12,10 +13,12 @@ void SaveLoad::save(const Party& party)
 {
     std::vector<byte> data = std::vector<byte>();
 
-   // Start with the PC location.
-    //data.push_back(SavedObjectCode::PCPosition);
-    //data.push_back(party.x());
-    //data.push_back(party.y());
+    // Start with the PC location.
+    data.push_back(SavedObjectCode::PC_POSITION);
+    data.push_back(party.x());
+    data.push_back(party.y());
+    for (Rune* r : party.runeCollection())
+        data.push_back(r->code());
     for (PC* pc : party.members())
     {
         data.push_back(SavedObjectCode::NEW_MEMBER);
@@ -41,11 +44,11 @@ void SaveLoad::pushNumeric(std::vector<byte>& data, unsigned short value)
 std::vector<byte> SaveLoad::getSpellBytes(const PC& pc) const
 {
     std::vector<byte> result = std::vector<byte>();
-    for (natural i = 0; i < pc.spells()->size(); i++)
+    for (natural i = 0; i < pc.spells().size(); i++)
     {
         result.push_back(SavedObjectCode::NEW_SPELL);
 
-        for (Rune* rune : pc.spells()->at(i).components())
+        for (Rune* rune : pc.spells().at(i)->components())
             result.push_back(rune->code());
     }
     return result;
@@ -62,37 +65,36 @@ void SaveLoad::load(Party& party) const
     if (data.size() <= 0)
         return;
 
-    std::vector<Spell> spells = std::vector<Spell>();
+    std::vector<Spell*> spells = std::vector<Spell*>();
 
-    Spell workingSpell;
-    PC* pc;
+    Spell* workingSpell = nullptr;
+    PC* pc = nullptr;
     bool spellInProgress = false;
+    try {
     for (natural i = 0; i < data.size(); i++)
     {
         switch(SavedObjectCode(data.at(i)))
         {
-
             case SavedObjectCode::PC_POSITION:
                 if (spellInProgress)
                 {
-                    workingSpell.resolve();
+                    workingSpell->resolve();
                     spells.push_back(workingSpell);
                 }
 
                 spellInProgress = false;
-                //party.x(int(data.at(i+1)));
-                //party.y(int(data.at(i+2)));
-                i+= 2;
+                party.x(int(data.at(++i)));
+                party.y(int(data.at(++i)));
                 break;
             case SavedObjectCode::NEW_MEMBER: {
                 if (spellInProgress)
                 {
-                    workingSpell.resolve();
+                    workingSpell->resolve();
                     spells.push_back(workingSpell);
 
-                    for (Spell s : spells)
-                        pc->spells()->push_back(Command("", s));
-                    spells = std::vector<Spell>();
+                    for (Spell* s : spells)
+                        pc->spells().push_back(s);
+                    spells = std::vector<Spell*>();
                 }
                 spellInProgress = false;
                 Templates::PCTemplate t = Templates::PCTemplate();
@@ -129,32 +131,226 @@ void SaveLoad::load(Party& party) const
             case SavedObjectCode::NEW_SPELL:
                 if (spellInProgress)
                 {
-                    workingSpell.resolve();
+                    workingSpell->resolve();
                     spells.push_back(workingSpell);
                 }
 
                 spellInProgress = true;
-                workingSpell = Spell();
+                workingSpell = new Spell();
                 break;
-            /*
+            case SavedObjectCode::HIGH_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == HIGH_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::HIGH));
+                break;
+            case SavedObjectCode::LOW_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == LOW_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::LOW));
+                break;
             case SavedObjectCode::CASTER_RUNE:
-                if (!spellInProgress)
-                    throw;
-                workingSpell.addComponent(&Commands::CASTER);
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::CASTER_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::CASTER));
                 break;
-            */
+            case SavedObjectCode::ALL_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::ALL_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::ALL));
+                break;
+            case SavedObjectCode::ANY_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::ANY_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::ANY));
+                break;
+            case SavedObjectCode::ALLY_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::ALLY_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::ALLY));
+                break;
+            case SavedObjectCode::MEMBER_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::MEMBER_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::MEMBER));
+                break;
+            case SavedObjectCode::ENEMY_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::ENEMY_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::ENEMY));
+                break;
+            case SavedObjectCode::STAMINA_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::STAMINA_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::STAMINA));
+                break;
+            case SavedObjectCode::SKILL_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::SKILL_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::SKILL));
+                break;
+            case SavedObjectCode::SPEED_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::SPEED_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::SPEED));
+                break;
+            case SavedObjectCode::RESISTANCE_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::RESISTANCE_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::RESISTANCE));
+                break;
+            case SavedObjectCode::DEFENCE_RUNE:
+                if (spellInProgress)
+                {
+                    for (Rune* r : party.runeCollection())
+                    {
+                        if (r->code() == SavedObjectCode::DEFENCE_RUNE)
+                        {
+                            workingSpell->addComponent(r);
+                            continue;
+                        }
+
+                    }
+                }
+                else
+                    party.addRunes(new Rune(Templates::Data::DEFENCE));
+                break;
             default: throw;
         }
-
+    }
+    } catch (...) {
+        if (workingSpell != nullptr)
+            delete workingSpell;
+        if (pc != nullptr)
+            delete pc;
     }
     if (pc == nullptr)
         throw;
     if (spellInProgress)
     {
-        workingSpell.resolve();
+        workingSpell->resolve();
         spells.push_back(workingSpell);
     }
 
-    for (Spell s : spells)
-        pc->spells()->push_back(Command("", s));
+    for (Spell* s : spells)
+        pc->spells().push_back(s);
 }

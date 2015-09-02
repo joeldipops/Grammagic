@@ -9,7 +9,7 @@ PC::PC(const Templates::PCTemplate& tmpl)
 {
     _name = tmpl.Name;
     _memberCode = tmpl.MemberCode;
-    otherCommands()->push_back(Command("Flee", Templates::Commands::FLEE));
+    otherCommands().push_back(new Command("Flee", Templates::Commands::FLEE));
     _jobClass = JobClass();
 }
 
@@ -42,8 +42,8 @@ Templates::PartyMemberCode PC::memberCode(void) const { return _memberCode; }
  */
 natural PC::spellSlots(void) const
 {
-    return _spellSlots > spells()->size()
-    ? spells()->size() + 1
+    return _spellSlots > spells().size()
+    ? spells().size() + 1
     : _spellSlots;
 }
 

@@ -202,12 +202,26 @@ void Party::endCombat(void)
 
 void Party::addRunes(Rune* rune)
 {
-    if (rune != nullptr)
-        _runeCollection.push_back(rune);
+    if (rune == nullptr)
+        return;
+    for (Rune* r : _runeCollection)
+    {
+        if (rune->code() == r->code())
+            return;
+    }
+    _runeCollection.push_back(rune);
 }
 
 void Party::addRunes(std::vector<Rune*> runes)
 {
-    _runeCollection.insert(_runeCollection.end(), runes.begin(), runes.end());
+    for (Rune* rune : runes)
+    {
+        bool found = false;
+        for (Rune* r : _runeCollection)
+            if (r->code() == rune->code())
+                found = true;
+        if (!found)
+            _runeCollection.push_back(rune);
+    }
 }
 //}

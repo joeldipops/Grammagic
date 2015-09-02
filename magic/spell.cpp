@@ -395,7 +395,7 @@ bool Spell::isValid(bool checkUnresolved) const
     return verify(_components);
 }
 
-int Spell::cast(Mob* caster, BattleField* battleField)
+int Spell::execute(Mob* caster, BattleField* battleField)
 {
     if (!isValid(false))
         return -1;

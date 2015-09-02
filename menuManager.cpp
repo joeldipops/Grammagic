@@ -109,10 +109,10 @@ Play::PlayState MenuManager::start(Party& party)
 natural MenuManager::selectedSpellLength(PC* pc) const
 {
     // We have only just started writing this spell.
-    if (int(pc->spells()->size()) <= _selectedSpellIndex)
+    if (int(pc->spells().size()) <= _selectedSpellIndex)
         return 0;
 
-    return pc->spells()->at(_selectedSpellIndex).spell()->components().size();
+    return pc->spells().at(_selectedSpellIndex)->components().size();
 }
 
 
@@ -145,8 +145,8 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
             break;
         case MenuState::SelectSpell: {
             PC* member = party.memberAt(_selectedMemberIndex);
-            itemCount = member->spellSlots() > member->spells()->size()
-                ? member->spells()->size() + 1
+            itemCount = member->spellSlots() > member->spells().size()
+                ? member->spells().size() + 1
                 : member->spellSlots();
             index = _selectedSpellIndex;
             indexToUpdate = &_selectedSpellIndex;
@@ -298,10 +298,10 @@ bool MenuManager::processSpellCommand(void)
 bool MenuManager::processRuneCommand(const Party& party)
 {
     PC* pc = party.memberAt(_selectedMemberIndex);
-    if (int(pc->spells()->size()) <= _selectedSpellIndex)
-        pc->spells()->push_back(Command("", Spell(std::vector<Rune*>(0))));
+    if (int(pc->spells().size()) <= _selectedSpellIndex)
+        pc->spells().push_back(new Spell(std::vector<Rune*>(0)));
 
-    Spell* workingSpell = pc->spells()->at(_selectedSpellIndex).spell();
+    Spell* workingSpell = (Spell*) pc->spells().at(_selectedSpellIndex);
 
     if (_selectedRuneIndex == 0)
     {

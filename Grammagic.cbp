@@ -27,8 +27,6 @@
 		</Linker>
 		<Unit filename="core.h" />
 		<Unit filename="globalConstants.h" />
-		<Unit filename="magic/adjective.cpp" />
-		<Unit filename="magic/adjective.h" />
 		<Unit filename="magic/adverb.cpp" />
 		<Unit filename="magic/adverb.h" />
 		<Unit filename="magic/auxilliary.cpp" />
@@ -40,11 +38,6 @@
 		<Unit filename="magic/modifier.h" />
 		<Unit filename="magic/noun.cpp" />
 		<Unit filename="magic/noun.h" />
-		<Unit filename="magic/nounPhrase.cpp" />
-		<Unit filename="magic/nounPhrase.h" />
-		<Unit filename="magic/nounish.h" />
-		<Unit filename="magic/properNoun.cpp" />
-		<Unit filename="magic/properNoun.h" />
 		<Unit filename="magic/rune.cpp" />
 		<Unit filename="magic/rune.h" />
 		<Unit filename="magic/spell.cpp" />
