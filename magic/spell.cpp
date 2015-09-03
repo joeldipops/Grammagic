@@ -242,6 +242,7 @@ bool Spell::edit(std::vector<Rune*> components_)
                     continue;
                 }
             }
+            break;
         }
 
         if (action == nullptr)
@@ -265,6 +266,7 @@ bool Spell::edit(std::vector<Rune*> components_)
                 addresses.push_back(action);
                 continue;
             }
+            break;
         }
 
         if (target == nullptr)
@@ -300,6 +302,7 @@ bool Spell::edit(std::vector<Rune*> components_)
                     continue;
                 }
             }
+            break;
         }
         if (rune->isAdverb())
         {

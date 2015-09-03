@@ -26,12 +26,9 @@ Combatable* Magic::adjNounAcquire(Noun* context, Mob* caster, BattleField* field
 
 
 //{Life Cycle
-Noun::Noun(MultiTargeter targeter, std::string n, Modifier e, Modifier c, Modifier d)
-    : Word(n, e, c, d)
-{
-    _multiTargeter = targeter;
-}
-
+/**
+ * Constructor
+ */
 Noun::Noun(Rune* properNoun)
     : Word(std::vector<Rune*> {properNoun})
 {
@@ -42,6 +39,9 @@ Noun::Noun(Rune* properNoun)
     _targetWrapper = properNounAcquire;
 }
 
+/**
+ * Constructor
+ */
 Noun::Noun(Rune* aux, Rune* adj, Rune* noun)
     : Word(std::vector<Rune*> {aux, adj, noun})
 {
@@ -55,6 +55,9 @@ Noun::Noun(Rune* aux, Rune* adj, Rune* noun)
     _targetWrapper = auxAdjNounAcquire;
 }
 
+/**
+ * Constructor
+ */
 Noun::Noun(Rune* adj, Rune* noun)
     : Word(std::vector<Rune*> {adj, noun})
 {

@@ -12,6 +12,8 @@
 
 using namespace Magic;
 
+namespace Magic { class Spell; }
+
 namespace Play
 {
     class Mob : public MapObject, public Combatable
@@ -60,8 +62,10 @@ namespace Play
             Command* selectedCommand(void) const;
             const std::string portraitFileName(void) const;
             std::vector<Command*> commands(void) const;
-            std::vector<Command*>& spells(void);
+            //std::vector<Command*>& spells(void);
             const std::vector<Command*>& spells(void) const;
+            void addSpell(Spell*);
+            void cleanUpSpellList(void);
             int unblockTime(void) const;
             bool isBlocked(void) const;
             int elapsedWait(void) const;

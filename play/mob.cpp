@@ -4,6 +4,10 @@
 using namespace Magic;
 using namespace Play;
 
+//{ Lifecycle
+/**
+ * Constructor
+ */
 Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
     :MapObject(tmpl)
 {
@@ -48,13 +52,9 @@ Mob::~Mob()
     }
     _otherCommands = std::vector<Command*>();
 }
+//}
 
-PlayStateContainer& Mob::onInspect(PlayStateContainer& data)
-{
-    data.Message = "I'm a mob";
-    return data;
-}
-
+//{ Properties
 /**
  * Gets the type mob this is.
  */
@@ -69,6 +69,115 @@ int Mob::unblockTime(void) const { return _unblockTime; }
  * returns true if the mob is blocked from performing commands, otherwise false.
  */
 bool Mob::isBlocked(void) const { return _isBlocked; }
+
+/**
+ * When stamina drops to 0 in combat, mob can't perform any more actions.
+ */
+int Mob::stamina(void) const { return _stamina; }
+int Mob::stamina(int stamina_)
+{
+    _stamina = stamina_;
+    return stamina();
+}
+
+unsigned short Mob::maxStamina(void) const { return _maxStamina; }
+
+/**
+ * Gets or sets the mob's default speed stat, which is a multiplier.
+ * @param defaultSpeed the new speed stat.
+ * @return the current speed stat.
+ */
+float Mob::defaultSpeed(void) const { return _defaultSpeed; }
+float Mob::defaultSpeed(float defaultSpeed_)
+{
+    _defaultSpeed = defaultSpeed_;
+    return _defaultSpeed;
+}
+
+/**
+ * Gets or sets the mob's default resistance stat, which is a multiplier.
+ */
+float Mob::defaultDefence(void) const { return _defaultDefence; }
+float Mob::defaultDefence(float defaultDefence_)
+{
+    _defaultDefence = defaultDefence_;
+    return _defaultDefence;
+}
+
+/**
+ * Gets or sets the mob's default resistance stat, which is a multiplier.
+ */
+float Mob::defaultSkill(void) const { return _defaultSkill; }
+float Mob::defaultSkill(float defaultSkill_)
+{
+    _defaultSkill = defaultSkill_;
+    return _defaultSkill;
+}
+
+/**
+ * Gets or sets the mob's default resistance stat, which is a multiplier.
+ */
+float Mob::defaultResistance(void) const { return _defaultResistance; }
+float Mob::defaultResistance(float defaultResistance_)
+{
+    _defaultResistance = defaultResistance_;
+    return _defaultResistance;
+}
+
+const std::vector<Command*>& Mob::spells(void) const { return _spellCommands; }
+
+/**
+ * Gets and sets the distance at which the enemy will start attacking you.
+ */
+int Mob::rangeOfSight(void) const { return _rangeOfSight; }
+int Mob::rangeOfSight(int range)
+{
+    _rangeOfSight = range;
+    return _rangeOfSight;
+}
+
+/**
+ * Gets and sets the distance at which the enemy will start chasing you.
+ */
+int Mob::rangeOfSense(void) const { return _rangeOfSense; }
+int Mob::rangeOfSense(int range)
+{
+    _rangeOfSense = range;
+    return _rangeOfSense;
+}
+
+/**
+ * @return The list of commands that are not spells.
+ */
+std::vector<Command*>& Mob::otherCommands() { return _otherCommands; }
+
+//}
+
+//{ Methods
+void Mob::addSpell(Spell* spell)
+{
+    _spellCommands.push_back(spell);
+}
+
+PlayStateContainer& Mob::onInspect(PlayStateContainer& data)
+{
+}
+
+/**
+ * Removes any spells with no components that may have been added in error.
+ */
+void Mob::cleanUpSpellList(void)
+{
+    std::vector<Command*> temp = std::vector<Command*>();
+    for (Command* s : _spellCommands)
+    {
+        if (s->components().size() <= 0)
+            delete s;
+        else
+            temp.push_back(s);
+    }
+    _spellCommands = temp;
+}
 
 /**
  * Blocks the mob from performing commands until a given amount of time has passed.
@@ -127,21 +236,6 @@ void Mob::unblock(void)
     _unblockTime = 0;
 }
 
-int Mob::stamina(int stamina_)
-{
-    _stamina = stamina_;
-    return stamina();
-}
-int Mob::stamina(void) const
-{
-    return _stamina;
-}
-
-unsigned short Mob::maxStamina(void) const
-{
-    return _maxStamina;
-}
-
 /**
  * Adds the passed in value to the mob's current stamina (pass in a negative to reduce it)
  * @param delta The change in stamina.
@@ -176,32 +270,6 @@ std::string Mob::portraitFileName(std::string portraitFileName_)
     return _portraitFileName;
 }
 
-/**
- * Gets and sets the distance at which the enemy will start attacking you.
- */
-int Mob::rangeOfSight(int range)
-{
-    _rangeOfSight = range;
-    return _rangeOfSight;
-}
-int Mob::rangeOfSight(void) const
-{
-    return _rangeOfSight;
-}
-
-/**
- * Gets and sets the distance at which the enemy will start chasing you.
- */
-int Mob::rangeOfSense(int range)
-{
-    _rangeOfSense = range;
-    return _rangeOfSense;
-}
-int Mob::rangeOfSense(void) const
-{
-    return _rangeOfSense;
-}
-
 std::vector<Command*> Mob::commands(void) const
 {
     std::vector<Command*> result = std::vector<Command*>();
@@ -210,17 +278,6 @@ std::vector<Command*> Mob::commands(void) const
 
     return result;
 }
-
-std::vector<Command*>& Mob::spells(void)
-{
-    return _spellCommands;
-}
-
-const std::vector<Command*>& Mob::spells(void) const
-{
-    return _spellCommands;
-}
-
 
 /**
  * Gets the last selected command.
@@ -253,8 +310,6 @@ int Mob::selectedCommandIndex(natural index)
     return _selectedCommandIndex;
 }
 
-
-
 bool Mob::isSensed(const MapObject& target) const
 {
     return isInRange(target, _rangeOfSense);
@@ -279,32 +334,11 @@ bool Mob::isInRange(const MapObject& target, int value) const
 }
 
 /**
- * @return The list of commands that are not spells.
- */
-std::vector<Command*>& Mob::otherCommands()
-{
-    return _otherCommands;
-}
-
-/**
  * The modified defence stat.
  */
 float Mob::defence(void) const
 {
     return _defaultDefence * _defenceMultiplier;
-}
-
-/**
- * Gets or sets the mob's default resistance stat, which is a multiplier.
- */
-float Mob::defaultDefence(void) const
-{
-    return _defaultDefence;
-}
-float Mob::defaultDefence(float defaultDefence_)
-{
-    _defaultDefence = defaultDefence_;
-    return _defaultDefence;
 }
 
 /**
@@ -325,18 +359,6 @@ float Mob::resistance(void) const
     return _defaultResistance * _resistanceMultiplier;
 }
 
-/**
- * Gets or sets the mob's default resistance stat, which is a multiplier.
- */
-float Mob::defaultResistance(void) const
-{
-    return _defaultResistance;
-}
-float Mob::defaultResistance(float defaultResistance_)
-{
-    _defaultResistance = defaultResistance_;
-    return _defaultResistance;
-}
 
 float Mob::changeResistance(float multiplier)
 {
@@ -354,19 +376,6 @@ float Mob::skill(void) const
     return _defaultSkill * _skillMultiplier;
 }
 
-/**
- * Gets or sets the mob's default resistance stat, which is a multiplier.
- */
-float Mob::defaultSkill(void) const
-{
-    return _defaultSkill;
-}
-float Mob::defaultSkill(float defaultSkill_)
-{
-    _defaultSkill = defaultSkill_;
-    return _defaultSkill;
-}
-
 float Mob::changeSkill(float multiplier)
 {
     if (multiplier >= 0)
@@ -382,20 +391,7 @@ float Mob::speed(void) const
     return _defaultSpeed * _speedMultiplier;
 }
 
-/**
- * Gets or sets the mob's default speed stat, which is a multiplier.
- * @param defaultSpeed the new speed stat.
- * @return the current speed stat.
- */
-float Mob::defaultSpeed(float defaultSpeed_)
-{
-    _defaultSpeed = defaultSpeed_;
-    return _defaultSpeed;
-}
-float Mob::defaultSpeed(void) const
-{
-    return _defaultSpeed;
-}
+
 
 /**
  * Temporary modifies the speed stat by a multiplier.
@@ -421,5 +417,7 @@ void Mob::endCombat(void)
     _defenceMultiplier = 1.0;
     _skillMultiplier = 1.0;
 }
+
+//}
 
 

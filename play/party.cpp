@@ -20,8 +20,8 @@ Party::Party(void)
 {
     _members = std::vector<PC*>(0);
     _bench = std::vector<PC*>(0);
-    x(0);
-    y(0);
+    x(-1);
+    y(-1);
     facing(Direction::SOUTH);
 }
 

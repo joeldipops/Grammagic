@@ -33,12 +33,12 @@ namespace Play
             bool processMenuCommand(const Party& party);
             bool processMemberCommand(void);
             bool processRuneCommand(const Party& party);
-            bool processSpellCommand(void);
+            bool processSpellCommand(const Party& party);
             bool processComponentCommand(void);
             bool processReorderMemberCommand(Party& party);
 
             bool processCommand(Party& party);
-            bool processCancel(void);
+            bool processCancel(Party& party);
 
             MenuViewManager _viewManager;
             int _selectedMenuIndex;

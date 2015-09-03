@@ -93,7 +93,7 @@ void SaveLoad::load(Party& party) const
                     spells.push_back(workingSpell);
 
                     for (Spell* s : spells)
-                        pc->spells().push_back(s);
+                        pc->addSpell(s);
                     spells = std::vector<Spell*>();
                 }
                 spellInProgress = false;
@@ -352,5 +352,5 @@ void SaveLoad::load(Party& party) const
     }
 
     for (Spell* s : spells)
-        pc->spells().push_back(s);
+        pc->addSpell(s);
 }

@@ -26,7 +26,7 @@ GameMap::~GameMap()
 }
 //}
 
-//{PROPERTIES
+//{ Properties
 
 /**
  * Gets or sets the list of mobs that exist on this map.
@@ -235,14 +235,13 @@ bool GameMap::loadChunk(int cX, int cY, std::string path)
             default:
                 break;
         }
+        // If the mob has already been assigned a position place it there.
         if (mob != nullptr)
             place(mob, x, y);
     }
 
     return true;
 }
-
-
 
 /**
  * Places a mob on to the map at the specified position.
@@ -293,12 +292,16 @@ Party* GameMap::party(Party& party_)
     if (_contents[0] != nullptr)
     {
         MapObject* old = _contents[0];
-        this->place((MapObject*)&party_, old->x(), old->y(), true);
+        int newX = (party_.x() >= 0) ? party_.x() : old->x();
+        int newY = (party_.y() >= 0) ? party_.y() : old->y();
+
+        kill(old);
+
+        this->place((MapObject*)&party_, newX, newY, true);
     }
 
     _contents[0] = &party_;
     return (Party*) _contents.at(0);
-
 }
 
 Party* GameMap::party(void) const

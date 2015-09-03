@@ -47,7 +47,6 @@ Play::PlayState MenuManager::start(Party& party)
             };
             _viewManager.render(party, vm, _message.length() > 0 ? &_message : nullptr);
         }
-
         else
             Util::sleep(50);
 
@@ -84,7 +83,7 @@ Play::PlayState MenuManager::start(Party& party)
                             rerender |= moveCursor(party, Core::InputPress::RIGHT);
                             break;
                         case SDLK_LEFTBRACKET:
-                            rerender |= processCancel();
+                            rerender |= processCancel(party);
                             break;
                         case SDLK_RIGHTBRACKET:
                             rerender |= processCommand(party);
@@ -184,7 +183,11 @@ bool MenuManager::moveCursor(Party& party, Core::InputPress input)
     return false;
 }
 
-bool MenuManager::processCancel(void)
+/**
+ * Moves to the previous step in the menu tree.
+ * @param Party should you wish to perform any operations on them.
+ */
+bool MenuManager::processCancel(Party& party)
 {
     switch(state())
     {
@@ -197,6 +200,7 @@ bool MenuManager::processCancel(void)
             state(MenuState::SelectSpell);
             return true;
         case MenuState::SelectSpell:
+            party.memberAt(_selectedMemberIndex)->cleanUpSpellList();
             _selectedSpellIndex = -1;
             state(MenuState::SelectMember);
             return true;
@@ -223,7 +227,7 @@ bool MenuManager::processCommand(Party& party)
         case MenuState::SelectMenu:
             return processMenuCommand(party);
         case MenuState::SelectSpell:
-            return processSpellCommand();
+            return processSpellCommand(party);
         case MenuState::SelectRune:
             return processRuneCommand(party);
         case MenuState::SelectComponent:
@@ -288,18 +292,30 @@ bool MenuManager::processComponentCommand(void)
     return true;
 }
 
-bool MenuManager::processSpellCommand(void)
+bool MenuManager::processSpellCommand(const Party& party)
 {
     _selectedComponentIndex = 0;
-    state(MenuState::SelectComponent);
+
+    std::vector<Command*> spells = party.memberAt(_selectedMemberIndex)->spells();
+    if (spells.size() <= _selectedSpellIndex || spells.at(_selectedSpellIndex)->components().size() <= 0)
+    {
+        _selectedRuneIndex = 0;
+        state(MenuState::SelectRune);
+    }
+    else
+        state(MenuState::SelectComponent);
+
     return true;
 }
 
+/**
+ * Adds a rune to the selected PC's selected Spell.
+ */
 bool MenuManager::processRuneCommand(const Party& party)
 {
     PC* pc = party.memberAt(_selectedMemberIndex);
     if (int(pc->spells().size()) <= _selectedSpellIndex)
-        pc->spells().push_back(new Spell(std::vector<Rune*>(0)));
+        pc->addSpell(new Spell(std::vector<Rune*>(0)));
 
     Spell* workingSpell = (Spell*) pc->spells().at(_selectedSpellIndex);
 

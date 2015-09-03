@@ -16,7 +16,6 @@ namespace Magic
             Verb(){};
             Verb(Rune* action);
             Verb(Rune* aux, Rune* action);
-            Verb(Action, std::string, Modifier, Modifier, Modifier, float = 1, float = 1, float = 1, bool = false);
             Action action(void);
             WordType type(void) const;
             float enemyCostMultiplier(void) const;

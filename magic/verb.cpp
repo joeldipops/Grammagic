@@ -19,20 +19,6 @@ void Magic::auxVerbAct(const Verb* context, Combatable* source, Combatable* targ
 /**
  * Constructor
  */
-Verb::Verb(
-    Action action_, std::string n, Modifier e, Modifier c, Modifier d,
-    float enemyCostMultiplier_, float allyEffectMultiplier_, float isSameMultiplier_,
-    bool isBoon_
-)
-    :Word(n, e, c, d)
-{
-    _action = action_;
-    _enemyCostMultiplier = enemyCostMultiplier_;
-    _allyEffectMultiplier = allyEffectMultiplier_;
-    _isSameMultiplier = isSameMultiplier_;
-    _isBoon = isBoon_;
-}
-
 Verb::Verb(Rune* action)
     : Word(std::vector<Rune*> {action})
 {
@@ -52,6 +38,9 @@ Verb::Verb(Rune* action)
     _actionWrapper = verbAct;
 };
 
+/**
+ * Constructor
+ */
 Verb::Verb(Rune* aux, Rune* action)
     : Word(std::vector<Rune*> {aux, action})
 {
