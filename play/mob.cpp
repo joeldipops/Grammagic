@@ -161,6 +161,7 @@ void Mob::addSpell(Spell* spell)
 
 PlayStateContainer& Mob::onInspect(PlayStateContainer& data)
 {
+    return data;
 }
 
 /**
@@ -260,11 +261,11 @@ int Mob::changeStamina(int delta)
  * @param portraitFileName The file name.
  * @return The file name.
  */
-const std::string Mob::portraitFileName(void) const
+const std::string& Mob::portraitFileName(void) const
 {
     return _portraitFileName;
 }
-std::string Mob::portraitFileName(std::string portraitFileName_)
+const std::string& Mob::portraitFileName(const std::string& portraitFileName_)
 {
     _portraitFileName = portraitFileName_;
     return _portraitFileName;

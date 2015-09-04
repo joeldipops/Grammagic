@@ -7,7 +7,7 @@ using namespace Magic;
  * @param name The displayed name of the command.
  * @param effect The action carried out by the command.
  */
-Command::Command(std::string name, Effect effect) : MenuItem(name)
+Command::Command(const std::string& name, Effect effect) : MenuItem(name)
 {
     _effect = effect;
 }

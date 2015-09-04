@@ -204,8 +204,10 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex, int selecte
     }
 }
 
-
-void MenuViewManager::render(const Party& party, const MenuViewModel& model, std::string* message)
+/**
+ * Renders menu related  elements to the screen.
+ */
+void MenuViewManager::render(const Party& party, const MenuViewModel& model, const std::string* message)
 {
     ViewManager::render();
     fillViewport(&BG_COLOUR);

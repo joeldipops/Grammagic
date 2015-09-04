@@ -11,7 +11,7 @@ namespace Persistence
     class SaveLoad
     {
         public:
-            SaveLoad(std::string);
+            SaveLoad(const std::string&);
             void save(const Party& party);
             void load(Party& party) const;
 

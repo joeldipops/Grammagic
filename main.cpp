@@ -28,6 +28,12 @@ const std::string Strings::AName = "Aayee";
 const std::string Strings::BName = "Beaey";
 const std::string Strings::CName = "Cie";
 const std::string Strings::HutDescription = "A safe place to rest";
+const std::string Strings::GlassCannon = "Glass Cannon";
+const std::string Strings::Tank = "Tank";
+const std::string Strings::WellSpring = "Well Spring";
+const std::string Strings::Wasp = "Wasp";
+const std::string Strings::Guard = "Guard";
+const std::string Strings::Jack = "Jack";
 
 using namespace Magic;
 using namespace Play;

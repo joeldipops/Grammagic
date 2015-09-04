@@ -100,7 +100,7 @@ bool GameMap::loadChunk(int cX, int cY)
  * @param y The y co-ordinate of the global map chunk.
  * @param path Path to the file where the chunk is stored.
  */
-bool GameMap::loadChunk(int cX, int cY, std::string path)
+bool GameMap::loadChunk(int cX, int cY, const std::string& path)
 {
     if (cX < 0 || cY < 0)
         return false;

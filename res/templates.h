@@ -57,6 +57,16 @@ namespace Templates
         Persistence::SavedObjectCode Code = Persistence::SavedObjectCode::UNKNOWN;
     };
 
+    struct JobTemplate
+    {
+        std::string Name;
+        float StaminaGrowth;
+        float SkillGrowth;
+        float SpeedGrowth;
+        float ResistanceGrowth;
+        float DefenceGrowth;
+    };
+
     /**
      * The default/initial properties and handlers of any map object
      */
@@ -92,6 +102,7 @@ namespace Templates
     {
         std::string Name;
         PartyMemberCode MemberCode;
+        JobTemplate Class;
     };
 
     struct EnemyTemplate : public MobTemplate
@@ -110,6 +121,13 @@ namespace Templates
     struct Data
     {
         public:
+            static const JobTemplate TANK;
+            static const JobTemplate WELLSPRING;
+            static const JobTemplate GLASSCANON;
+            static const JobTemplate JACK;
+            static const JobTemplate GUARD;
+            static const JobTemplate WASP;
+
             // Starting Stats of Playable Characters.
             static const PCTemplate A;
             static const PCTemplate B;

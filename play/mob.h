@@ -60,9 +60,8 @@ namespace Play
             int selectedCommandIndex(natural);
             int selectedCommandIndex(void) const;
             Command* selectedCommand(void) const;
-            const std::string portraitFileName(void) const;
+            const std::string& portraitFileName(void) const;
             std::vector<Command*> commands(void) const;
-            //std::vector<Command*>& spells(void);
             const std::vector<Command*>& spells(void) const;
             void addSpell(Spell*);
             void cleanUpSpellList(void);
@@ -76,7 +75,7 @@ namespace Play
             void endCombat(void);
 
         protected:
-            std::string portraitFileName(std::string);
+            const std::string& portraitFileName(const std::string&);
             std::vector<Command*>& otherCommands(void);
 
             float defaultSpeed(float);

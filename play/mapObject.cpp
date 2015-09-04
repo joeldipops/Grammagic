@@ -15,7 +15,7 @@ MapObject::MapObject(const Templates::MapObjectTemplate& tmpl)
  * @return the filename
  */
 std::string MapObject::imageFileName(void) const { return _imageFileName; }
-std::string MapObject::imageFileName(std::string name)
+std::string MapObject::imageFileName(const std::string& name)
 {
     _imageFileName = name;
     return _imageFileName;

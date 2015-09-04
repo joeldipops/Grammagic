@@ -4,16 +4,7 @@
 #include "mob.h"
 #include "../res/battleCommands.h"
 #include "../res/templates.h"
-
-// TODO - BWAARRPP
-class JobClass
-{
-    public:
-        std::string name(void) const
-        {
-            return "Class";
-        };
-};
+#include "jobClass.h"
 
 class PC : public Mob
 {
@@ -22,8 +13,8 @@ class PC : public Mob
         ~PC(void);
         natural spellSlots(void) const;
         natural runeSlots(void) const;
-        std::string name(void) const;
-        std::string className(void) const;
+        const std::string& name(void) const;
+        const std::string& className(void) const;
         bool isPlayerControlled(void) const;
         Templates::PartyMemberCode memberCode(void) const;
 

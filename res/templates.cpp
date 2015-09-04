@@ -4,6 +4,86 @@
 #include "../play/playStateManager.h"
 using namespace Templates;
 
+//{ Classes
+const JobTemplate getTANK()
+{
+    JobTemplate result = JobTemplate();
+    result.Name = Strings::Tank;
+    result.StaminaGrowth = 2.6;
+    result.DefenceGrowth = 2.0;
+    result.ResistanceGrowth = 2.0;
+    result.SpeedGrowth = 1.5;
+    result.SkillGrowth = 1.5;
+    return result;
+}
+const JobTemplate Data::TANK = getTANK();
+
+const JobTemplate getWELLSPRING()
+{
+    JobTemplate result = JobTemplate();
+    result.Name = Strings::WellSpring;
+    result.StaminaGrowth = 3.4;
+    result.DefenceGrowth = 1.8;
+    result.ResistanceGrowth = 1.8;
+    result.SpeedGrowth = 1.0;
+    result.SkillGrowth = 1.0;
+    return result;
+}
+const JobTemplate Data::WELLSPRING = getWELLSPRING();
+
+const JobTemplate getGLASSCANON()
+{
+    JobTemplate result = JobTemplate();
+    result.Name = Strings::GlassCannon;
+    result.StaminaGrowth = 1.6;
+    result.DefenceGrowth = 1.2;
+    result.ResistanceGrowth = 1.2;
+    result.SpeedGrowth = 2.5;
+    result.SkillGrowth = 3.0;
+    return result;
+}
+const JobTemplate Data::GLASSCANON = getGLASSCANON();
+
+const JobTemplate getJACK()
+{
+    JobTemplate result = JobTemplate();
+    result.Name = Strings::Jack;
+    result.StaminaGrowth = 2.0;
+    result.DefenceGrowth = 2.0;
+    result.ResistanceGrowth = 2.0;
+    result.SpeedGrowth = 2.0;
+    result.SkillGrowth = 2.0;
+    return result;
+}
+const JobTemplate Data::JACK = getJACK();
+
+const JobTemplate getGUARD()
+{
+    JobTemplate result = JobTemplate();
+    result.Name = Strings::Tank;
+    result.StaminaGrowth = 1.8;
+    result.DefenceGrowth = 2.4;
+    result.ResistanceGrowth = 2.4;
+    result.SpeedGrowth = 1.0;
+    result.SkillGrowth = 2.4;
+    return result;
+}
+const JobTemplate Data::GUARD = getGUARD();
+
+const JobTemplate getWASP()
+{
+    JobTemplate result = JobTemplate();
+    result.Name = Strings::Wasp;
+    result.StaminaGrowth = 1.7;
+    result.DefenceGrowth = 1.5;
+    result.ResistanceGrowth = 1.5;
+    result.SpeedGrowth = 3.3;
+    result.SkillGrowth = 2.0;
+    return result;
+}
+const JobTemplate Data::WASP = getWASP();
+//}
+
 //{Runes
 
 static Combatable* all(Mob* caster, BattleField* field, const std::vector<Combatable*>& candidates, SpellData&)
@@ -351,12 +431,11 @@ const RuneTemplate GetLOW()
 const RuneTemplate Templates::Data::LOW = GetLOW();
 
 
-Combatable* mostStamina (Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+Combatable* mostStamina(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     data.stat = Stat::STAMINA;
     return most(caster, battleField, candidates, data);
 }
-
 
 void changeStamina(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
 {
@@ -394,7 +473,7 @@ SpellData& fastSpell(SpellData& data)
     return modifySpell(data, 0, 0, -.25);
 }
 
-Combatable* mostSpeed (Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+Combatable* mostSpeed(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     data.stat = Stat::SPEED;
     return most(caster, battleField, candidates, data);
@@ -545,7 +624,6 @@ const RuneTemplate Templates::Data::SKILL = GetSKILL();
 
 //}
 
-
 //{Party Members
 PCTemplate GetA() // "Albert" archetype
 {
@@ -553,6 +631,7 @@ PCTemplate GetA() // "Albert" archetype
     result.Name = Strings::AName;
     result.ImagePath = RESOURCE_LOCATION + "a-image.png";
     result.PortraitPath = RESOURCE_LOCATION + "a-portrait.png";
+    result.Class = Data::WASP;
     result.Stamina = 100;
     result.Speed = 2.0;
     result.Resistance = 1.1;
@@ -569,6 +648,7 @@ PCTemplate GetB() // "Brienne" Archetype
     result.Name = Strings::BName;
     result.ImagePath = RESOURCE_LOCATION + "b-image.png";
     result.PortraitPath = RESOURCE_LOCATION + "b-portrait.png";
+    result.Class = Data::WELLSPRING;
     result.Stamina = 200;
     result.Speed = 0.5;
     result.Resistance = 2.0;
@@ -587,6 +667,7 @@ const PCTemplate GetC() //"All Rounder" archetype
     result.Name = Strings::CName;
     result.ImagePath = RESOURCE_LOCATION + "c-image.png";
     result.PortraitPath = RESOURCE_LOCATION + "c-portrait.png";
+    result.Class = Data::JACK;
     result.Stamina = 100;
     result.Speed = 1.0;
     result.Resistance = 1.0;

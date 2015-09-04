@@ -4,7 +4,7 @@
 using namespace Persistence;
 using namespace Templates;
 
-SaveLoad::SaveLoad(std::string path_)
+SaveLoad::SaveLoad(const std::string& path_)
 {
     _path = path_;
 }

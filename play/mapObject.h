@@ -21,7 +21,7 @@ namespace Play
             MapObject(const Templates::MapObjectTemplate&);
             virtual ~MapObject(void) {};
             bool isDense(void);
-            std::string imageFileName(std::string);
+            std::string imageFileName(const std::string&);
             std::string imageFileName(void) const;
 
             virtual PlayStateContainer& onInspect(PlayStateContainer&) = 0;

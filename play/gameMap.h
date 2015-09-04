@@ -34,7 +34,7 @@ namespace Play
             void buryTheDead();
             bool requestNextChunk(void);
             bool loadChunk(int x, int y);
-            bool loadChunk(int x, int y, std::string path);
+            bool loadChunk(int x, int y, const std::string& path);
 
             PlayStateContainer& onInspect(int x, int y, PlayStateContainer&);
             bool moveMob(MapObject*, Location);

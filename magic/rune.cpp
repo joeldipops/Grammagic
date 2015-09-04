@@ -35,7 +35,7 @@ Rune::~Rune(void) {}
 /**
  * Path to image that represents the rune.
  */
-std::string Rune::imagePath(void) const { return _imagePath; }
+const std::string& Rune::imagePath(void) const { return _imagePath; }
 
 /**
  * If rune is used as a proper noun, returns a function that targets a specific mob.

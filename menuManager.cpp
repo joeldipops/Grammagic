@@ -296,8 +296,9 @@ bool MenuManager::processSpellCommand(const Party& party)
 {
     _selectedComponentIndex = 0;
 
+    // Go straight to the rune level if there are no runes already in the spell.
     std::vector<Command*> spells = party.memberAt(_selectedMemberIndex)->spells();
-    if (spells.size() <= _selectedSpellIndex || spells.at(_selectedSpellIndex)->components().size() <= 0)
+    if (int(spells.size()) <= _selectedSpellIndex || spells.at(_selectedSpellIndex)->components().size() <= 0)
     {
         _selectedRuneIndex = 0;
         state(MenuState::SelectRune);

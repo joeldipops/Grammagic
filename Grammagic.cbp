@@ -54,8 +54,6 @@
 		<Unit filename="menuItem.h" />
 		<Unit filename="menuManager.cpp" />
 		<Unit filename="menuManager.h" />
-		<Unit filename="menuRune.cpp" />
-		<Unit filename="menuRune.h" />
 		<Unit filename="menuViewManager.cpp" />
 		<Unit filename="menuViewManager.h" />
 		<Unit filename="persistence/saveLoad.cpp" />
@@ -70,6 +68,8 @@
 		<Unit filename="play/enemy.h" />
 		<Unit filename="play/gameMap.cpp" />
 		<Unit filename="play/gameMap.h" />
+		<Unit filename="play/jobClass.cpp" />
+		<Unit filename="play/jobClass.h" />
 		<Unit filename="play/mapCell.cpp" />
 		<Unit filename="play/mapCell.h" />
 		<Unit filename="play/mapObject.cpp" />

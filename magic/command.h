@@ -13,7 +13,7 @@ namespace Magic
     {
         public:
             Command(void){};
-            Command(std::string, Effect);
+            Command(const std::string&, Effect);
             ~Command(void);
 
             const std::string& name(void) const;
