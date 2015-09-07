@@ -15,6 +15,7 @@ class PC : public Mob
         natural runeSlots(void) const;
         const std::string& name(void) const;
         const std::string& className(void) const;
+        const Persistence::SavedObjectCode classCode(void) const;
         bool isPlayerControlled(void) const;
         Templates::PartyMemberCode memberCode(void) const;
 

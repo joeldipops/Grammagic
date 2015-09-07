@@ -23,6 +23,7 @@ void SaveLoad::save(const Party& party)
     {
         data.push_back(SavedObjectCode::NEW_MEMBER);
         data.push_back(pc->memberCode());
+        data.push_back(pc->classCode());
         pushNumeric(data, pc->maxStamina());
         pushNumeric(data, (unsigned short)(pc->defaultSkill() * 100));
         pushNumeric(data, (unsigned short)(pc->defaultSpeed() * 100));
@@ -117,6 +118,24 @@ void SaveLoad::load(Party& party) const
                         t.ImagePath = RESOURCE_LOCATION + "c-image.png";
                         t.PortraitPath = RESOURCE_LOCATION + "c-portrait.png";
                         break;
+                    default: throw;
+                }
+
+                SavedObjectCode classCode = SavedObjectCode(data.at(++i));
+                switch(classCode)
+                {
+                    case SavedObjectCode::TANK_CLASS:
+                        t.Class = Templates::Data::TANK; break;
+                    case SavedObjectCode::WELLSPRING_CLASS:
+                        t.Class = Templates::Data::WELLSPRING; break;
+                    case SavedObjectCode::GLASSCANNON_CLASS:
+                        t.Class = Templates::Data::GLASSCANON; break;
+                    case SavedObjectCode::JACK_CLASS:
+                        t.Class = Templates::Data::JACK; break;
+                    case SavedObjectCode::GUARD_CLASS:
+                        t.Class = Templates::Data::GUARD; break;
+                    case SavedObjectCode::WASP_CLASS:
+                        t.Class = Templates::Data::WASP; break;
                     default: throw;
                 }
 

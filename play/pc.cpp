@@ -52,6 +52,11 @@ const std::string& PC::className(void) const
     return _jobClass.name();
 }
 
+const Persistence::SavedObjectCode PC::classCode(void) const
+{
+    return _jobClass.code();
+}
+
 bool PC::isPlayerControlled(void) const
 {
     return true;

@@ -5,11 +5,13 @@
 #include "modifier.h"
 #include "magicTypedefs.h"
 #include "../menuItem.h"
+#include "../persistence/saveable.h"
+
 namespace Templates { class RuneTemplate; }
 
 namespace Magic
 {
-    class Rune : public MenuItem
+    class Rune : public MenuItem, public Persistence::Saveable
     {
         public:
             Rune(const Templates::RuneTemplate&);

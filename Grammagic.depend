@@ -796,7 +796,7 @@
 1441362309 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
-1441104747 /home/joel/Projects/Grammagic/globalConstants.h
+1441423959 /home/joel/Projects/Grammagic/globalConstants.h
 	<SDL2/SDL.h>
 	<string>
 	"core.h"
@@ -816,13 +816,13 @@
 1441274069 source:/home/joel/Projects/Grammagic/magic/adverb.cpp
 	"adverb.h"
 
-1441361429 /home/joel/Projects/Grammagic/play/pc.h
+1441424603 /home/joel/Projects/Grammagic/play/pc.h
 	"mob.h"
 	"../res/battleCommands.h"
 	"../res/templates.h"
 	"jobClass.h"
 
-1441369173 source:/home/joel/Projects/Grammagic/play/pc.cpp
+1441426191 source:/home/joel/Projects/Grammagic/play/pc.cpp
 	"pc.h"
 
 1440925920 /home/joel/Projects/Grammagic/play/battleField.h
@@ -855,7 +855,7 @@
 	"play/pc.h"
 	<string>
 
-1441361511 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
+1441426605 source:/home/joel/Projects/Grammagic/persistence/saveLoad.cpp
 	"saveLoad.h"
 	"../magic/spell.h"
 
@@ -864,7 +864,7 @@
 	"../play/pc.h"
 	"../play/party.h"
 
-1437388688 /home/joel/Projects/Grammagic/persistence/saveable.h
+1441420834 /home/joel/Projects/Grammagic/persistence/saveable.h
 
 1439378490 source:/home/joel/Projects/Grammagic/util/utils.cpp
 	"utils.h"
@@ -891,13 +891,13 @@
 1439352331 /home/joel/Projects/Grammagic/res/partyMembers.h
 	<string>
 
-1441368749 source:/home/joel/Projects/Grammagic/res/templates.cpp
+1441424113 source:/home/joel/Projects/Grammagic/res/templates.cpp
 	"templates.h"
 	"battleCommands.h"
 	"strings.h"
 	"../play/playStateManager.h"
 
-1441368544 /home/joel/Projects/Grammagic/res/templates.h
+1441422524 /home/joel/Projects/Grammagic/res/templates.h
 	<string>
 	<vector>
 	"strings.h"
@@ -936,11 +936,12 @@
 	"rune.h"
 	"../res/templates.h"
 
-1441361092 /home/joel/Projects/Grammagic/magic/rune.h
+1441421286 /home/joel/Projects/Grammagic/magic/rune.h
 	<string>
 	"modifier.h"
 	"magicTypedefs.h"
 	"../menuItem.h"
+	"../persistence/saveable.h"
 
 1440495574 source:/home/joel/Projects/Grammagic/magic/auxilliary.cpp
 	"auxilliary.h"
@@ -958,11 +959,12 @@
 1441361548 source:/home/joel/Projects/Grammagic/play/mapObject.cpp
 	"mapObject.h"
 
-1441369066 /home/joel/Projects/Grammagic/play/jobClass.h
+1441421358 /home/joel/Projects/Grammagic/play/jobClass.h
 	<string>
 	"../res/templates.h"
+	"../persistence/saveable.h"
 
-1441369019 source:/home/joel/Projects/Grammagic/play/jobClass.cpp
+1441424125 source:/home/joel/Projects/Grammagic/play/jobClass.cpp
 	"jobClass.h"
 	"../core.h"
 

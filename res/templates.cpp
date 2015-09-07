@@ -3,12 +3,14 @@
 #include "strings.h"
 #include "../play/playStateManager.h"
 using namespace Templates;
+using namespace Persistence;
 
 //{ Classes
 const JobTemplate getTANK()
 {
     JobTemplate result = JobTemplate();
     result.Name = Strings::Tank;
+    result.Code = SavedObjectCode::TANK_CLASS;
     result.StaminaGrowth = 2.6;
     result.DefenceGrowth = 2.0;
     result.ResistanceGrowth = 2.0;
@@ -22,6 +24,7 @@ const JobTemplate getWELLSPRING()
 {
     JobTemplate result = JobTemplate();
     result.Name = Strings::WellSpring;
+    result.Code = SavedObjectCode::WELLSPRING_CLASS;
     result.StaminaGrowth = 3.4;
     result.DefenceGrowth = 1.8;
     result.ResistanceGrowth = 1.8;
@@ -35,6 +38,7 @@ const JobTemplate getGLASSCANON()
 {
     JobTemplate result = JobTemplate();
     result.Name = Strings::GlassCannon;
+    result.Code = SavedObjectCode::GLASSCANNON_CLASS;
     result.StaminaGrowth = 1.6;
     result.DefenceGrowth = 1.2;
     result.ResistanceGrowth = 1.2;
@@ -48,6 +52,7 @@ const JobTemplate getJACK()
 {
     JobTemplate result = JobTemplate();
     result.Name = Strings::Jack;
+    result.Code = SavedObjectCode::JACK_CLASS;
     result.StaminaGrowth = 2.0;
     result.DefenceGrowth = 2.0;
     result.ResistanceGrowth = 2.0;
@@ -60,7 +65,8 @@ const JobTemplate Data::JACK = getJACK();
 const JobTemplate getGUARD()
 {
     JobTemplate result = JobTemplate();
-    result.Name = Strings::Tank;
+    result.Name = Strings::Guard;
+    result.Code = SavedObjectCode::GUARD_CLASS;
     result.StaminaGrowth = 1.8;
     result.DefenceGrowth = 2.4;
     result.ResistanceGrowth = 2.4;
@@ -74,6 +80,7 @@ const JobTemplate getWASP()
 {
     JobTemplate result = JobTemplate();
     result.Name = Strings::Wasp;
+    result.Code = SavedObjectCode::WASP_CLASS;
     result.StaminaGrowth = 1.7;
     result.DefenceGrowth = 1.5;
     result.ResistanceGrowth = 1.5;

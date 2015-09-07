@@ -136,6 +136,7 @@ namespace Persistence
         NEW_SPELL,
         PC_POSITION,
         NEW_MEMBER,
+
         HIGH_RUNE,
         LOW_RUNE,
         CASTER_RUNE,
@@ -148,7 +149,14 @@ namespace Persistence
         SKILL_RUNE,
         SPEED_RUNE,
         RESISTANCE_RUNE,
-        DEFENCE_RUNE
+        DEFENCE_RUNE,
+
+        TANK_CLASS,
+        WELLSPRING_CLASS,
+        GLASSCANNON_CLASS,
+        JACK_CLASS,
+        GUARD_CLASS,
+        WASP_CLASS
     };
 }
 

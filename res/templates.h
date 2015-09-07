@@ -65,6 +65,7 @@ namespace Templates
         float SpeedGrowth;
         float ResistanceGrowth;
         float DefenceGrowth;
+        Persistence::SavedObjectCode Code;
     };
 
     /**

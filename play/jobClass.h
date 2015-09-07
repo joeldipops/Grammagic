@@ -3,10 +3,11 @@
 
 #include <string>
 #include "../res/templates.h"
+#include "../persistence/saveable.h"
 
 namespace Play
 {
-    class JobClass
+    class JobClass : public Persistence::Saveable
     {
         public:
             JobClass(){};
@@ -14,6 +15,7 @@ namespace Play
             ~JobClass(void);
 
             const std::string& name(void) const;
+            Persistence::SavedObjectCode code(void) const;
 
             float staminaGrowthCoefficient(void) const;
             float skillGrowthCoefficient(void) const;
@@ -28,6 +30,7 @@ namespace Play
             float _speedGrowthCoefficient;
             float _resistanceGrowthCoefficient;
             float _defenceGrowthCoefficient;
+            Persistence::SavedObjectCode _code;
     };
 }
 
