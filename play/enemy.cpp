@@ -3,22 +3,29 @@
 
 using namespace Play;
 
+//{ Lifecycle
 Enemy::Enemy(const Templates::EnemyTemplate& tmpl) : Mob(tmpl, MobType::Hostile)
 {
     _physicalStrength = tmpl.Attack;
     _combatDelay = tmpl.AttackDelay;
     _movementDelay = tmpl.MovementDelay;
     _combatAction = tmpl.CombatAction;
+    _rewardForDefeat = tmpl.Reward;
 }
+//}
+
+//{ Properties
+int Enemy::combatDelay(void) const { return _combatDelay; }
+int Enemy::movementDelay(void) const { return _movementDelay; }
+float Enemy::physicalStrength(void) const { return _physicalStrength; }
+int Enemy::rewardForDefeat(void) const { return _rewardForDefeat; }
+//}
+
+//{ Methods
 
 MobType Enemy::type(void) const
 {
     return MobType::Hostile;
-}
-
-int Enemy::combatDelay(void) const
-{
-    return _combatDelay;
 }
 
 /**
@@ -72,13 +79,13 @@ void Enemy::aiAct(BattleField* field)
     block(SDL_GetTicks() + (dur / speed()));
 }
 
+/**
+ * Fired when player stands next to an enemy and presses action button.
+ */
 PlayStateContainer& Enemy::onInspect(PlayStateContainer& data)
 {
     data.State = PlayState::Combat;
     isInCombat(true);
     return data;
 }
-
-int Enemy::movementDelay(void) const { return _movementDelay; }
-
-float Enemy::physicalStrength(void) const { return _physicalStrength; }
+//}

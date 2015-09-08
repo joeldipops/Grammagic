@@ -707,6 +707,7 @@ const EnemyTemplate GetE1()
     result.RangeOfSight = 1;
     result.AttackDelay = 3000;
     result.MovementDelay = 3000;
+    result.Reward = 1;
     return result;
 };
 const EnemyTemplate Data::E1 = GetE1();
@@ -726,6 +727,7 @@ const EnemyTemplate GetE2()
     result.RangeOfSight = 2;
     result.AttackDelay = 3000;
     result.MovementDelay = 3000;
+    result.Reward = 2;
     return result;
 };
 const EnemyTemplate Data::E2 = GetE2();
@@ -745,6 +747,7 @@ const EnemyTemplate GetB1()
     result.RangeOfSight = 0;
     result.AttackDelay = 3000;
     result.MovementDelay = 2000;
+    result.Reward = 4;
     return result;
 };
 const EnemyTemplate Data::B1 = GetB1();

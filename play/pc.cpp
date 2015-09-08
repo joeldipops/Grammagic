@@ -62,6 +62,39 @@ bool PC::isPlayerControlled(void) const
     return true;
 }
 
+/**
+ * After an enemy is defeated add any experience points gained.
+ */
+void PC::getSpoils(int reward)
+{
+    _staminaEXP += reward;
+    _speedEXP += reward;
+    _skillEXP += reward;
+    _defenceEXP += reward;
+    _resistanceEXP += reward;
+}
+
+/**
+ * When combat finishes, increase any stats that have broken the threshold.
+ */
+void PC::applySpoils(void)
+{
+    maxStamina(maxStamina() + (_staminaEXP / STAT_INCREASE_THRESHOLD));
+    _staminaEXP = _staminaEXP % STAT_INCREASE_THRESHOLD;
+
+    defaultSkill(defaultSkill() + (_skillEXP / STAT_INCREASE_THRESHOLD));
+    _skillEXP = _skillEXP % STAT_INCREASE_THRESHOLD;
+
+    defaultSpeed(defaultSpeed() + (_speedEXP / STAT_INCREASE_THRESHOLD));
+    _speedEXP = _speedEXP % STAT_INCREASE_THRESHOLD;
+
+    defaultResistance(defaultResistance() + (_resistanceEXP / STAT_INCREASE_THRESHOLD));
+    _resistanceEXP = _resistanceEXP % STAT_INCREASE_THRESHOLD;
+
+    defaultDefence(defaultDefence() + (_defenceEXP / STAT_INCREASE_THRESHOLD));
+    _defenceEXP = _defenceEXP % STAT_INCREASE_THRESHOLD;
+}
+
 //}
 
 

@@ -19,12 +19,25 @@ class PC : public Mob
         bool isPlayerControlled(void) const;
         Templates::PartyMemberCode memberCode(void) const;
 
+        void getSpoils(int);
+
+    protected:
+        static const natural STAT_INCREASE_THRESHOLD = 100;
 
     private:
+        void applySpoils(void);
+        void applySpoilForStat(int&, natural&);
+
         natural _spellSlots = 7;
         natural _runeSlots = 6;
         std::string _name;
         Templates::PartyMemberCode _memberCode;
         JobClass _jobClass;
+
+        natural _staminaEXP;
+        natural _skillEXP;
+        natural _speedEXP;
+        natural _defenceEXP;
+        natural _resistanceEXP;
 };
 #endif

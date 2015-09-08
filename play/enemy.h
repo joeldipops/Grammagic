@@ -22,11 +22,13 @@ namespace Play
             int combatDelay(void) const;
             float physicalStrength(void) const;
             MobType type(void) const;
+            int rewardForDefeat(void) const;
 
         private:
             int _movementDelay;
             int _combatDelay;
             int _physicalStrength;
+            int _rewardForDefeat;
             AiAction _combatAction;
             void attack(BattleField*);
     };

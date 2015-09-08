@@ -111,6 +111,7 @@ namespace Templates
         float Attack;
         int AttackDelay;
         int MovementDelay;
+        int Reward;
         Play::AiAction CombatAction = nullptr;
     };
 

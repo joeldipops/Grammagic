@@ -78,6 +78,7 @@ namespace Play
             const std::string& portraitFileName(const std::string&);
             std::vector<Command*>& otherCommands(void);
 
+            unsigned short maxStamina(unsigned short );
             float defaultSpeed(float);
             float defaultResistance(float);
             float defaultDefence(float);
