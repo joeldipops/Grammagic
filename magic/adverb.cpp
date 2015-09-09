@@ -2,7 +2,7 @@
 
 using namespace Magic;
 
-//{Lifecycle
+//{ Lifecycle
 
 /**
  * Constructor
@@ -17,7 +17,7 @@ Adverb::Adverb(Rune* adv)
 }
 //}
 
-//{Methods
+//{ Methods
 SpellData& Adverb::modifySpell(SpellData& data)
 {
     return _modify(data);

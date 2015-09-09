@@ -1,7 +1,6 @@
 #include "assetCache.h"
 
 //{Lifecycle
-//AssetCache::AssetCache() {}
 
 /**
  * Constructor
@@ -69,8 +68,6 @@ SDL_Texture* AssetCache::get(std::string fileName, std::string text, int fontSiz
     return result;
 
 }
-
-
 
 /**
  * Loads a TTF font type asset either from file or from the cache.

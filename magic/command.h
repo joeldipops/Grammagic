@@ -18,7 +18,7 @@ namespace Magic
 
             const std::string& name(void) const;
             virtual const std::vector<Rune*> components(void) const;
-            virtual int execute(Mob*, BattleField*);
+            virtual int execute(Mob*, BattleField&);
 
         private:
             Effect _effect;

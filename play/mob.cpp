@@ -83,7 +83,7 @@ int Mob::stamina(int stamina_)
 unsigned short Mob::maxStamina(void) const { return _maxStamina; }
 unsigned short Mob::maxStamina(unsigned short maxStamina_)
 {
-    _maxStamina = maxStamina_;
+    return _maxStamina = maxStamina_;
 }
 
 /**

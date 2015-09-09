@@ -2,7 +2,7 @@
 #include "../res/templates.h"
 using namespace Magic;
 
-
+//{ Lifecycle
 Rune::Rune(const Templates::RuneTemplate& tmpl)
     :MenuItem(tmpl.Name)
 {
@@ -30,6 +30,8 @@ Rune::Rune(const Templates::RuneTemplate& tmpl)
 }
 
 Rune::~Rune(void) {}
+
+//}
 
 //{Properties
 /**

@@ -17,7 +17,7 @@ namespace Play
     class MapObject;
     struct PlayStateContainer;
 
-    typedef int (*AiAction)(Mob* context, BattleField* field);
+    typedef int (*AiAction)(Mob* context, BattleField& field);
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject* context, PlayStateContainer&);
 }
 

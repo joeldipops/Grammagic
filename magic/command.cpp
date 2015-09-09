@@ -2,6 +2,7 @@
 
 using namespace Magic;
 
+//{ Lifecycle
 /**
  * Constructor
  * @param name The displayed name of the command.
@@ -17,9 +18,10 @@ Command::Command(const std::string& name, Effect effect) : MenuItem(name)
  */
 Command::~Command()
 {
-
 }
+//}
 
+//{ Methods
 const std::vector<Rune*> Command::components(void) const
 {
     return std::vector<Rune*>(0);
@@ -46,7 +48,9 @@ const std::string& Command::name(void) const
  * @param combatants All mobs involved in the current battle.
  * @return Number of milliseconds this command should wait after executing.
  */
-int Command::execute(Mob* caster, BattleField* field)
+int Command::execute(Mob* caster, BattleField& field)
 {
     return _effect(this, caster, field);
 }
+
+//}

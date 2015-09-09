@@ -1,13 +1,7 @@
 #include "mapCell.h"
 #include "playStateManager.h"
 
-MapCell::MapCell(){}
-
-MapCell::~MapCell()
-{
-    _contents = nullptr;
-}
-
+//{ Lifecycle
 /**
  * Constructor
  * @param terrain The terrain in this cell of the map.
@@ -19,18 +13,27 @@ MapCell::MapCell(const Templates::TerrainTemplate& tmpl)
 }
 
 /**
+ * Destructor
+ */
+MapCell::~MapCell()
+{
+    _contents = nullptr;
+}
+
+//}
+
+
+//{ Properties
+/**
  * Sets and gets the terrain in this cell of the map.
  * @param terrain the cell should be set to.
  * @return The current terrain, after the update.
  */
+const Terrain* MapCell::terrain(void) const { return &_terrain; }
 Terrain* MapCell::terrain(Terrain* terrain_)
 {
     if (terrain_ != nullptr)
         _terrain = *terrain_;
-    return &_terrain;
-}
-const Terrain* MapCell::terrain(void) const
-{
     return &_terrain;
 }
 
@@ -47,6 +50,10 @@ MapObject* MapCell::contents(MapObject* contents_)
 
     return _contents;
 }
+
+//}
+
+//{ Methods
 
 PlayStateContainer* MapCell::enter(MapObject* mob, PlayStateContainer* data)
 {
@@ -79,4 +86,6 @@ void MapCell::empty(void)
 {
     _contents = nullptr;
 }
+
+//}
 

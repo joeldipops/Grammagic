@@ -398,7 +398,7 @@ bool Spell::isValid(bool checkUnresolved) const
     return verify(_components);
 }
 
-int Spell::execute(Mob* caster, BattleField* battleField)
+int Spell::execute(Mob* caster, BattleField& battleField)
 {
     if (!isValid(false))
         return -1;
@@ -424,10 +424,10 @@ int Spell::execute(Mob* caster, BattleField* battleField)
     }
 
     // Ensure there is a penalty for using enemy sources rather than allied ones.
-    if (!battleField->areAllied((Combatable*)caster, source))
+    if (!battleField.areAllied((Combatable*)caster, source))
         data.cost *= _action->enemyCostMultiplier();
 
-    if (battleField->areAllied((Combatable*)caster, target))
+    if (battleField.areAllied((Combatable*)caster, target))
         data.effect *= _action->allyEffectMultiplier();
 
     // Apply meta actions.

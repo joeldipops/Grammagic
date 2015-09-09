@@ -21,6 +21,7 @@ namespace Play
             PlayStateContainer& onInspect(PlayStateContainer&);
             void buryTheDead(void);
             void endCombat(void);
+            void getSpoils(BattleField& field);
 
             PC* memberAt(natural) const;
             int getIndexOf(const Mob*) const;

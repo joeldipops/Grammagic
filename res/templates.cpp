@@ -93,25 +93,25 @@ const JobTemplate Data::WASP = getWASP();
 
 //{Runes
 
-static Combatable* all(Mob* caster, BattleField* field, const std::vector<Combatable*>& candidates, SpellData&)
+static Combatable* all(Mob* caster, BattleField& field, const std::vector<Combatable*>& candidates, SpellData&)
 {
     TargetAll* result = new TargetAll(candidates);
 
-    bool isPlayerAllied = field->areAllied(caster, field->pcs().at(0));
+    bool isPlayerAllied = field.areAllied(caster, field.pcs().at(0));
 
     // Should the target be considered an ally or an of the caster?
     natural allyCount = 0;
     for (const Combatable* c : candidates)
     {
-        if (field->areAllied(caster, c))
+        if (field.areAllied(caster, c))
             allyCount++;
     }
 
 
     if (allyCount > candidates.size() / 2.0)
-        field->addToField(result, isPlayerAllied);
+        field.addToField(result, isPlayerAllied);
     else
-        field->addToField(result, !isPlayerAllied);
+        field.addToField(result, !isPlayerAllied);
 
     return result;
 }
@@ -135,7 +135,7 @@ const RuneTemplate GetALL()
 const RuneTemplate Templates::Data::ALL = GetALL();
 
 
-static Combatable* any (Mob* caster, BattleField* field, const std::vector<Combatable*>& candidates, SpellData&)
+static Combatable* any (Mob* caster, BattleField& field, const std::vector<Combatable*>& candidates, SpellData&)
 {
     int index  = rand() % candidates.size();
     return candidates.at(index);
@@ -160,7 +160,7 @@ const RuneTemplate GetANY()
 const RuneTemplate Templates::Data::ANY = GetANY();
 
 
-static Combatable* self (Mob* caster, BattleField*, SpellData&)
+static Combatable* self (Mob* caster, BattleField&, SpellData&)
 {
     return (Combatable*) caster;
 };
@@ -184,15 +184,15 @@ const RuneTemplate GetCASTER()
 const RuneTemplate Templates::Data::CASTER = GetCASTER();
 
 
-static std::vector<Combatable*> enemies(Mob* caster, BattleField* battleField, SpellData&)
+static std::vector<Combatable*> enemies(Mob* caster, BattleField& battleField, SpellData&)
 {
     std::vector<Combatable*> result;
     std::vector<Mob*> candidates;
 
     if (caster->type() == MobType::PlayerCharacter)
-        candidates =  battleField->hostiles();
+        candidates =  battleField.hostiles();
     else
-        candidates = battleField->pcs();
+        candidates = battleField.pcs();
 
     for (Mob* m : candidates)
     {
@@ -220,15 +220,15 @@ const RuneTemplate GetENEMY()
 };
 const RuneTemplate Templates::Data::ENEMY = GetENEMY();
 
-static std::vector<Combatable*> allies(Mob* caster, BattleField* battleField, SpellData&)
+static std::vector<Combatable*> allies(Mob* caster, BattleField& battleField, SpellData&)
 {
     std::vector<Combatable*> result;
     std::vector<Mob*> candidates;
 
     if (caster->type() == MobType::PlayerCharacter)
-        candidates = battleField->pcs();
+        candidates = battleField.pcs();
     else
-        candidates =  battleField->hostiles();
+        candidates =  battleField.hostiles();
 
     for (Mob* m : candidates)
     {
@@ -257,15 +257,15 @@ const RuneTemplate GetALLY()
 };
 const RuneTemplate Templates::Data::ALLY = GetALLY();
 
-static std::vector<Combatable*> members(Mob* caster, BattleField* battleField, SpellData& data)
+static std::vector<Combatable*> members(Mob* caster, BattleField& battleField, SpellData& data)
 {
     std::vector<Combatable*> result;
     std::vector<Mob*> candidates;
 
     if (caster->type() == MobType::PlayerCharacter)
-        candidates = battleField->pcs();
+        candidates = battleField.pcs();
     else
-        candidates =  battleField->hostiles();
+        candidates =  battleField.hostiles();
 
     for (Mob* m : candidates)
     {
@@ -302,7 +302,7 @@ SpellData& modifySpell(SpellData& data, float metaCost, float metaEffect, float 
     return  data;
 }
 
-Combatable* most(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+Combatable* most(Mob* caster, BattleField& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     Combatable* result = nullptr;
     for(natural i = 0; i < candidates.size(); i++)
@@ -438,7 +438,7 @@ const RuneTemplate GetLOW()
 const RuneTemplate Templates::Data::LOW = GetLOW();
 
 
-Combatable* mostStamina(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+Combatable* mostStamina(Mob* caster, BattleField& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     data.stat = Stat::STAMINA;
     return most(caster, battleField, candidates, data);
@@ -480,7 +480,7 @@ SpellData& fastSpell(SpellData& data)
     return modifySpell(data, 0, 0, -.25);
 }
 
-Combatable* mostSpeed(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+Combatable* mostSpeed(Mob* caster, BattleField& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     data.stat = Stat::SPEED;
     return most(caster, battleField, candidates, data);
@@ -518,7 +518,7 @@ const RuneTemplate GetSPEED()
 };
 const RuneTemplate Templates::Data::SPEED = GetSPEED();
 
-Combatable* mostDefence(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+Combatable* mostDefence(Mob* caster, BattleField& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     data.stat = Stat::DEFENSE;
     return most(caster, battleField, candidates, data);
@@ -555,7 +555,7 @@ const RuneTemplate GetDEFENCE()
 };
 const RuneTemplate Templates::Data::DEFENCE = GetDEFENCE();
 
-Combatable* mostResistance(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+Combatable* mostResistance(Mob* caster, BattleField& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     data.stat = Stat::RESISTANCE;
     return most(caster, battleField, candidates, data);
@@ -592,7 +592,7 @@ const RuneTemplate GetRESISTANCE()
 };
 const RuneTemplate Templates::Data::RESISTANCE = GetRESISTANCE();
 
-Combatable* mostSkill(Mob* caster, BattleField* battleField, const std::vector<Combatable*>& candidates, SpellData& data)
+Combatable* mostSkill(Mob* caster, BattleField& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
     data.stat = Stat::SKILL;
     return most(caster, battleField, candidates, data);
@@ -687,7 +687,7 @@ const PCTemplate Data::C = GetC();
 //}
 
 //{Types of Enemy
-int aiAttack(Play::Mob* context, Play::BattleField* field)
+int aiAttack(Play::Mob* context, Play::BattleField& field)
 {
     return Commands::ATTACK(nullptr, context, field);
 }
@@ -707,7 +707,7 @@ const EnemyTemplate GetE1()
     result.RangeOfSight = 1;
     result.AttackDelay = 3000;
     result.MovementDelay = 3000;
-    result.Reward = 1;
+    result.Reward = 10;
     return result;
 };
 const EnemyTemplate Data::E1 = GetE1();
@@ -727,7 +727,7 @@ const EnemyTemplate GetE2()
     result.RangeOfSight = 2;
     result.AttackDelay = 3000;
     result.MovementDelay = 3000;
-    result.Reward = 2;
+    result.Reward = 20;
     return result;
 };
 const EnemyTemplate Data::E2 = GetE2();
@@ -747,7 +747,7 @@ const EnemyTemplate GetB1()
     result.RangeOfSight = 0;
     result.AttackDelay = 3000;
     result.MovementDelay = 2000;
-    result.Reward = 4;
+    result.Reward = 40;
     return result;
 };
 const EnemyTemplate Data::B1 = GetB1();

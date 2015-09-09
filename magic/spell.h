@@ -34,11 +34,10 @@ namespace Magic
             void addComponent(Rune*, bool = false);
 
             bool edit(std::vector<Rune*>);
-            int execute(Mob*, BattleField*);
+            int execute(Mob*, BattleField&);
             bool resolve(void);
 
         private:
-            static int spellCaster(Command* _this, Mob* caster, BattleField*);
             int calculateCost(void) const;
             int calculateEffect(void) const;
             int calculateDuration(void) const;

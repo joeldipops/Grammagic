@@ -23,13 +23,12 @@ Play::PlayState CombatManager::start(GameMap* map_)
 
     _map = map_;
     SDL_Event event;
-    BattleField field = BattleField(map_);
-    _field = &field;
+    _field = BattleField(map_);
 
-    field.isInCombat(true);
+    _field.isInCombat(true);
     bool rerender = true;
 
-    while(field.isInCombat())
+    while(_field.isInCombat())
     {
         Util::sleep(50);
 
@@ -49,7 +48,7 @@ Play::PlayState CombatManager::start(GameMap* map_)
             events.push_back(event);
         }
 
-        std::vector<Mob*> due = field.getDue();
+        std::vector<Mob*> due = _field.getDue();
         for(Mob* combatant : due)
         {
             if (combatant->type() == MobType::PlayerCharacter)
@@ -60,19 +59,18 @@ Play::PlayState CombatManager::start(GameMap* map_)
                 if (_selectedMemberIndex < 0)
                     _selectedMemberIndex = index;
                 if (_selectedMemberIndex == index)
-                    rerender = processPcTurn(combatant, &field, &events);
+                    rerender = processPcTurn(combatant, _field, &events);
             }
             else if (combatant->type() == MobType::Hostile)
-                rerender = processHostileTurn((Enemy*)combatant, &field);
+                rerender = processHostileTurn((Enemy*)combatant, _field);
         }
 
-        if (field.isDefeat())
+        if (_field.isDefeat())
             state(Play::PlayState::GameOver);
     }
 
-    _field->endCombat();
+    _field.endCombat();
 
-    _field = nullptr;
     _map = nullptr;
     return result();
 }
@@ -89,6 +87,7 @@ void CombatManager::buryTheDead(void)
     ))
         _selectedMemberIndex = -1;
 
+    _map->party()->getSpoils(_field);
     _map->buryTheDead();
 }
 
@@ -121,13 +120,13 @@ bool CombatManager::moveCursor(Mob* mob, Core::InputPress input)
     return (mob->selectedCommandIndex(newIndex) != -1);
 }
 
-bool CombatManager::processHostileTurn(Enemy* mob, BattleField* field)
+bool CombatManager::processHostileTurn(Enemy* mob, BattleField& field)
 {
     mob->aiAct(field);
     return true;
 }
 
-bool CombatManager::processPcTurn(Mob* pc, BattleField* field, std::vector<SDL_Event>* events)
+bool CombatManager::processPcTurn(Mob* pc, BattleField& field, std::vector<SDL_Event>* events)
 {
 
     bool hasUpdate;
@@ -169,7 +168,7 @@ bool CombatManager::processPcTurn(Mob* pc, BattleField* field, std::vector<SDL_E
     return hasUpdate;
 }
 
-bool CombatManager::processCommand(Mob* mob, BattleField* field)
+bool CombatManager::processCommand(Mob* mob, BattleField& field)
 {
     // Carry out the command
     int waitMs = mob->selectedCommand()->execute(mob, field);
@@ -177,12 +176,12 @@ bool CombatManager::processCommand(Mob* mob, BattleField* field)
     // Apply the duration - mob cannot act again until command completes.
     mob->block(SDL_GetTicks() + waitMs);
 
-    if (field->isDefeat())
+    if (field.isDefeat())
     {
         state(Play::PlayState::GameOver);
         return true;
     }
-    if (field->isVictory())
+    if (field.isVictory())
         state(Play::PlayState::Victory);
 
     return true;
@@ -196,16 +195,15 @@ Play::PlayState CombatManager::result(void) const
 Play::PlayState CombatManager::state(Play::PlayState state_)
 {
     StateManager::state(state_);
-    if (_field != nullptr)
-        switch(state_)
-        {
-            case Play::PlayState::GameOver:
-            case Play::PlayState::Victory:
-                _field->isInCombat(false);
-                break;
-            default: _field->isInCombat(true);
-                break;
-        }
+    switch(state_)
+    {
+        case Play::PlayState::GameOver:
+        case Play::PlayState::Victory:
+            _field.isInCombat(false);
+            break;
+        default: _field.isInCombat(true);
+            break;
+    }
     return StateManager::state();
 }
 

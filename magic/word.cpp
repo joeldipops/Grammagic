@@ -26,10 +26,11 @@ Word::Word(std::vector<Rune*> data)
 Word::~Word(void) {}
 //}
 
-//{Properties
+//{ Properties
 int Word::addEffect(void) const { return _addEffect; }
 int Word::addCost(void) const { return _addCost; }
 int Word::addDuration(void) const { return _addDuration; }
 float Word::modEffect(void) const { return _modEffect; }
 float Word::modCost(void) const { return _modCost; }
 float Word::modDuration(void) const { return _modDuration; }
+//}

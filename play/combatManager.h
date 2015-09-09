@@ -25,9 +25,9 @@ namespace Magic
 
         private:
 
-            bool processCommand(Mob*, BattleField*);
-            bool processPcTurn(Mob*, BattleField*, std::vector<SDL_Event>*);
-            bool processHostileTurn(Enemy*, BattleField*);
+            bool processCommand(Mob*, BattleField&);
+            bool processPcTurn(Mob*, BattleField&, std::vector<SDL_Event>*);
+            bool processHostileTurn(Enemy*, BattleField&);
             void render(void);
             bool moveCursor(Mob* mob, Core::InputPress input);
             void buryTheDead(void);
@@ -38,7 +38,7 @@ namespace Magic
             MapViewManager* _mapView;
             MiniMapViewManager* _miniMapView;
 
-            BattleField* _field = nullptr;
+            BattleField _field;
             GameMap* _map = nullptr;
             int _selectedMemberIndex = -1;
     };

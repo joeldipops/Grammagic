@@ -22,7 +22,7 @@ class PC : public Mob
         void getSpoils(int);
 
     protected:
-        static const natural STAT_INCREASE_THRESHOLD = 100;
+        static const natural STAT_INCREASE_THRESHOLD = 1000;
 
     private:
         void applySpoils(void);

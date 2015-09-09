@@ -67,11 +67,11 @@ bool PC::isPlayerControlled(void) const
  */
 void PC::getSpoils(int reward)
 {
-    _staminaEXP += reward;
-    _speedEXP += reward;
-    _skillEXP += reward;
-    _defenceEXP += reward;
-    _resistanceEXP += reward;
+    _staminaEXP += floor(reward * _jobClass.staminaGrowthCoefficient());
+    _skillEXP += floor(reward * _jobClass.skillGrowthCoefficient());
+    _speedEXP += floor(reward * _jobClass.speedGrowthCoefficient());
+    _defenceEXP += floor(reward * _jobClass.defenceGrowthCoefficient());
+    _resistanceEXP += floor(reward * _jobClass.resistanceGrowthCoefficient());
 }
 
 /**

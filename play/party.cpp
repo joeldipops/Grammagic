@@ -1,4 +1,5 @@
 #include "party.h"
+#include "enemy.h"
 
 using namespace Play;
 
@@ -62,6 +63,28 @@ const std::vector<Rune*> Party::runeCollection(void) const { return _runeCollect
 PlayStateContainer& Party::onInspect(PlayStateContainer& data)
 {
     return data;
+}
+
+/**
+ * After an enemy is defeated, apportion experience points (and any other spoils) amongst party members
+ * @param field The battlefield where the corpses of defeated enemies lie.
+ */
+void Party::getSpoils(BattleField& field)
+{
+    for(Mob* m : field.hostiles())
+    {
+        if (m->stamina() > 0)
+            continue;
+
+        Enemy* e = (Enemy*) m;
+        for (PC* pc : _members)
+        {
+            if (pc->stamina() <= 0)
+                continue;
+
+            pc->getSpoils(e->rewardForDefeat());
+        }
+    }
 }
 
 void Party::buryTheDead(void)

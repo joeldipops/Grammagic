@@ -3,19 +3,19 @@
 using namespace Magic;
 
 //{Friends
-Combatable* Magic::properNounAcquire(Noun* context, Mob* caster, BattleField* field, SpellData& data)
+Combatable* Magic::properNounAcquire(Noun* context, Mob* caster, BattleField& field, SpellData& data)
 {
     return context->_target(caster, field, data);
 };
 
-Combatable* Magic::auxAdjNounAcquire(Noun* context, Mob* caster, BattleField* field, SpellData& data)
+Combatable* Magic::auxAdjNounAcquire(Noun* context, Mob* caster, BattleField& field, SpellData& data)
 {
     data.modality = context->_modality;
     std::vector<Combatable*> candidates = context->_findCandidates(caster, field, data);
     return context->_select(caster, field, candidates, data);
 };
 
-Combatable* Magic::adjNounAcquire(Noun* context, Mob* caster, BattleField* field, SpellData& data)
+Combatable* Magic::adjNounAcquire(Noun* context, Mob* caster, BattleField& field, SpellData& data)
 {
     std::vector<Combatable*> candidates = context->_findCandidates(caster, field, data);
     return context->_select(caster, field, candidates, data);
@@ -71,7 +71,7 @@ Noun::Noun(Rune* adj, Rune* noun)
 //}
 
 //{Methods
-Combatable* Noun::acquireTarget(Mob* caster, BattleField* field)
+Combatable* Noun::acquireTarget(Mob* caster, BattleField& field)
 {
     SpellData data = SpellData();
     return _targetWrapper(this, caster, field, data);
@@ -82,7 +82,7 @@ WordType Noun::type(void) const
     return WordType::NOUN;
 }
 
-std::vector<Combatable*> Noun::acquireCandidates(Mob* caster, BattleField* field)
+std::vector<Combatable*> Noun::acquireCandidates(Mob* caster, BattleField& field)
 {
     SpellData data;
     return _multiTargeter(caster, field, data);

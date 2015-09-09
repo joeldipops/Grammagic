@@ -9,7 +9,7 @@ namespace Play
     class MapCell
     {
         public:
-            MapCell(void);
+            MapCell(void) {};
             MapCell(const Templates::TerrainTemplate&);
             ~MapCell(void);
             Terrain* terrain(Terrain* = nullptr);

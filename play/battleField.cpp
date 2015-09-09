@@ -6,6 +6,7 @@
 
 using namespace Play;
 
+//{ Lifecycle
 /**
  * Constructor
  * @param map The battlefield is essentially formed out of a subset of the map.
@@ -99,6 +100,33 @@ BattleField::~BattleField(void)
     }
     _rubbishBin = std::vector<Combatable*>(0);
 }
+
+//}
+
+//{ Properties
+/**
+ * Gets or sets the status of the battlefield.
+ */
+bool BattleField::isInCombat(void) const { return _isInCombat; }
+bool BattleField::isInCombat(bool isInCombat_)
+{
+    _isInCombat = isInCombat_;
+    return _isInCombat;
+}
+
+/**
+ * List of mobs in the combat who are hostile to the player.
+ */
+std::vector<Mob*> BattleField::hostiles(void) { return _hostiles; }
+
+/**
+ * List of mobs who are controlled by the player.
+ */
+std::vector<Mob*> BattleField::pcs(void) { return _pcs; }
+
+//}
+
+//{ Methods
 
 /**
  * Cleans up after a battle.
@@ -212,35 +240,6 @@ bool BattleField::areAllied(const Combatable* one, const Combatable* other) cons
 }
 
 /**
- * Gets or sets the status of the battlefield.
- */
-bool BattleField::isInCombat(bool isInCombat_)
-{
-    _isInCombat = isInCombat_;
-    return _isInCombat;
-}
-bool BattleField::isInCombat(void) const
-{
-    return _isInCombat;
-}
-
-/**
- * List of mobs in the combat who are hostile to the player.
- */
-std::vector<Mob*> BattleField::hostiles(void)
-{
-    return _hostiles;
-}
-
-/**
- * List of mobs who are controlled by the player.
- */
-std::vector<Mob*> BattleField::pcs(void)
-{
-    return _pcs;
-}
-
-/**
  * List of all combatable mobs and anything else participating in the battle.
  */
 std::vector<Combatable*> BattleField::combatants(void)
@@ -270,3 +269,5 @@ void BattleField::addToField(Combatable* mob, bool isPlayerAllied)
     else
         _nonPlayerAllied.push_back(mob);
 }
+
+//}

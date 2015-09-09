@@ -73,7 +73,7 @@ bool Enemy::aiMove(GameMap& map_)
  * Allow an NPC to attack according to tis AI
  * @param field The current battlefield.
  */
-void Enemy::aiAct(BattleField* field)
+void Enemy::aiAct(BattleField& field)
 {
     int dur = _combatAction(this, field);
     block(SDL_GetTicks() + (dur / speed()));

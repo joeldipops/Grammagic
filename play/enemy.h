@@ -9,14 +9,14 @@
 using namespace Magic;
 namespace Play
 {
-    typedef int (*AiAction)(Mob* context, BattleField* field);
+    typedef int (*AiAction)(Mob* context, BattleField& field);
 
     class Enemy : public Mob
     {
         public:
             Enemy(const Templates::EnemyTemplate&);
             bool aiMove(GameMap&);
-            void aiAct(BattleField*);
+            void aiAct(BattleField&);
             PlayStateContainer& onInspect(PlayStateContainer&);
             int movementDelay(void) const;
             int combatDelay(void) const;
@@ -30,7 +30,7 @@ namespace Play
             int _physicalStrength;
             int _rewardForDefeat;
             AiAction _combatAction;
-            void attack(BattleField*);
+            void attack(BattleField&);
     };
 }
 
