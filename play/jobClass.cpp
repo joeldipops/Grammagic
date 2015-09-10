@@ -10,6 +10,11 @@ JobClass::JobClass(const Templates::JobTemplate& tmpl)
 {
     _name = tmpl.Name;
     _code = tmpl.Code;
+    _staminaGrowthCoefficient = tmpl.StaminaGrowth;
+    _skillGrowthCoefficient = tmpl.SkillGrowth;
+    _speedGrowthCoefficient = tmpl.SpeedGrowth;
+    _resistanceGrowthCoefficient = tmpl.ResistanceGrowth;
+    _defenceGrowthCoefficient = tmpl.DefenceGrowth;
 }
 
 /**

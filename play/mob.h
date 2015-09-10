@@ -72,7 +72,7 @@ namespace Play
             void block(int);
             bool tryUnblock(int);
             void unblock(void);
-            void endCombat(void);
+            virtual void endCombat(void);
 
         protected:
             const std::string& portraitFileName(const std::string&);

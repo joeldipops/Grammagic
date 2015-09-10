@@ -22,7 +22,7 @@ namespace Play
             virtual bool isInCombat(bool isInCombat_) {_isInCombat = isInCombat_; return _isInCombat; };
             virtual void endCombat(void) = 0;
         private:
-            bool _isInCombat;
+            bool _isInCombat = false;
     };
 }
 

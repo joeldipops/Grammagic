@@ -69,6 +69,7 @@ Play::PlayState CombatManager::start(GameMap* map_)
             state(Play::PlayState::GameOver);
     }
 
+    buryTheDead();
     _field.endCombat();
 
     _map = nullptr;

@@ -62,6 +62,12 @@ bool PC::isPlayerControlled(void) const
     return true;
 }
 
+void PC::endCombat(void)
+{
+    applySpoils();
+    Mob::endCombat();
+}
+
 /**
  * After an enemy is defeated add any experience points gained.
  */

@@ -18,15 +18,15 @@ class PC : public Mob
         const Persistence::SavedObjectCode classCode(void) const;
         bool isPlayerControlled(void) const;
         Templates::PartyMemberCode memberCode(void) const;
+        void endCombat(void);
 
         void getSpoils(int);
 
     protected:
-        static const natural STAT_INCREASE_THRESHOLD = 1000;
+        static const natural STAT_INCREASE_THRESHOLD = 30;
 
     private:
         void applySpoils(void);
-        void applySpoilForStat(int&, natural&);
 
         natural _spellSlots = 7;
         natural _runeSlots = 6;
@@ -34,10 +34,10 @@ class PC : public Mob
         Templates::PartyMemberCode _memberCode;
         JobClass _jobClass;
 
-        natural _staminaEXP;
-        natural _skillEXP;
-        natural _speedEXP;
-        natural _defenceEXP;
-        natural _resistanceEXP;
+        natural _staminaEXP = 0;
+        natural _skillEXP = 0;
+        natural _speedEXP = 0;
+        natural _defenceEXP = 0;
+        natural _resistanceEXP = 0;
 };
 #endif
