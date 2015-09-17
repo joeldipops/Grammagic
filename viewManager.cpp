@@ -78,7 +78,7 @@ void ViewManager::render()
 
 
 void ViewManager::drawHorizontalControls(
-    const std::vector<MenuItem*>* items, const int selectedIndex,
+    const std::vector<MenuItem*>& items, const int selectedIndex,
     const SDL_Rect* port, const SDL_Rect* control, const SDL_Colour* unselectedColour, const SDL_Colour* selectedColour
 )
 {
@@ -91,20 +91,22 @@ void ViewManager::drawHorizontalControls(
     if (control == nullptr)
         control = &_control;
 
-    const SDL_Colour* usColour = (unselectedColour != nullptr) ? unselectedColour : &TEXT_COLOUR;
-    const SDL_Colour* sColour = (selectedColour != nullptr) ? selectedColour : &SELECTED_COLOUR;
+    const SDL_Colour& usColour = (unselectedColour != nullptr) ? *unselectedColour : TEXT_COLOUR;
+    const SDL_Colour& sColour = (selectedColour != nullptr) ? *selectedColour : SELECTED_COLOUR;
 
     SDL_Rect rect = SDL_Rect {view.x + control->x, view.y + control->y, control->w, control->h};
     SDL_Rect temp;
 
     int rows = 1;
     int i = 0;
-    for(; i < int(items->size()); i++)
+    for(; i < int(items.size()); i++)
     {
+
+
         if (i == selectedIndex)
-            drawOptionBox(&rect, items->at(i)->name(), 5, &BG_COLOUR, sColour, sColour);
+            drawOptionBox(rect, items.at(i), 5, BG_COLOUR, sColour, sColour);
         else
-            drawOptionBox(&rect, items->at(i)->name(), 5, &BG_COLOUR, usColour, usColour);
+            drawOptionBox(rect, items.at(i), 5, BG_COLOUR, usColour, usColour);
         temp = SDL_Rect {rect.x + control->w + control->x, rect.y, control->w, control->h};
 
         // Can't fit horizontally, so shift below.
@@ -142,7 +144,7 @@ natural ViewManager::drawMessage(const std::string& message, const SDL_Rect& let
         outer.w = inner.w + paddingX * 2;
         outer.h = inner.h + paddingY * 2;
 
-        drawOptionBox(&inner, message, 0, &BG_COLOUR, &SELECTED_COLOUR, &SELECTED_COLOUR);
+        drawOptionBox(inner, message, 0, BG_COLOUR, SELECTED_COLOUR, SELECTED_COLOUR);
         result = message.length();
     }
     else
@@ -170,7 +172,7 @@ natural ViewManager::drawMessage(const std::string& message, const SDL_Rect& let
 
             rect.w = width;
 
-            drawOptionBox(&rect, word, 0, &BG_COLOUR, &INVISIBLE, &SELECTED_COLOUR);
+            drawOptionBox(rect, word, 0, BG_COLOUR, INVISIBLE, SELECTED_COLOUR);
 
 
             rect.x = rect.x + rect.w + letterSize.w;
@@ -190,18 +192,18 @@ natural ViewManager::drawMessage(const std::string& message, const SDL_Rect& let
  * @param items The list of items on the menu.
  * @param selectedIndex The position in the list of the currently selected item.
  */
-void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control, bool allowSpilling)
+void ViewManager::drawControls(const std::vector<MenuItem*>& items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control, bool allowSpilling)
 {
     // Cast MenuItems to const before calling.
     std::vector<const MenuItem*> cItems = std::vector<const MenuItem*>(0);
-    cItems.reserve(items->size());
-    for (natural i = 0; i < items->size(); i++)
+    cItems.reserve(items.size());
+    for (natural i = 0; i < items.size(); i++)
     {
-        const MenuItem* n = items->at(i);
+        const MenuItem* n = items.at(i);
         cItems.push_back(n);
     }
 
-    return drawControls(&cItems, selectedIndex, port, control, allowSpilling);
+    return drawControls(cItems, selectedIndex, port, control, allowSpilling);
 }
 
 /**
@@ -209,7 +211,7 @@ void ViewManager::drawControls(const std::vector<MenuItem*>* items, const int se
  * @param items The list of items on the menu.
  * @param selectedIndex The position in the list of the currently selected item.
  */
-void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control, bool allowSpilling)
+void ViewManager::drawControls(const std::vector<const MenuItem*>& items, const int selectedIndex, const SDL_Rect* port, const SDL_Rect* control, bool allowSpilling)
 {
     const int arrowOffset = 15;
     const int borderWidth = 5;
@@ -240,7 +242,7 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const 
             SDL_RenderCopy(_renderer, arrowLeft, NULL, &arrowRect);
             rect.x += arrowOffset;
         }
-        if (int(items->size()) > visiblePerPage)
+        if (int(items.size()) > visiblePerPage)
         {
             SDL_Texture* arrowRight = _assets->get(RESOURCE_LOCATION + "arrow-right.png");
             SDL_Rect arrowRect = SDL_Rect { view.x + view.w - borderWidth - 2 - 15, view.y + (view.h / 2), 15, 15 };
@@ -259,17 +261,17 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>* items, const 
 
     SDL_Rect temp;
 
-    int limit = (i + visiblePerPage) >= int(items->size())
-    ? items->size()
+    int limit = (i + visiblePerPage) >= int(items.size())
+    ? items.size()
     : i + visiblePerPage;
 
     for(; i < limit; i++)
     {
-        SDL_Colour textClr = items->at(i)->colour();
+        SDL_Colour textClr = items.at(i)->colour();
         if (i == selectedIndex)
-            drawOptionBox(&rect, items->at(i)->name(), borderWidth, &BG_COLOUR, &textClr, &SELECTED_COLOUR);
+            drawOptionBox(rect, items.at(i), borderWidth, BG_COLOUR, textClr, SELECTED_COLOUR);
         else
-            drawOptionBox(&rect, items->at(i)->name(), borderWidth, &BG_COLOUR, &textClr, &TEXT_COLOUR);
+            drawOptionBox(rect, items.at(i), borderWidth, BG_COLOUR, textClr, TEXT_COLOUR);
         temp = SDL_Rect {rect.x, rect.y + control->h + control->y, control->w, control->h};
 
         // Can't fit vertically, so shift to the right.
@@ -307,23 +309,40 @@ std::string ViewManager::displayMultiplier(float value) const
 }
 
 
+void ViewManager::drawOptionBox(const SDL_Rect& rect,  const MenuItem* item, int borderWidth, const SDL_Colour& bgColour, const SDL_Colour& fgColour, const SDL_Colour& textColour)
+{
+    SDL_Texture* texture = nullptr;
+
+    if (item->imagePath().size() <= 0)
+        texture = formatFontTexture(item->name(), &fgColour);
+    else
+        texture = assets()->get(item->imagePath());
+
+    return drawOptionBox(rect, texture, borderWidth, bgColour, fgColour, textColour);
+}
+
+void ViewManager::drawOptionBox(const SDL_Rect& rect, const std::string& text, const int borderWidth, const SDL_Colour& bgColour, const SDL_Colour& fgColour, const SDL_Colour& textColour)
+{
+    SDL_Texture* texture = formatFontTexture(text, &fgColour);
+    return drawOptionBox(rect, texture, borderWidth, bgColour, fgColour, textColour);
+}
+
 /**
  * Render a box with a border and text in the middle.
  */
-void ViewManager::drawOptionBox(const SDL_Rect* rect, const std::string& text, int borderWidth, const SDL_Colour* bgColour, const SDL_Colour* fgColour, const SDL_Colour* TEXT_COLOUR)
+void ViewManager::drawOptionBox(const SDL_Rect& rect, SDL_Texture* texture, int borderWidth, const SDL_Colour& bgColour, const SDL_Colour& fgColour, const SDL_Colour& textColour)
 {
     // Background
-    SDL_SetRenderDrawColor(_renderer, bgColour->r, bgColour->g, bgColour->b, bgColour->a);
-    SDL_RenderFillRect(_renderer, rect);
+    SDL_SetRenderDrawColor(_renderer, bgColour.r, bgColour.g, bgColour.b, bgColour.a);
+    SDL_RenderFillRect(_renderer, &rect);
 
     // Foreground
     int textOffset = borderWidth * 2;
-    SDL_Texture* texTure = formatFontTexture(text, fgColour);
-    SDL_Rect textArea = SDL_Rect { rect->x + textOffset, rect->y + textOffset, rect->w - textOffset * 2, rect->h - textOffset * 2};
-    SDL_RenderCopy(_renderer, texTure, NULL, &textArea);
+    SDL_Rect textArea = SDL_Rect { rect.x + textOffset, rect.y + textOffset, rect.w - textOffset * 2, rect.h - textOffset * 2};
+    SDL_RenderCopy(_renderer, texture, NULL, &textArea);
 
     // Border
-    drawBorder(*rect, borderWidth, TEXT_COLOUR, true);
+    drawBorder(rect, borderWidth, &textColour, true);
 }
 
 /**

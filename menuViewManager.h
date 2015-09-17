@@ -41,6 +41,7 @@ namespace Play
             void renderPCs(const Party&, int, int = -1);
 
             static const SDL_Rect _menuControl;
+            static const SDL_Rect _runeControl;
             static const int borderWidth = 5;
             static const int cursorXOffset;
             static const int cursorYOffset;

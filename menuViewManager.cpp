@@ -4,6 +4,7 @@
 using namespace Play;
 
 const SDL_Rect MenuViewManager::_menuControl = SDL_Rect { 6, 6, 150, 50 };
+const SDL_Rect MenuViewManager::_runeControl = SDL_Rect { 6, 6, 60, 60 };
 const int MenuViewManager::cursorXOffset = borderWidth + _menuControl.x;
 const int MenuViewManager::cursorYOffset = borderWidth + _menuControl.y;
 
@@ -32,7 +33,7 @@ void MenuViewManager::renderRunes(const Party& party, int runeIndex)
     MenuItem item = MenuItem("");
     items.push_back(&item);
     items.insert(items.end(), runes.begin(), runes.end());
-    drawControls(&items, runeIndex, &_runesVp, &_menuControl);
+    drawControls(items, runeIndex, &_runesVp, &_runeControl);
 }
 
 /**
@@ -76,18 +77,18 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
                 SDL_RenderCopy(renderer(), invalid, 0, &validRect);
 
             if (i == spellIndex)
-                drawHorizontalControls(&menuItems, position, &rect, &_menuControl, &SELECTED_COLOUR, &HIGHLIGHTED_COLOUR);
+                drawHorizontalControls(menuItems, position, &rect, &_runeControl, &SELECTED_COLOUR, &HIGHLIGHTED_COLOUR);
             else
-                drawHorizontalControls(&menuItems, position, &rect, &_menuControl);
+                drawHorizontalControls(menuItems, position, &rect, &_runeControl);
         }
         else
         {
             MenuItem emptySlot = MenuItem();
             menuItems.push_back(&emptySlot);
             if (i == spellIndex)
-                drawHorizontalControls(&menuItems, position, &rect, &_menuControl, &SELECTED_COLOUR, &HIGHLIGHTED_COLOUR);
+                drawHorizontalControls(menuItems, position, &rect, &_menuControl, &SELECTED_COLOUR, &HIGHLIGHTED_COLOUR);
             else
-                drawHorizontalControls(&menuItems, position, &rect, &_menuControl);
+                drawHorizontalControls(menuItems, position, &rect, &_menuControl);
         }
 
         rect = SDL_Rect { rect.x, rect.y + rect.h, rect.w, rect.h};
@@ -214,7 +215,7 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, con
     drawBorder(borderWidth, &TEXT_COLOUR);
 
     auto pointers = toPointers(model.MenuItems);
-    drawControls(&pointers, int(model.SelectedMenuItem), &_mainVp, &_menuControl, false);
+    drawControls(pointers, int(model.SelectedMenuItem), &_mainVp, &_menuControl, false);
 
     switch(model.SelectedMenuItem)
     {

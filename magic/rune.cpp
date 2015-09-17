@@ -4,9 +4,8 @@ using namespace Magic;
 
 //{ Lifecycle
 Rune::Rune(const Templates::RuneTemplate& tmpl)
-    :MenuItem(tmpl.Name)
+    :MenuItem(tmpl.Name, tmpl.ImagePath)
 {
-    _imagePath = tmpl.ImagePath;
     _getTarget = tmpl.GetTarget;
     _getTargetCandidates = tmpl.GetTargetCandidates;
     _selectTargetFromCandidates = tmpl.SelectTargetFromCandidates;
@@ -34,10 +33,6 @@ Rune::~Rune(void) {}
 //}
 
 //{Properties
-/**
- * Path to image that represents the rune.
- */
-const std::string& Rune::imagePath(void) const { return _imagePath; }
 
 /**
  * If rune is used as a proper noun, returns a function that targets a specific mob.

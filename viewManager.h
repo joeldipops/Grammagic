@@ -38,17 +38,21 @@ class ViewManager
         void fillViewport(const SDL_Colour*);
         void drawBorder(const int, const SDL_Colour*);
         void drawBorder(const SDL_Rect&, const int, const SDL_Colour*, const bool);
-        void drawOptionBox(const SDL_Rect*, const std::string&, const int, const SDL_Colour*, const SDL_Colour*, const SDL_Colour*);
+
+        void drawOptionBox(const SDL_Rect&, const std::string&, const int, const SDL_Colour&, const SDL_Colour&, const SDL_Colour&);
+        void drawOptionBox(const SDL_Rect&, const MenuItem*, int borderWidth, const SDL_Colour&, const SDL_Colour&, const SDL_Colour&);
+        void drawOptionBox(const SDL_Rect&, SDL_Texture*, int borderWidth, const SDL_Colour&, const SDL_Colour&, const SDL_Colour&);
+
         void drawControls(
-            const std::vector<const MenuItem*>*, const int, const SDL_Rect* = nullptr,
+            const std::vector<const MenuItem*>&, const int, const SDL_Rect* = nullptr,
             const SDL_Rect* = nullptr, bool = true
         );
         void drawControls(
-            const std::vector<MenuItem*>*, const int, const SDL_Rect* = nullptr,
+            const std::vector<MenuItem*>&, const int, const SDL_Rect* = nullptr,
             const SDL_Rect* = nullptr, bool = true
         );
         void drawHorizontalControls(
-            const std::vector<MenuItem*>*, const int,
+            const std::vector<MenuItem*>&, const int,
             const SDL_Rect* = nullptr, const SDL_Rect* = nullptr,
             const SDL_Colour* = nullptr, const SDL_Colour* = nullptr
         );

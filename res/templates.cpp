@@ -120,7 +120,7 @@ const RuneTemplate GetALL()
     RuneTemplate result = RuneTemplate();
     result.Name = "ALL";
     result.Code = Persistence::SavedObjectCode::ALL_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "all.png";
     result.SelectTargetFromCandidates = all;
 
     result.AddEffect = 0;
@@ -145,7 +145,7 @@ const RuneTemplate GetANY()
     RuneTemplate result = RuneTemplate();
     result.Name = "ANY";
     result.Code = Persistence::SavedObjectCode::ANY_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "any.png";
     result.SelectTargetFromCandidates = any;
 
     result.AddEffect = 0;
@@ -169,7 +169,7 @@ const RuneTemplate GetCASTER()
     RuneTemplate result = RuneTemplate();
     result.Name = "CASTER";
     result.Code = Persistence::SavedObjectCode::CASTER_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "caster.png";
     result.GetTarget = self;
 
     result.AddEffect = 0;
@@ -206,7 +206,7 @@ const RuneTemplate GetENEMY()
     RuneTemplate result = RuneTemplate();
     result.Name = "ENEMY";
     result.Code = Persistence::SavedObjectCode::ENEMY_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "enemy.png";
     result.GetTargetCandidates = enemies;
 
     result.AddEffect = 0;
@@ -243,7 +243,7 @@ const RuneTemplate GetALLY()
     RuneTemplate result = RuneTemplate();
     result.Name = "ALLY";
     result.Code = Persistence::SavedObjectCode::ALLY_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "ally.png";
     result.GetTargetCandidates = allies;
 
     result.AddEffect = 0;
@@ -280,7 +280,7 @@ const RuneTemplate GetMEMBER()
     RuneTemplate result = RuneTemplate();
     result.Name = "MEMBER";
     result.Code = Persistence::SavedObjectCode::MEMBER_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "member.png";
     result.GetTargetCandidates = members;
 
     result.AddEffect = 0;
@@ -393,7 +393,7 @@ const RuneTemplate GetHIGH()
     RuneTemplate result = RuneTemplate();
     result.Name = "HIGH";
     result.Code = Persistence::SavedObjectCode::HIGH_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "up.png";
     result.PerformAction;
     result.MetaAction = heavySpell;
 
@@ -420,7 +420,7 @@ const RuneTemplate GetLOW()
     RuneTemplate result = RuneTemplate();
     result.Name = "LOW";
     result.Code = Persistence::SavedObjectCode::LOW_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "down.png";
     result.PerformAction;
     result.MetaAction = lightSpell;
 
@@ -455,7 +455,7 @@ const RuneTemplate GetSTAMINA()
     RuneTemplate result = RuneTemplate();
     result.Name = "STAMINA";
     result.Code = Persistence::SavedObjectCode::STAMINA_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "stamina.png";
     result.SelectTargetFromCandidates = mostStamina;
     result.PerformAction = changeStamina;
 
@@ -497,7 +497,7 @@ const RuneTemplate GetSPEED()
     RuneTemplate result = RuneTemplate();
     result.Name = "SPEED";
     result.Code = Persistence::SavedObjectCode::SPEED_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "speed.png";
     result.SelectTargetFromCandidates = mostSpeed;
     result.PerformAction = changeSpeed;
     result.MetaAction = fastSpell;
@@ -535,7 +535,7 @@ const RuneTemplate GetDEFENCE()
     RuneTemplate result = RuneTemplate();
     result.Name = "DEFENCE";
     result.Code = Persistence::SavedObjectCode::DEFENCE_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "defence.png";
     result.SelectTargetFromCandidates = mostDefence;
     result.PerformAction = changeDefence;
 
@@ -572,7 +572,7 @@ const RuneTemplate GetRESISTANCE()
     RuneTemplate result = RuneTemplate();
     result.Name = "RESISTANCE";
     result.Code = Persistence::SavedObjectCode::RESISTANCE_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "resistance.png";
     result.SelectTargetFromCandidates = mostResistance;
     result.PerformAction = changeResistance;
 
@@ -609,7 +609,7 @@ const RuneTemplate GetSKILL()
     RuneTemplate result = RuneTemplate();
     result.Name = "SKILL";
     result.Code = Persistence::SavedObjectCode::SKILL_RUNE;
-    result.ImagePath = "";
+    result.ImagePath = RESOURCE_LOCATION + "skill.png";
     result.SelectTargetFromCandidates = mostSkill;
     result.PerformAction = changeSkill;
 

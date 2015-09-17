@@ -18,7 +18,6 @@ namespace Magic
             ~Rune(void);
 
             Persistence::SavedObjectCode code(void) const;
-            const std::string& imagePath(void) const;
             int addEffect(void) const;
             int addCost(void) const;
             int addDuration(void) const;
@@ -51,7 +50,6 @@ namespace Magic
 
         private:
             std::string _name;
-            std::string _imagePath;
             Targeter _getTarget = nullptr;
             MultiTargeter _getTargetCandidates = nullptr;
             Selecter _selectTargetFromCandidates = nullptr;

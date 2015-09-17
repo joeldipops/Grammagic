@@ -23,9 +23,9 @@ void ControlViewManager::render(const Mob* pc, Play::PlayState state, const std:
             std::vector<MenuItem*> menuItems = std::vector<MenuItem*> {commands.begin(), commands.end()};
 
             if (pc->isBlocked())
-                drawControls(&menuItems, -1);
+                drawControls(menuItems, -1);
             else
-                drawControls(&menuItems, pc->selectedCommandIndex());
+                drawControls(menuItems, pc->selectedCommandIndex());
             break;
         }
         default: break;
