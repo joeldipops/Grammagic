@@ -10,7 +10,6 @@ GameMap::GameMap()
 {
     _contents = std::vector<MapObject*>(0);
     // Reserve the first spot for the PC mob.
-    _contents.push_back(nullptr);
     _cells = std::map<unsigned long, MapCell>();
 }
 
@@ -259,8 +258,13 @@ bool GameMap::place(MapObject* mob, int x, int y, bool canReplace)
 
     if (mob->isPlayerParty())
     {
-        delete _contents.at(0);
-        _contents.at(0) = mob;
+
+        if (_contents.size() > 0 && _contents.at(0)->isPlayerParty())
+        {
+            kill(_contents.at(0));
+        }
+
+        _contents.insert(_contents.begin(), mob);
     }
     else
     {
@@ -306,7 +310,11 @@ Party* GameMap::party(Party& party_)
 
 Party* GameMap::party(void) const
 {
+    if (_contents.size() <= 0)
+        return nullptr;
+
     return (Party*) _contents.at(0);
+
 }
 
 /**

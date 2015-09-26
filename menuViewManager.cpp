@@ -98,7 +98,7 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
 void MenuViewManager::renderPCs(const Party& party, int memberIndex, int selectedPosition)
 {
     bool isOrdering = selectedPosition >= 0 && memberIndex >= 0;
-    SDL_Rect templateRect{ _partyVp.x + cursorXOffset, _partyVp.y, _partyVp.w - cursorXOffset, 150 };
+    SDL_Rect templateRect{ _partyVp.x + cursorXOffset, _partyVp.y, _partyVp.w - cursorXOffset, 160 };
     for (natural i = 0; i < party.members().size(); i++)
     {
         natural position = i;
@@ -133,8 +133,10 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex, int selecte
         PC* pc = party.memberAt(i);
         const int TEXT_WIDTH = 22;
         const int TEXT_HEIGHT = 19;
-        const int LABEL_GAP = 60;
-        const int MARGIN_Y = 20;
+        const int ICON_SIZE = 45;
+        const int REL_TEXT_Y = (ICON_SIZE / 2) - (TEXT_HEIGHT / 2);
+        const int LABEL_GAP = 30;
+        const int MARGIN_Y = 10;
 
         const SDL_Colour* colour;
 
@@ -155,50 +157,45 @@ void MenuViewManager::renderPCs(const Party& party, int memberIndex, int selecte
 
         // Draw class name
         std::string className = pc->className();
-        SDL_Rect classRect { rect.x + 2, portRect.y + portRect.h, TEXT_WIDTH * int(className.length()), TEXT_HEIGHT};
+        SDL_Rect classRect { rect.x + 2, portRect.y + portRect.h + TEXT_HEIGHT - 10, TEXT_WIDTH * int(className.length()), TEXT_HEIGHT};
         textTure = formatFontTexture(className, colour);
         SDL_RenderCopy(renderer(), textTure, NULL, &classRect);
 
         // Draw stamina.
-        std::string label = "Stamina";
-        SDL_Rect stmLabelRect { rect.x + TEXT_WIDTH * 10, rect.y + 3, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
+        SDL_Rect stmLabelRect { rect.x + TEXT_WIDTH * 12, rect.y + 3, ICON_SIZE, ICON_SIZE};
 
-        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &stmLabelRect);
+        SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "stamina.png"), NULL, &stmLabelRect);
 
         // Draw skill.
-        label = "Skill";
         std::string value = displayMultiplier(pc->defaultSkill());
-        SDL_Rect sklLabelRect { stmLabelRect.x, stmLabelRect.y + stmLabelRect.h + MARGIN_Y, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
-        SDL_Rect sklValueRect { sklLabelRect.x + sklLabelRect.w + LABEL_GAP, stmLabelRect.y + stmLabelRect.h + MARGIN_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
-        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &sklLabelRect);
+        SDL_Rect sklLabelRect { stmLabelRect.x, stmLabelRect.y + stmLabelRect.h + MARGIN_Y, ICON_SIZE, ICON_SIZE};
+        SDL_Rect sklValueRect { sklLabelRect.x + sklLabelRect.w + LABEL_GAP, sklLabelRect.y + REL_TEXT_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "skill.png"), NULL, &sklLabelRect);
         SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &sklValueRect);
 
         // Draw resistance
-        label = "Resist";
         value = displayMultiplier(pc->defaultResistance());
-        SDL_Rect resLabelRect { sklLabelRect.x, sklLabelRect.y + sklLabelRect.h + MARGIN_Y, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
-        SDL_Rect resValueRect { sklValueRect.x, sklValueRect.y + sklValueRect.h + MARGIN_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
-        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &resLabelRect);
+        SDL_Rect resLabelRect { sklLabelRect.x, sklLabelRect.y + sklLabelRect.h + MARGIN_Y, ICON_SIZE, ICON_SIZE};
+        SDL_Rect resValueRect { sklValueRect.x, resLabelRect.y + REL_TEXT_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "resistance.png"), NULL, &resLabelRect);
         SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &resValueRect);
 
         // Draw Speed
-        label = "Speed";
         value = displayMultiplier(pc->defaultSpeed());
-        SDL_Rect spdLabelRect { sklValueRect.x + sklValueRect.w + 2 * LABEL_GAP, sklValueRect.y, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
-        SDL_Rect spdValueRect { spdLabelRect.x + spdLabelRect.w + LABEL_GAP, sklValueRect.y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
-        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &spdLabelRect);
+        SDL_Rect spdLabelRect { sklValueRect.x + sklValueRect.w + 2 * LABEL_GAP, sklLabelRect.y, ICON_SIZE, ICON_SIZE};
+        SDL_Rect spdValueRect { spdLabelRect.x + spdLabelRect.w + LABEL_GAP, spdLabelRect.y + REL_TEXT_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "speed.png"), NULL, &spdLabelRect);
         SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &spdValueRect);
 
         // Draw Defense
-        label = "Defense";
         value = displayMultiplier(pc->defaultDefence());
-        SDL_Rect defLabelRect { spdLabelRect.x, spdLabelRect.y + spdLabelRect.h + MARGIN_Y, TEXT_WIDTH * int(label.length()), TEXT_HEIGHT};
-        SDL_Rect defValueRect { spdValueRect.x, spdValueRect.y + spdValueRect.h + MARGIN_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
-        SDL_RenderCopy(renderer(), formatFontTexture(label, colour), NULL, &defLabelRect);
+        SDL_Rect defLabelRect { spdLabelRect.x, spdLabelRect.y + spdLabelRect.h + MARGIN_Y, ICON_SIZE, ICON_SIZE};
+        SDL_Rect defValueRect { spdValueRect.x, defLabelRect.y + REL_TEXT_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "defence.png"), NULL, &defLabelRect);
         SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &defValueRect);
 
         value = std::to_string(pc->stamina());
-        SDL_Rect stmValueRect { sklValueRect.x, stmLabelRect.y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
+        SDL_Rect stmValueRect { sklValueRect.x, stmLabelRect.y + REL_TEXT_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
         SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &stmValueRect);
 
         drawBorder(rect, 3, colour, false);

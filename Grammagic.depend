@@ -331,7 +331,7 @@
 	"res/strings.h"
 	<iostream>
 
-1441796562 source:/home/joel/Projects/Grammagic/util/assetCache.cpp
+1442717261 source:/home/joel/Projects/Grammagic/util/assetCache.cpp
 	"assetCache.h"
 
 1390221300 /usr/include/SDL/SDL_image.h
@@ -410,7 +410,7 @@
 	"combatable.h"
 	"../res/templates.h"
 
-1441361534 source:/home/joel/Projects/Grammagic/play/gameMap.cpp
+1443249488 source:/home/joel/Projects/Grammagic/play/gameMap.cpp
 	"gameMap.h"
 
 1441796946 source:/home/joel/Projects/Grammagic/play/mapCell.cpp
@@ -423,7 +423,7 @@
 1440198763 source:/home/joel/Projects/Grammagic/play/miniMapViewManager.cpp
 	"viewManagers.h"
 
-1441796980 source:/home/joel/Projects/Grammagic/play/mob.cpp
+1443249188 source:/home/joel/Projects/Grammagic/play/mob.cpp
 	"mob.h"
 	"playStateManager.h"
 
@@ -574,15 +574,16 @@
 	"../play/mob.h"
 	"../play/gameMap.h"
 
-1441789375 source:/home/joel/Projects/Grammagic/play/enemy.cpp
+1442724626 source:/home/joel/Projects/Grammagic/play/enemy.cpp
 	"enemy.h"
 	"playStateManager.h"
 
-1441796239 /home/joel/Projects/Grammagic/play/enemy.h
+1442724268 /home/joel/Projects/Grammagic/play/enemy.h
 	"mob.h"
 	"gameMap.h"
 	"../globalConstants.h"
 	"../res/templates.h"
+	"npc.h"
 
 1436349052 source:/home/joel/Projects/Grammagic/combat/combatManager.cpp
 	"combatManager.h"
@@ -770,7 +771,7 @@
 1438428017 source:/home/joel/Projects/Grammagic/magic/battleCommands.cpp
 	"battleCommands.h"
 
-1442491769 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
+1442720267 source:/home/joel/Projects/Grammagic/menuViewManager.cpp
 	"menuViewManager.h"
 	"magic/spell.h"
 
@@ -796,7 +797,7 @@
 1441362309 source:/home/joel/Projects/Grammagic/menuManager.cpp
 	"menuManager.h"
 
-1441423959 /home/joel/Projects/Grammagic/globalConstants.h
+1442724403 /home/joel/Projects/Grammagic/globalConstants.h
 	<SDL2/SDL.h>
 	<string>
 	"core.h"
@@ -968,4 +969,11 @@
 1441881779 source:/home/joel/Projects/Grammagic/play/jobClass.cpp
 	"jobClass.h"
 	"../core.h"
+
+1442724804 /home/joel/Projects/Grammagic/play/npc.h
+	"mob.h"
+
+1442724860 source:/home/joel/Projects/Grammagic/play/npc.cpp
+	"npc.h"
+	"gameMap.h"
 

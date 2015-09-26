@@ -78,6 +78,8 @@
 		<Unit filename="play/miniMapViewManager.cpp" />
 		<Unit filename="play/mob.cpp" />
 		<Unit filename="play/mob.h" />
+		<Unit filename="play/npc.cpp" />
+		<Unit filename="play/npc.h" />
 		<Unit filename="play/party.cpp" />
 		<Unit filename="play/party.h" />
 		<Unit filename="play/pc.cpp" />

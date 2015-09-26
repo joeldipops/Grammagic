@@ -4,11 +4,10 @@
 using namespace Play;
 
 //{ Lifecycle
-Enemy::Enemy(const Templates::EnemyTemplate& tmpl) : Mob(tmpl, MobType::Hostile)
+Enemy::Enemy(const Templates::EnemyTemplate& tmpl) : NPC(tmpl, MobType::Hostile)
 {
     _physicalStrength = tmpl.Attack;
     _combatDelay = tmpl.AttackDelay;
-    _movementDelay = tmpl.MovementDelay;
     _combatAction = tmpl.CombatAction;
     _rewardForDefeat = tmpl.Reward;
 }
@@ -16,7 +15,6 @@ Enemy::Enemy(const Templates::EnemyTemplate& tmpl) : Mob(tmpl, MobType::Hostile)
 
 //{ Properties
 int Enemy::combatDelay(void) const { return _combatDelay; }
-int Enemy::movementDelay(void) const { return _movementDelay; }
 float Enemy::physicalStrength(void) const { return _physicalStrength; }
 int Enemy::rewardForDefeat(void) const { return _rewardForDefeat; }
 //}
@@ -61,7 +59,7 @@ bool Enemy::aiMove(GameMap& map_)
         dX = (rand() % 100) > 50 ? 1 : -1;
     }
 
-    block(SDL_GetTicks() + _movementDelay + (rand() % 200 - 100));
+    block(SDL_GetTicks() + movementDelay() + (rand() % 200 - 100));
 
     if (dX == 0 && dY == 0)
         return false;

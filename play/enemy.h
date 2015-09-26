@@ -5,27 +5,26 @@
 #include "gameMap.h"
 #include "../globalConstants.h"
 #include "../res/templates.h"
+#include "npc.h"
 
 using namespace Magic;
 namespace Play
 {
     typedef int (*AiAction)(Mob* context, BattleField& field);
 
-    class Enemy : public Mob
+    class Enemy : public NPC
     {
         public:
             Enemy(const Templates::EnemyTemplate&);
             bool aiMove(GameMap&);
             void aiAct(BattleField&);
             PlayStateContainer& onInspect(PlayStateContainer&);
-            int movementDelay(void) const;
             int combatDelay(void) const;
             float physicalStrength(void) const;
             MobType type(void) const;
             int rewardForDefeat(void) const;
 
         private:
-            int _movementDelay;
             int _combatDelay;
             int _physicalStrength;
             int _rewardForDefeat;

@@ -17,7 +17,8 @@ AssetCache::AssetCache(SDL_Renderer* renderer)
  */
 AssetCache::~AssetCache(void)
 {
-        emptyCache();
+    emptyCache();
+
 }
 //}
 
@@ -99,6 +100,7 @@ void AssetCache::discard(std::string key)
     _assets[key] = nullptr;
     _assets.erase(key);
 
+    delete _fontAssets[key];
     _fontAssets[key] = nullptr;
     _fontAssets.erase(key);
 }
@@ -113,5 +115,12 @@ void AssetCache::emptyCache(void)
         SDL_DestroyTexture(item.second);
         item.second = nullptr;
     }
+
+    for(auto &item : _fontAssets)
+    {
+        delete item.second;
+    }
+    _assets = std::map<std::string, SDL_Texture*>();
+    _fontAssets = std::map<std::string, TTF_Font*>();
 }
 //}
