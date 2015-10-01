@@ -23,8 +23,8 @@ namespace Templates
     struct Commands
     {
         // Non spell commands
-        static int FLEE(Command*, Mob*, BattleField& field);
-        static int ATTACK(Command* command, Mob* actor, BattleField& field);
+        static int FLEE(Command*, Mob*, SpellContext& field);
+        static int ATTACK(Command* command, Mob* actor, SpellContext& field);
     };
 }
 #endif

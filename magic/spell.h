@@ -20,7 +20,8 @@ namespace Magic
     {
         public:
             static bool verify(std::vector<Rune*>);
-            bool isValid(bool = false) const;
+            bool isValid(void) const;
+            bool isValid(bool) const;
 
             Spell(){};
             Spell(std::vector<Word*>);
@@ -34,7 +35,7 @@ namespace Magic
             void addComponent(Rune*, bool = false);
 
             bool edit(std::vector<Rune*>);
-            int execute(Mob*, BattleField&);
+            int execute(Mob*, SpellContext&);
             bool resolve(void);
 
         private:

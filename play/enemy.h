@@ -10,7 +10,7 @@
 using namespace Magic;
 namespace Play
 {
-    typedef int (*AiAction)(Mob* context, BattleField& field);
+    typedef int (*AiAction)(Mob* context, SpellContext& field);
 
     class Enemy : public NPC
     {

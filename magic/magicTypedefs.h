@@ -14,6 +14,7 @@ namespace Play
 using namespace Play;
 namespace Magic
 {
+    class SpellContext;
     struct SpellData
     {
         Stat stat;
@@ -28,17 +29,17 @@ namespace Magic
     /**
      * Targets a specific Mob.
      */
-    typedef Combatable* (*Targeter)(Mob*, BattleField&, SpellData&);
+    typedef Combatable* (*Targeter)(Mob*, SpellContext&, SpellData&);
 
     /**
      * Chooses a list of candidates to be the target of the spell.
      */
-    typedef std::vector<Combatable*> (*MultiTargeter) (Mob*, BattleField&, SpellData&);
+    typedef std::vector<Combatable*> (*MultiTargeter) (Mob*, SpellContext&, SpellData&);
 
     /**
      * Selects a target from a list of candidates.
      */
-    typedef Combatable* (*Selecter) (Mob*, BattleField&, const std::vector<Combatable*>&, SpellData&);
+    typedef Combatable* (*Selecter) (Mob*, SpellContext&, const std::vector<Combatable*>&, SpellData&);
 
     /**
      * Performs an action as part of a spell.
@@ -51,7 +52,7 @@ namespace Magic
     * @param battlefield holds various data on combat currently in progress.
     * @return The time before the mob that made the command can act again.
     */
-    typedef int (*Effect)(Command* context, Mob*, BattleField&);
+    typedef int (*Effect)(Command* context, Mob*, SpellContext&);
 
     /**
      * Performs operations and transformations on the spell itself without changing the target, source or effect.

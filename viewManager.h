@@ -40,7 +40,7 @@ class ViewManager
         void drawBorder(const SDL_Rect&, const int, const SDL_Colour*, const bool);
 
         void drawOptionBox(const SDL_Rect&, const std::string&, const int, const SDL_Colour&, const SDL_Colour&, const SDL_Colour&);
-        void drawOptionBox(const SDL_Rect&, const MenuItem*, int borderWidth, const SDL_Colour&, const SDL_Colour&, const SDL_Colour&);
+        virtual void drawOptionBox(const SDL_Rect&, const MenuItem*, int borderWidth, const SDL_Colour&, const SDL_Colour&, const SDL_Colour&);
         void drawOptionBox(const SDL_Rect&, SDL_Texture*, int borderWidth, const SDL_Colour&, const SDL_Colour&, const SDL_Colour&);
 
         void drawControls(

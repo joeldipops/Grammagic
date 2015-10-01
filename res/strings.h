@@ -13,6 +13,7 @@ class Strings
         static const std::string Continue;
         static const std::string Save;
         static const std::string Magic;
+        static const std::string Cast;
         static const std::string SaveComplete;
         static const std::string Party;
         static const std::string HutDescription;

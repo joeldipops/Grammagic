@@ -9,7 +9,7 @@
 #include "../globalConstants.h"
 #include "../magic/magicTypedefs.h"
 
-namespace Magic { class Command; }
+namespace Magic { class Command; class SpellContext; }
 namespace Play
 {
     class Mob;
@@ -17,7 +17,7 @@ namespace Play
     class MapObject;
     struct PlayStateContainer;
 
-    typedef int (*AiAction)(Mob* context, BattleField& field);
+    typedef int (*AiAction)(Mob* context, Magic::SpellContext& field);
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject* context, PlayStateContainer&);
 }
 

@@ -28,17 +28,20 @@ namespace Play
 
             natural selectedSpellLength(PC*) const;
             bool moveCursor(Party& party, Core::InputPress input);
+            bool moveCursorSideways(Party& party, Core::InputPress input);
 
             // What happens when you hit ok when on various menu items.
             bool processMenuCommand(const Party& party);
             bool processMemberCommand(void);
             bool processRuneCommand(const Party& party);
-            bool processSpellCommand(const Party& party);
+            bool processSpellCommand(Party& party);
             bool processComponentCommand(void);
             bool processReorderMemberCommand(Party& party);
 
             bool processCommand(Party& party);
             bool processCancel(Party& party);
+
+            bool cast(Play::Party&, Play::Mob&, int);
 
             MenuViewManager _viewManager;
             int _selectedMenuIndex;

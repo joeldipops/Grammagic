@@ -11,12 +11,12 @@ using namespace Play;
  * Constructor
  * @param map The battlefield is essentially formed out of a subset of the map.
  */
-BattleField::BattleField(GameMap* map_)
+BattleField::BattleField(GameMap* map_) : SpellContext()
 {
     // All party members will be in the combat.
     for (Mob* c : map_->party()->members())
     {
-        _pcs.push_back(c);
+        pcs().push_back(c);
     }
 
     // Place the rest of the party on the map in random positions around the  party leader.
@@ -31,7 +31,7 @@ BattleField::BattleField(GameMap* map_)
     int partyX = map_->party()->x();
     int partyY = map_->party()->y();
     auto c = map_->contents();
-    while ((!startChecking || indexY != startY) && partyIndex < _pcs.size())
+    while ((!startChecking || indexY != startY) && partyIndex < pcs().size())
     {
         int x = partyX + indexX;
         int y = partyY + indexY;
@@ -40,7 +40,7 @@ BattleField::BattleField(GameMap* map_)
         if (cell != nullptr && !cell->terrain()->isDense())
             if (cell->contents() == nullptr)
             {
-                map_->place(_pcs.at(partyIndex), x, y);
+                map_->place(pcs().at(partyIndex), x, y);
                 partyIndex++;
             }
 
@@ -64,7 +64,7 @@ BattleField::BattleField(GameMap* map_)
 
         if (m->isInCombat())
         {
-            _hostiles.push_back(m);
+            hostiles().push_back(m);
             continue;
         }
 
@@ -73,7 +73,7 @@ BattleField::BattleField(GameMap* map_)
         {
             if (m->isSeen(*pc))
             {
-                _hostiles.push_back(m);
+                hostiles().push_back(m);
                 break;
             }
         }
@@ -85,44 +85,15 @@ BattleField::BattleField(GameMap* map_)
     _map = map_;
 }
 
-/**
- * Garbage collects any memory that was allocated during combat.
- */
 BattleField::~BattleField(void)
 {
-    _playerAllied = std::vector<Combatable*>(0);
-    _nonPlayerAllied = std::vector<Combatable*>(0);
     _map = nullptr;
-
-    for(Combatable* item : _rubbishBin)
-    {
-        delete item;
-    }
-    _rubbishBin = std::vector<Combatable*>(0);
 }
 
 //}
 
 //{ Properties
-/**
- * Gets or sets the status of the battlefield.
- */
-bool BattleField::isInCombat(void) const { return _isInCombat; }
-bool BattleField::isInCombat(bool isInCombat_)
-{
-    _isInCombat = isInCombat_;
-    return _isInCombat;
-}
 
-/**
- * List of mobs in the combat who are hostile to the player.
- */
-std::vector<Mob*> BattleField::hostiles(void) { return _hostiles; }
-
-/**
- * List of mobs who are controlled by the player.
- */
-std::vector<Mob*> BattleField::pcs(void) { return _pcs; }
 
 //}
 
@@ -133,13 +104,13 @@ std::vector<Mob*> BattleField::pcs(void) { return _pcs; }
  */
 void BattleField::endCombat(void)
 {
-    _isInCombat = false;
+    isInCombat(false);
     _map->party()->endCombat();
 
-    for (Combatable* mob : _hostiles)
+    for (Combatable* mob : hostiles())
         mob->endCombat();
 
-    for (Mob* pc : _pcs)
+    for (Mob* pc : pcs())
     {
         pc->endCombat();
         // Remove from the map.
@@ -153,7 +124,7 @@ void BattleField::endCombat(void)
  */
 bool BattleField::isVictory(void) const
 {
-    for (Combatable* m : _hostiles)
+    for (Combatable* m : hostiles())
     {
         if (m->stamina() > 0)
             return false;
@@ -167,7 +138,7 @@ bool BattleField::isVictory(void) const
  */
 bool BattleField::isDefeat(void) const
 {
-    for (Combatable* m : _pcs)
+    for (Combatable* m : pcs())
     {
         if (m->stamina() > 0)
             return false;
@@ -182,23 +153,23 @@ bool BattleField::isDefeat(void) const
 std::vector<Mob*> BattleField::getDue(void)
 {
     std::vector<Mob*> result = std::vector<Mob*>(0);
-    if (!_isInCombat)
+    if (!isInCombat())
         return result;
 
     int time = SDL_GetTicks();
-    for (Combatable* c : combatants())
+    for (Combatable* c : participants())
     {
         Mob* item = (Mob*) c;
         // Now is the time to clean up dead mobs.
         if (item->stamina() <= 0)
         {
             natural i;
-            for (i = 0; i < _hostiles.size(); i++)
-                if (item == _hostiles.at(i))
-                    _hostiles.erase(_hostiles.begin() + i);
-            for (i = 0; i < _pcs.size(); i++)
-                if (item == _pcs.at(i))
-                    _pcs.erase(_pcs.begin() + i);
+            for (i = 0; i < hostiles().size(); i++)
+                if (item == hostiles().at(i))
+                    hostiles().erase(hostiles().begin() + i);
+            for (i = 0; i < pcs().size(); i++)
+                if (item == pcs().at(i))
+                    pcs().erase(pcs().begin() + i);
             continue;
         }
 
@@ -207,67 +178,6 @@ std::vector<Mob*> BattleField::getDue(void)
     }
     result.shrink_to_fit();
     return result;
-}
-
-/**
- * Returns true if two mobs are on the same side.
- * @param one One of two mobs.
- * @param other Two of two mobs.
- */
-bool BattleField::areAllied(const Combatable* one, const Combatable* other) const
-{
-    int found = 0;
-    for(Combatable* mob : _hostiles)
-    {
-        if (mob == one)
-            found++;
-        if (mob == other)
-            found++;
-    }
-
-    if (found == 2)
-        return true;
-
-    for (Combatable* mob : _nonPlayerAllied)
-    {
-        if (mob == one)
-            found++;
-        if (mob == other)
-            found++;
-    }
-
-    return found % 2 == 0;
-}
-
-/**
- * List of all combatable mobs and anything else participating in the battle.
- */
-std::vector<Combatable*> BattleField::combatants(void)
-{
-    std::vector<Combatable*> result = std::vector<Combatable*>();
-
-    for (Mob* m : _hostiles)
-    {
-        result.push_back(m);
-    }
-    for (Mob* m : _pcs)
-    {
-        result.push_back(m);
-    }
-    return result;
-}
-
-/**
- * Keep track of an obj that was allocated during combat.
- */
-void BattleField::addToField(Combatable* mob, bool isPlayerAllied)
-{
-    _rubbishBin.push_back(mob);
-
-    if (isPlayerAllied)
-        _playerAllied.push_back(mob);
-    else
-        _nonPlayerAllied.push_back(mob);
 }
 
 //}

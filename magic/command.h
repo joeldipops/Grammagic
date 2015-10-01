@@ -16,9 +16,9 @@ namespace Magic
             Command(const std::string&, Effect);
             ~Command(void);
 
-            const std::string& name(void) const;
+            virtual bool isValid(void) const { return true; };
             virtual const std::vector<Rune*> components(void) const;
-            virtual int execute(Mob*, BattleField&);
+            virtual int execute(Mob*, SpellContext&);
 
         private:
             Effect _effect;

@@ -60,7 +60,6 @@ AssetCache* StateManager<S, P>::assets(void)
     return _assets;
 }
 
-
 /**
  * Moves the cursor around a menu.
  */

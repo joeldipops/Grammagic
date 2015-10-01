@@ -382,6 +382,11 @@ int Spell::calculateDuration(void) const
     return (int) floor(result);
 }
 
+bool Spell::isValid(void) const
+{
+    return isValid(false);
+}
+
 /**
  * @param checkUnresolved If true, also check unresolved components.
  * @return True if the spell can be effectively cast.
@@ -398,7 +403,7 @@ bool Spell::isValid(bool checkUnresolved) const
     return verify(_components);
 }
 
-int Spell::execute(Mob* caster, BattleField& battleField)
+int Spell::execute(Mob* caster, SpellContext& battleField)
 {
     if (!isValid(false))
         return -1;
@@ -415,6 +420,10 @@ int Spell::execute(Mob* caster, BattleField& battleField)
 
     Combatable* source = _source->acquireTarget(caster, battleField);
     Combatable* target = _target->acquireTarget(caster, battleField);
+
+    if (source == nullptr || target == nullptr)
+        return 0;
+
 
     // Prevent actions such as free healing where cost is 10 and effect is 30 = +20 health.
     if (target == source)

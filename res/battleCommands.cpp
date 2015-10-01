@@ -5,13 +5,13 @@ using namespace Templates;
 
 // Non Spells
 //{
-int Commands::FLEE(Command*, Mob*, BattleField& field)
+int Commands::FLEE(Command*, Mob*, SpellContext& field)
 {
     field.isInCombat(false);
     return 0;
 };
 
-int Commands::ATTACK(Command* command, Mob* actor, BattleField& field)
+int Commands::ATTACK(Command* command, Mob* actor, SpellContext& field)
 {
     // PCs are squishy and can not attack physically
     if (actor->isPlayerControlled())
@@ -25,8 +25,8 @@ int Commands::ATTACK(Command* command, Mob* actor, BattleField& field)
     natural iter = 0;
     while(iter < randFail)
     {
-        int i = rand() % field.combatants().size();
-        Combatable* target = field.combatants().at(i);
+        int i = rand() % field.participants().size();
+        Combatable* target = field.participants().at(i);
 
         // Do damage to the target and then ollie outie.
         if (!field.areAllied(actor, target))

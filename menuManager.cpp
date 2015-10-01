@@ -114,9 +114,41 @@ natural MenuManager::selectedSpellLength(PC* pc) const
     return pc->spells().at(_selectedSpellIndex)->components().size();
 }
 
+bool MenuManager::moveCursorSideways(Party& party, Core::InputPress input)
+{
+    if (state() != SelectSpell)
+        return false;
+
+    // This is all select spell state focused for now.
+    std::vector<Command*> spells = party.memberAt(_selectedMemberIndex)->spells();
+    if (spells.size() <= _selectedSpellIndex || !spells.at(_selectedSpellIndex)->isValid())
+        return false;
+
+    int* index = &_selectedComponentIndex;
+    int min = -2;
+    int max = -1;
+    switch(input)
+    {
+        case Core::InputPress::LEFT:
+            *index = *index > min ? *index - 1 : max;
+            break;
+        case Core::InputPress::RIGHT:
+            *index = *index < max ? *index + 1 : min;
+            break;
+        case Core::InputPress::DOWN:
+        case Core::InputPress::UP:
+        default:
+            return false;
+    }
+
+    return true;
+}
 
 bool MenuManager::moveCursor(Party& party, Core::InputPress input)
 {
+    if (state() == MenuState::SelectSpell && in(input, Core::InputPress::LEFT, Core::InputPress::RIGHT))
+        return moveCursorSideways(party, input);
+
     int result = 0;
     int index = 0;
     natural itemCount = 0;
@@ -292,8 +324,11 @@ bool MenuManager::processComponentCommand(void)
     return true;
 }
 
-bool MenuManager::processSpellCommand(const Party& party)
+bool MenuManager::processSpellCommand(Party& party)
 {
+    if (_selectedComponentIndex < -1)
+        return cast(party, (Mob&)*party.memberAt(_selectedMemberIndex), _selectedSpellIndex);
+
     _selectedComponentIndex = 0;
 
     // Go straight to the rune level if there are no runes already in the spell.
@@ -329,6 +364,17 @@ bool MenuManager::processRuneCommand(const Party& party)
     workingSpell->component(_selectedComponentIndex, party.runeCollection().at(_selectedRuneIndex - 1));
     if (_selectedComponentIndex + 1 < int(pc->runeSlots()))
         _selectedComponentIndex++;
+    return true;
+}
+
+bool MenuManager::cast(Play::Party& party, Play::Mob& caster, int spellIndex)
+{
+    using namespace Magic;
+    Spell* spell = (Spell*) caster.spells().at(spellIndex);
+
+    SpellContext context = SpellContext(party.members(), std::vector<Enemy*>());
+
+    spell->execute(&caster, context);
     return true;
 }
 

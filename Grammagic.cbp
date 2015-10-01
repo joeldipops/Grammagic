@@ -42,6 +42,8 @@
 		<Unit filename="magic/rune.h" />
 		<Unit filename="magic/spell.cpp" />
 		<Unit filename="magic/spell.h" />
+		<Unit filename="magic/spellContext.cpp" />
+		<Unit filename="magic/spellContext.h" />
 		<Unit filename="magic/targetAll.cpp" />
 		<Unit filename="magic/targetAll.h" />
 		<Unit filename="magic/verb.cpp" />

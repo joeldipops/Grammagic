@@ -70,16 +70,27 @@ void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPo
             if (runes.size() < pc.runeSlots())
                 menuItems.push_back(&emptySlot);
 
-            SDL_Rect validRect = SDL_Rect { rect.w - 40, rect.y + cursorYOffset, 30, 30 };
+            SDL_Rect validRect = SDL_Rect { rect.x - 30, rect.y + cursorYOffset, 30, 30 };
             if (command->isValid(true))
                 SDL_RenderCopy(renderer(), valid, 0, &validRect);
             else
                 SDL_RenderCopy(renderer(), invalid, 0, &validRect);
 
-            if (i == spellIndex)
+            // if position is less than -1 a different button (eg. "Cast") is selected.
+            if (i == spellIndex && position >= -1)
                 drawHorizontalControls(menuItems, position, &rect, &_runeControl, &SELECTED_COLOUR, &HIGHLIGHTED_COLOUR);
             else
                 drawHorizontalControls(menuItems, position, &rect, &_runeControl);
+
+            // Draw button to let us use the spell.
+            if (command->isValid(true) && i == spellIndex)
+            {
+                SDL_Rect castRect { rect.w - (_menuControl.w + 10), rect.y + 10, _menuControl.w, _menuControl.h };
+                if (position == -2)
+                    drawOptionBox(castRect, Strings::Cast, borderWidth, BG_COLOUR, SELECTED_COLOUR, SELECTED_COLOUR);
+                else
+                    drawOptionBox(castRect, Strings::Cast, borderWidth, BG_COLOUR, TEXT_COLOUR, TEXT_COLOUR);
+            }
         }
         else
         {

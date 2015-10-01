@@ -29,7 +29,7 @@ class PC : public Mob
         void applySpoils(void);
 
         natural _spellSlots = 7;
-        natural _runeSlots = 6;
+        natural _runeSlots = 10;
         std::string _name;
         Templates::PartyMemberCode _memberCode;
         JobClass _jobClass;
