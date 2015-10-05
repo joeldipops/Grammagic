@@ -1,14 +1,14 @@
 #ifndef MENUVIEWMANAGER_H_INCLUDED
 #define MENUVIEWMANAGER_H_INCLUDED
 
-#include "util/utils.h"
+#include "../util/utils.h"
 #include "viewManager.h"
-#include "res/battleCommands.h"
-#include "play/pc.h"
-#include "globalConstants.h"
-#include "play/party.h"
+#include "../res/battleCommands.h"
+#include "../play/pc.h"
+#include "../globalConstants.h"
+#include "../play/party.h"
 
-namespace Play
+namespace View
 {
     struct MenuViewModel
     {

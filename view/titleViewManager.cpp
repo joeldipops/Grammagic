@@ -1,4 +1,5 @@
-#include "titleStateManager.h"
+#include "titleViewManager.h"
+using namespace View;
 
 TitleViewManager::TitleViewManager() : ViewManager() {}
 TitleViewManager::TitleViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) : ViewManager(r, v, a) {}

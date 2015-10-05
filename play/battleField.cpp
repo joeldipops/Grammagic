@@ -100,6 +100,22 @@ BattleField::~BattleField(void)
 //{ Methods
 
 /**
+ *
+ */
+ void BattleField::buryTheDead(void)
+ {
+    for (natural i = 0; i < hostiles().size(); i++)
+    {
+        if (hostiles().at(i)->stamina() <= 0)
+        {
+            hostiles().erase(hostiles().begin() + i);
+            i--;
+        }
+    }
+    _map->buryTheDead();
+ }
+
+/**
  * Cleans up after a battle.
  */
 void BattleField::endCombat(void)

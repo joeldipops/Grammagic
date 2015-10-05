@@ -1,4 +1,5 @@
-#include "viewManagers.h"
+#include "miniMapViewManager.h"
+using namespace View;
 
 MiniMapViewManager::MiniMapViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) : ViewManager(r, v, a) {}
 

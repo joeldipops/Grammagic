@@ -9,7 +9,7 @@ const MenuItem TitleStateManager::CONTINUE = MenuItem(Strings::Continue);
  */
 TitleStateManager::TitleStateManager(SDL_Renderer* r, AssetCache* a) : StateManager(r, a)
 {
-    _view = TitleViewManager(renderer(), SDL_Rect {0, 0, 1200, 800}, assets());
+    _view = View::TitleViewManager(renderer(), SDL_Rect {0, 0, 1200, 800}, assets());
     _menu = std::vector<MenuItem> {START, CONTINUE, QUIT};
     state(Title::TitleState::Normal);
 }

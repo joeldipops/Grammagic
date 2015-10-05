@@ -26,6 +26,7 @@ namespace Play
             bool isVictory(void) const;
             bool isDefeat(void) const;
 
+            void buryTheDead(void);
             void endCombat(void);
 
         private:

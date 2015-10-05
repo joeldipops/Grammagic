@@ -17,5 +17,12 @@ bool in(T value, T candidate, t... rest)
         return true;
 
     return in(value, rest...);
-}
+};
+
+template<typename T>
+void deletePtr(T*& pointer)
+{
+    delete pointer;
+    pointer = nullptr;
+};
 #endif

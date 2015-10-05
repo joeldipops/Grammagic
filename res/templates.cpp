@@ -340,12 +340,12 @@ Combatable* most(Mob* caster, SpellContext& battleField, const std::vector<Comba
             }
             if (data.modality == Modality::HIGH)
             {
-                if (mobValue < resultValue)
+                if (mobValue > resultValue)
                     result = mob;
             }
             else
             {
-                if (mobValue > resultValue)
+                if (mobValue < resultValue)
                     result = mob;
             }
         }

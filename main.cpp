@@ -16,6 +16,7 @@
 #include "res/templates.h"
 
 const std::string Strings::Heading = "Grammagic";
+const std::string Strings::Victory = "Victory";
 const std::string Strings::Stamina = "Stamina";
 const std::string Strings::Start = "Start";
 const std::string Strings::Quit = "Quit";

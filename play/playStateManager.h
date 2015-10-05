@@ -10,12 +10,19 @@
 #include "gameMap.h"
 #include "mob.h"
 #include "../mapFileBlock.h"
-#include "viewManagers.h"
 #include "../menuManager.h"
 #include "enemy.h"
 #include "combatManager.h"
 #include "pc.h"
 #include "party.h"
+
+namespace View
+{
+    class ControlViewManager;
+    class StatsViewManager;
+    class MapViewManager;
+    class MiniMapViewManager;
+}
 
 namespace Play
 {
@@ -56,10 +63,10 @@ namespace Play
 
             // Properties
             std::string _message;
-            ControlViewManager* _controlView = nullptr;
-            StatsViewManager* _statsView = nullptr;
-            ViewManager* _miniMapView = nullptr;
-            MapViewManager* _mapView = nullptr;
+            View::ControlViewManager* _controlView = nullptr;
+            View::StatsViewManager* _statsView = nullptr;
+            View::ViewManager* _miniMapView = nullptr;
+            View::MapViewManager* _mapView = nullptr;
             GameMap* _map = nullptr;
             int _combatGraceTime = 0;
 

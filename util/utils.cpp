@@ -4,15 +4,6 @@
 using namespace Util;
 
 /**
- * Puts the executing thread to sleep so that other cpu work can be done.
- * @param Amount of time thread should sleep for.
- */
-void Util::sleep(int milliseconds)
-{
-    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
-}
-
-/**
  * Writes directly to a file.
  * @param fileName the name of the file.
  * @param data The bytes to write.

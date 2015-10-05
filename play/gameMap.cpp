@@ -380,6 +380,8 @@ void GameMap::buryTheDead(void)
             // Remove from existence
             _contents.erase(_contents.begin() + i);
             i--;
+            if (!mob->isPlayerControlled())
+                delete mob;
         }
     }
 }

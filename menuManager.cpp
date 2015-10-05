@@ -9,7 +9,7 @@ const MenuItem MenuManager::PARTY = MenuItem(Strings::Party);
 MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
     : StateManager(r, a)
 {
-    _viewManager = MenuViewManager(r, SDL_Rect {0, 0, WIDTH, HEIGHT }, a);
+    _viewManager = View::MenuViewManager(r, SDL_Rect {0, 0, WIDTH, HEIGHT }, a);
     _selectedSpellIndex = -1;
     _selectedRuneIndex = -1;
     _selectedComponentIndex = -1;
@@ -33,7 +33,7 @@ Play::PlayState MenuManager::start(Party& party)
     {
         if (rerender)
         {
-            MenuViewModel vm
+            View::MenuViewModel vm
             {
                 _menu, // MenuItems
                 MainMenuItem(_selectedMenuIndex), // SelectedMenuItem
@@ -121,7 +121,7 @@ bool MenuManager::moveCursorSideways(Party& party, Core::InputPress input)
 
     // This is all select spell state focused for now.
     std::vector<Command*> spells = party.memberAt(_selectedMemberIndex)->spells();
-    if (spells.size() <= _selectedSpellIndex || !spells.at(_selectedSpellIndex)->isValid())
+    if ((_selectedSpellIndex >= 0 && spells.size() <= natural(_selectedSpellIndex)) || !spells.at(_selectedSpellIndex)->isValid())
         return false;
 
     int* index = &_selectedComponentIndex;

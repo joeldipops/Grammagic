@@ -1,5 +1,6 @@
 #include "viewManager.h"
 
+using namespace View;
 using namespace Util;
 
 // Constants
@@ -25,7 +26,7 @@ const int ViewManager::DEFAULT_BORDER_WIDTH = 7;
  * @param viewPort the size and position of this viewport within the window.
  * @param assets Image (later sound, font, etc) assets shared between classes.
  */
-ViewManager::ViewManager(SDL_Renderer* renderer, SDL_Rect viewPort, AssetCache* assets)
+ViewManager::ViewManager(SDL_Renderer* renderer, SDL_Rect& viewPort, AssetCache* assets)
 {
     _renderer = renderer;
     _viewPort = viewPort;

@@ -7,6 +7,7 @@ class Strings
 {
     public:
         static const std::string Heading;
+        static const std::string Victory;
         static const std::string Stamina;
         static const std::string Start;
         static const std::string Quit;

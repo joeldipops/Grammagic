@@ -1,4 +1,8 @@
 #include "playStateManager.h"
+#include "../view/controlViewManager.h"
+#include "../view/mapViewManager.h"
+#include "../view/miniMapViewManager.h"
+#include "../view/statsViewManager.h"
 
 using namespace Play;
 
@@ -14,6 +18,7 @@ const int COMBAT_GRACE_PERIOD = 1000;
  */
 PlayStateManager::PlayStateManager(SDL_Renderer* r, AssetCache* a) : StateManager(r, a)
 {
+    using namespace View;
     _controlView = new ControlViewManager(renderer(), CONTROL_VIEW, assets());
     _miniMapView = new MiniMapViewManager(renderer(), MINIMAP_VIEW, assets());
     _statsView = new StatsViewManager(renderer(), STATS_VIEW, assets());
@@ -43,7 +48,7 @@ Core::CoreState PlayStateManager::start(Party& party)
     state(PlayState::Movement);
     result(Core::CoreState::Exit);
 
-    CombatManager combatManager = CombatManager(renderer(), assets(), ScreenViewContainer{_controlView, _miniMapView, _statsView, _mapView});
+    CombatManager combatManager = CombatManager(renderer(), assets(), View::ScreenViewContainer{_controlView, _miniMapView, _statsView, _mapView});
     MenuManager menuManager = MenuManager(renderer(), assets());
 
     // Create a simple 5x5 map for testing.

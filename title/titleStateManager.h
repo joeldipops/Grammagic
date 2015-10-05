@@ -2,7 +2,7 @@
 #define INTROSTATEMANAGER_H_INCLUDED
 
 #include "../menuItem.h"
-#include "../title/titleViewManager.h"
+#include "../view/titleViewManager.h"
 #include "../stateManager.h"
 #include "../util/utils.h"
 #include "../res/strings.h"
@@ -24,7 +24,7 @@ class TitleStateManager final : Core::StateManager<Title::TitleState, Core::Core
         bool moveCursor(const Core::InputPress);
         bool processCommand(void);
 
-        TitleViewManager _view;
+        View::TitleViewManager _view;
         int _selectedItemIndex;
 };
 

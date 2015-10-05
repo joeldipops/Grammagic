@@ -12,6 +12,15 @@
 
 namespace Util
 {
+    /**
+    * Puts the executing thread to sleep so that other cpu work can be done.
+    * @param Amount of time thread should sleep for.
+    */
+    inline void sleep(int milliseconds)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+    };
+
     // TODO Learn to do operator overloading to make this prettier
     template<typename N>
     struct Nullable
@@ -111,10 +120,6 @@ namespace Util
 
         return result;
     }
-
-
-
-    void sleep(int milliseconds);
 
     bool writeFile(const std::string& fileName, const std::vector<byte>& data);
 

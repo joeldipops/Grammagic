@@ -5,7 +5,7 @@
 
 #include "stateManager.h"
 #include "play/mob.h"
-#include "menuViewManager.h"
+#include "view/menuViewManager.h"
 #include "globalConstants.h"
 #include "persistence/saveLoad.h"
 #include "res/strings.h"
@@ -43,7 +43,7 @@ namespace Play
 
             bool cast(Play::Party&, Play::Mob&, int);
 
-            MenuViewManager _viewManager;
+            View::MenuViewManager _viewManager;
             int _selectedMenuIndex;
             int _selectedMemberIndex;
             int _selectedSpellIndex;

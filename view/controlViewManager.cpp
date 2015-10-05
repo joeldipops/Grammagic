@@ -1,4 +1,6 @@
-#include "viewManagers.h"
+#include "controlViewManager.h"
+#include "../play/mob.h"
+using namespace View;
 
 const SDL_Rect ControlViewManager::_runeControl = SDL_Rect { 0, 0, 50, 50 };
 

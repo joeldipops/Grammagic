@@ -1,4 +1,6 @@
-#include "viewManagers.h"
+#include "mapViewManager.h"
+#include "../play/gameMap.h"
+using namespace View;
 
 /**
  * Constructor passes through to base class.

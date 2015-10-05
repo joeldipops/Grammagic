@@ -1,16 +1,28 @@
 #include "combatManager.h"
+#include "../view/controlViewManager.h"
+#include "../view/mapViewManager.h"
+#include "../view/miniMapViewManager.h"
+#include "../view/statsViewManager.h"
+#include "../view/victoryViewManager.h"
 
 using namespace Magic;
 
-CombatManager::CombatManager(SDL_Renderer* r, AssetCache* a, ScreenViewContainer views) : StateManager(r, a)
+CombatManager::CombatManager(SDL_Renderer* r, AssetCache* a, View::ScreenViewContainer views) : StateManager(r, a)
 {
+    using namespace View;
+    static SDL_Rect wholeScreen = { 0, 0, WIDTH, HEIGHT};
     _controlView = (ControlViewManager*) views.Top;
     _statsView = (StatsViewManager*) views.Right;
     _miniMapView = (MiniMapViewManager*) views.TopRight;
     _mapView = (MapViewManager*) views.Main;
+
+    _victoryView = new VictoryViewManager(r, wholeScreen, a);
 }
 
-CombatManager::~CombatManager(void) {};
+CombatManager::~CombatManager(void)
+{
+    deletePtr(_victoryView);
+};
 
 Play::PlayState CombatManager::start(void)
 {
@@ -69,8 +81,8 @@ Play::PlayState CombatManager::start(GameMap* map_)
             state(Play::PlayState::GameOver);
     }
 
-    buryTheDead();
     _field.endCombat();
+    buryTheDead();
 
     _map = nullptr;
     return result();
@@ -89,7 +101,7 @@ void CombatManager::buryTheDead(void)
         _selectedMemberIndex = -1;
 
     _map->party()->getSpoils(_field);
-    _map->buryTheDead();
+    _field.buryTheDead();
 }
 
 void CombatManager::render(void)
@@ -105,7 +117,7 @@ void CombatManager::render(void)
         _controlView->render(nullptr, PlayState::Combat);
     _statsView->render(*_map, state, _selectedMemberIndex);
     _miniMapView->render();
-
+//    _victoryView->render(*_map->party());
     SDL_RenderPresent(renderer());
 }
 

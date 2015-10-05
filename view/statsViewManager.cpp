@@ -1,4 +1,6 @@
-#include "viewManagers.h"
+#include "statsViewManager.h"
+#include "../play/gameMap.h"
+using namespace View;
 
 StatsViewManager::StatsViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) : ViewManager(r, v, a)
 {}

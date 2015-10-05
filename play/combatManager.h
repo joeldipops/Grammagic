@@ -2,18 +2,26 @@
 #define COMBATMANAGER_H_INCLUDED
 
 #include "../stateManager.h"
-#include "../play/viewManagers.h"
 #include "../play/gameMap.h"
 #include "battleField.h"
-#include "../screenViewContainer.h"
+#include "../view/screenViewContainer.h"
 #include "../play/enemy.h"
+
+namespace View
+{
+    class ControlViewManager;
+    class StatsViewManager;
+    class MapViewManager;
+    class MiniMapViewManager;
+    class VictoryViewManager;
+}
 
 namespace Magic
 {
     class CombatManager : public Core::StateManager<Play::PlayState, Play::PlayState>
     {
         public:
-            CombatManager(SDL_Renderer*, AssetCache*, ScreenViewContainer);
+            CombatManager(SDL_Renderer*, AssetCache*, View::ScreenViewContainer);
             ~CombatManager(void);
 
             Play::PlayState start(GameMap*);
@@ -33,10 +41,11 @@ namespace Magic
             void buryTheDead(void);
 
             // views
-            ControlViewManager* _controlView;
-            StatsViewManager* _statsView;
-            MapViewManager* _mapView;
-            MiniMapViewManager* _miniMapView;
+            View::ControlViewManager* _controlView = nullptr;
+            View::StatsViewManager* _statsView = nullptr;
+            View::MapViewManager* _mapView = nullptr;
+            View::MiniMapViewManager* _miniMapView = nullptr;
+            View::VictoryViewManager* _victoryView = nullptr;
 
             BattleField _field;
             GameMap* _map = nullptr;

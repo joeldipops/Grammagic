@@ -1,7 +1,7 @@
 #include "menuViewManager.h"
-#include "magic/spell.h"
+#include "../magic/spell.h"
 
-using namespace Play;
+using namespace View;
 
 const SDL_Rect MenuViewManager::_menuControl = SDL_Rect { 6, 6, 150, 50 };
 const SDL_Rect MenuViewManager::_runeControl = SDL_Rect { 6, 6, 60, 60 };
