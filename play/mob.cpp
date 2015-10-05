@@ -8,7 +8,7 @@ using namespace Play;
 /**
  * Constructor
  */
-Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
+Mob::Mob(const Resources::MobTemplate& tmpl, MobType type_)
     :MapObject(tmpl)
 {
     _type = type_;
@@ -39,17 +39,13 @@ Mob::Mob(const Templates::MobTemplate& tmpl, MobType type_)
 Mob::~Mob()
 {
     for (Command* c : _spellCommands)
-    {
-        delete c;
-        c = nullptr;
-    }
+        deletePtr(c);
+
     _spellCommands = std::vector<Command*>();
 
     for (Command* c : _otherCommands)
-    {
-        delete c;
-        c = nullptr;
-    }
+        deletePtr(c);
+
     _otherCommands = std::vector<Command*>();
 }
 //}

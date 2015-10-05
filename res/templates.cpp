@@ -2,7 +2,7 @@
 #include "battleCommands.h"
 #include "strings.h"
 #include "../play/playStateManager.h"
-using namespace Templates;
+using namespace Resources;
 using namespace Persistence;
 
 //{ Classes
@@ -132,7 +132,7 @@ const RuneTemplate GetALL()
     result.ModDuration = 1.0;
     return result;
 };
-const RuneTemplate Templates::Data::ALL = GetALL();
+const RuneTemplate Resources::Data::ALL = GetALL();
 
 static Combatable* any (Mob* caster, SpellContext& field, const std::vector<Combatable*>& candidates, SpellData&)
 {
@@ -156,7 +156,7 @@ const RuneTemplate GetANY()
     result.ModDuration = 1.0;
     return result;
 };
-const RuneTemplate Templates::Data::ANY = GetANY();
+const RuneTemplate Resources::Data::ANY = GetANY();
 
 
 static Combatable* self (Mob* caster, SpellContext&, SpellData&)
@@ -180,7 +180,7 @@ const RuneTemplate GetCASTER()
     result.ModDuration = 1.0;
     return result;
 };
-const RuneTemplate Templates::Data::CASTER = GetCASTER();
+const RuneTemplate Resources::Data::CASTER = GetCASTER();
 
 
 static std::vector<Combatable*> enemies(Mob* caster, SpellContext& battleField, SpellData&)
@@ -217,7 +217,7 @@ const RuneTemplate GetENEMY()
     result.ModDuration = 1.0;
     return result;
 };
-const RuneTemplate Templates::Data::ENEMY = GetENEMY();
+const RuneTemplate Resources::Data::ENEMY = GetENEMY();
 
 static std::vector<Combatable*> allies(Mob* caster, SpellContext& battleField, SpellData&)
 {
@@ -254,7 +254,7 @@ const RuneTemplate GetALLY()
     result.ModDuration = 1.0;
     return result;
 };
-const RuneTemplate Templates::Data::ALLY = GetALLY();
+const RuneTemplate Resources::Data::ALLY = GetALLY();
 
 static std::vector<Combatable*> members(Mob* caster, SpellContext& battleField, SpellData& data)
 {
@@ -291,7 +291,7 @@ const RuneTemplate GetMEMBER()
     result.ModDuration = 1.0;
     return result;
 };
-const RuneTemplate Templates::Data::MEMBER = GetMEMBER();
+const RuneTemplate Resources::Data::MEMBER = GetMEMBER();
 
 SpellData& modifySpell(SpellData& data, float metaCost, float metaEffect, float metaDuration)
 {
@@ -407,7 +407,7 @@ const RuneTemplate GetHIGH()
     result.ModDuration = 1.0;
     return result;
 };
-const RuneTemplate Templates::Data::HIGH = GetHIGH();
+const RuneTemplate Resources::Data::HIGH = GetHIGH();
 
 SpellData& lightSpell(SpellData& data)
 {
@@ -434,7 +434,7 @@ const RuneTemplate GetLOW()
     result.ModDuration = 1.0;
     return result;
 };
-const RuneTemplate Templates::Data::LOW = GetLOW();
+const RuneTemplate Resources::Data::LOW = GetLOW();
 
 
 Combatable* mostStamina(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
@@ -472,7 +472,7 @@ const RuneTemplate GetSTAMINA()
     result.ActionDurationBonus = 3000;
     return result;
 };
-const RuneTemplate Templates::Data::STAMINA = GetSTAMINA();
+const RuneTemplate Resources::Data::STAMINA = GetSTAMINA();
 
 SpellData& fastSpell(SpellData& data)
 {
@@ -515,7 +515,7 @@ const RuneTemplate GetSPEED()
     result.ActionDurationBonus = 3000;
     return result;
 };
-const RuneTemplate Templates::Data::SPEED = GetSPEED();
+const RuneTemplate Resources::Data::SPEED = GetSPEED();
 
 Combatable* mostDefence(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
@@ -552,7 +552,7 @@ const RuneTemplate GetDEFENCE()
     result.ActionDurationBonus = 3000;
     return result;
 };
-const RuneTemplate Templates::Data::DEFENCE = GetDEFENCE();
+const RuneTemplate Resources::Data::DEFENCE = GetDEFENCE();
 
 Combatable* mostResistance(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
@@ -589,7 +589,7 @@ const RuneTemplate GetRESISTANCE()
     result.ActionDurationBonus = 3000;
     return result;
 };
-const RuneTemplate Templates::Data::RESISTANCE = GetRESISTANCE();
+const RuneTemplate Resources::Data::RESISTANCE = GetRESISTANCE();
 
 Combatable* mostSkill(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
 {
@@ -626,7 +626,7 @@ const RuneTemplate GetSKILL()
     result.ActionDurationBonus = 3000;
     return result;
 };
-const RuneTemplate Templates::Data::SKILL = GetSKILL();
+const RuneTemplate Resources::Data::SKILL = GetSKILL();
 
 //}
 

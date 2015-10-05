@@ -56,8 +56,6 @@
 		<Unit filename="menuItem.h" />
 		<Unit filename="menuManager.cpp" />
 		<Unit filename="menuManager.h" />
-		<Unit filename="menuViewManager.cpp" />
-		<Unit filename="menuViewManager.h" />
 		<Unit filename="persistence/saveLoad.cpp" />
 		<Unit filename="persistence/saveLoad.h" />
 		<Unit filename="play/battleField.cpp" />
@@ -65,7 +63,6 @@
 		<Unit filename="play/combatManager.cpp" />
 		<Unit filename="play/combatManager.h" />
 		<Unit filename="play/combatable.h" />
-		<Unit filename="play/controlViewManager.cpp" />
 		<Unit filename="play/enemy.cpp" />
 		<Unit filename="play/enemy.h" />
 		<Unit filename="play/gameMap.cpp" />
@@ -76,8 +73,6 @@
 		<Unit filename="play/mapCell.h" />
 		<Unit filename="play/mapObject.cpp" />
 		<Unit filename="play/mapObject.h" />
-		<Unit filename="play/mapViewManager.cpp" />
-		<Unit filename="play/miniMapViewManager.cpp" />
 		<Unit filename="play/mob.cpp" />
 		<Unit filename="play/mob.h" />
 		<Unit filename="play/npc.cpp" />
@@ -88,10 +83,8 @@
 		<Unit filename="play/pc.h" />
 		<Unit filename="play/playStateManager.cpp" />
 		<Unit filename="play/playStateManager.h" />
-		<Unit filename="play/statsViewManager.cpp" />
 		<Unit filename="play/terrain.cpp" />
 		<Unit filename="play/terrain.h" />
-		<Unit filename="play/viewManagers.h" />
 		<Unit filename="res/battleCommands.cpp" />
 		<Unit filename="res/battleCommands.h" />
 		<Unit filename="res/font.ttf" />
@@ -122,19 +115,33 @@
 		<Unit filename="res/strings.h" />
 		<Unit filename="res/templates.cpp" />
 		<Unit filename="res/templates.h" />
-		<Unit filename="screenViewContainer.h" />
 		<Unit filename="stateManager.cpp" />
 		<Unit filename="stateManager.h" />
 		<Unit filename="title/titleStateManager.cpp" />
 		<Unit filename="title/titleStateManager.h" />
-		<Unit filename="title/titleViewManager.cpp" />
-		<Unit filename="title/titleViewManager.h" />
 		<Unit filename="util/assetCache.cpp" />
 		<Unit filename="util/assetCache.h" />
 		<Unit filename="util/utils.cpp" />
 		<Unit filename="util/utils.h" />
-		<Unit filename="viewManager.cpp" />
-		<Unit filename="viewManager.h" />
+		<Unit filename="view/controlViewManager.cpp" />
+		<Unit filename="view/controlViewManager.h" />
+		<Unit filename="view/mapViewManager.cpp" />
+		<Unit filename="view/mapViewManager.h" />
+		<Unit filename="view/menuViewManager.cpp" />
+		<Unit filename="view/menuViewManager.h" />
+		<Unit filename="view/miniMapViewManager.cpp" />
+		<Unit filename="view/miniMapViewManager.h" />
+		<Unit filename="view/screenViewContainer.h" />
+		<Unit filename="view/statsViewManager.cpp" />
+		<Unit filename="view/statsViewManager.h" />
+		<Unit filename="view/titleViewManager.cpp" />
+		<Unit filename="view/titleViewManager.h" />
+		<Unit filename="view/victoryViewManager.cpp" />
+		<Unit filename="view/victoryViewManager.h" />
+		<Unit filename="view/viewManager.cpp" />
+		<Unit filename="view/viewManager.h" />
+		<Unit filename="view/viewManagerMenuToolsBase.cpp" />
+		<Unit filename="view/viewManagerMenuToolsBase.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

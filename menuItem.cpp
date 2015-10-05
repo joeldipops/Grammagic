@@ -1,5 +1,7 @@
 #include "menuItem.h"
 
+using namespace Core;
+
 //{ Lifecycle
 /**
  * Constructor
@@ -8,6 +10,7 @@ MenuItem::MenuItem(const std::string& name_, const std::string& imagePath_)
 {
     _name = name_;
     _imagePath = imagePath_;
+    _colour = SDL_Colour { 0xFF, 0xFF, 0xFF, 0xFF };
 }
 //}
 
@@ -27,9 +30,11 @@ const std::string& MenuItem::imagePath(void) const { return _imagePath; }
 /**
  * @return The display text colour of this item.
  */
-SDL_Colour MenuItem::colour(void) const
+SDL_Colour MenuItem::colour(void) const { return _colour; }
+SDL_Colour MenuItem::colour(const SDL_Colour& colour_)
 {
-    return SDL_Colour { 0xFF, 0xFF, 0xFF, 0xFF };
+    _colour = colour_;
+    return _colour;
 }
 
 //}

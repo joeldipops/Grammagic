@@ -4,7 +4,7 @@ using namespace Play;
 
 //{ Lifecycle
 
-MapObject::MapObject(const Templates::MapObjectTemplate& tmpl)
+MapObject::MapObject(const Resources::MapObjectTemplate& tmpl)
 {
     _isDense = tmpl.IsDense;
     _imageFileName = tmpl.ImagePath;

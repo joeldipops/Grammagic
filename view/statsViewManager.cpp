@@ -1,5 +1,6 @@
 #include "statsViewManager.h"
 #include "../play/gameMap.h"
+#include "../util/assetCache.h"
 using namespace View;
 
 StatsViewManager::StatsViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) : ViewManager(r, v, a)
@@ -7,8 +8,9 @@ StatsViewManager::StatsViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) :
 
 void StatsViewManager::render(const GameMap& gameMap, const Play::PlayState state, int selectedMemberIndex)
 {
+    using namespace Resources;
     ViewManager::render();
-    fillViewport(&BG_COLOUR);
+    fillViewport(BG_COLOUR);
     drawBorder(DEFAULT_BORDER_WIDTH, &TEXT_COLOUR);
 
     SDL_Rect rect;

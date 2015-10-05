@@ -21,7 +21,7 @@ namespace Play
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject* context, PlayStateContainer&);
 }
 
-namespace Templates
+namespace Resources
 {
     struct Commands;
 

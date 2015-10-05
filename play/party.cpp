@@ -5,9 +5,9 @@ using namespace Play;
 
 //{Lifecycle
 
-Templates::MapObjectTemplate getPCDefaultTemplate(void)
+Resources::MapObjectTemplate getPCDefaultTemplate(void)
 {
-    Templates::MapObjectTemplate result;
+    Resources::MapObjectTemplate result;
     result.ImagePath = "";
     result.IsDense = true;
     return result;
@@ -120,7 +120,7 @@ PC* Party::memberAt(natural index) const
     return _members.at(index);
 }
 
-PC* Party::addLeader(const Templates::PCTemplate& tmpl)
+PC* Party::addLeader(const Resources::PCTemplate& tmpl)
 {
     PC* pc = new PC(tmpl);
     if (_members.size() >= 1)
@@ -136,7 +136,7 @@ PC* Party::addLeader(const Templates::PCTemplate& tmpl)
     return pc;
 }
 
-PC* Party::addMember(const Templates::PCTemplate& tmpl)
+PC* Party::addMember(const Resources::PCTemplate& tmpl)
 {
 
     if (_members.size() <= 0)

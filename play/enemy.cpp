@@ -4,7 +4,7 @@
 using namespace Play;
 
 //{ Lifecycle
-Enemy::Enemy(const Templates::EnemyTemplate& tmpl) : NPC(tmpl, MobType::Hostile)
+Enemy::Enemy(const Resources::EnemyTemplate& tmpl) : NPC(tmpl, MobType::Hostile)
 {
     _physicalStrength = tmpl.Attack;
     _combatDelay = tmpl.AttackDelay;

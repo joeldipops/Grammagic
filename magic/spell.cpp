@@ -146,10 +146,8 @@ Spell::Spell(std::vector<Rune*> components_)
 Spell::~Spell(void)
 {
     for (Word* w : _rubbishBin)
-    {
-        delete w;
-        w = nullptr;
-    }
+        deletePtr(w);
+
 
     _rubbishBin = std::vector<Word*>(0);
 }
@@ -184,9 +182,8 @@ void Spell::toBin(Word* word)
 void Spell::emptyBin(void)
 {
     for (Word* w : _rubbishBin)
-    {
         delete w;
-    }
+
     _rubbishBin = std::vector<Word*>();
 }
 
@@ -319,9 +316,8 @@ bool Spell::edit(std::vector<Rune*> components_)
     if (target == nullptr || action == nullptr || source == nullptr)
     {
         for(Word* w : addresses)
-        {
             delete w;
-        }
+
         return false;
     }
 

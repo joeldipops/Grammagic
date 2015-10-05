@@ -47,7 +47,7 @@ namespace Play
             void renderMobs();
             void renderHud();
             //std::vector<char> readFile(const char*);
-            void writeMapFile(const std::string& fileName, const int width, const int height, const std::vector<MapFileBlock>* data);
+            void writeMapFile(const std::string& fileName, const int width, const int height, const std::vector<Persistence::MapFileBlock>* data);
 
             // Main Loop
             bool processMovementState(void);
@@ -70,7 +70,7 @@ namespace Play
             GameMap* _map = nullptr;
             int _combatGraceTime = 0;
 
-            std::vector<MapFileBlock> tempMapFile();
+            std::vector<Persistence::MapFileBlock> tempMapFile();
     };
 }
 

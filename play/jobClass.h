@@ -11,7 +11,7 @@ namespace Play
     {
         public:
             JobClass(){};
-            JobClass(const Templates::JobTemplate&);
+            JobClass(const Resources::JobTemplate&);
             ~JobClass(void);
 
             const std::string& name(void) const;

@@ -12,7 +12,7 @@ namespace Play
     {
         public:
             Terrain(void);
-            Terrain(const Templates::TerrainTemplate&);
+            Terrain(const Resources::TerrainTemplate&);
             PlayStateContainer& onInspect(PlayStateContainer&);
             PlayStateContainer& onEnter(PlayStateContainer&);
         private:

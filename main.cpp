@@ -15,6 +15,8 @@
 #include "res/battleCommands.h"
 #include "res/templates.h"
 
+using namespace Resources;
+
 const std::string Strings::Heading = "Grammagic";
 const std::string Strings::Victory = "Victory";
 const std::string Strings::Stamina = "Stamina";
@@ -40,7 +42,7 @@ const std::string Strings::Jack = "Jack";
 using namespace Magic;
 using namespace Play;
 using namespace Persistence;
-using namespace Templates;
+
 namespace Core
 {
     class Grammar
@@ -100,9 +102,9 @@ namespace Core
                             break;
                         }
                         case CoreState::Play: {
-                            player.addMember(Templates::Data::A);
-                            player.addMember(Templates::Data::B);
-                            player.addMember(Templates::Data::C);
+                            player.addMember(Resources::Data::A);
+                            player.addMember(Resources::Data::B);
+                            player.addMember(Resources::Data::C);
                             state = play.start(player);
                             break;
                         }

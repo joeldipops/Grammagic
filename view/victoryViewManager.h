@@ -1,16 +1,17 @@
 #ifndef VICTORYVIEWMANAGER_H_INLCUDED
 #define VICTORYVIEWMANAGER_H_INCLUDED
 
-#include "viewManager.h"
+#include "viewManagerMenuToolsBase.h"
 
+namespace Util { class AssetCache; }
 namespace Play { class Party; }
 
 namespace View
 {
-    class VictoryViewManager : public ViewManager
+    class VictoryViewManager : public ViewManagerMenuToolsBase
     {
         public:
-            VictoryViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
+            VictoryViewManager(SDL_Renderer*, SDL_Rect, Util::AssetCache*);
             void render(Play::Party&);
     };
 }

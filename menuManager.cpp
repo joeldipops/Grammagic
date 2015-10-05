@@ -2,9 +2,11 @@
 
 using namespace Play;
 
+using namespace Resources;
 const MenuItem MenuManager::MAGIC = MenuItem(Strings::Magic);
 const MenuItem MenuManager::SAVE = MenuItem(Strings::Save);
 const MenuItem MenuManager::PARTY = MenuItem(Strings::Party);
+
 
 MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
     : StateManager(r, a)

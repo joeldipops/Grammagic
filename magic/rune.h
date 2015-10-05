@@ -6,15 +6,15 @@
 #include "magicTypedefs.h"
 #include "../menuItem.h"
 #include "../persistence/saveable.h"
-
-namespace Templates { class RuneTemplate; }
+using namespace Core;
+namespace Resources { class RuneTemplate; }
 
 namespace Magic
 {
     class Rune : public MenuItem, public Persistence::Saveable
     {
         public:
-            Rune(const Templates::RuneTemplate&);
+            Rune(const Resources::RuneTemplate&);
             ~Rune(void);
 
             Persistence::SavedObjectCode code(void) const;

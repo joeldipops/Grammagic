@@ -28,6 +28,8 @@ namespace Magic
             Play::PlayState start(void);
 
         protected:
+            using StateManager::result;
+            using StateManager::state;
             virtual Play::PlayState result(void) const;
             virtual Play::PlayState state(Play::PlayState);
 
@@ -39,6 +41,7 @@ namespace Magic
             void render(void);
             bool moveCursor(Mob* mob, Core::InputPress input);
             void buryTheDead(void);
+            void endCombat(void);
 
             // views
             View::ControlViewManager* _controlView = nullptr;

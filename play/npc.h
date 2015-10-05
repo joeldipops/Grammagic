@@ -3,7 +3,7 @@
 
 #include "mob.h"
 
-namespace Templates { struct EnemyTemplate; }
+namespace Resources { struct EnemyTemplate; }
 
 namespace Play
 {
@@ -12,8 +12,8 @@ namespace Play
     class NPC : public Mob
     {
         public:
-            NPC(const Templates::EnemyTemplate&, MobType);
-            NPC(const Templates::EnemyTemplate&);
+            NPC(const Resources::EnemyTemplate&, MobType);
+            NPC(const Resources::EnemyTemplate&);
             ~NPC(void);
             virtual bool aiMove(GameMap&);
         protected:

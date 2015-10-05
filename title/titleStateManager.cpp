@@ -1,5 +1,7 @@
 #include "titleStateManager.h"
+using namespace Play;
 
+using namespace Resources;
 const MenuItem TitleStateManager::START = MenuItem(Strings::Start);
 const MenuItem TitleStateManager::QUIT = MenuItem(Strings::Quit);
 const MenuItem TitleStateManager::CONTINUE = MenuItem(Strings::Continue);
@@ -7,7 +9,7 @@ const MenuItem TitleStateManager::CONTINUE = MenuItem(Strings::Continue);
 /**
  * Constructor
  */
-TitleStateManager::TitleStateManager(SDL_Renderer* r, AssetCache* a) : StateManager(r, a)
+TitleStateManager::TitleStateManager(SDL_Renderer* r, Util::AssetCache* a) : StateManager(r, a)
 {
     _view = View::TitleViewManager(renderer(), SDL_Rect {0, 0, 1200, 800}, assets());
     _menu = std::vector<MenuItem> {START, CONTINUE, QUIT};

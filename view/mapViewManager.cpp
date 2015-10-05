@@ -1,11 +1,12 @@
 #include "mapViewManager.h"
 #include "../play/gameMap.h"
+#include "../util/assetCache.h"
 using namespace View;
 
 /**
  * Constructor passes through to base class.
  */
-MapViewManager::MapViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) : ViewManager(r, v, a) {}
+MapViewManager::MapViewManager(SDL_Renderer* r, SDL_Rect v, Util::AssetCache* a) : ViewManager(r, v, a) {}
 
 /**
  * Renders the map.

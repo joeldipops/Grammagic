@@ -15,8 +15,8 @@ namespace Play
             ~Party(void);
             PC* leader(void) const;
             const std::vector<PC*> members(void) const;
-            PC* addLeader(const Templates::PCTemplate&);
-            PC* addMember(const Templates::PCTemplate&);
+            PC* addLeader(const Resources::PCTemplate&);
+            PC* addMember(const Resources::PCTemplate&);
             PC* removeMember(PC*);
             PlayStateContainer& onInspect(PlayStateContainer&);
             void buryTheDead(void);
@@ -41,7 +41,7 @@ namespace Play
         private:
             std::vector<PC*> _members;
             std::vector<PC*> _bench;
-            static Templates::MapObjectTemplate ctrTmpl;
+            static Resources::MapObjectTemplate ctrTmpl;
 
     };
 }

@@ -2,7 +2,7 @@
 #include "../magic/spell.h"
 
 using namespace Persistence;
-using namespace Templates;
+using namespace Resources;
 
 SaveLoad::SaveLoad(const std::string& path_)
 {
@@ -98,7 +98,7 @@ void SaveLoad::load(Party& party) const
                     spells = std::vector<Spell*>();
                 }
                 spellInProgress = false;
-                Templates::PCTemplate t = Templates::PCTemplate();
+                Resources::PCTemplate t = Resources::PCTemplate();
                 t.MemberCode = PartyMemberCode(data.at(++i));
 
                 switch(t.MemberCode)
@@ -125,17 +125,17 @@ void SaveLoad::load(Party& party) const
                 switch(classCode)
                 {
                     case SavedObjectCode::TANK_CLASS:
-                        t.Class = Templates::Data::TANK; break;
+                        t.Class = Resources::Data::TANK; break;
                     case SavedObjectCode::WELLSPRING_CLASS:
-                        t.Class = Templates::Data::WELLSPRING; break;
+                        t.Class = Resources::Data::WELLSPRING; break;
                     case SavedObjectCode::GLASSCANNON_CLASS:
-                        t.Class = Templates::Data::GLASSCANON; break;
+                        t.Class = Resources::Data::GLASSCANON; break;
                     case SavedObjectCode::JACK_CLASS:
-                        t.Class = Templates::Data::JACK; break;
+                        t.Class = Resources::Data::JACK; break;
                     case SavedObjectCode::GUARD_CLASS:
-                        t.Class = Templates::Data::GUARD; break;
+                        t.Class = Resources::Data::GUARD; break;
                     case SavedObjectCode::WASP_CLASS:
-                        t.Class = Templates::Data::WASP; break;
+                        t.Class = Resources::Data::WASP; break;
                     default: throw;
                 }
 
@@ -170,7 +170,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::HIGH));
+                    party.addRunes(new Rune(Resources::Data::HIGH));
                 break;
             case SavedObjectCode::LOW_RUNE:
                 if (spellInProgress)
@@ -185,7 +185,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::LOW));
+                    party.addRunes(new Rune(Resources::Data::LOW));
                 break;
             case SavedObjectCode::CASTER_RUNE:
                 if (spellInProgress)
@@ -200,7 +200,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::CASTER));
+                    party.addRunes(new Rune(Resources::Data::CASTER));
                 break;
             case SavedObjectCode::ALL_RUNE:
                 if (spellInProgress)
@@ -215,7 +215,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::ALL));
+                    party.addRunes(new Rune(Resources::Data::ALL));
                 break;
             case SavedObjectCode::ANY_RUNE:
                 if (spellInProgress)
@@ -230,7 +230,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::ANY));
+                    party.addRunes(new Rune(Resources::Data::ANY));
                 break;
             case SavedObjectCode::ALLY_RUNE:
                 if (spellInProgress)
@@ -245,7 +245,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::ALLY));
+                    party.addRunes(new Rune(Resources::Data::ALLY));
                 break;
             case SavedObjectCode::MEMBER_RUNE:
                 if (spellInProgress)
@@ -260,7 +260,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::MEMBER));
+                    party.addRunes(new Rune(Resources::Data::MEMBER));
                 break;
             case SavedObjectCode::ENEMY_RUNE:
                 if (spellInProgress)
@@ -275,7 +275,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::ENEMY));
+                    party.addRunes(new Rune(Resources::Data::ENEMY));
                 break;
             case SavedObjectCode::STAMINA_RUNE:
                 if (spellInProgress)
@@ -290,7 +290,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::STAMINA));
+                    party.addRunes(new Rune(Resources::Data::STAMINA));
                 break;
             case SavedObjectCode::SKILL_RUNE:
                 if (spellInProgress)
@@ -305,7 +305,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::SKILL));
+                    party.addRunes(new Rune(Resources::Data::SKILL));
                 break;
             case SavedObjectCode::SPEED_RUNE:
                 if (spellInProgress)
@@ -320,7 +320,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::SPEED));
+                    party.addRunes(new Rune(Resources::Data::SPEED));
                 break;
             case SavedObjectCode::RESISTANCE_RUNE:
                 if (spellInProgress)
@@ -335,7 +335,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::RESISTANCE));
+                    party.addRunes(new Rune(Resources::Data::RESISTANCE));
                 break;
             case SavedObjectCode::DEFENCE_RUNE:
                 if (spellInProgress)
@@ -351,7 +351,7 @@ void SaveLoad::load(Party& party) const
                     }
                 }
                 else
-                    party.addRunes(new Rune(Templates::Data::DEFENCE));
+                    party.addRunes(new Rune(Resources::Data::DEFENCE));
                 break;
             default: throw;
         }

@@ -4,12 +4,12 @@ using namespace Play;
 
 
 //{ Lifecycle
-PC::PC(const Templates::PCTemplate& tmpl)
+PC::PC(const Resources::PCTemplate& tmpl)
 : Mob(tmpl, MobType::PlayerCharacter)
 {
     _name = tmpl.Name;
     _memberCode = tmpl.MemberCode;
-    otherCommands().push_back(new Command("Flee", Templates::Commands::FLEE));
+    otherCommands().push_back(new Command("Flee", Resources::Commands::FLEE));
     _jobClass = JobClass(tmpl.Class);
 }
 
@@ -32,7 +32,7 @@ const std::string& PC::name(void) const { return _name; }
 /**
  * Identifies which character this mob represents.
  */
-Templates::PartyMemberCode PC::memberCode(void) const { return _memberCode; }
+Resources::PartyMemberCode PC::memberCode(void) const { return _memberCode; }
 
 //}
 
@@ -85,20 +85,45 @@ void PC::getSpoils(int reward)
  */
 void PC::applySpoils(void)
 {
-    maxStamina(maxStamina() + (_staminaEXP / STAT_INCREASE_THRESHOLD));
+    maxStamina(maxStamina() + getStaminaGain());
     _staminaEXP = _staminaEXP % STAT_INCREASE_THRESHOLD;
 
-    defaultSkill(defaultSkill() + (_skillEXP / STAT_INCREASE_THRESHOLD));
+    defaultSkill(defaultSkill() + getSkillGain() / 100.0);
     _skillEXP = _skillEXP % STAT_INCREASE_THRESHOLD;
 
-    defaultSpeed(defaultSpeed() + (_speedEXP / STAT_INCREASE_THRESHOLD));
+    defaultSpeed(defaultSpeed() + getSpeedGain() / 100.0);
     _speedEXP = _speedEXP % STAT_INCREASE_THRESHOLD;
 
-    defaultResistance(defaultResistance() + (_resistanceEXP / STAT_INCREASE_THRESHOLD));
+    defaultResistance(defaultResistance() + getResistanceGain() / 100.0);
     _resistanceEXP = _resistanceEXP % STAT_INCREASE_THRESHOLD;
 
-    defaultDefence(defaultDefence() + (_defenceEXP / STAT_INCREASE_THRESHOLD));
+    defaultDefence(defaultDefence() + getDefenceGain() / 100.0);
     _defenceEXP = _defenceEXP % STAT_INCREASE_THRESHOLD;
+}
+
+int PC::getStaminaGain(void) const
+{
+    return _staminaEXP / STAT_INCREASE_THRESHOLD;
+}
+
+int PC::getSpeedGain(void) const
+{
+    return _speedEXP / STAT_INCREASE_THRESHOLD;
+}
+
+int PC::getSkillGain(void) const
+{
+    return _skillEXP / STAT_INCREASE_THRESHOLD;
+}
+
+int PC::getResistanceGain(void) const
+{
+    return _resistanceEXP / STAT_INCREASE_THRESHOLD;
+}
+
+int PC::getDefenceGain(void) const
+{
+    return _defenceEXP / STAT_INCREASE_THRESHOLD;
 }
 
 //}

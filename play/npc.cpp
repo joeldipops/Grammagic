@@ -5,7 +5,7 @@
     /**
      * Constructor.
      */
-    NPC::NPC(const Templates::EnemyTemplate& tmpl, MobType type_)
+    NPC::NPC(const Resources::EnemyTemplate& tmpl, MobType type_)
         :Mob(tmpl, type_)
     {
         _movementDelay = tmpl.MovementDelay;
@@ -14,7 +14,7 @@
     /**
      * Constructor
      */
-    NPC::NPC(const Templates::EnemyTemplate& tmpl)
+    NPC::NPC(const Resources::EnemyTemplate& tmpl)
         :NPC(tmpl, MobType::NPC)
     {}
 

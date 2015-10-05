@@ -1,11 +1,15 @@
 #include "viewManager.h"
+#include "../util/assetCache.h"
+#include "../menuItem.h"
 
 using namespace View;
+
+using namespace Core;
 using namespace Util;
+
 
 // Constants
 //{
-
 const SDL_Colour ViewManager::BG_COLOUR = { 0x19, 0x19, 0x70, 0xFF };
 const SDL_Colour ViewManager::TEXT_COLOUR = { 0x69, 0x69, 0x69, 0xFF };
 const SDL_Colour ViewManager::SELECTED_COLOUR = { 0xFF, 0xFF, 0xFF, 0xFF };
@@ -350,10 +354,9 @@ void ViewManager::drawOptionBox(const SDL_Rect& rect, SDL_Texture* texture, int 
 * Fills the view port with a rect, starting from the top left.
 * @param colour The rectangle should either be this or the current colour.
 */
-void ViewManager::fillViewport(const SDL_Colour* colour = nullptr)
+void ViewManager::fillViewport(const SDL_Colour& colour)
 {
-    if (colour != nullptr)
-        SDL_SetRenderDrawColor(_renderer, colour->r, colour->g, colour->b, colour->a);
+    SDL_SetRenderDrawColor(_renderer, colour.r, colour.g, colour.b, colour.a);
     SDL_Rect rect = SDL_Rect { 0, 0 ,_viewPort.w, _viewPort.h };
     SDL_RenderFillRect(_renderer, &rect);
 };
@@ -561,4 +564,5 @@ void ViewManager::drawSector(int icx, int icy, int r, int startDegree, int endDe
             i = 0;
     }
 }
+
 //}

@@ -6,7 +6,7 @@
  * Constructor
  * @param terrain The terrain in this cell of the map.
  */
-MapCell::MapCell(const Templates::TerrainTemplate& tmpl)
+MapCell::MapCell(const Resources::TerrainTemplate& tmpl)
 {
     _terrain = Terrain(tmpl);
     _contents = nullptr;

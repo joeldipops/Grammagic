@@ -3,8 +3,7 @@
 
 #include <vector>
 
-class PC;
-namespace Play { class Mob; class Combatable; class Enemy;}
+namespace Play { class Mob; class Combatable; class Enemy; class PC;}
 
 using namespace Play;
 

@@ -27,16 +27,11 @@ PlayStateManager::PlayStateManager(SDL_Renderer* r, AssetCache* a) : StateManage
 
 PlayStateManager::~PlayStateManager()
 {
-    delete _map;
-    _map = nullptr;
-    delete _controlView;
-    _controlView = nullptr;
-    delete _miniMapView;
-    _miniMapView = nullptr;
-    delete _statsView;
-    _statsView = nullptr;
-    delete _mapView;
-    _mapView = nullptr;
+    deletePtr(_map);
+    deletePtr(_controlView);
+    deletePtr(_miniMapView);
+    deletePtr(_statsView);
+    deletePtr(_mapView);
 }
 
 /**
@@ -54,7 +49,7 @@ Core::CoreState PlayStateManager::start(Party& party)
     // Create a simple 5x5 map for testing.
     if (REGEN_MAP)
     {
-        std::vector<MapFileBlock> file = tempMapFile();
+        std::vector<Persistence::MapFileBlock> file = tempMapFile();
         writeMapFile("res/maps/map1_1", 20, 13, &file);
     }
 
@@ -234,6 +229,10 @@ bool PlayStateManager::processMovementState(void)
 
         Mob* enemy = (Mob*) m;
 
+        // This is kind of just a band-aid.....
+        if (enemy->isPlayerControlled())
+            continue;
+
         if (enemy->isSeen(*_map->party()))
             state(PlayState::Combat);
     }
@@ -371,8 +370,10 @@ void PlayStateManager::render()
 /**
  *
  */
-void PlayStateManager::writeMapFile(const std::string& fileName, const int width, const int height, const std::vector<MapFileBlock>* data)
+void PlayStateManager::writeMapFile(const std::string& fileName, const int width, const int height, const std::vector<Persistence::MapFileBlock>* data)
 {
+    using namespace Persistence;
+
     int fileSize =  (data->size() * MapFileBlock::BYTES_PER_CELL)+2;
     std::vector<byte> dataBytes = std::vector<byte>(0);
     dataBytes.reserve(fileSize);
@@ -390,8 +391,9 @@ void PlayStateManager::writeMapFile(const std::string& fileName, const int width
 }
 
 // Test data.
-std::vector<MapFileBlock> PlayStateManager::tempMapFile()
+std::vector<Persistence::MapFileBlock> PlayStateManager::tempMapFile()
 {
+    using namespace Persistence;
     std::vector<MapFileBlock> result = std::vector<MapFileBlock> {
         MapFileBlock::generateTestCell(WallTerrain),
         MapFileBlock::generateTestCell(WallTerrain),

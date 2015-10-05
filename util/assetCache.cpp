@@ -1,4 +1,5 @@
 #include "assetCache.h"
+using namespace Util;
 
 //{Lifecycle
 
@@ -117,9 +118,8 @@ void AssetCache::emptyCache(void)
     }
 
     for(auto &item : _fontAssets)
-    {
         delete item.second;
-    }
+
     _assets = std::map<std::string, SDL_Texture*>();
     _fontAssets = std::map<std::string, TTF_Font*>();
 }

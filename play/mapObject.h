@@ -18,7 +18,7 @@ namespace Play
     class MapObject
     {
         public:
-            MapObject(const Templates::MapObjectTemplate&);
+            MapObject(const Resources::MapObjectTemplate&);
             virtual ~MapObject(void) {};
             bool isDense(void);
             std::string imageFileName(const std::string&);

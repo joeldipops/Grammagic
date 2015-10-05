@@ -8,23 +8,26 @@
 #include <string>
 #include <iostream>
 
-class AssetCache
+namespace Util
 {
-    public:
-        AssetCache();
-        AssetCache(SDL_Renderer*);
-        ~AssetCache(void);
-        SDL_Texture* get(std::string);
-        TTF_Font* get(std::string, int);
-        SDL_Texture* get(std::string, std::string, int, SDL_Colour);
+    class AssetCache
+    {
+        public:
+            AssetCache();
+            AssetCache(SDL_Renderer*);
+            ~AssetCache(void);
+            SDL_Texture* get(std::string);
+            TTF_Font* get(std::string, int);
+            SDL_Texture* get(std::string, std::string, int, SDL_Colour);
 
-        void discard(std::string);
-        void emptyCache(void);
+            void discard(std::string);
+            void emptyCache(void);
 
-    private:
-        std::map<std::string, SDL_Texture*> _assets;
-        std::map<std::string, TTF_Font*> _fontAssets;
-        SDL_Renderer* _renderer;
-};
+        private:
+            std::map<std::string, SDL_Texture*> _assets;
+            std::map<std::string, TTF_Font*> _fontAssets;
+            SDL_Renderer* _renderer;
+    };
+}
 
 #endif

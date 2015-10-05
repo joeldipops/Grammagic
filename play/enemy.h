@@ -15,7 +15,7 @@ namespace Play
     class Enemy : public NPC
     {
         public:
-            Enemy(const Templates::EnemyTemplate&);
+            Enemy(const Resources::EnemyTemplate&);
             bool aiMove(GameMap&);
             void aiAct(BattleField&);
             PlayStateContainer& onInspect(PlayStateContainer&);

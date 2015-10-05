@@ -10,14 +10,10 @@
 #include "../magic/targetAll.h"
 #include "../util/utils.h"
 
-namespace Magic
-{
-}
-
 namespace Play { class Enemy; }
 
 using namespace Play;
-namespace Templates
+namespace Resources
 {
 
     struct Commands

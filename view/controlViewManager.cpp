@@ -20,7 +20,7 @@ void ControlViewManager::render(const Mob* pc, Play::PlayState state, const std:
 {
     _lastDrawnCharCount = 0;
     ViewManager::render();
-    fillViewport(&BG_COLOUR);
+    fillViewport(BG_COLOUR);
     switch(state)
     {
         case Play::PlayState::Movement:
@@ -101,6 +101,7 @@ void ControlViewManager::writeMessage(const std::string& message)
 
 void ControlViewManager::writeHeading(void)
 {
+    using namespace Resources;
     SDL_Texture* texture = formatFontTexture(Strings::Heading, &SELECTED_COLOUR);
     SDL_Rect textArea = SDL_Rect { viewPort().x + 20, viewPort().y + 5, viewPort().w - 40, viewPort().h - 10 };
     SDL_RenderCopy(renderer(), texture, NULL, &textArea);

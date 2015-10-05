@@ -6,7 +6,7 @@ using namespace Play;
 /**
  * Constructor
  */
-JobClass::JobClass(const Templates::JobTemplate& tmpl)
+JobClass::JobClass(const Resources::JobTemplate& tmpl)
 {
     _name = tmpl.Name;
     _code = tmpl.Code;

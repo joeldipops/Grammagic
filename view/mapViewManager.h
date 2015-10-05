@@ -11,7 +11,7 @@ namespace View
     class MapViewManager : public ViewManager
     {
         public:
-            MapViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
+            MapViewManager(SDL_Renderer*, SDL_Rect, Util::AssetCache*);
             void render(const GameMap*, const Play::PlayState);
 
         private:

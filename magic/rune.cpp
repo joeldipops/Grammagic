@@ -3,7 +3,7 @@
 using namespace Magic;
 
 //{ Lifecycle
-Rune::Rune(const Templates::RuneTemplate& tmpl)
+Rune::Rune(const Resources::RuneTemplate& tmpl)
     :MenuItem(tmpl.Name, tmpl.ImagePath)
 {
     _getTarget = tmpl.GetTarget;

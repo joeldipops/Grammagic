@@ -19,7 +19,7 @@ namespace Play
     class Mob : public MapObject, public Combatable
     {
         public:
-            Mob(const Templates::MobTemplate&, MobType);
+            Mob(const Resources::MobTemplate&, MobType);
             virtual ~Mob();
 
             virtual MobType type(void) const;

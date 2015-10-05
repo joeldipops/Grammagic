@@ -4,9 +4,9 @@
 using namespace Play;
 
 //{ Lifecycle
-Templates::MapObjectTemplate getTerrainDefaultTemplate(void)
+Resources::MapObjectTemplate getTerrainDefaultTemplate(void)
 {
-    Templates::MapObjectTemplate result;
+    Resources::MapObjectTemplate result;
     result.ImagePath = "";
     result.IsDense = true;
     return result;
@@ -23,7 +23,7 @@ Terrain::Terrain()
  * Constructor
  * @param type
  */
-Terrain::Terrain(const Templates::TerrainTemplate& tmpl)
+Terrain::Terrain(const Resources::TerrainTemplate& tmpl)
     :MapObject(tmpl)
 {
     _onEnter = tmpl.OnEnter;

@@ -3,8 +3,9 @@
 
 #include <SDL2/SDL.h>
 
-#include "util/assetCache.h"
 #include "globalConstants.h"
+
+namespace Util { class AssetCache; }
 
 namespace Core
 {
@@ -12,7 +13,7 @@ namespace Core
     class StateManager
     {
         public:
-            StateManager(SDL_Renderer* renderer, AssetCache* assets);
+            StateManager(SDL_Renderer* renderer, Util::AssetCache* assets);
 
         protected:
             virtual const int moveCursor(const Core::InputPress, const int, const int, const int);
@@ -23,11 +24,11 @@ namespace Core
             virtual ParentState result(ParentState);
 
             SDL_Renderer* renderer(void);
-            AssetCache* assets(void);
+            Util::AssetCache* assets(void);
 
         private:
             SDL_Renderer* _renderer;
-            AssetCache* _assets;
+            Util::AssetCache* _assets;
             State _state;
             ParentState _result;
     };

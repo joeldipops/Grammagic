@@ -28,9 +28,8 @@ SpellContext::SpellContext(const std::vector<PC*>& pcs_, const std::vector<Enemy
 SpellContext::~SpellContext(void)
 {
     for(Combatable* item : _rubbishBin)
-    {
         delete item;
-    }
+
     _rubbishBin = std::vector<Combatable*>(0);
 }
 

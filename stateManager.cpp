@@ -1,6 +1,7 @@
 #include "stateManager.h"
 
 using namespace Core;
+using namespace Util;
 
 /**
  * Constructor

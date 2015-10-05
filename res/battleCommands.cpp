@@ -1,7 +1,7 @@
 #include "battleCommands.h"
 #include "../play/enemy.h"
 
-using namespace Templates;
+using namespace Resources;
 
 // Non Spells
 //{

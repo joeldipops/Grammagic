@@ -31,7 +31,7 @@ Play::PlayState CombatManager::start(void)
 
 Play::PlayState CombatManager::start(GameMap* map_)
 {
-    state(Play::PlayState::Movement);
+    state(Play::PlayState::Combat);
 
     _map = map_;
     SDL_Event event;
@@ -81,11 +81,70 @@ Play::PlayState CombatManager::start(GameMap* map_)
             state(Play::PlayState::GameOver);
     }
 
-    _field.endCombat();
-    buryTheDead();
+    endCombat();
 
     _map = nullptr;
     return result();
+}
+
+void CombatManager::endCombat(void)
+{
+    buryTheDead();
+
+    if (state() == PlayState::Combat)
+    {
+        _field.endCombat();
+        state(PlayState::Movement);
+        return;
+    }
+
+    // TODO
+    if (state() == PlayState::GameOver)
+    {
+        _field.endCombat();
+        return;
+    }
+
+    enum debriefStates { START, REVIEW, CALCULATE, DONE };
+    debriefStates debriefState = debriefStates::REVIEW;
+    debriefStates oldState = debriefStates::START;
+    while(debriefState != debriefStates::DONE)
+    {
+        if (oldState != debriefState)
+        {
+            render();
+            oldState = debriefState;
+        }
+
+        Util::sleep(50);
+
+        SDL_Event event;
+        while(SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+                state(Play::PlayState::Exit);
+            if (event.type != SDL_KEYDOWN)
+                continue;
+
+            switch(event.key.keysym.sym)
+            {
+                case SDLK_q:
+                    state(Play::PlayState::Exit);
+                    return;
+                default:
+                    if (debriefState == debriefStates::REVIEW)
+                    {
+                        debriefState = debriefStates::CALCULATE;
+                        _field.endCombat();
+                    }
+                    else if (debriefState == debriefStates::CALCULATE)
+                    {
+                        debriefState = debriefStates::DONE;
+                    }
+                    break;
+            }
+        }
+    }
 }
 
 /**
@@ -109,15 +168,25 @@ void CombatManager::render(void)
     SDL_SetRenderDrawColor(renderer(), 0x00, 0x00, 0x00, 0xFF);
     SDL_RenderClear(renderer());
 
-    Play::PlayState state = Play::PlayState::Combat;
-    _mapView->render(_map, state);
-    if (_selectedMemberIndex >= 0)
-        _controlView->render(_map->party()->memberAt(_selectedMemberIndex), state);
-    else
-        _controlView->render(nullptr, PlayState::Combat);
-    _statsView->render(*_map, state, _selectedMemberIndex);
-    _miniMapView->render();
-//    _victoryView->render(*_map->party());
+    switch (state())
+    {
+        case PlayState::Combat:
+            _mapView->render(_map, state());
+            if (_selectedMemberIndex >= 0)
+                _controlView->render(_map->party()->memberAt(_selectedMemberIndex), state());
+            else
+                _controlView->render(nullptr, PlayState::Combat);
+            _statsView->render(*_map, state(), _selectedMemberIndex);
+            _miniMapView->render();
+            break;
+        case PlayState::Victory:
+            _victoryView->render(*_map->party());
+            break;
+        case PlayState::GameOver:
+        default:
+            break;
+    }
+
     SDL_RenderPresent(renderer());
 }
 

@@ -101,6 +101,8 @@ bool GameMap::loadChunk(int cX, int cY)
  */
 bool GameMap::loadChunk(int cX, int cY, const std::string& path)
 {
+    using namespace Persistence;
+
     if (cX < 0 || cY < 0)
         return false;
 
@@ -191,16 +193,16 @@ bool GameMap::loadChunk(int cX, int cY, const std::string& path)
         switch (TerrainType(mapData[i]))
         {
             case TerrainType::GrassTerrain:
-                cell = MapCell(Templates::Data::Grass);
+                cell = MapCell(Resources::Data::Grass);
                 break;
             case TerrainType::WallTerrain:
-                cell = MapCell(Templates::Data::Wall);
+                cell = MapCell(Resources::Data::Wall);
                 break;
             case TerrainType::HutTerrain:
-                cell = MapCell(Templates::Data::Hut);
+                cell = MapCell(Resources::Data::Hut);
                 break;
             case TerrainType::CacheTerrain:
-                cell = MapCell(Templates::Data::Cache);
+                cell = MapCell(Resources::Data::Cache);
             default:
                 break;
         }
@@ -216,14 +218,14 @@ bool GameMap::loadChunk(int cX, int cY, const std::string& path)
         switch(contents)
         {
             case MobType::E2:
-                mob = new Enemy(Templates::Data::E2);
+                mob = new Enemy(Resources::Data::E2);
                 break;
             case MobType::B1:
-                mob = new Enemy(Templates::Data::B1);
+                mob = new Enemy(Resources::Data::B1);
                 break;
             case MobType::E1:
             case MobType::Hostile:
-                mob = new Enemy(Templates::Data::E1);
+                mob = new Enemy(Resources::Data::E1);
                 break;
             case MobType::PartyOfMobs:
             case MobType::PlayerCharacter: {

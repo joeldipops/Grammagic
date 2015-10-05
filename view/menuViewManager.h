@@ -2,7 +2,7 @@
 #define MENUVIEWMANAGER_H_INCLUDED
 
 #include "../util/utils.h"
-#include "viewManager.h"
+#include "viewManagerMenuToolsBase.h"
 #include "../res/battleCommands.h"
 #include "../play/pc.h"
 #include "../globalConstants.h"
@@ -23,7 +23,7 @@ namespace View
             int SelectedPositionIndex;
     };
 
-    class MenuViewManager : public ViewManager
+    class MenuViewManager : public ViewManagerMenuToolsBase
     {
         public:
             MenuViewManager(){};
@@ -38,14 +38,8 @@ namespace View
 
             void renderSpells(const PC&, int, int);
             void renderRunes(const Party&, int);
-            void renderPCs(const Party&, int, int = -1);
 
-            static const SDL_Rect _menuControl;
             static const SDL_Rect _runeControl;
-            static const int borderWidth = 5;
-            static const int cursorXOffset;
-            static const int cursorYOffset;
-            static const int marginLeft = 40;
     };
 }
 

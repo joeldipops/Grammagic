@@ -9,8 +9,8 @@ namespace View
     {
         public:
             TitleViewManager(void);
-            TitleViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-            void render(const std::vector<MenuItem*>, const int);
+            TitleViewManager(SDL_Renderer*, SDL_Rect, Util::AssetCache*);
+            void render(const std::vector<Core::MenuItem*>, const int);
     };
 }
 
