@@ -18,7 +18,8 @@ enum MobType
     E1 = '5',
     E2 = '6',
     B1 = '7',
-    NPC = '8'
+    NPC = '9',
+    NPC1 = '8'
 };
 
 enum TerrainType

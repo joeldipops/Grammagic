@@ -217,6 +217,9 @@ bool GameMap::loadChunk(int cX, int cY, const std::string& path)
         MapObject* mob = nullptr;
         switch(contents)
         {
+            case MobType::NPC1:
+                mob = new NPC(Resources::Data::NPC1);
+                break;
             case MobType::E2:
                 mob = new Enemy(Resources::Data::E2);
                 break;

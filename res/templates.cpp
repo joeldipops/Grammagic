@@ -685,6 +685,24 @@ const PCTemplate GetC() //"All Rounder" archetype
 const PCTemplate Data::C = GetC();
 //}
 
+
+PlayStateContainer& receiveTutorial(MapObject* context, PlayStateContainer& data)
+{
+    data.Message = Strings::Tutorial;
+    data.State = PlayState::Message;
+    return data;
+}
+const EnemyTemplate GetNPC1()
+{
+    EnemyTemplate result;
+    result.ImagePath = RESOURCE_LOCATION + "npc.png";
+    result.MovementDelay = 3000;
+    result.Stamina = 1;
+    result.OnInspect = receiveTutorial;
+    return result;
+}
+const EnemyTemplate Data::NPC1 = GetNPC1();
+
 //{Types of Enemy
 int aiAttack(Play::Mob* context, SpellContext& field)
 {

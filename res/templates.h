@@ -138,6 +138,8 @@ namespace Resources
             static const PCTemplate E;
             static const PCTemplate F;
 
+            static const EnemyTemplate NPC1;
+
             static const TerrainTemplate Grass;
             static const TerrainTemplate Wall;
             static const TerrainTemplate Hut;

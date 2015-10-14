@@ -161,6 +161,10 @@ void Mob::addSpell(Spell* spell)
 
 PlayStateContainer& Mob::onInspect(PlayStateContainer& data)
 {
+    if (onInspectFn())
+    {
+        return onInspectFn()(this, data);
+    }
     return data;
 }
 

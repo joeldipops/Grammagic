@@ -34,7 +34,7 @@ int NPC::movementDelay(void) const { return _movementDelay; }
 
 //{ Methods
 /**
- * NPCs move around randomly.
+ * NPCs move around randomly. (I dunno what I was thinking here.  Obviously some will pace and some will stand still.....)
  */
 bool NPC::aiMove(GameMap& map_)
 {

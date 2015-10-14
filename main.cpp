@@ -39,6 +39,13 @@ const std::string Strings::Wasp = "Wasp";
 const std::string Strings::Guard = "Guard";
 const std::string Strings::Jack = "Jack";
 
+const std::string Strings::Tutorial = "\
+To cast a spell, first you need to get that energy from somewhere.  This is called a \"source\".\
+\nNext, a spell needs to do something, called an \"action\".  Actions can get complicated, but most are as simple as making your\
+\nallies faster or your enemies worse at casting spells.\
+\nThe last part of a spell is the \"target\".  Tell the spell where to go and let fly!\
+";
+
 using namespace Magic;
 using namespace Play;
 using namespace Persistence;

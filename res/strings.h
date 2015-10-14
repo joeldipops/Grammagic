@@ -21,6 +21,7 @@ namespace Resources
             static const std::string SaveComplete;
             static const std::string Party;
             static const std::string HutDescription;
+            static const std::string Tutorial;
 
             // Class Names
             static const std::string GlassCannon;

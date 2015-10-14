@@ -141,7 +141,9 @@ natural ViewManager::drawMessage(const std::string& message, const SDL_Rect& let
     SDL_Rect outer { maximum.x, maximum.y, 0, 0};
     SDL_Rect inner { maximum.x + paddingX, maximum.y + paddingY, 0, 0 };
 
-    if (int(message.length() * letterSize.w) < maximum.w)
+    std::vector<std::string> lines = Util::split(message, '\n');
+
+    if (lines.size() <= 1 && int(message.length() * letterSize.w) < maximum.w)
     {
         inner.w = message.length() * letterSize.w;
         inner.h = letterSize.h;
@@ -158,30 +160,52 @@ natural ViewManager::drawMessage(const std::string& message, const SDL_Rect& let
         int maxY = maximum.y + maximum.h;
 
         SDL_Rect rect { maximum.x + paddingX, maximum.y + paddingY, 0, letterSize.h };
-        std::vector<std::string> words = Util::split(message, ' ');
-        for (std::string word : words)
+
+        for (natural l = 0; l < lines.size(); l++)
         {
-            int width = word.length() * letterSize.w;
-
-            // Go down to the next line.
-            if (rect.x + width > maxX)
-            {
-                if (rect.x + width > outer.x + outer.w)
-                    outer.w = rect.x - outer.x;
-
-                rect.y = rect.y + rect.h;
-                rect.x = maximum.x + paddingX;
-                if (rect.y + rect.h > maxY)
-                    break;
+            std::string line = lines[l];
+            std::vector<std::string> words = Util::split(line, ' ');
+            if (words.size() <= 0) {
+                result++;
+                continue;
             }
+            natural w = 0;
+            for (;w < words.size(); w++)
+            {
+                std::string word = words[w];
+                if (word.length() <= 0) {
+                    result++;
+                    continue;
+                }
 
-            rect.w = width;
+                int width = word.length() * letterSize.w;
 
-            drawOptionBox(rect, word, 0, BG_COLOUR, INVISIBLE, SELECTED_COLOUR);
+                // Go down to the next line.
+                if (rect.x + width > maxX)
+                {
+                    if (rect.x + width > outer.x + outer.w)
+                        outer.w = rect.x - outer.x;
 
+                    rect.y = rect.y + rect.h;
+                    rect.x = maximum.x + paddingX;
+                    if (rect.y + rect.h > maxY)
+                        break;
+                }
 
-            rect.x = rect.x + rect.w + letterSize.w;
-            result += word.length() + 1;
+                rect.w = width;
+
+                drawOptionBox(rect, word, 0, BG_COLOUR, INVISIBLE, SELECTED_COLOUR);
+
+                rect.x = rect.x + rect.w + letterSize.w;
+                result += word.length() + 1;
+            }
+            if (w == words.size())
+                result--;
+            rect.x = maximum.x + paddingX;
+            rect.y = rect.y + rect.h;
+            if (rect.y + rect.h > maxY)
+                break;
+            result++;
         }
         outer.h = rect.y + rect.h + paddingY - outer.y;
     }
