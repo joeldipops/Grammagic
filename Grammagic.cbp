@@ -121,6 +121,8 @@
 		<Unit filename="title/titleStateManager.h" />
 		<Unit filename="util/assetCache.cpp" />
 		<Unit filename="util/assetCache.h" />
+		<Unit filename="util/events.cpp" />
+		<Unit filename="util/events.h" />
 		<Unit filename="util/utils.cpp" />
 		<Unit filename="util/utils.h" />
 		<Unit filename="view/controlViewManager.cpp" />

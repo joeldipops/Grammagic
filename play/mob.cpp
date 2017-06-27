@@ -163,7 +163,8 @@ PlayStateContainer& Mob::onInspect(PlayStateContainer& data)
 {
     if (onInspectFn())
     {
-        return onInspectFn()(this, data);
+        const auto fn =  onInspectFn();
+        return fn(this, data);
     }
     return data;
 }

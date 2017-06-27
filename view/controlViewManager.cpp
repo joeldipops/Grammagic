@@ -1,4 +1,5 @@
 #include "controlViewManager.h"
+#include "../res/strings.h"
 #include "../play/mob.h"
 using namespace View;
 

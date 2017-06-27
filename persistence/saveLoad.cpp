@@ -1,4 +1,5 @@
 #include "saveLoad.h"
+#include "../res/strings.h"
 #include "../magic/spell.h"
 
 using namespace Persistence;

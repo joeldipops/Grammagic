@@ -1,4 +1,6 @@
 #include "statsViewManager.h"
+
+#include "../res/strings.h"
 #include "../play/gameMap.h"
 #include "../util/assetCache.h"
 using namespace View;

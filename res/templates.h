@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "strings.h"
+#include "../util/events.h"
 
 #include "../globalConstants.h"
 #include "../magic/magicTypedefs.h"
@@ -75,7 +75,7 @@ namespace Resources
     {
         std::string ImagePath;
         bool IsDense;
-        Play::PlayEventHandler OnInspect = nullptr;
+        Handler<MapObject, PlayStateContainer> OnInspect = nullptr;
     };
 
     /**

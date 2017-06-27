@@ -46,6 +46,9 @@ To cast a spell, first you need to get that energy from somewhere.  This is call
 \nThe last part of a spell is the \"target\".  Tell the spell where to go and let fly!\
 ";
 
+
+Core::EventManager eventManager;
+
 using namespace Magic;
 using namespace Play;
 using namespace Persistence;
@@ -84,10 +87,11 @@ namespace Core
                 while(state != CoreState::Exit)
                 {
                     Party player = Party();
-                    SDL_Event e;
-                    while(SDL_PollEvent(&e) != 0)
+                    Event myEvent;
+                    while(eventManager.pollEvent(&myEvent))
                     {
-                        if (e.type == SDL_QUIT)
+                        SDL_Event event = *myEvent.InnerEvent;
+                        if (event.type == SDL_QUIT)
                         {
                             state = CoreState::Exit;
                         }

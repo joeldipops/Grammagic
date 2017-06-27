@@ -1,4 +1,6 @@
 #include "titleStateManager.h"
+#include "../util/events.h"
+
 using namespace Play;
 
 using namespace Resources;
@@ -32,7 +34,6 @@ Core::CoreState TitleStateManager::start(void)
     bool rerender = true;
     _selectedItemIndex = 0;
     Title::TitleState oldState;
-    SDL_Event event;
     while(state() != Title::TitleState::Exit)
     {
         if(rerender)
@@ -42,8 +43,10 @@ Core::CoreState TitleStateManager::start(void)
 
         oldState = state();
 
-        while(SDL_PollEvent(&event) != 0 && oldState == state())
+        Core::Event myEvent;
+        while(eventManager.pollEvent(&myEvent) && oldState == state())
         {
+            SDL_Event event = *myEvent.InnerEvent;
             switch(event.type)
             {
                 case SDL_QUIT:

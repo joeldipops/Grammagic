@@ -18,7 +18,7 @@ MapObject::MapObject(const Resources::MapObjectTemplate& tmpl)
 /**
  * Function trigged when object is inspected by player.
  */
-const PlayEventHandler MapObject::onInspectFn(void) const { return _onInspect; }
+const Handler<MapObject, PlayStateContainer> MapObject::onInspectFn(void) const { return _onInspect; }
 
 /**
  * Sets and gets the path to this object's image.

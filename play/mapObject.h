@@ -6,6 +6,7 @@
 #include "../globalConstants.h"
 #include "../util/utils.h"
 #include "../res/templates.h"
+#include "../util/events.h"
 
 using namespace Util;
 
@@ -26,6 +27,7 @@ namespace Play
 
             virtual PlayStateContainer& onInspect(PlayStateContainer&) = 0;
 
+
             Location location(int, int);
             Location location(const Location*);
 
@@ -41,14 +43,14 @@ namespace Play
 
         protected:
             bool isDense(bool);
-            const PlayEventHandler onInspectFn(void) const;
+            const Handler<MapObject, PlayStateContainer> onInspectFn(void) const;
         private:
             bool _isDense;
             std::string _imageFileName;
             int _x = 0;
             int _y = 0;
             Direction _facing = Direction::NONE;
-            PlayEventHandler _onInspect;
+            Handler<MapObject, PlayStateContainer> _onInspect;
     };
 }
 

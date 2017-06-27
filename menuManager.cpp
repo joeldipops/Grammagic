@@ -54,10 +54,10 @@ Play::PlayState MenuManager::start(Party& party)
 
         rerender = false;
 
-        SDL_Event event;
-
-        while(SDL_PollEvent(&event))
+        Event myEvent;
+        while(eventManager.pollEvent(&myEvent))
         {
+            SDL_Event event = *myEvent.InnerEvent;
             switch(event.type)
             {
                 case SDL_QUIT:

@@ -1,4 +1,6 @@
 #include "victoryViewManager.h"
+
+#include "../res/strings.h"
 #include "../play/party.h"
 
 using namespace View;

@@ -121,8 +121,10 @@ bool PlayStateManager::processMessage(void)
     PlayState oldState = state();
     Util::sleep(50);
     bool result = false;
-    while(SDL_PollEvent(&event) != 0 && oldState == state())
+    Event myEvent;
+    while(eventManager.pollEvent(&myEvent) && oldState == state())
     {
+        SDL_Event event = *myEvent.InnerEvent;
         switch(event.type)
         {
             case SDL_QUIT:
@@ -178,8 +180,10 @@ bool PlayStateManager::processMovementState(void)
         hasUpdate |= nme->aiMove(*_map);
     }
 
-    while(SDL_PollEvent(&event) != 0 && oldState == state())
+    Event myEvent;
+    while(eventManager.pollEvent(&myEvent) && oldState == state())
     {
+        SDL_Event event = *myEvent.InnerEvent;
         switch(event.type)
         {
             case SDL_QUIT:

@@ -1,4 +1,5 @@
 #include "menuViewManager.h"
+#include "../res/strings.h"
 #include "../magic/spell.h"
 #include "../util/assetCache.h"
 

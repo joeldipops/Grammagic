@@ -53,8 +53,10 @@ Play::PlayState CombatManager::start(GameMap* map_)
         rerender = true;
 
         std::vector<SDL_Event> events;
-        while(SDL_PollEvent(&event))
+        Event myEvent;
+        while(eventManager.pollEvent(&myEvent))
         {
+            SDL_Event event = *myEvent.InnerEvent;
             if (event.type == SDL_QUIT)
                 return Play::PlayState::Exit;
             events.push_back(event);
@@ -118,9 +120,10 @@ void CombatManager::endCombat(void)
 
         Util::sleep(50);
 
-        SDL_Event event;
-        while(SDL_PollEvent(&event))
+        Event myEvent;
+        while(eventManager.pollEvent(&myEvent))
         {
+            SDL_Event event = *myEvent.InnerEvent;
             if (event.type == SDL_QUIT)
                 state(Play::PlayState::Exit);
             if (event.type != SDL_KEYDOWN)
