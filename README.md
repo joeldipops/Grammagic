@@ -6,6 +6,6 @@ Back in the GameCube era, Silicon Knights released Eternal Darkness: Sanity's Re
 Eternal Darkness was a unique and inspiring game, but I was never able to scratch my itch for a truly flexible spell crafting system, so that's what I'm trying to do here.
 
 **Grammagic** isn't the catchiest of names but it sums up what this game is supposed to be about. *Magic* constructed with *Grammar*.
-Just as in Eternal Darkness, you'll collect runes throughout the game, Nouns, Verbs, Adverbs and Prepositions that can be arranged at your leisure into spells, and then assigned to your party members to used as attacks, healing magic, support etc and to solve puzzles.
+Just as in Eternal Darkness, you'll collect runes throughout the game, Nouns, Verbs, Adverbs and Prepositions that can be arranged at your leisure into spells, and then assigned to your party members to use as attacks, healing magic, support etc and to solve puzzles.
 
 The basic grammar engine is in place already, but there's no game to speak of yet, just a large space where you can run around a try a few basic spells on some basic enemies.
