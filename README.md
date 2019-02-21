@@ -14,3 +14,5 @@ Just as in Eternal Darkness, you'll collect runes throughout the game - Nouns, V
 
 The basic grammar engine is in place already, but there's no game to speak of yet, just a large space where you can run around a try a few basic spells on some basic enemies.
 
+Copyright (C) 2019 Joel Roberts
+
