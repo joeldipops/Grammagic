@@ -13,6 +13,3 @@ Eternal Darkness was a unique and inspiring game, but I was never able to scratc
 Just as in Eternal Darkness, you'll collect runes throughout the game - Nouns, Verbs, Adverbs and Prepositions that can be arranged at your leisure into spells, and then assigned to your party members to use for attacks, healing, support, puzzle solving and more.
 
 The basic grammar engine is in place already, but there's no game to speak of yet, just a large space where you can run around a try a few basic spells on some basic enemies.
-
-Copyright (C) 2019 Joel Roberts
-
