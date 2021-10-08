@@ -1,7 +1,7 @@
 #ifndef MAGICTYPEDEFS_H_INCLUDED
 #define MAGICTYPEDEFS_H_INCLUDED
 
-#inculde <vector>
+#include <vector>
 
 namespace Play
 {
