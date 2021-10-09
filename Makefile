@@ -31,9 +31,9 @@ clean: clean_debug
 ensure_folders:
 	test -d $(OBJDIR_DEBUG) || mkdir -p $(OBJDIR_DEBUG)
 	test -d $(OUTDIR_DEBUG) || mkdir -p $(OUTDIR_DEBUG)
-	test -d $(OUTDIR_DEBUG)/res || mkdir -p $(OUTDIR_DEBUG)/res
-	test -d $(OUTDIR_DEBUG)/res/maps || mkdir -p $(OUTDIR_DEBUG)/res/maps
-	test -d $(OUTDIR_DEBUG)/res/images || mkdir -p $(OUTDIR_DEBUG)/res/images
+	test -d $(OUTDIR_DEBUG)/maps || mkdir -p $(OUTDIR_DEBUG)/maps
+	test -d $(OUTDIR_DEBUG)/images || mkdir -p $(OUTDIR_DEBUG)/images
+	test -d $(OUTDIR_DEBUG)/fonts || mkdir -p $(OUTDIR_DEBUG)/fonts
 	test -d $(OBJDIR_DEBUG)/res || mkdir -p $(OBJDIR_DEBUG)/res
 	test -d $(OBJDIR_DEBUG)/view || mkdir -p $(OBJDIR_DEBUG)/view
 	test -d $(OBJDIR_DEBUG)/util || mkdir -p $(OBJDIR_DEBUG)/util
@@ -41,16 +41,15 @@ ensure_folders:
 	test -d $(OBJDIR_DEBUG)/magic || mkdir -p $(OBJDIR_DEBUG)/magic
 	test -d $(OBJDIR_DEBUG)/play || mkdir -p $(OBJDIR_DEBUG)/play
 	test -d $(OBJDIR_DEBUG)/persistence || mkdir -p $(OBJDIR_DEBUG)/persistence
-	test bin/debug/res/images
 
 debug: ensure_folders resources_debug $(PROGRAM_NAME)_debug
 
 resources_debug:
-	cp res/images/* $(OUTDIR_DEBUG)/res/images
-	cp res/maps/* $(OUTDIR_DEBUG)/res/maps
-	cp res/font.ttf $(OUTDIR_DEBUG)/res/font.ttf
+	cp res/images/* $(OUTDIR_DEBUG)/images
+	cp res/maps/* $(OUTDIR_DEBUG)/maps
+	cp res/fonts/* $(OUTDIR_DEBUG)/fonts
 
-$(PROGRAM_NAME)_debug: ensure_folders $(OBJ_DEBUG) $(DEP_DEBUG)
+$(PROGRAM_NAME)_debug: ensure_folders $(OBJ_DEBUG)
 	$(LD) $(LIBDIR_DEBUG) -o $(OUT_DEBUG) $(OBJ_DEBUG)  $(LDFLAGS_DEBUG) $(LIB_DEBUG)
 
 $(OBJDIR_DEBUG)/%.o: %.cpp

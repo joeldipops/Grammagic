@@ -10,7 +10,7 @@
         "program": "${workspaceFolder}/bin/debug/grammagic",
         "args": [],
         "stopAtEntry": false,
-        "cwd": "${workspaceFolder}",
+        "cwd": "${workspaceFolder}/bin/debug/",
         "environment": [],
         "externalConsole": false,
         "MIMode": "gdb",

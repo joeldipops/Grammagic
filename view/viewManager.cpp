@@ -325,7 +325,7 @@ void ViewManager::drawControls(const std::vector<const MenuItem*>& items, const 
  */
 SDL_Texture* ViewManager::formatFontTexture(std::string text, const SDL_Colour* colour)
 {
-    return _assets->get("res/font.ttf", text.c_str(), 30, *colour);
+    return _assets->get("fonts/font.ttf", text.c_str(), 30, *colour);
 }
 
 /**

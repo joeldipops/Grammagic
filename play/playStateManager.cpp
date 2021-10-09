@@ -50,7 +50,7 @@ Core::CoreState PlayStateManager::start(Party& party)
     if (REGEN_MAP)
     {
         std::vector<Persistence::MapFileBlock> file = tempMapFile();
-        writeMapFile("res/maps/map1_1", 20, 13, &file);
+        writeMapFile("maps/map1_1", 20, 13, &file);
     }
 
     // Load the map
@@ -349,7 +349,7 @@ void PlayStateManager::exit(const Core::CoreState nextState)
 GameMap* PlayStateManager::loadMap(void)
 {
     GameMap* gameMap = new GameMap();
-    gameMap->loadChunk(1, 1, "res/maps/map1_1");
+    gameMap->loadChunk(1, 1, "maps/map1_1");
     gameMap->requestNextChunk();
     return gameMap;
 

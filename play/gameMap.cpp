@@ -89,7 +89,7 @@ bool GameMap::requestNextChunk(void)
 
 bool GameMap::loadChunk(int cX, int cY)
 {
-    const std::string path = "res/maps/map";
+    const std::string path = "maps/map";
     return loadChunk(cX, cY, path + std::to_string(cX) + "_" + std::to_string(cY));
 }
 

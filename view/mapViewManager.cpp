@@ -30,7 +30,7 @@ void MapViewManager::render(const GameMap* gameMap, const Play::PlayState state)
  */
 void MapViewManager::renderTerrain(const GameMap* gameMap, const SDL_Rect& visible)
 {
-    const std::string blank = "res/hidden.png";
+    const std::string blank = "hidden.png";
 
     for(int y = visible.y; y < visible.h; y++)
     {

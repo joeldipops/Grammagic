@@ -2,3 +2,4 @@ bin/
 obj/
 *~
 grammagic.save
+.vscode/settings.json
